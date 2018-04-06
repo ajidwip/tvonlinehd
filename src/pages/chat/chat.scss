@@ -20,7 +20,7 @@ page-chat {
     .elem button {
         border-radius: 0;
         margin: 0;
-        position: absolute;
+        position: relative;
         top: 0;
         left: 0;
         width: 100%;
@@ -61,7 +61,7 @@ page-chat {
         display: inline-block;
         padding: 0 10px;
     }
-    .message-special .innerMessage:before {
+    .message.special .innerMessage:before {
         content: '';
         height: 2px;
         background: #eee;

@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Content } from 'ionic-angular';
 import { AngularFireDatabase, FirebaseListObservable } from "angularfire2/database-deprecated";
 
 /**
@@ -15,20 +15,19 @@ import { AngularFireDatabase, FirebaseListObservable } from "angularfire2/databa
   templateUrl: 'chat.html',
 })
 export class ChatPage {
-
   username: string = '';
   message: string = '';
   _chatSubscription;
-  messages: object[] = [];
-
+  public messages = [];
+  @ViewChild(Content) content: Content
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public db: AngularFireDatabase) {
     this.username = this.navParams.get('username')
     this._chatSubscription = this.db.object('/chat').subscribe(data => {
-      console.log(data)
-      this.messages = data;
+      this.messages = Object.keys(data).map(i => data[i])
+      console.log(this.messages[0].username)
     })
   }
   sendMessage() {
@@ -43,14 +42,17 @@ export class ChatPage {
     this._chatSubscription.unsubscribe();
     this.db.list('/chat').push({
       specialMessage: true,
-      message: '${this.username} has left the room'
+      message: `${this.username} has left the room`
     })
   }
   ionViewDidLoad() {
     this.db.list('/chat').push({
       specialMessage: true,
-      message: '${this.username} has joined the room'
+      message: `${this.username} has joined the room`
     })
+  }
+  callFunction() {
+    this.content.scrollToBottom(0)
   }
 
 }
