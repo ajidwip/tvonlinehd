@@ -52,9 +52,11 @@ page-chat {
     }
     .messageLeft {
         float: left;
+        max-width: 100%;
     }
     .messageRight {
         float: right;
+        max-width: 100%;
     }
     .message.special .innerMessage .messageContent {
         background: white;
