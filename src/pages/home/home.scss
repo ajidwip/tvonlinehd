@@ -1,3 +1,105 @@
 page-home {
+    .header {
+        background: #092e61;
+    }
+    .header-navbar {
+        text-align: center;
+        background: transparent;
+        padding: 5px;
 
+    }
+    .header-banner {
+        
+    }
+    .title-menu {
+        text-align: left;
+        height:0px;
+    }
+    .title-logo {
+        font-size: 50px;
+        color: #ffffff;
+    }
+    .container {
+        position: relative;
+        text-align: center;
+        color: white;
+    }
+    .container-img {
+        opacity: 0.5;
+    }
+    .top-left {
+        position: absolute;
+        top: 8px;
+        left: 16px;
+    }
+    
+    .top-right {
+        position: absolute;
+        top: 8px;
+        right: 16px;
+        font-size: 100%;
+        font-family: 'Times New Roman', Times, serif;
+        color: #dedede;
+    }
+    
+    .bottom-left {
+        position: absolute;
+        bottom: 8px;
+        left: 16px;
+    }
+    
+    .bottom-right {
+        position: absolute;
+        bottom: 8px;
+        right: 16px;
+    }
+    
+    .centered {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 140%;
+    }
+    .centered-top {
+        position: absolute;
+        top: 8%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-family: 'Times New Roman', Times, serif;
+        color: #dedede;
+        width: 100%;
+    }
+    .centered-left {
+        position: absolute;
+        top: 20%;
+        font-family: Arial, Helvetica, sans-serif;
+        width: 100%;
+    }
+    .centered-right {
+        position: absolute;
+        top: 20%;
+        font-family: Arial, Helvetica, sans-serif;
+        width: 100%;
+    }
+    .logo-club-left {
+        float: left;
+        width: 35%;
+    }
+    .logo-club-right {
+        float: right;
+        width: 35%;
+    }
+    .logo-name {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 80%;
+    }
+    .result {
+        height: 22px;
+    }
+    .statistics{
+    }
+    .swiper-pagination-bullet {
+        background: #ffffff;
+    }
 }

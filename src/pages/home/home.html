@@ -1,16 +1,106 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Testing
-    </ion-title>
-  </ion-navbar>
+<ion-header class="header">
+  <div class="header-navbar">
+    <div class="title-menu">
+      <button ion-button clear color="light" style="top:7px;">
+        <ion-icon name="md-options" style="font-size:25px;"></ion-icon>
+      </button>
+    </div>
+    <div class="title-logo">
+      <h4>
+        BARCA
+        <img src="assets/icon/logo.gif" height="20" /> INFO&nbsp;&nbsp;&nbsp;&nbsp;
+      </h4>
+    </div>
+  </div>
+  <div class="header-banner">
+    <ion-slides pager=true>
+      <ion-slide>
+        <div class="container">
+          <img class="container-img" src="assets/imgs/campnou.jpg" style="width:100%;" />
+          <div class="centered-top">
+            <div style="font-size:60%;">La Liga - Matchday 31 : 12 Agust 18 01:30 WIB</div>
+          </div>
+          <div class="centered">
+            <div class="result">
+              4 - 1
+            </div>
+            <div class="statistics">
+              <button style="font-size:12px;height:25px;" ion-button color="danger">Statistics</button>
+            </div>
+          </div>
+          <div class="centered-left">
+            <div class="logo-club-left">
+              <img style="width:40%;" src="assets/imgs/logoclubpng/barcelona.png" />
+              <div class="logo-name">FC Barcelona</div>
+            </div>
+          </div>
+          <div class="centered-right">
+            <div class="logo-club-right">
+              <img style="width:40%;" src="assets/imgs/logoclubpng/realmadrid.png" />
+              <div class="logo-name">Real Madrid</div>
+            </div>
+          </div>
+          <div class="top-right">
+            <ion-icon name="md-more"></ion-icon>
+          </div>
+        </div>
+      </ion-slide>
+      <ion-slide>
+          <div class="container">
+            <img class="container-img" src="assets/imgs/campnou.jpg" style="width:100%;" />
+            <div class="centered-top">
+              <div style="font-size:60%;">La Liga - Matchday 31 : 12 Agust 18 01:30 WIB</div>
+            </div>
+            <div class="centered">
+              <div class="result">
+                4 - 1
+              </div>
+              <div class="statistics">
+                <button style="font-size:12px;height:25px;" ion-button color="danger">Statistics</button>
+              </div>
+            </div>
+            <div class="centered-left">
+              <div class="logo-club-left">
+                <img style="width:40%;" src="assets/imgs/logoclubpng/barcelona.png" />
+                <div class="logo-name">FC Barcelona</div>
+              </div>
+            </div>
+            <div class="centered-right">
+              <div class="logo-club-right">
+                <img style="width:40%;" src="assets/imgs/logoclubpng/realmadrid.png" />
+                <div class="logo-name">Real Madrid</div>
+              </div>
+            </div>
+            <div class="top-right">
+              <ion-icon name="md-more"></ion-icon>
+            </div>
+          </div>
+        </ion-slide>
+    </ion-slides>
+  </div>
 </ion-header>
-<ion-content padding>
-  <p>Enter your username</p>
-  <ion-list>
-    <ion-item>
-      <ion-label floating>Username</ion-label>
-      <ion-input type="text" [(ngModel)]="username"></ion-input></ion-item>
-  </ion-list>
-  <button ion-button block outline (click)="loginUser()">Login</button>
+<ion-content>
+  <div class="news">
+    <ion-item no-lines>
+      <h4>NEWS</h4>
+      <h5 item-end>See More..</h5>
+    </ion-item>
+    <ion-slides>
+      <ion-slide>
+        <ion-card>
+          Testing
+        </ion-card>
+      </ion-slide>
+      <ion-slide>
+        <ion-card>
+          Testing
+        </ion-card>
+      </ion-slide>
+      <ion-slide>
+        <ion-card>
+          Testing
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
+  </div>
 </ion-content>
