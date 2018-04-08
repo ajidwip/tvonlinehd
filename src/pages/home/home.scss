@@ -3,13 +3,12 @@ page-home {
         background: #092e61;
     }    
     .header-sticky {
-        visibility:hidden;
+
     }
     .header-navbar {
         text-align: center;
         background: transparent;
-        padding: 5px;
-
+        padding: 0px;
     }
     .header-banner {
         
@@ -129,5 +128,11 @@ page-home {
         left: 0;
         bottom: 0px;
         width: 100%;
+    }
+    .news {
+        padding-left: 30px;
+    }
+    .content-news {
+        margin-top:-20px;
     }
 }

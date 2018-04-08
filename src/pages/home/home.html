@@ -1,5 +1,5 @@
 <ion-header id="header" class="header">
-  <div class="header-navbar">
+  <div id="header-navbar" class="header-navbar">
     <div class="title-menu">
       <button ion-button clear color="light" style="top:7px;">
         <ion-icon name="md-options" style="font-size:25px;"></ion-icon>
@@ -12,11 +12,11 @@
       </h4>
     </div>
   </div>
-  <div class="header-banner">
+  <div id="header-banner" class="header-banner">
     <ion-slides pager="true">
       <ion-slide>
         <div class="container">
-          <img class="container-img" src="assets/imgs/campnou.jpg" style="width:100%;" />
+          <img id="container-img" class="container-img" src="assets/imgs/campnou.jpg" style="width:100%;" />
           <div class="centered-top">
             <div style="font-size:60%;">La Liga - Matchday 31 : 12 Agust 18 01:30 WIB</div>
           </div>
@@ -47,9 +47,7 @@
       </ion-slide>
     </ion-slides>
   </div>
-</ion-header>
-<ion-header id="header-sticky" class="header-sticky">
-  <div class="header-banner">
+  <!-- <div id="header-banner-sticky" class="header-banner-sticky">
     <ion-slides pager="true">
       <ion-slide>
         <div class="container">
@@ -78,45 +76,98 @@
         </div>
       </ion-slide>
     </ion-slides>
-  </div>
+  </div> -->
 </ion-header>
 <ion-content id="content">
-  <div class="news">
-    <ion-item id="news" no-lines>
-      <h4>NEWS</h4>
-      <h5 item-end>See More..</h5>
+  <div class="content">
+    <ion-item id="news" class="news" no-lines>
+      <h4 style="font-weight:bold;">NEWS</h4>
+      <h5 item-end style="color:#f53d3d;">See More..</h5>
     </ion-item>
-    <ion-slides>
+    <ion-slides class="content-news">
       <ion-slide>
         <ion-card>
-          Testing
-        </ion-card>
-      </ion-slide>
-      <ion-slide>
-        <ion-card>
-          Testing
-        </ion-card>
-      </ion-slide>
-      <ion-slide>
-        <ion-card>
-          Testing
+          <img src="assets/imgs/campnou.jpg" />
         </ion-card>
       </ion-slide>
     </ion-slides>
   </div>
-  <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum,
-    altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et.
-    Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
-  <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum,
-    altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et.
-    Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
-  <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum,
-    altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et.
-    Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
-  <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum,
-    altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et.
-    Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
-  <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum,
-    altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et.
-    Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
+  <div class="content">
+    <ion-item id="news" class="news" no-lines>
+      <h4 style="font-weight:bold;">NEWS</h4>
+      <h5 item-end style="color:#f53d3d;">See More..</h5>
+    </ion-item>
+    <ion-slides class="content-news">
+      <ion-slide>
+        <ion-card>
+          <img src="assets/imgs/campnou.jpg" />
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
+  </div>
+  <div class="content">
+    <ion-item id="news" class="news" no-lines>
+      <h4 style="font-weight:bold;">NEWS</h4>
+      <h5 item-end style="color:#f53d3d;">See More..</h5>
+    </ion-item>
+    <ion-slides class="content-news">
+      <ion-slide>
+        <ion-card>
+          <img src="assets/imgs/campnou.jpg" />
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
+  </div>
+  <div class="content">
+    <ion-item id="news" class="news" no-lines>
+      <h4 style="font-weight:bold;">NEWS</h4>
+      <h5 item-end style="color:#f53d3d;">See More..</h5>
+    </ion-item>
+    <ion-slides class="content-news">
+      <ion-slide>
+        <ion-card>
+          <img src="assets/imgs/campnou.jpg" />
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
+  </div>
+  <div class="content">
+    <ion-item id="news" class="news" no-lines>
+      <h4 style="font-weight:bold;">NEWS</h4>
+      <h5 item-end style="color:#f53d3d;">See More..</h5>
+    </ion-item>
+    <ion-slides class="content-news">
+      <ion-slide>
+        <ion-card>
+          <img src="assets/imgs/campnou.jpg" />
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
+  </div>
+  <div class="content">
+    <ion-item id="news" class="news" no-lines>
+      <h4 style="font-weight:bold;">NEWS</h4>
+      <h5 item-end style="color:#f53d3d;">See More..</h5>
+    </ion-item>
+    <ion-slides class="content-news">
+      <ion-slide>
+        <ion-card>
+          <img src="assets/imgs/campnou.jpg" />
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
+  </div>
+  <div class="content">
+    <ion-item id="news" class="news" no-lines>
+      <h4 style="font-weight:bold;">NEWS</h4>
+      <h5 item-end style="color:#f53d3d;">See More..</h5>
+    </ion-item>
+    <ion-slides class="content-news">
+      <ion-slide>
+        <ion-card>
+          <img src="assets/imgs/campnou.jpg" />
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
+  </div>
 </ion-content>
