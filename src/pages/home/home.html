@@ -1,4 +1,4 @@
-<ion-header class="header">
+<ion-header id="header" class="header">
   <div class="header-navbar">
     <div class="title-menu">
       <button ion-button clear color="light" style="top:7px;">
@@ -13,7 +13,7 @@
     </div>
   </div>
   <div class="header-banner">
-    <ion-slides pager=true>
+    <ion-slides pager="true">
       <ion-slide>
         <div class="container">
           <img class="container-img" src="assets/imgs/campnou.jpg" style="width:100%;" />
@@ -45,43 +45,44 @@
           </div>
         </div>
       </ion-slide>
-      <ion-slide>
-          <div class="container">
-            <img class="container-img" src="assets/imgs/campnou.jpg" style="width:100%;" />
-            <div class="centered-top">
-              <div style="font-size:60%;">La Liga - Matchday 31 : 12 Agust 18 01:30 WIB</div>
-            </div>
-            <div class="centered">
-              <div class="result">
-                4 - 1
-              </div>
-              <div class="statistics">
-                <button style="font-size:12px;height:25px;" ion-button color="danger">Statistics</button>
-              </div>
-            </div>
-            <div class="centered-left">
-              <div class="logo-club-left">
-                <img style="width:40%;" src="assets/imgs/logoclubpng/barcelona.png" />
-                <div class="logo-name">FC Barcelona</div>
-              </div>
-            </div>
-            <div class="centered-right">
-              <div class="logo-club-right">
-                <img style="width:40%;" src="assets/imgs/logoclubpng/realmadrid.png" />
-                <div class="logo-name">Real Madrid</div>
-              </div>
-            </div>
-            <div class="top-right">
-              <ion-icon name="md-more"></ion-icon>
-            </div>
-          </div>
-        </ion-slide>
     </ion-slides>
   </div>
 </ion-header>
-<ion-content>
+<ion-header id="header-sticky" class="header-sticky">
+  <div class="header-banner">
+    <ion-slides pager="true">
+      <ion-slide>
+        <div class="container">
+          <img class="container-img" src="assets/imgs/campnou.jpg" style="width:100%;height:65px;" />
+          <div class="centered-top">
+            <div style="font-size:60%;">La Liga - Matchday 31 : 12 Agust 18 01:30 WIB</div>
+          </div>
+          <div class="centered-sticky">
+            <div class="result">
+              FCB 4 - 1 RMD
+            </div>
+          </div>
+          <div class="centered-left-sticky">
+            <div class="logo-club-left">
+              <img style="width:25%;" src="assets/imgs/logoclubpng/barcelona.png" />
+            </div>
+          </div>
+          <div class="centered-right-sticky">
+            <div class="logo-club-right">
+              <img style="width:25%;" src="assets/imgs/logoclubpng/realmadrid.png" />
+            </div>
+          </div>
+          <div class="top-right">
+            <ion-icon name="md-more"></ion-icon>
+          </div>
+        </div>
+      </ion-slide>
+    </ion-slides>
+  </div>
+</ion-header>
+<ion-content id="content">
   <div class="news">
-    <ion-item no-lines>
+    <ion-item id="news" no-lines>
       <h4>NEWS</h4>
       <h5 item-end>See More..</h5>
     </ion-item>
@@ -103,4 +104,19 @@
       </ion-slide>
     </ion-slides>
   </div>
+  <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum,
+    altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et.
+    Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
+  <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum,
+    altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et.
+    Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
+  <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum,
+    altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et.
+    Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
+  <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum,
+    altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et.
+    Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
+  <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum,
+    altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et.
+    Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
 </ion-content>
