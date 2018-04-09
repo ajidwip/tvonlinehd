@@ -1,1 +1,23 @@
-<ion-nav [root]="rootPage"></ion-nav>
+<ion-menu type="overlay" [content]="mycontent">
+    <ion-content style="background:#fff;">
+        <ion-item no-lines style="text-align:center;background:#092e61;border-bottom:5px solid;border-color:#488aff;">
+            <img src="assets/imgs/people.jpg" height="150" style="border-radius:100%" />
+            <div>
+                <button ion-button outline style="color:#fff;width:100px;height:30px;">Sign In</button>
+            </div>
+        </ion-item>
+        <ion-item no-lines style="border-bottom:1px solid;border-color:#dedede;">
+            <ion-icon item-start name="md-calendar" style="font-size:40px;"></ion-icon>
+            <h5>CALENDAR</h5>
+        </ion-item>
+        <ion-item no-lines style="border-bottom:1px solid;border-color:#dedede;">
+            <ion-icon item-start name="md-people" style="font-size:40px;"></ion-icon>
+            <h5>PLAYERS</h5>
+        </ion-item>
+        <div class="top-right">
+            <ion-icon name="md-close" menuClose style="font-size:30px;"></ion-icon>
+        </div>
+    </ion-content>
+</ion-menu>
+
+<ion-nav #mycontent [root]="rootPage"></ion-nav>

@@ -6,9 +6,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ChatPage } from '../pages/chat/chat';
+import { TabsPage } from '../pages/tabs/tabs';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database-deprecated';
-import { CarouselComponent } from '../components/carousel/carousel';
 import { ContentPhotoComponent } from '../components/content-photo/content-photo';
 import { ContentVideoComponent } from '../components/content-video/content-video';
 import { ContentNewsComponent } from '../components/content-news/content-news';
@@ -27,7 +27,7 @@ var config = {
     MyApp,
     HomePage,
     ChatPage,
-    CarouselComponent,
+    TabsPage,
     ContentNewsComponent,
     ContentPhotoComponent,
     ContentVideoComponent
@@ -42,7 +42,8 @@ var config = {
   entryComponents: [
     MyApp,
     HomePage,
-    ChatPage
+    ChatPage,
+    TabsPage
   ],
   providers: [
     StatusBar,

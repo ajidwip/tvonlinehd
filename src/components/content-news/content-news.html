@@ -1,11 +1,5 @@
 <div class="carousel-container">
     <div class="carousel">
-        <div class="carousel-title">
-            <ion-item no-lines style="background:transparent;">
-                <h4 style="font-weight:bold;text-align:center;">NEWS</h4>
-                <h4 item-end (click)="doShowNews()">More..</h4>
-            </ion-item>
-        </div>
         <div radio-group class="carousel-slide-item slide-item-{{i}}" *ngFor="let item of items; let i=index"
             [ngStyle]="{'transform': 'rotateY(-'+item.currentPlacement+'deg)  translateZ('+tz+'px)', '-webkit-transform': 'rotateY('+item.currentPlacement+'deg)  translateZ('+tz+'px)', '-ms-transform': 'rotateY('+item.currentPlacement+'deg)  translateZ('+tz+'px)',
         '-o-transform': 'rotateY('+item.currentPlacement+'deg)  translateZ('+tz+'px)'}" (swipeleft)="onSwipeLeft($event);"

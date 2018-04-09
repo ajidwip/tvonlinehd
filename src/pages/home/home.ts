@@ -253,9 +253,9 @@ export class HomePage {
         document.getElementById('logo-clubright').style.width = '30%'
         document.getElementById('result').style.display = 'none'
         document.getElementById('result-sticky').style.display = 'block'
-        document.getElementById('centered-left').style.left = '50px'
+        document.getElementById('centered-left').style.left = '12%'
         document.getElementById('centered-left').style.top = '25%'
-        document.getElementById('centered-right').style.right = '50px'
+        document.getElementById('centered-right').style.right = '12%'
         document.getElementById('centered-right').style.top = '25%'
       }
       else {
