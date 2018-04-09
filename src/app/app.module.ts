@@ -9,6 +9,9 @@ import { ChatPage } from '../pages/chat/chat';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database-deprecated';
 import { CarouselComponent } from '../components/carousel/carousel';
+import { ContentPhotoComponent } from '../components/content-photo/content-photo';
+import { ContentVideoComponent } from '../components/content-video/content-video';
+import { ContentNewsComponent } from '../components/content-news/content-news';
 
 var config = {
   apiKey: "AIzaSyBYa6NgqtjCTvrKX3o_4NDpKSol64PwcD4",
@@ -24,7 +27,10 @@ var config = {
     MyApp,
     HomePage,
     ChatPage,
-    CarouselComponent
+    CarouselComponent,
+    ContentNewsComponent,
+    ContentPhotoComponent,
+    ContentVideoComponent
   ],
   imports: [
     BrowserModule,

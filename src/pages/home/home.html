@@ -21,23 +21,26 @@
             <div style="font-size:60%;">La Liga - Matchday 31 : 12 Agust 18 01:30 WIB</div>
           </div>
           <div class="centered">
-            <div class="result">
+            <div id="result" class="result">
               4 - 1
             </div>
+            <div id="result-sticky" class="result-sticky">
+                FCB 4 - 1 RMD
+              </div>
             <div id="statistics" class="statistics">
               <button style="font-size:12px;height:25px;" ion-button color="danger">Statistics</button>
             </div>
           </div>
-          <div class="centered-left">
+          <div id="centered-left" class="centered-left">
             <div class="logo-club-left">
-              <img style="width:40%;" src="assets/imgs/logoclubpng/barcelona.png" />
-              <div class="logo-name">FC Barcelona</div>
+              <img id="logo-clubleft" style="width:40%;" src="assets/imgs/logoclubpng/barcelona.png" />
+              <div id="name-clubleft" class="logo-name">FC Barcelona</div>
             </div>
           </div>
-          <div class="centered-right">
+          <div id="centered-right" class="centered-right">
             <div class="logo-club-right">
-              <img style="width:40%;" src="assets/imgs/logoclubpng/realmadrid.png" />
-              <div class="logo-name">Real Madrid</div>
+              <img id="logo-clubright" style="width:40%;" src="assets/imgs/logoclubpng/realmadrid.png" />
+              <div id="name-clubright" class="logo-name">Real Madrid</div>
             </div>
           </div>
           <div class="top-right">
@@ -51,17 +54,17 @@
 <ion-content id="content" class="content">
   <div class="content-news" style="margin-bottom:300px;">
     <div padding style="margin-top:-30px;">
-      <carousel [slides]="slides" [autoloop]="false" (selectSlide)="selectItem($event);"></carousel>
+      <content-news [slides]="slides" [autoloop]="false" (selectSlide)="selectItem($event);"></content-news>
     </div>
   </div>
-  <div class="content-news" style="margin-bottom:300px;">
+  <div class="content-photo" style="margin-bottom:300px;">
     <div padding>
-      <carousel [slides]="slides" [autoloop]="false" (selectSlide)="selectItem($event);"></carousel>
+      <content-photo [slides]="slides" [autoloop]="false" (selectSlide)="selectItem($event);"></content-photo>
     </div>
   </div>
-  <div class="content-news" style="margin-bottom:300px;padding-bottom:100px;">
+  <div class="content-video" style="margin-bottom:300px;padding-bottom:50px;">
     <div padding>
-      <carousel [slides]="slides" [autoloop]="false" (selectSlide)="selectItem($event);"></carousel>
+      <content-video [slides]="slides" [autoloop]="false" (selectSlide)="selectItem($event);"></content-video>
     </div>
   </div>
 </ion-content>

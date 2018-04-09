@@ -247,10 +247,30 @@ export class HomePage {
         document.getElementById('container-img').style.height = '65px'
         document.getElementById('container-img').style.transition = 'height 1s'
         document.getElementById('statistics').style.display = 'none'
+        document.getElementById('name-clubleft').style.display = 'none'
+        document.getElementById('name-clubright').style.display = 'none'
+        document.getElementById('logo-clubleft').style.width = '30%'
+        document.getElementById('logo-clubright').style.width = '30%'
+        document.getElementById('result').style.display = 'none'
+        document.getElementById('result-sticky').style.display = 'block'
+        document.getElementById('centered-left').style.left = '50px'
+        document.getElementById('centered-left').style.top = '25%'
+        document.getElementById('centered-right').style.right = '50px'
+        document.getElementById('centered-right').style.top = '25%'
       }
       else {
         document.getElementById('container-img').style.height = 'auto'
         document.getElementById('statistics').style.display = 'block'
+        document.getElementById('name-clubleft').style.display = 'block'
+        document.getElementById('name-clubright').style.display = 'block'
+        document.getElementById('logo-clubleft').style.width = '40%'
+        document.getElementById('logo-clubright').style.width = '40%'
+        document.getElementById('result').style.display = 'block'
+        document.getElementById('result-sticky').style.display = 'none'
+        document.getElementById('centered-left').style.left = 'auto'
+        document.getElementById('centered-left').style.top = '20%'
+        document.getElementById('centered-right').style.right = 'auto'
+        document.getElementById('centered-right').style.top = '20%'
       }
     });
   }
