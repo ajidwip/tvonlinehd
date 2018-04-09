@@ -30,7 +30,7 @@ export class HomePage {
         country: 'Spain',
         color: '#092e61',
         isSelected: false,
-        imgUrl: 'assets/imgs/logoclub/barcelona.jpg',
+        imgUrl: 'assets/imgs/barca.jpg',
         backgroundImgUrl: 'http://oxygennacdn3.oxygenna.com/wp-content/uploads/2015/11/18.jpg',
         outstanding: true
       },
@@ -41,7 +41,7 @@ export class HomePage {
         country: 'Spain',
         color: '#092e61',
         isSelected: false,
-        imgUrl: 'assets/imgs/logoclub/barcelona.jpg',
+        imgUrl: 'assets/imgs/barca.jpg',
         backgroundImgUrl: 'https://s-media-cache-ak0.pinimg.com/originals/d2/7b/4f/d27b4fa995194a0c77b8871a326a7c0b.jpg'
       },
       {
@@ -51,7 +51,7 @@ export class HomePage {
         country: 'Spain',
         color: '#092e61',
         isSelected: false,
-        imgUrl: 'assets/imgs/logoclub/barcelona.jpg',
+        imgUrl: 'assets/imgs/barca.jpg',
         outstanding: true,
         backgroundImgUrl: 'https://i.imgur.com/AMf9X7E.jpg'
       },
@@ -62,7 +62,7 @@ export class HomePage {
         country: 'Spain',
         color: '#092e61',
         isSelected: false,
-        imgUrl: 'assets/imgs/logoclub/barcelona.jpg',
+        imgUrl: 'assets/imgs/barca.jpg',
         backgroundImgUrl: 'http://oxygennacdn2.oxygenna.com/wp-content/uploads/2015/06/small.jpg'
       },
       {
@@ -72,7 +72,7 @@ export class HomePage {
         country: 'Spain',
         color: '#092e61',
         isSelected: false,
-        imgUrl: 'assets/imgs/logoclub/barcelona.jpg',
+        imgUrl: 'assets/imgs/barca.jpg',
         backgroundImgUrl: 'https://newevolutiondesigns.com/images/freebies/google-material-design-wallpaper-1.jpg'
       },
       {
@@ -82,7 +82,7 @@ export class HomePage {
         country: 'Spain',
         color: '#092e61',
         isSelected: false,
-        imgUrl: 'assets/imgs/logoclub/barcelona.jpg',
+        imgUrl: 'assets/imgs/barca.jpg',
         backgroundImgUrl: 'https://i.ytimg.com/vi/GpTrOahC6jI/maxresdefault.jpg'
       },
       {
@@ -92,7 +92,7 @@ export class HomePage {
         country: 'Spain',
         color: '#092e61',
         isSelected: false,
-        imgUrl: 'assets/imgs/logoclub/barcelona.jpg',
+        imgUrl: 'assets/imgs/barca.jpg',
         backgroundImgUrl: 'http://www.templatemonsterblog.es/wp-content/uploads/2016/04/1-9-2.jpg'
       },
       {
@@ -102,7 +102,7 @@ export class HomePage {
         country: 'Spain',
         color: '#092e61',
         isSelected: false,
-        imgUrl: 'assets/imgs/logoclub/barcelona.jpg',
+        imgUrl: 'assets/imgs/barca.jpg',
         backgroundImgUrl: 'https://cms-assets.tutsplus.com/uploads/users/41/posts/25951/image/material-design-3.jpg'
       },
       {
@@ -112,7 +112,7 @@ export class HomePage {
         country: 'Spain',
         color: '#092e61',
         isSelected: false,
-        imgUrl: 'assets/imgs/logoclub/barcelona.jpg',
+        imgUrl: 'assets/imgs/barca.jpg',
         backgroundImgUrl: 'https://cms-assets.tutsplus.com/uploads/users/41/posts/25951/image/material-design-background-1.jpg'
       },
       {
@@ -122,7 +122,7 @@ export class HomePage {
         country: 'Spain',
         color: '#092e61',
         isSelected: false,
-        imgUrl: 'assets/imgs/logoclub/barcelona.jpg',
+        imgUrl: 'assets/imgs/barca.jpg',
         backgroundImgUrl: 'http://www.vactualpapers.com/web/wallpapers/1-pattern-35-color-schemes-material-design-wallpaper-series-image11/2560x1440.jpg'
       },
       {
@@ -132,7 +132,7 @@ export class HomePage {
         country: 'Spain',
         color: '#092e61',
         isSelected: false,
-        imgUrl: 'assets/imgs/logoclub/barcelona.jpg',
+        imgUrl: 'assets/imgs/barca.jpg',
         backgroundImgUrl: 'https://www.smashingmagazine.com/wp-content/uploads/2015/07/Ultimate-Material-Lollipop-Collection1.png'
       },
       {
@@ -142,7 +142,7 @@ export class HomePage {
         country: 'Spain',
         color: '#092e61',
         isSelected: false,
-        imgUrl: 'assets/imgs/logoclub/barcelona.jpg',
+        imgUrl: 'assets/imgs/barca.jpg',
         backgroundImgUrl: 'https://s-media-cache-ak0.pinimg.com/736x/c2/bd/3a/c2bd3ae483f9617e6f71bc2a74b60b5a.jpg'
       },
       {
@@ -152,7 +152,7 @@ export class HomePage {
         country: 'Spain',
         color: '#092e61',
         isSelected: false,
-        imgUrl: 'assets/imgs/logoclub/barcelona.jpg',
+        imgUrl: 'assets/imgs/barca.jpg',
         backgroundImgUrl: 'http://www.vactualpapers.com/web/wallpapers/material-design-hd-background-by-vactual-papers-wallpaper-84/thumbnail/lg.jpg'
       },
       {
@@ -162,7 +162,7 @@ export class HomePage {
         country: 'Spain',
         color: '#092e61',
         isSelected: false,
-        imgUrl: 'assets/imgs/logoclub/barcelona.jpg',
+        imgUrl: 'assets/imgs/barca.jpg',
         backgroundImgUrl: 'https://ak2.picdn.net/shutterstock/videos/19300069/thumb/9.jpg'
       },
       {
@@ -172,7 +172,7 @@ export class HomePage {
         country: 'Spain',
         color: '#092e61',
         isSelected: false,
-        imgUrl: 'assets/imgs/logoclub/barcelona.jpg',
+        imgUrl: 'assets/imgs/barca.jpg',
         backgroundImgUrl: 'http://oxygennacdn1.oxygenna.com/wp-content/uploads/2017/01/header-image-6.jpg'
       },
 

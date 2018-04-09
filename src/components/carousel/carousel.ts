@@ -7,7 +7,6 @@ export interface CarouselItem {
     country: string,
     imgUrl?: string,
     backgroundImgUrl?: string,
-    color?: string,
     outstanding: boolean
 }
 
@@ -18,7 +17,6 @@ interface SlideItem {
     country: string,
     imgUrl: string,
     backgroundImgUrl: string,
-    color: string,
     currentPlacement: number,
     outstanding: boolean
 }
@@ -63,7 +61,6 @@ export class CarouselComponent {
                 country: item.country,
                 imgUrl: item.imgUrl,
                 backgroundImgUrl: item.backgroundImgUrl,
-                color: item.color,
                 outstanding: item.outstanding,
                 currentPlacement: degree
             };
