@@ -8,6 +8,7 @@ import { HomePage } from '../pages/home/home';
 import { ChatPage } from '../pages/chat/chat';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database-deprecated';
+import { CarouselComponent } from '../components/carousel/carousel';
 
 var config = {
   apiKey: "AIzaSyBYa6NgqtjCTvrKX3o_4NDpKSol64PwcD4",
@@ -22,7 +23,8 @@ var config = {
   declarations: [
     MyApp,
     HomePage,
-    ChatPage
+    ChatPage,
+    CarouselComponent
   ],
   imports: [
     BrowserModule,

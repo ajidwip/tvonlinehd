@@ -21,6 +21,14 @@ page-home {
         font-size: 50px;
         color: #ffffff;
     }
+    .content {
+        margin-top: -40%;
+        height: 122%;
+    }
+    .content-news {
+        margin-top: 40%;
+        margin-bottom: -40%;
+    }
     .container {
         position: relative;
         text-align: center;
@@ -42,6 +50,17 @@ page-home {
         font-size: 100%;
         font-family: 'Times New Roman', Times, serif;
         color: #dedede;
+    }
+    .center-left {
+        position: absolute;
+        top: 40%;
+        left: 16px;
+    }
+    
+    .center-right {
+        position: absolute;
+        top: 40%;
+        right: 16px;
     }
     
     .bottom-left {
@@ -129,10 +148,7 @@ page-home {
         bottom: 0px;
         width: 100%;
     }
-    .news {
-        padding-left: 30px;
-    }
-    .content-news {
+    .content-news-slide {
         margin-top:-20px;
     }
 }

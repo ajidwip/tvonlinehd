@@ -24,7 +24,7 @@
             <div class="result">
               4 - 1
             </div>
-            <div class="statistics">
+            <div id="statistics" class="statistics">
               <button style="font-size:12px;height:25px;" ion-button color="danger">Statistics</button>
             </div>
           </div>
@@ -47,127 +47,21 @@
       </ion-slide>
     </ion-slides>
   </div>
-  <!-- <div id="header-banner-sticky" class="header-banner-sticky">
-    <ion-slides pager="true">
-      <ion-slide>
-        <div class="container">
-          <img class="container-img" src="assets/imgs/campnou.jpg" style="width:100%;height:65px;" />
-          <div class="centered-top">
-            <div style="font-size:60%;">La Liga - Matchday 31 : 12 Agust 18 01:30 WIB</div>
-          </div>
-          <div class="centered-sticky">
-            <div class="result">
-              FCB 4 - 1 RMD
-            </div>
-          </div>
-          <div class="centered-left-sticky">
-            <div class="logo-club-left">
-              <img style="width:25%;" src="assets/imgs/logoclubpng/barcelona.png" />
-            </div>
-          </div>
-          <div class="centered-right-sticky">
-            <div class="logo-club-right">
-              <img style="width:25%;" src="assets/imgs/logoclubpng/realmadrid.png" />
-            </div>
-          </div>
-          <div class="top-right">
-            <ion-icon name="md-more"></ion-icon>
-          </div>
-        </div>
-      </ion-slide>
-    </ion-slides>
-  </div> -->
 </ion-header>
-<ion-content id="content">
-  <div class="content">
-    <ion-item id="news" class="news" no-lines>
-      <h4 style="font-weight:bold;">NEWS</h4>
-      <h5 item-end style="color:#f53d3d;">See More..</h5>
-    </ion-item>
-    <ion-slides class="content-news">
-      <ion-slide>
-        <ion-card>
-          <img src="assets/imgs/campnou.jpg" />
-        </ion-card>
-      </ion-slide>
-    </ion-slides>
+<ion-content id="content" class="content">
+  <div class="content-news" style="margin-bottom:280px;">
+    <div padding style="margin-top:-30px;">
+      <carousel [slides]="slides" [autoloop]="false" (selectSlide)="selectItem($event);"></carousel>
+    </div>
   </div>
-  <div class="content">
-    <ion-item id="news" class="news" no-lines>
-      <h4 style="font-weight:bold;">NEWS</h4>
-      <h5 item-end style="color:#f53d3d;">See More..</h5>
-    </ion-item>
-    <ion-slides class="content-news">
-      <ion-slide>
-        <ion-card>
-          <img src="assets/imgs/campnou.jpg" />
-        </ion-card>
-      </ion-slide>
-    </ion-slides>
+  <div class="content-news" style="margin-bottom:280px;">
+    <div padding>
+      <carousel [slides]="slides" [autoloop]="false" (selectSlide)="selectItem($event);"></carousel>
+    </div>
   </div>
-  <div class="content">
-    <ion-item id="news" class="news" no-lines>
-      <h4 style="font-weight:bold;">NEWS</h4>
-      <h5 item-end style="color:#f53d3d;">See More..</h5>
-    </ion-item>
-    <ion-slides class="content-news">
-      <ion-slide>
-        <ion-card>
-          <img src="assets/imgs/campnou.jpg" />
-        </ion-card>
-      </ion-slide>
-    </ion-slides>
-  </div>
-  <div class="content">
-    <ion-item id="news" class="news" no-lines>
-      <h4 style="font-weight:bold;">NEWS</h4>
-      <h5 item-end style="color:#f53d3d;">See More..</h5>
-    </ion-item>
-    <ion-slides class="content-news">
-      <ion-slide>
-        <ion-card>
-          <img src="assets/imgs/campnou.jpg" />
-        </ion-card>
-      </ion-slide>
-    </ion-slides>
-  </div>
-  <div class="content">
-    <ion-item id="news" class="news" no-lines>
-      <h4 style="font-weight:bold;">NEWS</h4>
-      <h5 item-end style="color:#f53d3d;">See More..</h5>
-    </ion-item>
-    <ion-slides class="content-news">
-      <ion-slide>
-        <ion-card>
-          <img src="assets/imgs/campnou.jpg" />
-        </ion-card>
-      </ion-slide>
-    </ion-slides>
-  </div>
-  <div class="content">
-    <ion-item id="news" class="news" no-lines>
-      <h4 style="font-weight:bold;">NEWS</h4>
-      <h5 item-end style="color:#f53d3d;">See More..</h5>
-    </ion-item>
-    <ion-slides class="content-news">
-      <ion-slide>
-        <ion-card>
-          <img src="assets/imgs/campnou.jpg" />
-        </ion-card>
-      </ion-slide>
-    </ion-slides>
-  </div>
-  <div class="content">
-    <ion-item id="news" class="news" no-lines>
-      <h4 style="font-weight:bold;">NEWS</h4>
-      <h5 item-end style="color:#f53d3d;">See More..</h5>
-    </ion-item>
-    <ion-slides class="content-news">
-      <ion-slide>
-        <ion-card>
-          <img src="assets/imgs/campnou.jpg" />
-        </ion-card>
-      </ion-slide>
-    </ion-slides>
+  <div class="content-news" style="margin-bottom:280px;padding-bottom:100px;">
+    <div padding>
+      <carousel [slides]="slides" [autoloop]="false" (selectSlide)="selectItem($event);"></carousel>
+    </div>
   </div>
 </ion-content>
