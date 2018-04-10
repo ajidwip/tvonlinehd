@@ -175,12 +175,15 @@ export class HomePage {
         imgUrl: 'assets/imgs/barca.jpg',
         backgroundImgUrl: 'http://oxygennacdn1.oxygenna.com/wp-content/uploads/2017/01/header-image-6.jpg'
       },
-
     ];
-
   }
   ionViewDidLoad() {
     this.getCurrentSlides();
+  }
+  ionViewWillLeave() {
+    document.getElementById('header-navbar').style.height = 'auto'
+    document.getElementById('header-navbar').style.opacity = '1'
+    this.content.scrollToTop(0)
   }
   getCurrentSlides() {
 

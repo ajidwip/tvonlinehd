@@ -52,7 +52,12 @@
   </div>
 </ion-header>
 <ion-content id="content" class="content">
-  <div class="content-news" style="margin-bottom:70%;">
+  <div class="content-top" style="margin-bottom:-3%;">
+    <ion-card>
+      <img src="assets/imgs/campnou.jpg" style="width:100%;" />
+    </ion-card>
+  </div>
+  <div class="content-news" style="margin-bottom:73%;">
     <div>
       <ion-item no-lines style="background:transparent;">
         <h4 style="font-weight:bold;font-size:17px;text-align:left;">NEWS</h4>
@@ -63,7 +68,12 @@
       <content-news [slides]="slides" [autoloop]="false" (selectSlide)="selectItem($event);"></content-news>
     </div>
   </div>
-  <div class="content-photo" style="margin-bottom:70%;">
+  <div>
+    <ion-card>
+      <img src="assets/imgs/campnou.jpg" style="width:100%;" />
+    </ion-card>
+  </div>
+  <div class="content-photo" style="margin-bottom:73%;">
     <div>
       <ion-item no-lines style="background:transparent;">
         <h4 style="font-weight:bold;font-size:17px;text-align:left;">PHOTOS</h4>
@@ -74,7 +84,12 @@
       <content-photo [slides]="slides" [autoloop]="false" (selectSlide)="selectItem($event);"></content-photo>
     </div>
   </div>
-  <div class="content-video" style="margin-bottom:70%;">
+  <div>
+    <ion-card>
+      <img src="assets/imgs/campnou.jpg" style="width:100%;" />
+    </ion-card>
+  </div>
+  <div class="content-video" style="margin-bottom:73%;">
     <div>
       <ion-item no-lines style="background:transparent;">
         <h4 style="font-weight:bold;font-size:17px;text-align:left;">VIDEOS</h4>
@@ -84,5 +99,10 @@
     <div padding style="margin-top:-60px;">
       <content-video [slides]="slides" [autoloop]="false" (selectSlide)="selectItem($event);"></content-video>
     </div>
+  </div>
+  <div style="padding-bottom:5px;">
+    <ion-card>
+      <img src="assets/imgs/campnou.jpg" style="width:100%;" />
+    </ion-card>
   </div>
 </ion-content>

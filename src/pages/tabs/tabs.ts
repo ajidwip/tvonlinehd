@@ -11,7 +11,7 @@ import { ChatPage } from '../../pages/chat/chat';
 })
 export class TabsPage {
   home = HomePage;
-  about = ChatPage;
+  news = ChatPage;
   photo = ChatPage;
   video = ChatPage;
   chat = ChatPage;

@@ -24,7 +24,8 @@ export class ChatPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public db: AngularFireDatabase) {
-    this.username = this.navParams.get('username')
+    // this.username = this.navParams.get('username')
+    this.username = 'SLAMET'
     this._chatSubscription = this.db.object('/chat').subscribe(data => {
       this.messages = Object.keys(data).map(i => data[i])
       console.log(this.messages[0].username)
