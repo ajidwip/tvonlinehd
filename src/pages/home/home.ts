@@ -183,6 +183,8 @@ export class HomePage {
   ionViewWillLeave() {
     document.getElementById('header-navbar').style.height = 'auto'
     document.getElementById('header-navbar').style.opacity = '1'
+    document.getElementById('content').style.marginTop = '0%'
+    document.getElementById('content').style.height = '100%'
     this.content.scrollToTop(0)
   }
   getCurrentSlides() {
@@ -239,11 +241,16 @@ export class HomePage {
       if (this.scroll == 0) {
         document.getElementById('header-navbar').style.height = 'auto'
         document.getElementById('header-navbar').style.opacity = '1'
+        document.getElementById('content').style.marginTop = '0%'
+        document.getElementById('content').style.height = '100%'
+
       }
       else {
         document.getElementById('header-navbar').style.height = '0'
         document.getElementById('header-navbar').style.opacity = '0'
         document.getElementById('header-navbar').style.transition = 'height 1s'
+        document.getElementById('content').style.marginTop = '-12%'
+        document.getElementById('content').style.height = '110%'
 
       }
       if (this.scroll > 100) {
@@ -260,6 +267,15 @@ export class HomePage {
         document.getElementById('centered-left').style.top = '25%'
         document.getElementById('centered-right').style.right = '12%'
         document.getElementById('centered-right').style.top = '25%'
+        document.getElementById('content').style.marginTop = '-24%'
+        document.getElementById('content').style.height = '114%'
+
+      }
+      else if (this.scroll == 0) {
+        document.getElementById('header-navbar').style.height = 'auto'
+        document.getElementById('header-navbar').style.opacity = '1'
+        document.getElementById('content').style.marginTop = '0%'
+        document.getElementById('content').style.height = '100%'
       }
       else {
         document.getElementById('container-img').style.height = 'auto'

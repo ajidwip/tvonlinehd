@@ -46,10 +46,10 @@ export class ContentPhotoComponent {
         let degree: number = 0;
 
         if(this.platform.is('core') || this.platform.is('mobileweb')) {
-            this.tz = 250;
+            this.tz = 300;
 
         } else {
-            this.tz = 200;
+            this.tz = 250;
         }
 
         //this.tz = Math.round((this.containerWidth / 2) / Math.tan(Math.PI / values.length));

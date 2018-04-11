@@ -22,12 +22,9 @@ page-home {
         color: #ffffff;
     }
     .content {
-        margin-top: -40%;
-        height: 120%;
+        background: #e9e9e9;
     }
-    .content-top {
-        margin-top: 42%;
-        margin-bottom: -40%;
+    .content-all {
     }
     .container {
         position: relative;
@@ -152,7 +149,10 @@ page-home {
         bottom: 0px;
         width: 100%;
     }
-    .content-news-slide {
-        margin-top:-20px;
+    .card-header-md {
+        font-size: 1.6rem;
+        color: #222;
+        padding: 16px;
+        text-align: left;
     }
 }

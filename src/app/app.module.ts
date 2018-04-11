@@ -5,13 +5,17 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { ChatPage } from '../pages/chat/chat';
 import { TabsPage } from '../pages/tabs/tabs';
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from 'angularfire2/database-deprecated';
+import { LoginPage } from '../pages/login/login';
+import { ChatPage } from '../pages/chat/chat';
 import { ContentPhotoComponent } from '../components/content-photo/content-photo';
 import { ContentVideoComponent } from '../components/content-video/content-video';
 import { ContentNewsComponent } from '../components/content-news/content-news';
+import { GooglePlus } from '@ionic-native/google-plus';
+import { AngularFireModule } from 'angularfire2';
+import firebase from 'firebase';
+import { AngularFireDatabaseModule } from 'angularfire2/database-deprecated';
+import { IonicStorageModule } from '@ionic/storage';
 
 var config = {
   apiKey: "AIzaSyBYa6NgqtjCTvrKX3o_4NDpKSol64PwcD4",
@@ -26,8 +30,9 @@ var config = {
   declarations: [
     MyApp,
     HomePage,
-    ChatPage,
     TabsPage,
+    LoginPage,
+    ChatPage,
     ContentNewsComponent,
     ContentPhotoComponent,
     ContentVideoComponent
@@ -36,19 +41,25 @@ var config = {
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(config),
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    IonicStorageModule.forRoot({
+      name: '__mydb',
+         driverOrder: ['indexeddb', 'sqlite', 'websql']
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
-    ChatPage,
-    TabsPage
+    TabsPage,
+    LoginPage,
+    ChatPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    GooglePlus
   ]
 })
 export class AppModule {}

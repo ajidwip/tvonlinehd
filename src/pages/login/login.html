@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Sign In
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-item>
+    <ion-label stacked>Email</ion-label>
+    <ion-input type="text"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label stacked primary>Password</ion-label>
+    <ion-input [type]="passwordType" [(ngModel)]="password"></ion-input>
+    <button ion-button clear item-end (click)='showHide(password)' style="height:32px;top:12px;">
+      <ion-icon [name]="passwordIcon" style="font-size:25px;"></ion-icon>
+    </button>
+  </ion-item>
+
+  <ion-item>
+    <label class="container">Remember Me
+      <input type="checkbox">
+      <span class="checkmark"></span>
+    </label>
+    <label item-end style="color:#488aff;font-size: 1.2rem;">Forgot Password?</label>
+  </ion-item>
+  <ion-buttons padding>
+    <button ion-button color="primary" block outline>Sign In</button>
+  </ion-buttons>
+  <ion-label style="color:#999;font-size: 1.2rem;text-align:center;">OR</ion-label>
+  <ion-buttons padding>
+    <button ion-button color="primary" block outline (click)="doLoginGoogle()">
+      <ion-icon name="logo-google"> Google</ion-icon>
+    </button>
+  </ion-buttons>
+  <ion-label style="color:#999;font-size: 1.2rem;text-align:center;">Do not have an account?
+    <a>Register</a>
+  </ion-label>
+
+</ion-content>
