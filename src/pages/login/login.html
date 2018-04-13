@@ -15,78 +15,90 @@
 </ion-header>
 
 <ion-content padding id="login" class="login">
+  <form [formGroup]="myFormLogin">
+    <ion-item>
+      <ion-label stacked>Email</ion-label>
+      <ion-input formControlName="email" type="text"></ion-input>
+    </ion-item>
 
-  <ion-item>
-    <ion-label stacked>Email</ion-label>
-    <ion-input type="text"></ion-input>
-  </ion-item>
+    <ion-item>
+      <ion-label stacked primary>Password</ion-label>
+      <ion-input formControlName="password" [type]="passwordType"></ion-input>
+      <button ion-button clear item-end (click)='showHide(password)' style="height:32px;top:12px;">
+        <ion-icon [name]="passwordIcon" style="font-size:25px;"></ion-icon>
+      </button>
+    </ion-item>
 
-  <ion-item>
-    <ion-label stacked primary>Password</ion-label>
-    <ion-input [type]="passwordType" [(ngModel)]="password"></ion-input>
-    <button ion-button clear item-end (click)='showHide(password)' style="height:32px;top:12px;">
-      <ion-icon [name]="passwordIcon" style="font-size:25px;"></ion-icon>
-    </button>
-  </ion-item>
-
-  <ion-item>
-    <label class="container">Remember Me
-      <input type="checkbox">
-      <span class="checkmark"></span>
-    </label>
-    <label item-end style="color:#488aff;font-size: 1.2rem;">Forgot Password?</label>
-  </ion-item>
-  <ion-buttons padding>
-    <button ion-button color="primary" block outline style="height:40px;">Sign In</button>
-  </ion-buttons>
-  <ion-label style="color:#999;font-size: 1.2rem;text-align:center;">OR</ion-label>
-  <ion-buttons padding>
-    <button ion-button color="danger" block outline (click)="doLoginGoogle()" style="height:40px;">
-      <ion-icon name="logo-google"> Google</ion-icon>
-    </button>
-  </ion-buttons>
-  <ion-label style="color:#999;font-size: 1.2rem;text-align:center;">Do not have an account?
-    <a (click)="doRegister()">Register</a>
-  </ion-label>
-
+    <ion-item>
+      <!-- <label class="container">Remember Me
+        <input type="checkbox" [checked]="true">
+        <span class="checkmark"></span>
+      </label> -->
+      <label item-start style="color:#488aff;font-size: 1.2rem;">Forgot Password?</label>
+    </ion-item>
+    <ion-buttons padding>
+      <button ion-button color="primary" block outline style="height:40px;" (click)="doGetLogin()">Sign In</button>
+    </ion-buttons>
+    <ion-label style="color:#999;font-size: 1.2rem;text-align:center;">OR</ion-label>
+    <ion-buttons padding>
+      <button ion-button color="danger" block outline (click)="doLoginGoogle()" style="height:40px;">
+        <ion-icon name="logo-google"> Google</ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-label style="color:#999;font-size: 1.2rem;text-align:center;">Do not have an account?
+      <a (click)="doRegister()">Register</a>
+    </ion-label>
+  </form>
 </ion-content>
 <div id="register" class="register" style="background:url(assets/imgs/all.jpg);background-repeat:no-repeat;background-size:cover;">
   <ion-content padding style="background:#000;opacity:0.9">
     <div style="text-align:right;height:15px;">
-      <button ion-button clear color="dark" (click)="doCloseRegister()">
+      <button ion-button clear color="light" (click)="doCloseRegister()">
         <ion-icon name="md-close" style="font-size:25px;"></ion-icon>
       </button>
     </div>
     <div style="text-align:center;margin-bottom:20px;">
       SIGN UP
     </div>
-    <ion-item style="background:transparent;color:#fff;">
-      <ion-label stacked>Email</ion-label>
-      <ion-input type="text"></ion-input>
-    </ion-item>
-    <ion-item style="background:transparent;color:#fff;">
-      <ion-label stacked primary>Password</ion-label>
-      <ion-input [type]="passwordType" [(ngModel)]="password"></ion-input>
-      <button ion-button clear item-end (click)='showHide(password)' style="height:32px;top:12px;">
-        <ion-icon [name]="passwordIcon" style="font-size:25px;"></ion-icon>
-      </button>
-    </ion-item>
-    <ion-item style="background:transparent;color:#fff;">
-      <ion-label stacked>Name</ion-label>
-      <ion-input type="text"></ion-input>
-    </ion-item>
-    <ion-item style="background:transparent">
-      <label class="container">&nbsp;&nbsp;I accepted the
-        <u>Terms and Conditions</u> of Barca Info
-        <input type="checkbox">
-        <span class="checkmark"></span>
-      </label>
-    </ion-item>
+    <form [formGroup]="myForm">
+      <ion-item style="background:transparent;color:#fff;padding-right:12px;">
+        <ion-label stacked>Email</ion-label>
+        <ion-input formControlName="email" type="text"></ion-input>
+      </ion-item>
+      <ion-item style="background:transparent;color:#fff;padding-right:12px;">
+        <ion-label stacked primary>Password</ion-label>
+        <ion-input formControlName="password" [type]="passwordType"></ion-input>
+        <button ion-button clear item-end (click)='showHide(password)' style="height:32px;top:12px;">
+          <ion-icon [name]="passwordIcon" style="font-size:25px;"></ion-icon>
+        </button>
+      </ion-item>
+      <ion-row style="background:transparent;">
+        <ion-col col-4 style="background:transparent;">
+          <ion-item style="background:transparent;color:#fff;">
+            <ion-label stacked>First Name</ion-label>
+            <ion-input formControlName="firstname" type="text"> </ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col col-8 style="background:transparent;">
+          <ion-item style="background:transparent;color:#fff;padding-right:12px;">
+            <ion-label stacked>Last Name</ion-label>
+            <ion-input formControlName="lastname" type="text"> </ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <!-- <ion-item style="background:transparent">
+        <label class="container">&nbsp;&nbsp;I accepted the
+          <u>Terms and Conditions</u> of Barca Info
+          <input type="checkbox">
+          <span class="checkmark"></span>
+        </label>
+      </ion-item> -->
+    </form>
     <ion-buttons padding>
-      <button ion-button color="primary" block outline style="height:40px;">SIGN UP</button>
+      <button ion-button color="primary" block outline style="height:40px;" (click)="doPostRegister()">SIGN UP</button>
     </ion-buttons>
     <ion-label style="color:rgb(255, 255, 255);font-size: 1.2rem;text-align:center;">Already registered?
-      <a (click)="doRegister()">
+      <a (click)="doCloseRegister()">
         <u>Sign in</u>
       </a>
     </ion-label>

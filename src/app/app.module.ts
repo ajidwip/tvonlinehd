@@ -16,6 +16,8 @@ import { AngularFireModule } from 'angularfire2';
 import firebase from 'firebase';
 import { AngularFireDatabaseModule } from 'angularfire2/database-deprecated';
 import { IonicStorageModule } from '@ionic/storage';
+import { ApiProvider } from '../providers/api/api';
+import { HttpClientModule } from '@angular/common/http';
 
 var config = {
   apiKey: "AIzaSyBYa6NgqtjCTvrKX3o_4NDpKSol64PwcD4",
@@ -42,6 +44,7 @@ var config = {
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(config),
     AngularFireDatabaseModule,
+    HttpClientModule,
     IonicStorageModule.forRoot({
       name: '__mydb',
          driverOrder: ['indexeddb', 'sqlite', 'websql']
@@ -59,7 +62,8 @@ var config = {
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    GooglePlus
+    GooglePlus,
+    ApiProvider
   ]
 })
 export class AppModule {}
