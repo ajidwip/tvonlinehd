@@ -1,4 +1,23 @@
 page-login { 
+    .header {
+        background: #092e61;
+    }    
+    .header-sticky {
+
+    }
+    .header-navbar {
+        text-align: center;
+        background: transparent;
+        padding: 0px;
+    }
+    .title-menu {
+        text-align: left;
+        height:0px;
+    }
+    .title-logo {
+        font-size: 50px;
+        color: #ffffff;
+    }
     .toolbar-background-md {
         background: #ffffff;
     }
@@ -72,5 +91,25 @@ page-login {
         -webkit-transform: rotate(45deg);
         -ms-transform: rotate(45deg);
         transform: rotate(45deg);
+    }
+    .top-right {
+        position: absolute;
+        top: 15px;
+        right: 16px;
+        font-size: 100%;
+        font-family: 'Times New Roman', Times, serif;
+        color: #999;
+    }
+    .register {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
     }
 }

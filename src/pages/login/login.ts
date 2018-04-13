@@ -1,16 +1,12 @@
 import { Component } from '@angular/core';
-import { AlertController, NavController, NavParams } from 'ionic-angular';
+import { ViewController, App, AlertController, NavController, NavParams } from 'ionic-angular';
 import { GooglePlus } from '@ionic-native/google-plus';
 import { AngularFireModule } from 'angularfire2';
 import firebase from 'firebase';
 import { Storage } from '@ionic/storage';
-
-/**
- * Generated class for the LoginPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { TabsPage } from '../../pages/tabs/tabs';
+import { HomePage } from '../home/home';
+import { DOCUMENT } from '@angular/platform-browser';
 
 @Component({
   selector: 'page-login',
@@ -30,15 +26,22 @@ export class LoginPage {
     public navParams: NavParams,
     public googleplus: GooglePlus,
     public alertCtrl: AlertController,
-    private storage: Storage) {
+    private storage: Storage,
+    public appCtrl: App,
+    public viewCtrl: ViewController) {
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
+  doRegister() {
+    document.getElementById('header').style.display = 'none';
+    document.getElementById('login').style.display = 'none';
+    document.getElementById('register').style.display = 'block';
+  }
+  doCloseRegister() {
+    document.getElementById('header').style.display = 'block';
+    document.getElementById('login').style.display = 'block';
+    document.getElementById('register').style.display = 'none';
   }
   passwordType: string = 'password';
   passwordIcon: string = 'eye-off';
-
   showHide(password) {
     this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
     this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';

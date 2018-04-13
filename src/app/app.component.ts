@@ -9,9 +9,9 @@ import { LoginPage } from '../pages/login/login';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = TabsPage;
+  rootPage: any = TabsPage;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public menuCtrl: MenuController){
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public menuCtrl: MenuController) {
     platform.ready().then(() => {
       statusBar.styleDefault();
       splashScreen.hide();
@@ -21,5 +21,10 @@ export class MyApp {
     this.rootPage = LoginPage;
     this.menuCtrl.close();
   }
+  doHome() {
+    this.rootPage = TabsPage;
+    this.menuCtrl.close();
+  }
+
 }
 

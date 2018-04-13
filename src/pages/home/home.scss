@@ -11,7 +11,6 @@ page-home {
         padding: 0px;
     }
     .header-banner {
-        
     }
     .title-menu {
         text-align: left;
@@ -22,7 +21,7 @@ page-home {
         color: #ffffff;
     }
     .content {
-        background: #e9e9e9;
+        background: #dedede;
     }
     .content-all {
     }
@@ -30,6 +29,7 @@ page-home {
         position: relative;
         text-align: center;
         color: white;
+        width: 120%;
     }
     .container-img {
         opacity: 0.5;
@@ -154,21 +154,5 @@ page-home {
         color: #222;
         padding: 16px;
         text-align: left;
-    }
-    .swiper-container {
-      width: 100%;
-      height: 100%;
-    }
-    .swiper-slide {
-      text-align: center;
-      font-size: 18px;
-      width: 80%;
-      align-items: center;
-    }
-    .swiper-slide:nth-child(2n) {
-      width: 20%;
-    }
-    .swiper-slide:nth-child(3n) {
-      width: 80%;
     }
 }
