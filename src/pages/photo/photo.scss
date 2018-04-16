@@ -18,4 +18,23 @@ page-photo {
         font-size: 50px;
         color: #ffffff;
     }
+    .container {
+        position: relative;
+        text-align: center;
+        color: white;
+    }
+    
+    /* Bottom left text */
+    .bottom {
+        position: absolute;
+        bottom: 0px;
+        width: 100%;
+        height:50%;
+        background: rgba(34,39,51,0.6);
+        color:#D3D6D7;
+        opacity: 0.9;
+        text-align:left;
+        padding-left:10px;
+        padding-top:20px;
+    }
 }
