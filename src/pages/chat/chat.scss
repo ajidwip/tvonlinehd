@@ -1,4 +1,20 @@
 page-chat {
+    .header {
+        background: #092e61;
+    }    
+    .header-navbar {
+        text-align: center;
+        background: transparent;
+        padding: 0px;
+    }
+    .title-menu {
+        text-align: left;
+        height:0px;
+    }
+    .title-logo {
+        font-size: 50px;
+        color: #ffffff;
+    }
     .innerMessage {
         display: inline-block;
         padding: 5px 10px;

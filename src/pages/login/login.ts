@@ -79,7 +79,7 @@ export class LoginPage {
             picture: this.users[0].image_url
           });
           this.events.publish('user:login', this.users, Date.now());
-          this.navCtrl.setRoot(TabsPage);
+          window.location.reload();
         }
         else {
           let alert = this.alertCtrl.create({
@@ -160,18 +160,20 @@ export class LoginPage {
       'webClientId': '798397482932-8go91dakhnar8c88plcl1nv2k8c7dg00.apps.googleusercontent.com',
       'offline': true
     }).then(res => {
-      this.displayName = res.displayName;
-      this.email = res.email;
-      this.familyName = res.familyName;
-      this.givenName = res.givenName;
-      this.userId = res.userId;
-      this.imageUrl = res.imageUrl;
-      this.idToken = res.idToken;
+      this.events.publish('user:logingoogle', res, Date.now());
+      // this.displayName = res.displayName;
+      // this.email = res.email;
+      // this.familyName = res.familyName;
+      // this.givenName = res.givenName;
+      // this.userId = res.userId;
+      // this.imageUrl = res.imageUrl;
+      // this.idToken = res.idToken;
       this.storage.set('users', {
         name: res.displayName,
         email: res.email,
         picture: res.imageUrl
       });
+      window.location.reload()
       // firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
       //   .then(suc => {
       //     let alert = this.alertCtrl.create({

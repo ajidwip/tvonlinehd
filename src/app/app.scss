@@ -6,3 +6,9 @@
     font-family: 'Times New Roman', Times, serif;
     color: #dedede;
 }
+ion-loading.transparent {
+    .loading-wrapper {
+      background: transparent;
+      box-shadow: none;
+    }
+  }

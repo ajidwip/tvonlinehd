@@ -1,9 +1,22 @@
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>chat</ion-title>
-  </ion-navbar>
-
+<ion-header id="header" class="header">
+  <div id="header-navbar" class="header-navbar">
+    <div style="text-align:right;height:0px;">
+      <button ion-button clear color="light" (click)="toggleSearch()">
+        <ion-icon name="md-people" style="font-size:25px;"> (20)</ion-icon>
+      </button>
+    </div>
+    <div class="title-menu">
+      <button ion-button clear menuToggle color="light" style="top:3px;">
+        <ion-icon name="md-options" style="font-size:25px;"></ion-icon>
+      </button>
+    </div>
+    <div class="title-logo">
+      <h4>
+        BARCA
+        <img src="assets/icon/logo.gif" height="20" /> INFO&nbsp;&nbsp;&nbsp;&nbsp;
+      </h4>
+    </div>
+  </div>
 </ion-header>
 
 

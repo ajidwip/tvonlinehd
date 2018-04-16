@@ -9,7 +9,6 @@ import { ChatPage } from "../chat/chat";
 
 export class HomePage {
   @ViewChild(Content) content: Content;
-  @ViewChild(Slides) slides: Slides;
   username: string = '';
   scroll: any = 0;
   state: string = 'x';
@@ -54,7 +53,6 @@ export class HomePage {
     }
   }
   ngAfterViewInit() {
-    this.slides.centeredSlides = false;
     this.content.ionScroll.subscribe((event) => {
       this.scroll = event.scrollTop
       if (this.scroll == 0) {
