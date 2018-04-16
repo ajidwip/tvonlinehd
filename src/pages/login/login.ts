@@ -74,6 +74,7 @@ export class LoginPage {
         this.users = val['data']
         if (this.users.length != 0) {
           this.storage.set('users', {
+            id: this.users[0].id,
             name: this.users[0].first_name,
             email: this.users[0].email,
             picture: this.users[0].image_url
@@ -169,6 +170,7 @@ export class LoginPage {
       // this.imageUrl = res.imageUrl;
       // this.idToken = res.idToken;
       this.storage.set('users', {
+        id: res.userId,
         name: res.displayName,
         email: res.email,
         picture: res.imageUrl

@@ -1,8 +1,9 @@
-<ion-header id="header" class="header">
+<ion-header class="header">
   <div id="header-navbar" class="header-navbar">
     <div style="text-align:right;height:0px;">
       <button ion-button clear color="light" (click)="toggleSearch()">
-        <ion-icon name="md-people" style="font-size:25px;"> (20)</ion-icon>
+        <ion-icon name="md-people" style="font-size:25px;"></ion-icon>
+        <div style="margin-left:5px;font-size:15px;">({{totalonline}})</div>
       </button>
     </div>
     <div class="title-menu">
@@ -20,7 +21,7 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding class="content">
 
   <div id="chatMessages">
     <div *ngFor="let message of messages;let last = last" [class]="message.specialMessage ? 'message special' : 'message'">
@@ -34,14 +35,14 @@
 
 </ion-content>
 
-<ion-footer>
+<ion-footer class="footer">
   <div id="footer">
     <div class="elem">
       <ion-input type="text" [(ngModel)]="message"></ion-input>
     </div>
     <div class="elem">
-      <button ion-button icon-only (click)="sendMessage()">
-        <ion-icon name="send"></ion-icon>
+      <button ion-button icon-only color="bluedark" (click)="sendMessage()">
+        <ion-icon name="md-send"></ion-icon>
       </button>
     </div>
   </div>
