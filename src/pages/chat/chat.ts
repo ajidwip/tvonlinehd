@@ -19,6 +19,7 @@ export class ChatPage {
   public users = [];
   _chatSubscription;
   public messages = [];
+  public useronline = [];
   @ViewChild(Content) content: Content
   constructor(
     public navCtrl: NavController,
@@ -30,9 +31,8 @@ export class ChatPage {
       this.messages = Object.keys(data).map(i => data[i])
       this.api.get('table/z_users', { params: { filter: "status='ONLINE'" } })
         .subscribe(val => {
+          this.useronline = val['data']
           this.totalonline = val['count']
-          console.log(this.totalonline);
-          console.log(val)
         })
     })
   }
@@ -77,7 +77,6 @@ export class ChatPage {
             specialMessage: true,
             message: `${this.username} has joined the room`
           })
-          console.log(this.id)
           const headers = new HttpHeaders()
             .set("Content-Type", "application/json");
           this.api.put("table/z_users",
@@ -94,6 +93,16 @@ export class ChatPage {
   }
   callFunction() {
     this.content.scrollToBottom(0)
+  }
+  doShowOnline() {
+    if (document.getElementById('content').style.opacity == '1' && document.getElementById('content-online').style.display == 'none') {
+      document.getElementById('content').style.opacity = '0.5';
+      document.getElementById('content-online').style.display = 'block'
+    }
+    else {
+      document.getElementById('content').style.opacity = '1';
+      document.getElementById('content-online').style.display = 'none'
+    }
   }
 
 }

@@ -11,7 +11,7 @@ export class PhotoPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad PhotoPage');
+
   }
 
 }

@@ -1,5 +1,10 @@
 <ion-header id="header" class="header">
   <div id="header-navbar" class="header-navbar">
+    <div *ngIf="streaming" class="logo-streaming" style="text-align:right;height:0px;">
+      <button ion-button clear color="light" (click)="toggleSearch()">
+        <img src="assets/imgs/live.gif" height="25" style="margin-top:10px;"/>
+      </button>
+    </div>
     <div class="title-menu">
       <button ion-button clear menuToggle color="light" style="top:3px;">
         <ion-icon name="md-options" style="font-size:25px;"></ion-icon>

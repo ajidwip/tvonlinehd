@@ -11,7 +11,7 @@ export class VideoPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad VideoPage');
+
   }
 
 }

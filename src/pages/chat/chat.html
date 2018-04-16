@@ -1,7 +1,7 @@
 <ion-header class="header">
   <div id="header-navbar" class="header-navbar">
     <div style="text-align:right;height:0px;">
-      <button ion-button clear color="light" (click)="toggleSearch()">
+      <button ion-button clear color="light" (click)="doShowOnline()">
         <ion-icon name="md-people" style="font-size:25px;"></ion-icon>
         <div style="margin-left:5px;font-size:15px;">({{totalonline}})</div>
       </button>
@@ -21,7 +21,7 @@
 </ion-header>
 
 
-<ion-content padding class="content">
+<ion-content id="content" padding class="content">
 
   <div id="chatMessages">
     <div *ngFor="let message of messages;let last = last" [class]="message.specialMessage ? 'message special' : 'message'">
@@ -47,3 +47,12 @@
     </div>
   </div>
 </ion-footer>
+
+<ion-content id="content-online" style="top:0px;display: none;height:100%;width:100%;">
+  <ion-item *ngFor="let user of useronline">
+    <ion-avatar item-start>
+      <img src="{{user.image_url}}" />
+    </ion-avatar>
+    <h5>{{user.first_name}}</h5>
+  </ion-item>
+</ion-content>

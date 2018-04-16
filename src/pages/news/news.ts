@@ -11,7 +11,7 @@ export class NewsPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad NewsPage');
+
   }
 
 }
