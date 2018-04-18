@@ -2,7 +2,7 @@
   <div id="header-navbar" class="header-navbar">
     <div *ngIf="streaming" class="logo-streaming" style="text-align:right;height:0px;">
       <button ion-button clear color="light" (click)="toggleSearch()">
-        <img src="assets/imgs/live.gif" height="25" style="margin-top:10px;"/>
+        <img src="assets/imgs/live.gif" height="25" style="margin-top:10px;" />
       </button>
     </div>
     <div class="title-menu">
@@ -66,72 +66,12 @@
       </ion-item>
       <div class="swiper-container">
         <div class="swiper-wrapper">
-          <div class="swiper-slide">
+          <div class="swiper-slide" *ngFor="let news of NewsAllactive">
             <div style="margin-right:-15px;">
               <ion-card>
-                <img style="height:125px;width:100%;" src="assets/imgs/campnou.jpg">
-                <ion-card-content style="text-align:left;">
-                  Testing
-                </ion-card-content>
-              </ion-card>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div style="margin-right:-15px;">
-              <ion-card>
-                <img style="height:125px;width:100%;" src="assets/imgs/campnou.jpg">
-                <ion-card-content style="text-align:left;">
-                  Testing
-                </ion-card-content>
-              </ion-card>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div style="margin-right:-15px;">
-              <ion-card>
-                <img style="height:125px;width:100%;" src="assets/imgs/campnou.jpg">
-                <ion-card-content style="text-align:left;">
-                  Testing
-                </ion-card-content>
-              </ion-card>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div style="margin-right:-15px;">
-              <ion-card>
-                <img style="height:125px;width:100%;" src="assets/imgs/campnou.jpg">
-                <ion-card-content style="text-align:left;">
-                  Testing
-                </ion-card-content>
-              </ion-card>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div style="margin-right:-15px;">
-              <ion-card>
-                <img style="height:125px;width:100%;" src="assets/imgs/campnou.jpg">
-                <ion-card-content style="text-align:left;">
-                  Testing
-                </ion-card-content>
-              </ion-card>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div style="margin-right:-15px;">
-              <ion-card>
-                <img style="height:125px;width:100%;" src="assets/imgs/campnou.jpg">
-                <ion-card-content style="text-align:left;">
-                  Testing
-                </ion-card-content>
-              </ion-card>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div style="margin-right:-15px;">
-              <ion-card>
-                <img style="height:125px;width:100%;" src="assets/imgs/campnou.jpg">
-                <ion-card-content style="text-align:left;">
-                  Testing
+                <img style="height:125px;width:100%;" src="{{news.image_url}}">
+                <ion-card-content style="text-align:left;height:70px;font-weight: bold;">
+                  {{news.title}}
                 </ion-card-content>
               </ion-card>
             </div>
@@ -139,7 +79,12 @@
         </div>
       </div>
     </div>
-    <div class="content-news">
+    <div class="banner">
+      <ion-card>
+        <img src="assets/imgs/campnou.jpg" />
+      </ion-card>
+    </div>
+    <div class="content-photos">
       <ion-item no-lines style="background:transparent;margin-bottom:-15px;">
         <h5 style="font-weight:bold;font-size:17px;">PHOTOS</h5>
         <a item-end style="color:#f53d3d;font-size:12px;">SEE MORE..</a>
@@ -150,67 +95,7 @@
             <div style="margin-right:-15px;">
               <ion-card>
                 <img style="height:125px;width:100%;" src="assets/imgs/campnou.jpg">
-                <ion-card-content style="text-align:left;">
-                  Testing
-                </ion-card-content>
-              </ion-card>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div style="margin-right:-15px;">
-              <ion-card>
-                <img style="height:125px;width:100%;" src="assets/imgs/campnou.jpg">
-                <ion-card-content style="text-align:left;">
-                  Testing
-                </ion-card-content>
-              </ion-card>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div style="margin-right:-15px;">
-              <ion-card>
-                <img style="height:125px;width:100%;" src="assets/imgs/campnou.jpg">
-                <ion-card-content style="text-align:left;">
-                  Testing
-                </ion-card-content>
-              </ion-card>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div style="margin-right:-15px;">
-              <ion-card>
-                <img style="height:125px;width:100%;" src="assets/imgs/campnou.jpg">
-                <ion-card-content style="text-align:left;">
-                  Testing
-                </ion-card-content>
-              </ion-card>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div style="margin-right:-15px;">
-              <ion-card>
-                <img style="height:125px;width:100%;" src="assets/imgs/campnou.jpg">
-                <ion-card-content style="text-align:left;">
-                  Testing
-                </ion-card-content>
-              </ion-card>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div style="margin-right:-15px;">
-              <ion-card>
-                <img style="height:125px;width:100%;" src="assets/imgs/campnou.jpg">
-                <ion-card-content style="text-align:left;">
-                  Testing
-                </ion-card-content>
-              </ion-card>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div style="margin-right:-15px;">
-              <ion-card>
-                <img style="height:125px;width:100%;" src="assets/imgs/campnou.jpg">
-                <ion-card-content style="text-align:left;">
+                <ion-card-content style="text-align:left;height:70px;font-weight: bold;">
                   Testing
                 </ion-card-content>
               </ion-card>

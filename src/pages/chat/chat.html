@@ -49,7 +49,7 @@
 </ion-footer>
 
 <ion-content id="content-online" style="top:0px;display: none;height:100%;width:100%;">
-  <ion-item *ngFor="let user of useronline">
+  <ion-item no-lines *ngFor="let user of useronline" style="border-bottom:1px solid;border-color:#eeeeee;">
     <ion-avatar item-start>
       <img src="{{user.image_url}}" />
     </ion-avatar>

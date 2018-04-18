@@ -95,13 +95,13 @@ export class ChatPage {
     this.content.scrollToBottom(0)
   }
   doShowOnline() {
-    if (document.getElementById('content').style.opacity == '1' && document.getElementById('content-online').style.display == 'none') {
-      document.getElementById('content').style.opacity = '0.5';
-      document.getElementById('content-online').style.display = 'block'
+    if (document.getElementById('chatMessages').style.display == 'none' && document.getElementById('content-online').style.display == 'block') {
+      document.getElementById('chatMessages').style.display = 'block';
+      document.getElementById('content-online').style.display = 'none'
     }
     else {
-      document.getElementById('content').style.opacity = '1';
-      document.getElementById('content-online').style.display = 'none'
+      document.getElementById('chatMessages').style.display = 'none';
+      document.getElementById('content-online').style.display = 'block'
     }
   }
 

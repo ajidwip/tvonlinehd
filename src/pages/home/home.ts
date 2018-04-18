@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { Slides, Content, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { ChatPage } from "../chat/chat";
+import { ApiProvider } from '../../providers/api/api';
 
 @Component({
   selector: 'page-home',
@@ -15,15 +16,21 @@ export class HomePage {
   private data: any;
   private start: number = 0;
   private end: number = 5;
-
+  public NewsAllactive = [];
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public alertCtrl: AlertController,
-    public loadingCtrl: LoadingController) {
+    public loadingCtrl: LoadingController,
+    public api: ApiProvider) {
 
+    this.doGetNewsAllActive();
   }
-  ionViewDidLoad() {
+  doGetNewsAllActive() {
+    this.api.get('table/z_content_news', { params: { filter: "status='OPEN'", sort: "id" + " DESC " } })
+      .subscribe(val => {
+        this.NewsAllactive = val['data'];
+      });
   }
   ionViewWillLeave() {
     document.getElementById('header-navbar').style.height = 'auto'
@@ -32,7 +39,7 @@ export class HomePage {
     document.getElementById('content').style.height = '100%'
     this.content.scrollToTop(0)
   }
-  
+
   showAlert(title: string, message: string) {
     let alert = this.alertCtrl.create({
       title: title,
