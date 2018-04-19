@@ -40,10 +40,22 @@ export class HomePage {
       });
   }
   ionViewWillLeave() {
+    document.getElementById('container-img').style.height = 'auto'
     document.getElementById('header-navbar').style.height = 'auto'
     document.getElementById('header-navbar').style.opacity = '1'
     document.getElementById('content').style.marginTop = '0%'
     document.getElementById('content').style.height = '100%'
+    document.getElementById('statistics').style.display = 'block'
+    document.getElementById('name-clubleft').style.display = 'block'
+    document.getElementById('name-clubright').style.display = 'block'
+    document.getElementById('logo-clubleft').style.width = '40%'
+    document.getElementById('logo-clubright').style.width = '40%'
+    document.getElementById('result').style.display = 'block'
+    document.getElementById('result-sticky').style.display = 'none'
+    document.getElementById('centered-left').style.left = 'auto'
+    document.getElementById('centered-left').style.top = '20%'
+    document.getElementById('centered-right').style.right = 'auto'
+    document.getElementById('centered-right').style.top = '20%'
     this.content.scrollToTop(0)
   }
 
