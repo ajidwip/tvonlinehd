@@ -21,6 +21,7 @@
     "@angular/http": "5.2.9",
     "@angular/platform-browser": "5.2.9",
     "@angular/platform-browser-dynamic": "5.2.9",
+    "@ionic-native/admob-pro": "^4.7.0",
     "@ionic-native/core": "4.6.0",
     "@ionic-native/google-plus": "^4.7.0",
     "@ionic-native/splash-screen": "4.6.0",
@@ -29,7 +30,9 @@
     "angular2-uuid": "^1.1.1",
     "angularfire2": "^5.0.0-rc.6.0",
     "cordova-android": "7.0.0",
+    "cordova-plugin-admobpro": "^2.31.4",
     "cordova-plugin-device": "^2.0.1",
+    "cordova-plugin-extension": "^1.5.4",
     "cordova-plugin-googleplus": "^5.2.3",
     "cordova-plugin-ionic-keyboard": "^2.0.5",
     "cordova-plugin-ionic-webview": "^1.1.19",
@@ -60,7 +63,8 @@
       "cordova-plugin-googleplus": {
         "REVERSED_CLIENT_ID": "com.googleusercontent.apps.798397482932-8go91dakhnar8c88plcl1nv2k8c7dg00"
       },
-      "cordova-sqlite-storage": {}
+      "cordova-sqlite-storage": {},
+      "cordova-plugin-admobpro": {}
     },
     "platforms": [
       "android"

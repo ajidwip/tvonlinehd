@@ -91,18 +91,23 @@
       </ion-item>
       <div class="swiper-container">
         <div class="swiper-wrapper">
-          <div class="swiper-slide">
+          <div class="swiper-slide" *ngFor="let gallery of GalleryAllactive">
             <div style="margin-right:-15px;">
               <ion-card>
-                <img style="height:125px;width:100%;" src="assets/imgs/campnou.jpg">
+                <img style="height:125px;width:100%;" src="{{gallery.image_url_thumb}}">
                 <ion-card-content style="text-align:left;height:70px;font-weight: bold;">
-                  Testing
+                  {{gallery.title}}
                 </ion-card-content>
               </ion-card>
             </div>
           </div>
         </div>
       </div>
+    </div>
+    <div class="banner">
+      <ion-card>
+        <img src="assets/imgs/campnou.jpg" />
+      </ion-card>
     </div>
     <div class="content-news">
       <ion-item no-lines style="background:transparent;margin-bottom:-15px;">

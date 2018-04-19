@@ -86,5 +86,6 @@
         <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.798397482932-8go91dakhnar8c88plcl1nv2k8c7dg00" />
     </plugin>
     <plugin name="cordova-sqlite-storage" spec="^2.3.0" />
+    <plugin name="cordova-plugin-admobpro" spec="^2.31.4" />
     <engine name="android" spec="7.0.0" />
 </widget>

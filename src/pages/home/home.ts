@@ -17,19 +17,26 @@ export class HomePage {
   private start: number = 0;
   private end: number = 5;
   public NewsAllactive = [];
+  public GalleryAllactive = [];
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public alertCtrl: AlertController,
     public loadingCtrl: LoadingController,
     public api: ApiProvider) {
-
     this.doGetNewsAllActive();
+    this.doGetGalleryAllActive();
   }
   doGetNewsAllActive() {
     this.api.get('table/z_content_news', { params: { filter: "status='OPEN'", sort: "id" + " DESC " } })
       .subscribe(val => {
         this.NewsAllactive = val['data'];
+      });
+  }
+  doGetGalleryAllActive() {
+    this.api.get('table/z_content_photos', { params: { filter: "status='OPEN'", sort: "id" + " DESC " } })
+      .subscribe(val => {
+        this.GalleryAllactive = val['data'];
       });
   }
   ionViewWillLeave() {

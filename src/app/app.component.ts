@@ -7,6 +7,8 @@ import { LoginPage } from '../pages/login/login';
 import { HttpHeaders } from "@angular/common/http";
 import { Storage } from '@ionic/storage';
 
+declare var swiper;
+
 @Component({
   templateUrl: 'app.html'
 })

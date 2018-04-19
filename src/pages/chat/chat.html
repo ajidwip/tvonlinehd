@@ -38,10 +38,10 @@
 <ion-footer class="footer">
   <div id="footer">
     <div class="elem">
-      <ion-input type="text" [(ngModel)]="message"></ion-input>
+      <ion-input id="myInput" type="text" [(ngModel)]="message"></ion-input>
     </div>
     <div class="elem">
-      <button ion-button icon-only color="bluedark" (click)="sendMessage()">
+      <button id="myBtn" ion-button icon-only color="bluedark" (click)="sendMessage()">
         <ion-icon name="md-send"></ion-icon>
       </button>
     </div>
