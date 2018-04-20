@@ -30,6 +30,7 @@ export class LoginPage {
   private nextno = '';
   private uuid = '';
   public users = [];
+  public googleakun = [];
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -67,7 +68,7 @@ export class LoginPage {
     this.api.get('table/z_users', {
       params: {
         filter: "email=" + "'" + this.myFormLogin.value.email + "'" +
-          " AND " + "password=" + "'" + password + "'"
+          " AND " + "password=" + "'" + password + "'" + " AND " + "type=" + 0
       }
     })
       .subscribe(val => {
@@ -171,25 +172,46 @@ export class LoginPage {
       // this.idToken = res.idToken;
       this.storage.set('users', {
         id: res.userId,
-        name: res.displayName,
+        name: res.givenName,
         email: res.email,
         picture: res.imageUrl
       });
-      window.location.reload()
-      // firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
-      //   .then(suc => {
-      //     let alert = this.alertCtrl.create({
-      //       subTitle: 'Login Sukses',
-      //       buttons: ['OK']
-      //     });
-      //     alert.present();
-      //   }).catch(ns => {
-      //     let alert = this.alertCtrl.create({
-      //       subTitle: 'Login Gagal',
-      //       buttons: ['OK']
-      //     });
-      //     alert.present();
-      //   })
+      this.api.get('table/z_users', {
+        params: {
+          filter: "email=" + "'" + res.email + "'" +
+            " AND " + "type=" + 1
+        }
+      }).subscribe(val => {
+        this.googleakun = val['data'];
+        if (this.googleakun.length != 0) {
+          window.location.reload()
+        }
+        else {
+          this.getNextNo().subscribe(val => {
+            this.nextno = val['nextno'];
+            let uuid = UUID.UUID();
+            this.uuid = uuid;
+            const headers = new HttpHeaders()
+              .set("Content-Type", "application/json");
+            this.api.post("table/z_users",
+              {
+                "id": this.nextno,
+                "email": res.email,
+                "first_name": res.givenName,
+                "last_name": res.familyName,
+                "password": 'GOOGLE',
+                "image_url": res.imageUrl,
+                "type": 1,
+                "date_create": moment().format('YYYY-MM-DD h:mm:ss'),
+                "uuid": this.uuid
+              },
+              { headers })
+              .subscribe(val => {
+                window.location.reload()
+              })
+          });
+        }
+      })
     }).catch(err => {
       let alert = this.alertCtrl.create({
         subTitle: 'Login Gagal',

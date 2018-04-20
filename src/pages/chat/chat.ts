@@ -82,13 +82,15 @@ export class ChatPage {
     };
 
     this.admob.createBanner({
-      adSize: 'CUSTOM',
+      adSize: 'SMART_BANNER',
       adId: admobid.banner,
       isTesting: true,
       autoShow: true,
-      width: 400,
-      height: 50,
-      position: this.admob.AD_POSITION.TOP_CENTER
+      // width: 360,
+      // height: 50,
+      position: this.admob.AD_POSITION.POS_XY,
+      overlap: true,
+      y: 80
     })
 
     this.admob.prepareInterstitial({
@@ -98,8 +100,6 @@ export class ChatPage {
     })
   }
   ionViewWillLeave() {
-    this.admob.hideBanner();
-    this.admob.showInterstitial();
     this._chatSubscription.unsubscribe();
     this.db.list('/chat').push({
       specialMessage: true,
@@ -114,7 +114,10 @@ export class ChatPage {
         "status": 'OFFLINE'
       },
       { headers })
-      .subscribe()
+      .subscribe(val => {
+        this.admob.removeBanner();
+        this.admob.showInterstitial();
+      })
   }
   ionViewDidLoad() {
     if (this.storage.length) {

@@ -3,6 +3,7 @@ page-chat {
         background: #092e61;
     }    
     .content {
+        margin-top:40px;
     }
     .footer {
     }
@@ -95,7 +96,7 @@ page-chat {
         z-index: -1;
     }
     .message.special .innerMessage {
-        background: transparent;
+        background: #ffffff;
         color: black;
         font-size: 80%;
         width: 100%;
