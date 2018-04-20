@@ -31,18 +31,20 @@ export class ChatPage {
     private admob: AdMobPro,
     public platform: Platform) {
 
-    platform.ready().then(() => {
+    /*platform.ready().then(() => {
       var admobid = {
         banner: 'ca-app-pub-7488223921090533/9446361096',
         interstitial: 'ca-app-pub-7488223921090533/9226869245'
       };
 
       this.admob.createBanner({
-        adSize: 'SMART_BANNER',
+        adSize: 'CUSTOM',
         adId: admobid.banner,
         isTesting: true,
         autoShow: true,
-        position: this.admob.AD_POSITION.BOTTOM_CENTER
+        width: 400,
+        height: 50,
+        position: this.admob.AD_POSITION.TOP_CENTER
       })
 
       this.admob.prepareInterstitial({
@@ -50,7 +52,7 @@ export class ChatPage {
         isTesting: true,
         autoShow: false
       })
-    });
+    });*/
     this._chatSubscription = this.db.object('/chat').subscribe(data => {
       this.messages = Object.keys(data).map(i => data[i])
       this.api.get('table/z_users', { params: { filter: "status='ONLINE'" } })
@@ -72,6 +74,28 @@ export class ChatPage {
       });
       this.message = '';
     }
+  }
+  ionViewWillEnter() {
+    var admobid = {
+      banner: 'ca-app-pub-7488223921090533/9446361096',
+      interstitial: 'ca-app-pub-7488223921090533/9226869245'
+    };
+
+    this.admob.createBanner({
+      adSize: 'CUSTOM',
+      adId: admobid.banner,
+      isTesting: true,
+      autoShow: true,
+      width: 400,
+      height: 50,
+      position: this.admob.AD_POSITION.TOP_CENTER
+    })
+
+    this.admob.prepareInterstitial({
+      adId: admobid.interstitial,
+      isTesting: true,
+      autoShow: false
+    })
   }
   ionViewWillLeave() {
     this.admob.hideBanner();

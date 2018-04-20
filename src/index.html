@@ -18,6 +18,20 @@
 
   <!-- cordova.js required for cordova apps (remove if not needed) -->
   <script src="cordova.js"></script>
+  <script src="assets/js/swiper.min.js"></script>
+  <script>
+    window.onload = function () {
+      var swiper = new Swiper('.swiper-container', {
+        slidesPerView: 1.2,
+        spaceBetween: 10,
+        freeMode: false,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+      });
+    }
+  </script>
 
   <!-- un-comment this code to enable service worker
   <script>
@@ -48,18 +62,6 @@
   <script src="build/main.js"></script>
 
   <!-- Initialize Swiper -->
-  <script src="assets/js/swiper.min.js"></script>
-  <script>
-    var swiper = new Swiper('.swiper-container', {
-      slidesPerView: 1.2,
-      spaceBetween: 10,
-      freeMode: false,
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-      },
-    });
-  </script>
 </body>
 
 </html>

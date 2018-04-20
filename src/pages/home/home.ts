@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Slides, Content, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { ChatPage } from "../chat/chat";
 import { ApiProvider } from '../../providers/api/api';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'page-home',
@@ -18,25 +19,35 @@ export class HomePage {
   private end: number = 5;
   public NewsAllactive = [];
   public GalleryAllactive = [];
+  public VideosAllactive = [];
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public alertCtrl: AlertController,
     public loadingCtrl: LoadingController,
-    public api: ApiProvider) {
+    public api: ApiProvider,
+    public sanitizer: DomSanitizer) {
     this.doGetNewsAllActive();
     this.doGetGalleryAllActive();
+    this.doGetVideosAllActive();
   }
   doGetNewsAllActive() {
     this.api.get('table/z_content_news', { params: { filter: "status='OPEN'", sort: "id" + " DESC " } })
       .subscribe(val => {
         this.NewsAllactive = val['data'];
       });
+
   }
   doGetGalleryAllActive() {
     this.api.get('table/z_content_photos', { params: { filter: "status='OPEN'", sort: "id" + " DESC " } })
       .subscribe(val => {
         this.GalleryAllactive = val['data'];
+      });
+  }
+  doGetVideosAllActive() {
+    this.api.get('table/z_content_videos', { params: { filter: "status='OPEN'", sort: "id" + " DESC " } })
+      .subscribe(val => {
+        this.VideosAllactive = val['data'];
       });
   }
   ionViewWillLeave() {
