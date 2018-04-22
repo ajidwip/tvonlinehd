@@ -6,6 +6,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/login/login';
 import { HttpHeaders } from "@angular/common/http";
 import { Storage } from '@ionic/storage';
+import { GooglePlus } from '@ionic-native/google-plus';
 
 @Component({
   templateUrl: 'app.html'
@@ -23,6 +24,7 @@ export class MyApp {
     splashScreen: SplashScreen,
     public menuCtrl: MenuController,
     public storage: Storage,
+    public googleplus: GooglePlus,
     public events: Events,
     public loadingCtrl: LoadingController) {
     platform.ready().then(() => {
@@ -57,6 +59,14 @@ export class MyApp {
     this.menuCtrl.close();
   }
   doLogout() {
+    this.googleplus.logout()
+      .then(res => {
+        this.users = [];
+        this.name = '';
+        this.email = '';
+        this.picture = '';
+        this.storage.remove('users')
+      });
     this.users = [];
     this.name = '';
     this.email = '';

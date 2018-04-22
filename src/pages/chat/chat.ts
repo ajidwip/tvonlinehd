@@ -81,7 +81,7 @@ export class ChatPage {
       interstitial: 'ca-app-pub-7488223921090533/9226869245'
     };
 
-    this.admob.createBanner({
+    /*this.admob.createBanner({
       adSize: 'SMART_BANNER',
       adId: admobid.banner,
       isTesting: true,
@@ -91,7 +91,7 @@ export class ChatPage {
       position: this.admob.AD_POSITION.POS_XY,
       overlap: true,
       y: 80
-    })
+    })*/
 
     this.admob.prepareInterstitial({
       adId: admobid.interstitial,
@@ -115,7 +115,7 @@ export class ChatPage {
       },
       { headers })
       .subscribe(val => {
-        this.admob.removeBanner();
+        // this.admob.removeBanner();
         this.admob.showInterstitial();
       })
   }

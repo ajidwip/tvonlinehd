@@ -120,6 +120,16 @@ page-home {
         font-family: Arial, Helvetica, sans-serif;
         width: 100%;
     }
+    ion-loading.transparent {
+        .loading-wrapper {
+          background: transparent;
+          box-shadow: none;
+      
+          .spinner-crescent circle {
+            stroke-width: 8px;
+          }
+        }
+      }
     .logo-club-left {
         float: left;
         width: 35%;

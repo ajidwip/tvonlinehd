@@ -170,12 +170,6 @@ export class LoginPage {
       // this.userId = res.userId;
       // this.imageUrl = res.imageUrl;
       // this.idToken = res.idToken;
-      this.storage.set('users', {
-        id: res.userId,
-        name: res.givenName,
-        email: res.email,
-        picture: res.imageUrl
-      });
       this.api.get('table/z_users', {
         params: {
           filter: "email=" + "'" + res.email + "'" +
@@ -189,6 +183,12 @@ export class LoginPage {
         else {
           this.getNextNo().subscribe(val => {
             this.nextno = val['nextno'];
+            this.storage.set('users', {
+              id: this.nextno,
+              name: res.givenName,
+              email: res.email,
+              picture: res.imageUrl
+            });
             let uuid = UUID.UUID();
             this.uuid = uuid;
             const headers = new HttpHeaders()

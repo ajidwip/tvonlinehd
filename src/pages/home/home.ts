@@ -4,6 +4,8 @@ import { ChatPage } from "../chat/chat";
 import { ApiProvider } from '../../providers/api/api';
 import { DomSanitizer } from '@angular/platform-browser';
 
+declare var Swiper:any;
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -90,6 +92,23 @@ export class HomePage {
     }
   }
   ngAfterViewInit() {
+    let loader = this.loadingCtrl.create({
+      // cssClass: 'transparent',
+      content: 'Loading Content...'
+    });
+  
+    loader.present().then(() => {
+      var swiper = new Swiper('.swiper-container', {
+        slidesPerView: 1.2,
+        spaceBetween: 10,
+        freeMode: false,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+      });
+      loader.dismiss();
+    });
     this.content.ionScroll.subscribe((event) => {
       this.scroll = event.scrollTop
       if (this.scroll == 0) {
