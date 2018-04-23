@@ -68,7 +68,7 @@
         <div class="swiper-wrapper">
           <div class="swiper-slide" *ngFor="let news of NewsAllactive">
             <div style="margin-right:-15px;">
-              <ion-card>
+              <ion-card (click)="doGoNewsDetail(news)">
                 <img style="height:125px;width:100%;" src="{{news.image_url}}">
                 <ion-card-content style="text-align:left;height:70px;font-weight: bold;">
                   {{news.title}}
@@ -93,7 +93,7 @@
         <div class="swiper-wrapper">
           <div class="swiper-slide" *ngFor="let gallery of GalleryAllactive">
             <div style="margin-right:-15px;">
-              <ion-card>
+              <ion-card (click)="doGoGalleryDetail(gallery)">
                 <img style="height:125px;width:100%;" src="{{gallery.image_url_thumb}}">
                 <ion-card-content style="text-align:left;height:70px;font-weight: bold;">
                   {{gallery.title}}

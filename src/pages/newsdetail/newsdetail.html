@@ -1,0 +1,19 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>News</ion-title>
+  </ion-navbar>
+
+</ion-header>
+<ion-content>
+  <div class="image">
+    <img src="{{image}}" style="width:100%;" />
+  </div>
+  <div padding>
+    <ion-note>{{date}}</ion-note>
+  </div>
+  <div padding style="font-size:20px;margin-top:-15px">
+    {{title}}
+  </div>
+  <ion-item style="margin-top:-10px;padding-left:16px;padding-right:16px;text-align: justify;text-justify: inter-word;" [innerHTML]="description"></ion-item>
+</ion-content>

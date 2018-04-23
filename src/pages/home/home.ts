@@ -5,7 +5,7 @@ import { ApiProvider } from '../../providers/api/api';
 import { DomSanitizer } from '@angular/platform-browser';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 
-declare var Swiper:any;
+declare var Swiper: any;
 
 @Component({
   selector: 'page-home',
@@ -57,6 +57,23 @@ export class HomePage {
         this.VideosAllactive = val['data'];
       });
   }
+  doGoNewsDetail(news) {
+    this.navCtrl.push('NewsdetailPage', {
+      id: news.id,
+      title: news.title,
+      description: news.description,
+      image: news.image_url,
+      date: news.date
+    });
+  }
+  doGoGalleryDetail(gallery) {
+    this.navCtrl.push('PhotodetailPage', {
+      id: gallery.id,
+      title: gallery.title,
+      image: gallery.image_url_thumb,
+      date: gallery.date
+    });
+  }
   ionViewWillLeave() {
     document.getElementById('container-img').style.height = 'auto'
     document.getElementById('header-navbar').style.height = 'auto'
@@ -101,7 +118,7 @@ export class HomePage {
       // cssClass: 'transparent',
       content: 'Loading Content...'
     });
-  
+
     loader.present().then(() => {
       var swiper = new Swiper('.swiper-container', {
         slidesPerView: 1.2,
