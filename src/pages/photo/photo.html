@@ -14,30 +14,12 @@
   </div>
 </ion-header>
 <ion-content style="background:#dedede;">
-  <ion-card>
+  <ion-card *ngFor="let gallery of GalleryAllactive">
     <div class="content-top">
       <div class="container">
-        <img src="https://media-public.fcbarcelona.com/20157/0/document_thumbnail/20197/214/61/171/78331350/1.0-10/78331350.jpg?t=1523719464000"
+        <img src="{{gallery.image_url_thumb}}"
           height="100" />
-        <div class="bottom">Barcelona vs Valencia</div>
-      </div>
-    </div>
-  </ion-card>
-  <ion-card>
-    <div class="content-top">
-      <div class="container">
-        <img src="https://media-public.fcbarcelona.com/20157/0/document_thumbnail/20197/214/61/171/78331350/1.0-10/78331350.jpg?t=1523719464000"
-          height="100" />
-        <div class="bottom">Barcelona vs Valencia</div>
-      </div>
-    </div>
-  </ion-card>
-  <ion-card>
-    <div class="content-top">
-      <div class="container">
-        <img src="https://media-public.fcbarcelona.com/20157/0/document_thumbnail/20197/214/61/171/78331350/1.0-10/78331350.jpg?t=1523719464000"
-          height="100" />
-        <div class="bottom">Barcelona vs Valencia</div>
+        <div class="bottom">{{gallery.title}}</div>
       </div>
     </div>
   </ion-card>

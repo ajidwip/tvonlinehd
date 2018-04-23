@@ -14,104 +14,15 @@
   </div>
 </ion-header>
 <ion-content>
-  <ion-card>
+  <ion-card *ngFor="let video of VideosAllactive">
     <ion-row>
       <ion-col>
-        <p style="font-weight:bold;">&nbsp;&nbsp;FC Barcelona vs Real Madrid</p>
+        <p style="font-weight:bold;">&nbsp;&nbsp;{{video.title}}</p>
       </ion-col>
     </ion-row>
-    <video style="width:100%;" controls>
-      <source src="http://101.255.60.202/webapi5/img/dining_video_2_" type="video/mp4">
-    </video>
-  </ion-card>
-  <ion-card>
-    <ion-row>
-      <ion-col>
-        <p style="font-weight:bold;">&nbsp;&nbsp;FC Barcelona vs Real Madrid</p>
-      </ion-col>
-    </ion-row>
-    <video style="width:100%;" controls>
-      <source src="http://101.255.60.202/webapi5/img/dining_video_2_" type="video/mp4">
-    </video>
-  </ion-card>
-  <ion-card>
-    <ion-row>
-      <ion-col>
-        <p style="font-weight:bold;">&nbsp;&nbsp;FC Barcelona vs Real Madrid</p>
-      </ion-col>
-    </ion-row>
-    <video style="width:100%;" controls>
-      <source src="http://101.255.60.202/webapi5/img/dining_video_2_" type="video/mp4">
-    </video>
-  </ion-card>
-  <ion-card>
-    <ion-row>
-      <ion-col>
-        <p style="font-weight:bold;">&nbsp;&nbsp;FC Barcelona vs Real Madrid</p>
-      </ion-col>
-    </ion-row>
-    <video style="width:100%;" controls>
-      <source src="http://101.255.60.202/webapi5/img/dining_video_2_" type="video/mp4">
-    </video>
-  </ion-card>
-  <ion-card>
-    <ion-row>
-      <ion-col>
-        <p style="font-weight:bold;">&nbsp;&nbsp;FC Barcelona vs Real Madrid</p>
-      </ion-col>
-    </ion-row>
-    <video style="width:100%;" controls>
-      <source src="http://101.255.60.202/webapi5/img/dining_video_2_" type="video/mp4">
-    </video>
-  </ion-card>
-  <ion-card>
-    <ion-row>
-      <ion-col>
-        <p style="font-weight:bold;">&nbsp;&nbsp;FC Barcelona vs Real Madrid</p>
-      </ion-col>
-    </ion-row>
-    <video style="width:100%;" controls>
-      <source src="http://101.255.60.202/webapi5/img/dining_video_2_" type="video/mp4">
-    </video>
-  </ion-card>
-  <ion-card>
-    <ion-row>
-      <ion-col>
-        <p style="font-weight:bold;">&nbsp;&nbsp;FC Barcelona vs Real Madrid</p>
-      </ion-col>
-    </ion-row>
-    <video style="width:100%;" controls>
-      <source src="http://101.255.60.202/webapi5/img/dining_video_2_" type="video/mp4">
-    </video>
-  </ion-card>
-  <ion-card>
-    <ion-row>
-      <ion-col>
-        <p style="font-weight:bold;">&nbsp;&nbsp;FC Barcelona vs Real Madrid</p>
-      </ion-col>
-    </ion-row>
-    <video style="width:100%;" controls>
-      <source src="http://101.255.60.202/webapi5/img/dining_video_2_" type="video/mp4">
-    </video>
-  </ion-card>
-  <ion-card>
-    <ion-row>
-      <ion-col>
-        <p style="font-weight:bold;">&nbsp;&nbsp;FC Barcelona vs Real Madrid</p>
-      </ion-col>
-    </ion-row>
-    <video style="width:100%;" controls>
-      <source src="http://101.255.60.202/webapi5/img/dining_video_2_" type="video/mp4">
-    </video>
-  </ion-card>
-  <ion-card>
-    <ion-row>
-      <ion-col>
-        <p style="font-weight:bold;">&nbsp;&nbsp;FC Barcelona vs Real Madrid</p>
-      </ion-col>
-    </ion-row>
-    <video style="width:100%;" controls>
-      <source src="http://101.255.60.202/webapi5/img/dining_video_2_" type="video/mp4">
-    </video>
+    <div class="container">
+        <img style="height:125px;width:100%;" src="https://img.youtube.com/vi/{{video.image_url_thumb}}/maxresdefault.jpg">
+        <div class="centered"><ion-icon (click)="doOpenVideo(video)" class="playvideo" name="logo-youtube" style="font-size:60px;"></ion-icon></div>
+      </div>
   </ion-card>
 </ion-content>

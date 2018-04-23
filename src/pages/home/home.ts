@@ -5,7 +5,6 @@ import { ApiProvider } from '../../providers/api/api';
 import { DomSanitizer } from '@angular/platform-browser';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 
-
 declare var Swiper:any;
 
 @Component({
@@ -37,7 +36,7 @@ export class HomePage {
     this.doGetVideosAllActive();
   }
   doOpenVideo(video) {
-    const browser = this.iab.create(video.video_url, '_system', 'location=no');
+    const browser = this.iab.create(video.video_url, '_blank', 'location=no');
   }
   doGetNewsAllActive() {
     this.api.get('table/z_content_news', { params: { filter: "status='OPEN'", sort: "id" + " DESC " } })

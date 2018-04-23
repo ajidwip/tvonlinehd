@@ -17,20 +17,20 @@
 <ion-content style="background:#dedede;">
   <div class="content-top">
     <div class="container">
-      <img src="https://media-public.fcbarcelona.com/20157/0/document_thumbnail/20197/214/61/171/78331350/1.0-10/78331350.jpg?t=1523719464000"
+      <img src="{{image}}"
         style="width:100%;" />
-      <div class="bottom">Bottom</div>
+      <div class="bottom">{{title}}</div>
     </div>
   </div>
   <div class="content-list">
-    <ion-card>
-      <ion-row>
+    <ion-card *ngFor="let news of NewsAllactive">
+      <ion-row >
         <ion-col col-3 style="padding:0px;">
-          <img src="https://media-public.fcbarcelona.com/20157/0/document_thumbnail/20197/214/61/171/78331350/1.0-10/78331350.jpg?t=1523719464000"
+          <img src="{{news.image_url}}"
             height="65" />
         </ion-col>
         <ion-col col-9 style="padding-left:10px;padding-top:10px;">
-          <p style="font-weight:bold;">FC Barcelona mendapatkan kemenangan penting atas Valencia</p>
+          <p style="font-weight:bold;">{{news.title}}</p>
         </ion-col>
       </ion-row>
     </ion-card>
