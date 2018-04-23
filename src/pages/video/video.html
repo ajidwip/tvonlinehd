@@ -14,6 +14,11 @@
   </div>
 </ion-header>
 <ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content>
+      pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing..."
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-card *ngFor="let video of VideosAllactive">
     <ion-row>
       <ion-col>
@@ -21,8 +26,15 @@
       </ion-col>
     </ion-row>
     <div class="container">
-        <img style="height:125px;width:100%;" src="https://img.youtube.com/vi/{{video.image_url_thumb}}/maxresdefault.jpg">
-        <div class="centered"><ion-icon (click)="doOpenVideo(video)" class="playvideo" name="logo-youtube" style="font-size:60px;"></ion-icon></div>
+      <img style="height:125px;width:100%;" src="https://img.youtube.com/vi/{{video.image_url_thumb}}/maxresdefault.jpg">
+      <div class="centered">
+        <ion-icon (click)="doOpenVideo(video)" class="playvideo" name="logo-youtube" style="font-size:60px;"></ion-icon>
       </div>
+    </div>
   </ion-card>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content>
+      loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

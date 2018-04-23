@@ -14,13 +14,22 @@
   </div>
 </ion-header>
 <ion-content style="background:#dedede;">
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content>
+      pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing..."
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-card *ngFor="let gallery of GalleryAllactive">
     <div class="content-top">
       <div class="container">
-        <img src="{{gallery.image_url_thumb}}"
-          height="100" />
+        <img src="{{gallery.image_url_thumb}}" height="150" />
         <div class="bottom">{{gallery.title}}</div>
       </div>
     </div>
   </ion-card>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content>
+      loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

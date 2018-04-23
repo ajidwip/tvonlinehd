@@ -9,6 +9,8 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 })
 export class VideoPage {
   public VideosAllactive = [];
+  halaman = 0;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -18,10 +20,39 @@ export class VideoPage {
   }
 
   doGetVideosAllActive() {
-    this.api.get('table/z_content_videos', { params: { filter: "status='OPEN'", sort: "id" + " DESC " } })
-      .subscribe(val => {
-        this.VideosAllactive = val['data'];
-      });
+    return new Promise(resolve => {
+      let offset = 30 * this.halaman
+      if (this.halaman == -1) {
+        resolve();
+      }
+      else {
+        this.halaman++;
+        this.api.get('table/z_content_videos', { params: { limit: 10, offset: offset, filter: "status='OPEN'", sort: "id" + " DESC " } })
+          .subscribe(val => {
+            let data = val['data'];
+            for (let i = 0; i < data.length; i++) {
+              this.VideosAllactive.push(data[i]);
+            }
+            if (data.length == 0) {
+              this.halaman = -1
+            }
+            resolve();
+          });
+      }
+    })
+
+  }
+  doInfinite(infiniteScroll) {
+    this.doGetVideosAllActive().then(response => {
+      infiniteScroll.complete();
+
+    })
+  }
+  doRefresh(refresher) {
+    this.api.get("table/z_content_videos", { params: { limit: 10, filter: "status='OPEN'", sort: "id" + " DESC " } }).subscribe(val => {
+      this.VideosAllactive = val['data'];
+      refresher.complete();
+    });
   }
   doOpenVideo(video) {
     const browser = this.iab.create(video.video_url, '_blank', 'location=no');
