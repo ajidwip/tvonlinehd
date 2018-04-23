@@ -22,6 +22,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { ApiProvider } from '../providers/api/api';
 import { HttpClientModule } from '@angular/common/http';
 import { AdMobPro } from '@ionic-native/admob-pro';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 var config = {
   apiKey: "AIzaSyBYa6NgqtjCTvrKX3o_4NDpKSol64PwcD4",
@@ -74,7 +75,8 @@ var config = {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     GooglePlus,
     ApiProvider,
-    AdMobPro
+    AdMobPro,
+    InAppBrowser
   ]
 })
 export class AppModule {}

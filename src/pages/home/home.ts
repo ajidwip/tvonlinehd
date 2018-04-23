@@ -3,6 +3,8 @@ import { Slides, Content, NavController, NavParams, AlertController, LoadingCont
 import { ChatPage } from "../chat/chat";
 import { ApiProvider } from '../../providers/api/api';
 import { DomSanitizer } from '@angular/platform-browser';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+
 
 declare var Swiper:any;
 
@@ -28,10 +30,14 @@ export class HomePage {
     public alertCtrl: AlertController,
     public loadingCtrl: LoadingController,
     public api: ApiProvider,
-    public sanitizer: DomSanitizer) {
+    public sanitizer: DomSanitizer,
+    private iab: InAppBrowser) {
     this.doGetNewsAllActive();
     this.doGetGalleryAllActive();
     this.doGetVideosAllActive();
+  }
+  doOpenVideo(video) {
+    const browser = this.iab.create(video.video_url, '_system', 'location=no');
   }
   doGetNewsAllActive() {
     this.api.get('table/z_content_news', { params: { filter: "status='OPEN'", sort: "id" + " DESC " } })
