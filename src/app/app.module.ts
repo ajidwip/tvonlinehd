@@ -7,10 +7,6 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/login/login';
-import { ChatPage } from '../pages/chat/chat';
-import { NewsPage } from '../pages/news/news';
-import { PhotoPage } from '../pages/photo/photo';
-import { VideoPage } from '../pages/video/video';
 import { ContentPhotoComponent } from '../components/content-photo/content-photo';
 import { ContentVideoComponent } from '../components/content-video/content-video';
 import { ContentNewsComponent } from '../components/content-news/content-news';
@@ -39,10 +35,6 @@ var config = {
     HomePage,
     TabsPage,
     LoginPage,
-    ChatPage,
-    NewsPage,
-    PhotoPage,
-    VideoPage,
     ContentNewsComponent,
     ContentPhotoComponent,
     ContentVideoComponent
@@ -63,11 +55,7 @@ var config = {
     MyApp,
     HomePage,
     TabsPage,
-    LoginPage,
-    ChatPage,
-    NewsPage,
-    PhotoPage,
-    VideoPage
+    LoginPage
   ],
   providers: [
     StatusBar,

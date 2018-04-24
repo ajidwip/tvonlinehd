@@ -74,9 +74,13 @@ export class MyApp {
     this.storage.remove('users')
   }
   doHome() {
-    window.location.reload();
+    this.rootPage = TabsPage;
     this.menuCtrl.close();
   }
+  doGoToPage(pageName) {
+    this.rootPage = pageName;
+    this.menuCtrl.close();
+  };
 
 }
 

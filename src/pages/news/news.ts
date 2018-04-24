@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiProvider } from '../../providers/api/api';
 import moment from 'moment';
+import { AdMobPro } from '@ionic-native/admob-pro';
 
+@IonicPage()
 @Component({
   selector: 'page-news',
   templateUrl: 'news.html',
@@ -22,7 +24,8 @@ export class NewsPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public api: ApiProvider) {
+    public api: ApiProvider,
+    private admob: AdMobPro) {
     this.doGetNewsAllActive();
   }
   doGetNewsAllActive() {
@@ -98,6 +101,23 @@ export class NewsPage {
       sumber: this.sumber,
       date: this.date
     });
+  }
+  ionViewWillEnter() {
+    var admobid = {
+      banner: 'ca-app-pub-7488223921090533/9446361096',
+      interstitial: 'ca-app-pub-7488223921090533/9226869245'
+    };
+
+    this.admob.createBanner({
+      adSize: 'SMART_BANNER',
+      adId: admobid.banner,
+      isTesting: true,
+      autoShow: true,
+      position: this.admob.AD_POSITION.BOTTOM_CENTER,
+    });
+  }
+  ionViewWillLeave() {
+    this.admob.removeBanner();
   }
 
 }

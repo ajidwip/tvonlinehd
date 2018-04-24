@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Refresher } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Refresher } from 'ionic-angular';
 import { ApiProvider } from '../../providers/api/api';
+import { AdMobPro } from '@ionic-native/admob-pro';
 
+@IonicPage()
 @Component({
   selector: 'page-photo',
   templateUrl: 'photo.html',
@@ -13,7 +15,8 @@ export class PhotoPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public api: ApiProvider) {
+    public api: ApiProvider,
+    private admob: AdMobPro) {
       
     this.doGetGalleryAllActive();
   }
@@ -60,5 +63,22 @@ export class PhotoPage {
       date: gallery.date,
       uuid: gallery.uuid
     });
+  }
+  ionViewWillEnter() {
+    var admobid = {
+      banner: 'ca-app-pub-7488223921090533/9446361096',
+      interstitial: 'ca-app-pub-7488223921090533/9226869245'
+    };
+
+    this.admob.createBanner({
+      adSize: 'SMART_BANNER',
+      adId: admobid.banner,
+      isTesting: true,
+      autoShow: true,
+      position: this.admob.AD_POSITION.BOTTOM_CENTER,
+    });
+  }
+  ionViewWillLeave() {
+    this.admob.removeBanner();
   }
 }

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, NavController, NavParams, Content } from 'ionic-angular';
+import { IonicPage, Platform, NavController, NavParams, Content } from 'ionic-angular';
 import { AngularFireDatabase, FirebaseListObservable } from "angularfire2/database-deprecated";
 import { Storage } from '@ionic/storage';
 import { ApiProvider } from '../../providers/api/api';
@@ -8,6 +8,7 @@ import { HttpHeaders } from "@angular/common/http";
 import moment from 'moment';
 import { AdMobPro } from '@ionic-native/admob-pro';
 
+@IonicPage()
 @Component({
   selector: 'page-chat',
   templateUrl: 'chat.html',

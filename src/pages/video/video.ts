@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiProvider } from '../../providers/api/api';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { AdMobPro } from '@ionic-native/admob-pro';
 
+@IonicPage()
 @Component({
   selector: 'page-video',
   templateUrl: 'video.html',
@@ -15,7 +17,8 @@ export class VideoPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public api: ApiProvider,
-    private iab: InAppBrowser) {
+    private iab: InAppBrowser,
+    private admob: AdMobPro) {
     this.doGetVideosAllActive();
   }
 
@@ -56,6 +59,23 @@ export class VideoPage {
   }
   doOpenVideo(video) {
     const browser = this.iab.create(video.video_url, '_blank', 'location=no');
+  }
+  ionViewWillEnter() {
+    var admobid = {
+      banner: 'ca-app-pub-7488223921090533/9446361096',
+      interstitial: 'ca-app-pub-7488223921090533/9226869245'
+    };
+
+    this.admob.createBanner({
+      adSize: 'SMART_BANNER',
+      adId: admobid.banner,
+      isTesting: true,
+      autoShow: true,
+      position: this.admob.AD_POSITION.BOTTOM_CENTER,
+    });
+  }
+  ionViewWillLeave() {
+    this.admob.removeBanner();
   }
 
 }

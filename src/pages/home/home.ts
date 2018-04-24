@@ -1,6 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { Slides, Content, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { ChatPage } from "../chat/chat";
+import { NewsPage } from "../news/news";
+import { PhotoPage } from "../photo/photo";
+import { VideoPage } from "../video/video";
 import { ApiProvider } from '../../providers/api/api';
 import { DomSanitizer } from '@angular/platform-browser';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
@@ -34,6 +37,15 @@ export class HomePage {
     this.doGetNewsAllActive();
     this.doGetGalleryAllActive();
     this.doGetVideosAllActive();
+  }
+  doMoreNews() {
+    this.navCtrl.push(NewsPage)
+  }
+  doMoreGallery() {
+    this.navCtrl.push(PhotoPage)
+  }
+  doMoreVideos() {
+    this.navCtrl.push(VideoPage)
   }
   doOpenVideo(video) {
     const browser = this.iab.create(video.video_url, '_blank', 'location=no');
