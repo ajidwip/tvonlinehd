@@ -63,6 +63,7 @@ export class HomePage {
       title: news.title,
       description: news.description,
       image: news.image_url,
+      sumber: news.sumber,
       date: news.date
     });
   }

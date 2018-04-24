@@ -1,19 +1,20 @@
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>News</ion-title>
+  <ion-navbar color="bluedark">
+    <ion-title>Latest News</ion-title>
   </ion-navbar>
 
 </ion-header>
 <ion-content>
-  <div class="image">
+  <div class="container">
     <img src="{{image}}" style="width:100%;" />
+    <div class="bottom-right">{{sumber}}</div>
   </div>
   <div padding>
-    <ion-note>{{date}}</ion-note>
+    <ion-note>{{formatdate}}</ion-note>
   </div>
   <div padding style="font-size:20px;margin-top:-15px">
     {{title}}
   </div>
-  <ion-item style="margin-top:-10px;padding-left:16px;padding-right:16px;text-align: justify;text-justify: inter-word;" [innerHTML]="description"></ion-item>
+  <div style="margin-top:-10px;padding-left:16px;padding-right:16px;text-align: justify;text-justify: inter-word;" [innerHTML]="description"></div>
 </ion-content>
