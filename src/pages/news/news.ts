@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ApiProvider } from '../../providers/api/api';
+import moment from 'moment';
 
 @Component({
   selector: 'page-news',
@@ -10,8 +11,12 @@ import { ApiProvider } from '../../providers/api/api';
 export class NewsPage {
   public NewsAllactive = [];
   public NewsTop = [];
+  public id = '';
   public title = '';
+  public description = '';
   public image = '';
+  public sumber = '';
+  public date: any;
   halaman = 0;
 
   constructor(
@@ -30,8 +35,12 @@ export class NewsPage {
         this.api.get('table/z_content_news', { params: { limit: 10, offset: offset, filter: "status='OPEN'", sort: "id" + " DESC " } })
           .subscribe(val => {
             this.NewsTop = val['data'];
+            this.id = this.NewsTop[0].id;
             this.title = this.NewsTop[0].title;
+            this.description = this.NewsTop[0].description;
             this.image = this.NewsTop[0].image_url;
+            this.sumber = this.NewsTop[0].sumber;
+            this.date = this.NewsTop[0].date;
             this.halaman++;
             this.api.get('table/z_content_news', { params: { filter: "status='OPEN' AND image_url!=" + "'" + this.image + "'", sort: "id" + " DESC " } })
               .subscribe(val => {
@@ -69,6 +78,26 @@ export class NewsPage {
             refresher.complete();
           });
       });
+  }
+  doGoNewsDetail(news) {
+    this.navCtrl.push('NewsdetailPage', {
+      id: news.id,
+      title: news.title,
+      description: news.description,
+      image: news.image_url,
+      sumber: news.sumber,
+      date: news.date
+    });
+  }
+  doGoNewsDetailTop() {
+    this.navCtrl.push('NewsdetailPage', {
+      id: this.id,
+      title: this.title,
+      description: this.description,
+      image: this.image,
+      sumber: this.sumber,
+      date: this.date
+    });
   }
 
 }

@@ -52,4 +52,13 @@ export class PhotoPage {
       refresher.complete();
     });
   }
+  doGoGalleryDetail(gallery) {
+    this.navCtrl.push('PhotodetailPage', {
+      id: gallery.id,
+      title: gallery.title,
+      image: gallery.image_url_thumb,
+      date: gallery.date,
+      uuid: gallery.uuid
+    });
+  }
 }

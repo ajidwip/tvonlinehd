@@ -72,7 +72,8 @@ export class HomePage {
       id: gallery.id,
       title: gallery.title,
       image: gallery.image_url_thumb,
-      date: gallery.date
+      date: gallery.date,
+      uuid: gallery.uuid
     });
   }
   ionViewWillLeave() {

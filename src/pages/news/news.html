@@ -20,14 +20,14 @@
       pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing..."
     </ion-refresher-content>
   </ion-refresher>
-  <div class="content-top">
+  <div class="content-top" (click)="doGoNewsDetailTop()">
     <div class="container">
       <img src="{{image}}" style="width:100%;"/>
       <div class="bottom">{{title}}</div>
     </div>
   </div>
   <div class="content-list">
-    <ion-card *ngFor="let news of NewsAllactive">
+    <ion-card *ngFor="let news of NewsAllactive" (click)="doGoNewsDetail(news)">
       <ion-row>
         <ion-col col-3 style="padding:0px;">
           <img src="{{news.image_url}}" style="width:100%;height:100%;" />

@@ -19,7 +19,7 @@
       pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing..."
     </ion-refresher-content>
   </ion-refresher>
-  <ion-card *ngFor="let gallery of GalleryAllactive">
+  <ion-card *ngFor="let gallery of GalleryAllactive" (click)="doGoGalleryDetail(gallery)">
     <div class="content-top">
       <div class="container">
         <img src="{{gallery.image_url_thumb}}" height="150" />
