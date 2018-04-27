@@ -38,6 +38,9 @@ export class HomePage {
     this.doGetGalleryAllActive();
     this.doGetVideosAllActive();
   }
+  doDashboard() {
+    this.navCtrl.push('DashboardPage')
+  }
   doMoreNews() {
     this.navCtrl.push(NewsPage)
   }

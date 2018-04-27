@@ -33,15 +33,15 @@ export class MyApp {
     });
     events.subscribe('user:login', (users, time) => {
       this.users = users;
-      this.name = users.first_name;
-      this.email = users.email;
-      this.picture = users.image_url;
+      this.name = users[0].first_name;
+      this.email = users[0].email;
+      this.picture = users[0].image_url;
     });
     events.subscribe('user:logingoogle', (res, time) => {
       this.users = res;
-      this.name = res.displayName;
-      this.email = res.email;
-      this.picture = res.imageUrl;
+      this.name = res[0].displayName;
+      this.email = res[0].email;
+      this.picture = res[0].imageUrl;
     });
     if (this.storage.length) {
       this.storage.get('users').then((val) => {
@@ -59,14 +59,6 @@ export class MyApp {
     this.menuCtrl.close();
   }
   doLogout() {
-    this.googleplus.logout()
-      .then(res => {
-        this.users = [];
-        this.name = '';
-        this.email = '';
-        this.picture = '';
-        this.storage.remove('users')
-      });
     this.users = [];
     this.name = '';
     this.email = '';

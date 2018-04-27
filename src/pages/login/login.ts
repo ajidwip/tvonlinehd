@@ -81,7 +81,7 @@ export class LoginPage {
             picture: this.users[0].image_url
           });
           this.events.publish('user:login', this.users, Date.now());
-          window.location.reload();
+          this.navCtrl.setRoot(TabsPage)
         }
         else {
           let alert = this.alertCtrl.create({
@@ -158,6 +158,7 @@ export class LoginPage {
     this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
   }
   doLoginGoogle() {
+    this.googleplus.disconnect();
     this.googleplus.login({
       'webClientId': '798397482932-8go91dakhnar8c88plcl1nv2k8c7dg00.apps.googleusercontent.com',
       'offline': true
@@ -178,7 +179,7 @@ export class LoginPage {
       }).subscribe(val => {
         this.googleakun = val['data'];
         if (this.googleakun.length != 0) {
-          window.location.reload()
+          this.navCtrl.setRoot(TabsPage)
         }
         else {
           this.getNextNo().subscribe(val => {
@@ -207,7 +208,7 @@ export class LoginPage {
               },
               { headers })
               .subscribe(val => {
-                window.location.reload()
+                this.navCtrl.setRoot(TabsPage)
               })
           });
         }

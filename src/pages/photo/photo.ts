@@ -17,7 +17,7 @@ export class PhotoPage {
     public navParams: NavParams,
     public api: ApiProvider,
     private admob: AdMobPro) {
-      
+
     this.doGetGalleryAllActive();
   }
   doGetGalleryAllActive() {
