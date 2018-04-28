@@ -23,20 +23,23 @@ page-chat {
     .innerMessage {
         display: inline-block;
         padding: 5px 10px;
-        background: color($colors, 'primary');
+        background: color($colors, 'darklight');
         margin: 5px;
-        color: white;
+        color: #383838;
         border-radius: 3px;
     }
     .innerMessage.messageRight {
-        background: color($colors, 'secondary');
+        background: color($colors, 'primary');
+        color: #ffffff;
     }
     .username {
         font-weight: bold;
-        font-size: 80%;
-    }
+        font-size: 70%;
+        color:#979797;
+    }    
     .message {
         font-size: 120%;
+        margin-bottom:10px;
     }
     .elem button {
         border-radius: 0;
@@ -78,6 +81,25 @@ page-chat {
     .messageRight {
         float: right;
         max-width: 80%;
+    }
+    .usernameLeft{
+        text-align: left;
+        padding-left: 50px;
+    }
+    .usernameRight {
+        text-align: right;
+        padding-right: 50px;
+    }
+    .timeLeft {
+        padding-top:10px;
+        font-size: 70%;
+        text-align: left;
+        color: #ffffff;
+    }
+    .timeRight {
+        padding-top:10px;
+        font-size: 70%;
+        text-align: right;
     }
     .message.special .innerMessage .messageContent {
         background: white;

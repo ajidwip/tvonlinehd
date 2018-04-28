@@ -25,11 +25,15 @@
 
   <div id="chatMessages">
     <div *ngFor="let message of messages;let last = last" [class]="message.specialMessage ? 'message special' : 'message'">
-      <div *ngIf="!message.specialMessage" [class]="message.username == username ? 'innerMessage messageRight' : 'innerMessage messageLeft'">
-        <div class="username">{{message.username}}</div>
+      <ion-avatar *ngIf="!message.specialMessage" [class]="message.email == email ? 'messageRight' : 'messageLeft'">
+        <img src="http://www.precision-spine.com/wp-content/uploads/2015/09/person-icon.png" height="50">
+      </ion-avatar>
+      <div [class]="message.email == email ? 'username usernameRight' : 'username usernameLeft'">{{message.username}}</div>
+      <div *ngIf="!message.specialMessage" [class]="message.email == email ? 'innerMessage messageRight' : 'innerMessage messageLeft'">
         <div class="messageContent">{{message.message}}</div>
-        {{last ? callFunction() : ''}}
+        <div [class]="message.email == email ? 'username timeLeft' : 'username timeRight'">{{message.time}}</div>
       </div>
+      {{last ? callFunction() : ''}}
     </div>
   </div>
 

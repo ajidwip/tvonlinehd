@@ -22,6 +22,7 @@ export class ChatPage {
   _chatSubscription;
   public messages = [];
   public useronline = [];
+  public email = '';
   @ViewChild(Content) content: Content
   constructor(
     public navCtrl: NavController,
@@ -31,29 +32,6 @@ export class ChatPage {
     public storage: Storage,
     private admob: AdMobPro,
     public platform: Platform) {
-
-    /*platform.ready().then(() => {
-      var admobid = {
-        banner: 'ca-app-pub-7488223921090533/9446361096',
-        interstitial: 'ca-app-pub-7488223921090533/9226869245'
-      };
-
-      this.admob.createBanner({
-        adSize: 'CUSTOM',
-        adId: admobid.banner,
-        isTesting: true,
-        autoShow: true,
-        width: 400,
-        height: 50,
-        position: this.admob.AD_POSITION.TOP_CENTER
-      })
-
-      this.admob.prepareInterstitial({
-        adId: admobid.interstitial,
-        isTesting: true,
-        autoShow: false
-      })
-    });*/
     this._chatSubscription = this.db.object('/chat').subscribe(data => {
       this.messages = Object.keys(data).map(i => data[i])
       this.api.get('table/z_users', { params: { filter: "status='ONLINE'" } })
@@ -70,7 +48,9 @@ export class ChatPage {
     else {
       this.db.list('/chat').push({
         username: this.username,
-        message: this.message
+        message: this.message,
+        email: this.email,
+        time: moment().format('YYYY-MM-DD h:mm')
       }).then(() => {
       });
       this.message = '';
@@ -127,6 +107,7 @@ export class ChatPage {
         if (this.users) {
           this.id = val.id;
           this.username = val.name;
+          this.email = val.email;
           this.db.list('/chat').push({
             specialMessage: true,
             message: `${this.username} has joined the room`

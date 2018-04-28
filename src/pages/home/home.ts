@@ -39,6 +39,7 @@ export class HomePage {
     this.doGetVideosAllActive();
   }
   doDashboard() {
+    console.log('1')
     this.navCtrl.push('DashboardPage')
   }
   doMoreNews() {
