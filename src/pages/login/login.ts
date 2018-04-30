@@ -43,6 +43,7 @@ export class LoginPage {
     public viewCtrl: ViewController,
     public fb: FormBuilder,
     public api: ApiProvider,
+    public app: App,
     public loadingCtrl: LoadingController,
     public events: Events) {
     this.loader = this.loadingCtrl.create({
@@ -92,7 +93,7 @@ export class LoginPage {
             picture: this.users[0].image_url
           });
           this.events.publish('user:login', this.users, Date.now());
-          this.navCtrl.setRoot(TabsPage)
+          this.app.getRootNav().setRoot(TabsPage);
         }
         else {
           let alert = this.alertCtrl.create({
@@ -189,7 +190,7 @@ export class LoginPage {
       }).subscribe(val => {
         this.googleakun = val['data'];
         if (this.googleakun.length != 0) {
-          this.navCtrl.setRoot(TabsPage)
+          this.app.getRootNav().setRoot(TabsPage);
         }
         else {
           this.getNextNo().subscribe(val => {
@@ -218,7 +219,7 @@ export class LoginPage {
               },
               { headers })
               .subscribe(val => {
-                this.navCtrl.setRoot(TabsPage)
+                this.app.getRootNav().setRoot(TabsPage);
               })
           });
         }

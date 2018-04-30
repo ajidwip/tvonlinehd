@@ -1,5 +1,5 @@
 import { ViewChild, Component } from '@angular/core';
-import { LoadingController, NavController, Events, MenuController, Platform, Nav } from 'ionic-angular';
+import { LoadingController, NavController, Events, MenuController, Platform, Nav, App } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -27,6 +27,7 @@ export class MyApp {
     public storage: Storage,
     public googleplus: GooglePlus,
     public events: Events,
+    public app: App,
     public loadingCtrl: LoadingController) {
     platform.ready().then(() => {
       statusBar.styleDefault();
@@ -68,7 +69,7 @@ export class MyApp {
     this.rootPage = TabsPage;
   }
   doHome() {
-    this.rootPage = TabsPage;
+    this.app.getRootNav().setRoot(TabsPage);
     this.menuCtrl.close();
   }
   doGoToPage(pageName) {

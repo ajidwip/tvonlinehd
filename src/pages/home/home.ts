@@ -1,9 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, Slides, Content, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
-import { ChatPage } from "../chat/chat";
-import { NewsPage } from "../news/news";
-import { PhotoPage } from "../photo/photo";
-import { VideoPage } from "../video/video";
+import { Platform, Slides, Content, NavController, NavParams, AlertController, LoadingController, App } from 'ionic-angular';
 import { ApiProvider } from '../../providers/api/api';
 import { DomSanitizer } from '@angular/platform-browser';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
@@ -35,6 +31,7 @@ export class HomePage {
     public loadingCtrl: LoadingController,
     public api: ApiProvider,
     public sanitizer: DomSanitizer,
+    public app: App,
     private iab: InAppBrowser) {
     this.loader = this.loadingCtrl.create({
       // cssClass: 'transparent',
@@ -56,17 +53,16 @@ export class HomePage {
     this.doGetVideosAllActive();
   }
   doDashboard() {
-    console.log('1')
-    this.navCtrl.push('DashboardPage')
+    this.app.getRootNav().setRoot('DashboardPage');
   }
   doMoreNews() {
-    this.navCtrl.push(NewsPage)
+    this.app.getRootNav().setRoot('NewsPage');
   }
   doMoreGallery() {
-    this.navCtrl.push(PhotoPage)
+    this.app.getRootNav().setRoot('PhotoPage');
   }
   doMoreVideos() {
-    this.navCtrl.push(VideoPage)
+    this.app.getRootNav().setRoot('VideoPage');
   }
   doOpenVideo(video) {
     const browser = this.iab.create(video.video_url, '_blank', 'location=no');
@@ -136,17 +132,6 @@ export class HomePage {
       buttons: ['OK']
     })
     alert.present();
-  }
-
-  loginUser() {
-    if (/^[a-zA-Z0-9]+$/.test(this.username)) {
-      this.navCtrl.push(ChatPage, {
-        username: this.username
-      })
-    }
-    else {
-      this.showAlert('Error', 'Invalid Username');
-    }
   }
   ngAfterViewInit() {
     this.loader.dismiss();
