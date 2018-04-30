@@ -11,7 +11,7 @@
       </button>
     </div>
     <div class="title-logo">
-      <ion-select [(ngModel)]="toppings" multiple="false" style="margin-left:40px;margin-top:5px;font-size:15px;color:#fff;text-align:left;font-weight: bold;max-width: 50%;"
+      <ion-select [(ngModel)]="toppings" multiple="false" style="margin-left:40px;margin-top:5px;font-size:15px;color:#fff;text-align:left;font-weight: bold;max-width: 55%;"
         placeholder="ALL COMPETITIONS">
         <ion-option>ALL COMPETITIONS</ion-option>
         <ion-option>LA LIGA</ion-option>
@@ -31,68 +31,11 @@
       <div style="font-size:80%;font-weight: bold;">12 Agustus 2018 01:30 WIB</div>
     </div>
     <div class="centered">
-      <div id="result" class="result">
+      <div id="result" *ngIf="" class="result">
         4 - 1
       </div>
-    </div>
-    <div id="centered-left" class="centered-left">
-      <div class="logo-club-left">
-        <img id="logo-clubleft" style="width:40%;margin-left:30%;" src="assets/imgs/logoclubpng/barcelona.png" />
-        <div id="name-clubleft" class="logo-name">FC Barcelona</div>
-      </div>
-    </div>
-    <div id="centered-right" class="centered-right">
-      <div class="logo-club-right">
-        <img id="logo-clubright" style="width:40%;margin-left:30%;" src="assets/imgs/logoclubpng/realmadrid.png" />
-        <div id="name-clubright" class="logo-name">Real Madrid</div>
-      </div>
-    </div>
-    <ion-row style="border-top:2px solid;border-color:#dedede;">
-      <ion-col>
-        <ion-icon name="md-pin"></ion-icon>
-        <b>Camp Nou, Barcelona</b>
-      </ion-col>
-    </ion-row>
-  </ion-card>
-  <ion-card class="container">
-    <img id="container-img" class="container-img" src="assets/imgs/white.jpg" style="width:100%;height:100px;" />
-    <div class="centered-top">
-      <div style="font-size:80%;font-weight: bold;">La Liga - Matchday 31</div>
-      <div style="font-size:80%;font-weight: bold;">12 Agustus 2018 01:30 WIB</div>
-    </div>
-    <div class="centered">
-      <div id="result" class="result">
-        4 - 1
-      </div>
-    </div>
-    <div id="centered-left" class="centered-left">
-      <div class="logo-club-left">
-        <img id="logo-clubleft" style="width:40%;margin-left:30%;" src="assets/imgs/logoclubpng/barcelona.png" />
-        <div id="name-clubleft" class="logo-name">FC Barcelona</div>
-      </div>
-    </div>
-    <div id="centered-right" class="centered-right">
-      <div class="logo-club-right">
-        <img id="logo-clubright" style="width:40%;margin-left:30%;" src="assets/imgs/logoclubpng/realmadrid.png" />
-        <div id="name-clubright" class="logo-name">Real Madrid</div>
-      </div>
-    </div>
-    <ion-row style="border-top:2px solid;border-color:#dedede;">
-      <ion-col>
-        <ion-icon name="md-pin"></ion-icon>
-        <b>Camp Nou, Barcelona</b>
-      </ion-col>
-    </ion-row>
-  </ion-card>
-  <ion-card class="container">
-    <img id="container-img" class="container-img" src="assets/imgs/white.jpg" style="width:100%;height:100px;" />
-    <div class="centered-top">
-      <div style="font-size:80%;font-weight: bold;">La Liga - Matchday 31</div>
-      <div style="font-size:80%;font-weight: bold;">12 Agustus 2018 01:30 WIB</div>
-    </div>
-    <div class="centered">
-      <div id="result" class="result">
-        4 - 1
+      <div id="time" class="result">
+        01:30
       </div>
     </div>
     <div id="centered-left" class="centered-left">
