@@ -27,7 +27,7 @@ export class NewsdetailPage {
     this.image = this.navParams.get('image');
     this.sumber = this.navParams.get('sumber');
     this.date = this.navParams.get('date');
-    this.formatdate = moment(this.date).calendar();
+    this.formatdate = moment(this.date).format('DD MMMM YYYY')
   }
 
   ionViewDidLoad() {

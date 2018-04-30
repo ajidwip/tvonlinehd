@@ -66,7 +66,7 @@ export class MyApp {
     this.email = '';
     this.picture = '';
     this.storage.remove('users')
-    this.rootPage = TabsPage;
+    this.app.getRootNav().setRoot(TabsPage);
   }
   doHome() {
     this.app.getRootNav().setRoot(TabsPage);
@@ -75,7 +75,17 @@ export class MyApp {
   doGoToPage(pageName) {
     this.rootPage = pageName;
     this.menuCtrl.close();
-  };
+  }
+  doChat() {
+    if (this.email != "") {
+      this.app.getRootNav().setRoot('ChatPage');
+      this.menuCtrl.close();
+    }
+    else {
+      this.app.getRootNav().setRoot(LoginPage);
+      this.menuCtrl.close();
+    }
+  }
 
 }
 
