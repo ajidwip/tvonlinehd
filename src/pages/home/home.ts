@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Slides, Content, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
+import { Platform, Slides, Content, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { ChatPage } from "../chat/chat";
 import { NewsPage } from "../news/news";
 import { PhotoPage } from "../photo/photo";
@@ -26,7 +26,9 @@ export class HomePage {
   public NewsAllactive = [];
   public GalleryAllactive = [];
   public VideosAllactive = [];
+  public loader: any;
   constructor(
+    public platform: Platform,
     public navCtrl: NavController,
     public navParams: NavParams,
     public alertCtrl: AlertController,
@@ -34,6 +36,21 @@ export class HomePage {
     public api: ApiProvider,
     public sanitizer: DomSanitizer,
     private iab: InAppBrowser) {
+    this.loader = this.loadingCtrl.create({
+      // cssClass: 'transparent',
+      content: 'Loading Content...'
+    });
+    this.loader.present().then(() => {
+      var swiper = new Swiper('.swiper-container', {
+        slidesPerView: 1.2,
+        spaceBetween: 10,
+        freeMode: false,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+      });
+    });
     this.doGetNewsAllActive();
     this.doGetGalleryAllActive();
     this.doGetVideosAllActive();
@@ -132,23 +149,7 @@ export class HomePage {
     }
   }
   ngAfterViewInit() {
-    let loader = this.loadingCtrl.create({
-      // cssClass: 'transparent',
-      content: 'Loading Content...'
-    });
-
-    loader.present().then(() => {
-      var swiper = new Swiper('.swiper-container', {
-        slidesPerView: 1.2,
-        spaceBetween: 10,
-        freeMode: false,
-        pagination: {
-          el: '.swiper-pagination',
-          clickable: true,
-        },
-      });
-      loader.dismiss();
-    });
+    this.loader.dismiss();
     this.content.ionScroll.subscribe((event) => {
       this.scroll = event.scrollTop
       if (this.scroll == 0) {

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, Platform, NavController, NavParams, Content } from 'ionic-angular';
+import { LoadingController, IonicPage, Platform, NavController, NavParams, Content } from 'ionic-angular';
 import { AngularFireDatabase, FirebaseListObservable } from "angularfire2/database-deprecated";
 import { Storage } from '@ionic/storage';
 import { ApiProvider } from '../../providers/api/api';
@@ -23,6 +23,9 @@ export class ChatPage {
   public messages = [];
   public useronline = [];
   public email = '';
+  public time: any;
+  public loader: any;
+
   @ViewChild(Content) content: Content
   constructor(
     public navCtrl: NavController,
@@ -30,8 +33,14 @@ export class ChatPage {
     public db: AngularFireDatabase,
     public api: ApiProvider,
     public storage: Storage,
+    public loadingCtrl: LoadingController,
     private admob: AdMobPro,
     public platform: Platform) {
+    this.loader = this.loadingCtrl.create({
+      // cssClass: 'transparent',
+      content: 'Loading Content...'
+    });
+    this.loader.present();
     this._chatSubscription = this.db.object('/chat').subscribe(data => {
       this.messages = Object.keys(data).map(i => data[i])
       this.api.get('table/z_users', { params: { filter: "status='ONLINE'" } })
@@ -40,6 +49,9 @@ export class ChatPage {
           this.totalonline = val['count']
         })
     })
+  }
+  ngAfterViewInit() {
+    this.loader.dismiss();
   }
   sendMessage() {
     if (this.message == '') {

@@ -18,6 +18,7 @@ export class MyApp {
   public name = '';
   public email = '';
   public picture = '';
+  public loader: any;
   constructor(
     platform: Platform,
     statusBar: StatusBar,
@@ -64,6 +65,7 @@ export class MyApp {
     this.email = '';
     this.picture = '';
     this.storage.remove('users')
+    this.rootPage = TabsPage;
   }
   doHome() {
     this.rootPage = TabsPage;

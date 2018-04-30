@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Refresher } from 'ionic-angular';
+import { LoadingController, IonicPage, NavController, NavParams, Refresher } from 'ionic-angular';
 import { ApiProvider } from '../../providers/api/api';
 import { AdMobPro } from '@ionic-native/admob-pro';
 
@@ -11,14 +11,23 @@ import { AdMobPro } from '@ionic-native/admob-pro';
 export class PhotoPage {
   public GalleryAllactive = [];
   halaman = 0;
+  public loader: any;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public api: ApiProvider,
+    public loadingCtrl: LoadingController,
     private admob: AdMobPro) {
-
+    this.loader = this.loadingCtrl.create({
+      // cssClass: 'transparent',
+      content: 'Loading Content...'
+    });
+    this.loader.present();
     this.doGetGalleryAllActive();
+  }
+  ngAfterViewInit() {
+    this.loader.dismiss();
   }
   doGetGalleryAllActive() {
     return new Promise(resolve => {

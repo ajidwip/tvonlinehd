@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { LoadingController, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiProvider } from '../../providers/api/api';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { AdMobPro } from '@ionic-native/admob-pro';
@@ -12,16 +12,25 @@ import { AdMobPro } from '@ionic-native/admob-pro';
 export class VideoPage {
   public VideosAllactive = [];
   halaman = 0;
+  public loader: any;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public api: ApiProvider,
     private iab: InAppBrowser,
-    private admob: AdMobPro) {
+    public loadingCtrl: LoadingController,
+    private admob: AdMobPro) {    
+      this.loader = this.loadingCtrl.create({
+      // cssClass: 'transparent',
+      content: 'Loading Content...'
+    });
+    this.loader.present();
     this.doGetVideosAllActive();
   }
-
+  ngAfterViewInit() {
+    this.loader.dismiss();
+  }
   doGetVideosAllActive() {
     return new Promise(resolve => {
       let offset = 30 * this.halaman

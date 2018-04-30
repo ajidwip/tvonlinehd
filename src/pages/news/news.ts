@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { LoadingController, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiProvider } from '../../providers/api/api';
 import moment from 'moment';
 import { AdMobPro } from '@ionic-native/admob-pro';
@@ -20,13 +20,23 @@ export class NewsPage {
   public sumber = '';
   public date: any;
   halaman = 0;
+  public loader: any;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public api: ApiProvider,
+    public loadingCtrl: LoadingController,
     private admob: AdMobPro) {
+    this.loader = this.loadingCtrl.create({
+      // cssClass: 'transparent',
+      content: 'Loading Content...'
+    });
+    this.loader.present();
     this.doGetNewsAllActive();
+  }
+  ngAfterViewInit() {
+    this.loader.dismiss();
   }
   doGetNewsAllActive() {
     return new Promise(resolve => {

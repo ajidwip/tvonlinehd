@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Events, ViewController, App, AlertController, NavController, NavParams } from 'ionic-angular';
+import { LoadingController, Events, ViewController, App, AlertController, NavController, NavParams } from 'ionic-angular';
 import { GooglePlus } from '@ionic-native/google-plus';
 import { AngularFireModule } from 'angularfire2';
 import firebase from 'firebase';
@@ -31,6 +31,8 @@ export class LoginPage {
   private uuid = '';
   public users = [];
   public googleakun = [];
+  public loader: any;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -41,7 +43,13 @@ export class LoginPage {
     public viewCtrl: ViewController,
     public fb: FormBuilder,
     public api: ApiProvider,
+    public loadingCtrl: LoadingController,
     public events: Events) {
+    this.loader = this.loadingCtrl.create({
+      // cssClass: 'transparent',
+      content: 'Loading Content...'
+    });
+    this.loader.present();
     this.myFormLogin = fb.group({
       email: ['', Validators.compose([Validators.required])],
       password: ['', Validators.compose([Validators.required])],
@@ -52,6 +60,9 @@ export class LoginPage {
       firstname: ['', Validators.compose([Validators.required])],
       lastname: ['', Validators.compose([Validators.required])],
     })
+  }
+  ngAfterViewInit() {
+    this.loader.dismiss();
   }
   doRegister() {
     document.getElementById('header').style.display = 'none';
@@ -149,7 +160,6 @@ export class LoginPage {
           this.doCloseRegister()
         }
       })
-
   }
   passwordType: string = 'password';
   passwordIcon: string = 'eye-off';
