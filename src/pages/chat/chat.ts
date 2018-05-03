@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Directive, HostListener, Component, ViewChild, ElementRef } from '@angular/core';
 import { LoadingController, IonicPage, Platform, NavController, NavParams, Content } from 'ionic-angular';
 import { AngularFireDatabase, FirebaseListObservable } from "angularfire2/database-deprecated";
 import { Storage } from '@ionic/storage';
@@ -12,6 +12,9 @@ import { AdMobPro } from '@ionic-native/admob-pro';
 @Component({
   selector: 'page-chat',
   templateUrl: 'chat.html',
+})
+@Directive({
+  selector: "ion-textarea[autoresize]" // Attribute selector
 })
 export class ChatPage {
   id: string = '';
@@ -27,6 +30,10 @@ export class ChatPage {
   public loader: any;
 
   @ViewChild(Content) content: Content
+  @HostListener("input", ["$event.target"])
+  onInput = (textArea: HTMLTextAreaElement): void => {
+    this.adjust();
+  }
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -35,7 +42,8 @@ export class ChatPage {
     public storage: Storage,
     public loadingCtrl: LoadingController,
     private admob: AdMobPro,
-    public platform: Platform) {
+    public platform: Platform,
+    public element: ElementRef) {
     this.loader = this.loadingCtrl.create({
       // cssClass: 'transparent',
       content: 'Loading Content...'
@@ -49,6 +57,36 @@ export class ChatPage {
           this.totalonline = val['count']
         })
     })
+  }
+  ngOnInit(): void {
+    const waitThenAdjust = (trial: number): void => {
+      if (trial > 10) {
+        // Give up.
+        return;
+      }
+
+      const ta = this.element.nativeElement.querySelector("textarea");
+      if (ta !== undefined && ta !== null) {
+        this.adjust();
+      }
+      else {
+        setTimeout(() => {
+          waitThenAdjust(trial + 1);
+        }, 0);
+      }
+    };
+
+    // Wait for the textarea to properly exist in the DOM, then adjust it.
+    waitThenAdjust(1)
+  }
+
+  adjust = (): void => {
+    const ta = this.element.nativeElement.querySelector("textarea");
+    if (ta !== undefined && ta !== null) {
+      ta.style.overflow = "hidden";
+      ta.style.height = "auto";
+      ta.style.height = ta.scrollHeight + "px";
+    }
   }
   ngAfterViewInit() {
     this.loader.dismiss();
@@ -66,6 +104,7 @@ export class ChatPage {
       }).then(() => {
       });
       this.message = '';
+      this.element.nativeElement.querySelector("textarea").style.height = "auto"
     }
   }
   ionViewWillEnter() {

@@ -42,7 +42,7 @@
 <ion-footer class="footer">
   <div id="footer">
     <div class="elem">
-      <ion-input id="myInput" type="text" [(ngModel)]="message"></ion-input>
+      <ion-textarea id="myInput" [(ngModel)]="message" placeholder="Type a message" rows="1"></ion-textarea>
     </div>
     <div class="elem">
       <button id="myBtn" ion-button icon-only color="bluedark" (click)="sendMessage()">
