@@ -18,32 +18,38 @@
     </div>
   </div>
   <div id="header-banner" class="header-banner">
-    <div class="container">
+    <div class="container" *ngFor="let schedule of ScheduleAllActive">
       <img id="container-img" class="container-img" src="assets/imgs/campnou.jpg" style="width:100%;" />
       <div class="centered-top">
-        <div style="font-size:60%;">La Liga - Matchday 31 : 12 Agust 18 01:30 WIB</div>
+        <div style="font-size:80%;">{{schedule.league}} - {{schedule.round}} - {{schedule.date | date:"dd MMMM yyyy"}}</div>
       </div>
       <div class="centered">
-        <div id="result" class="result">
-          4 - 1
+        <div *ngIf="schedule.status =='OPEN'" id="result" class="result">
+          {{schedule.date | date:"HH:mm"}}
         </div>
-        <div id="result-sticky" class="result-sticky">
-          FCB 4 - 1 RMD
+        <div *ngIf="schedule.status =='CLSD'" id="result" class="result">
+          {{schedule.skor_home}} - {{schedule.skor_away}}
+        </div>
+        <div *ngIf="schedule.status =='OPEN'" id="result-sticky" class="result-sticky">
+          FCB&nbsp;&nbsp;&nbsp;&nbsp;{{schedule.date | date:"HH:mm"}}&nbsp;&nbsp;&nbsp;&nbsp;RMD
+        </div>
+        <div *ngIf="schedule.status =='CLSD'" id="result-sticky" class="result-sticky">
+          {{schedule.club_home}} {{schedule.skor_home}} - {{schedule.skor_away}} {{schedule.club_away}}
         </div>
         <div id="statistics" class="statistics">
-          <button style="font-size:12px;height:25px;" ion-button color="danger" (click)="doStatistics()">Statistics</button>
+          <button style="font-size:12px;height:25px;" ion-button color="danger" (click)="doStatistics()">{{schedule.info_live}}</button>
         </div>
       </div>
       <div id="centered-left" class="centered-left">
         <div class="logo-club-left">
-          <img id="logo-clubleft" style="width:40%;" src="assets/imgs/logoclubpng/barcelona.png" />
-          <div id="name-clubleft" class="logo-name">FC Barcelona</div>
+          <img id="logo-clubleft" style="width:40%;" src="{{schedule.club_home_icon_url}}" />
+          <div id="name-clubleft" class="logo-name">{{schedule.club_home}}</div>
         </div>
       </div>
       <div id="centered-right" class="centered-right">
         <div class="logo-club-right">
-          <img id="logo-clubright" style="width:40%;" src="assets/imgs/logoclubpng/realmadrid.png" />
-          <div id="name-clubright" class="logo-name">Real Madrid</div>
+          <img id="logo-clubright" style="width:40%;" src="{{schedule.club_away_icon_url}}" />
+          <div id="name-clubright" class="logo-name">{{schedule.club_away}}</div>
         </div>
       </div>
       <div class="top-right">
@@ -121,7 +127,9 @@
               <ion-card>
                 <div class="container">
                   <img style="height:125px;width:100%;" src="https://img.youtube.com/vi/{{video.image_url_thumb}}/maxresdefault.jpg">
-                  <div class="centered"><ion-icon (click)="doOpenVideo(video)" class="playvideo" name="logo-youtube" style="font-size:60px;"></ion-icon></div>
+                  <div class="centered">
+                    <ion-icon (click)="doOpenVideo(video)" class="playvideo" name="logo-youtube" style="font-size:60px;"></ion-icon>
+                  </div>
                 </div>
                 <ion-card-content style="text-align:left;height:70px;font-weight: bold;">
                   {{video.title}}

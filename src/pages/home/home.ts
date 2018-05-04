@@ -3,6 +3,7 @@ import { Platform, Slides, Content, NavController, NavParams, AlertController, L
 import { ApiProvider } from '../../providers/api/api';
 import { DomSanitizer } from '@angular/platform-browser';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import moment from 'moment';
 
 declare var Swiper: any;
 
@@ -22,6 +23,7 @@ export class HomePage {
   public NewsAllactive = [];
   public GalleryAllactive = [];
   public VideosAllactive = [];
+  public ScheduleAllActive = [];
   public loader: any;
   constructor(
     public platform: Platform,
@@ -51,6 +53,7 @@ export class HomePage {
     this.doGetNewsAllActive();
     this.doGetGalleryAllActive();
     this.doGetVideosAllActive();
+    this.doGetScheduleAllActive();
   }
   doDashboard() {
     this.app.getRootNav().setRoot('DashboardPage');
@@ -63,6 +66,9 @@ export class HomePage {
   }
   doMoreVideos() {
     this.app.getRootNav().setRoot('VideoPage');
+  }
+  doSchedule() {
+    this.app.getRootNav().setRoot('CalendarPage');
   }
   doOpenVideo(video) {
     const browser = this.iab.create(video.video_url, '_blank', 'location=no');
@@ -84,6 +90,12 @@ export class HomePage {
     this.api.get('table/z_content_videos', { params: { filter: "status='OPEN'", sort: "id" + " DESC " } })
       .subscribe(val => {
         this.VideosAllactive = val['data'];
+      });
+  }
+  doGetScheduleAllActive() {
+    this.api.get('table/z_schedule', { params: { limit: 1, filter: "status='OPEN'" + " AND " + "date >=" + moment().format('YYYY-MM-DD') , sort: "date" + " ASC " } })
+      .subscribe(val => {
+        this.ScheduleAllActive = val['data'];
       });
   }
   doGoNewsDetail(news) {
