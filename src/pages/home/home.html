@@ -31,7 +31,7 @@
           {{schedule.skor_home}} - {{schedule.skor_away}}
         </div>
         <div *ngIf="schedule.status =='OPEN'" id="result-sticky" class="result-sticky">
-          FCB&nbsp;&nbsp;&nbsp;&nbsp;{{schedule.date | date:"HH:mm"}}&nbsp;&nbsp;&nbsp;&nbsp;RMD
+          FCB&nbsp;&nbsp;{{schedule.date | date:"HH:mm"}}&nbsp;&nbsp;RMD
         </div>
         <div *ngIf="schedule.status =='CLSD'" id="result-sticky" class="result-sticky">
           {{schedule.club_home}} {{schedule.skor_home}} - {{schedule.skor_away}} {{schedule.club_away}}
@@ -60,11 +60,6 @@
 </ion-header>
 <ion-content id="content" class="content">
   <div class="content-all">
-    <div class="banner" (click)="doDashboard()">
-      <ion-card>
-        <img src="assets/imgs/campnou.jpg" />
-      </ion-card>
-    </div>
     <div class="content-news">
       <ion-item no-lines style="background:transparent;margin-bottom:-15px;">
         <h5 style="font-weight:bold;font-size:17px;">NEWS</h5>
@@ -76,7 +71,7 @@
             <div style="margin-right:-15px;">
               <ion-card (click)="doGoNewsDetail(news)">
                 <img style="height:125px;width:100%;" src="{{news.image_url}}">
-                <ion-card-content style="text-align:left;height:70px;font-weight: bold;">
+                <ion-card-content style="text-align:left;height:80px;font-weight: bold;">
                   {{news.title}}
                 </ion-card-content>
               </ion-card>
@@ -101,7 +96,7 @@
             <div style="margin-right:-15px;">
               <ion-card (click)="doGoGalleryDetail(gallery)">
                 <img style="height:125px;width:100%;" src="{{gallery.image_url_thumb}}">
-                <ion-card-content style="text-align:left;height:70px;font-weight: bold;">
+                <ion-card-content style="text-align:left;height:80px;font-weight: bold;">
                   {{gallery.title}}
                 </ion-card-content>
               </ion-card>
@@ -131,7 +126,7 @@
                     <ion-icon (click)="doOpenVideo(video)" class="playvideo" name="logo-youtube" style="font-size:60px;"></ion-icon>
                   </div>
                 </div>
-                <ion-card-content style="text-align:left;height:70px;font-weight: bold;">
+                <ion-card-content style="text-align:left;height:80px;font-weight: bold;">
                   {{video.title}}
                 </ion-card-content>
               </ion-card>

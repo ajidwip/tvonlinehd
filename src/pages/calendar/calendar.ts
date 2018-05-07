@@ -39,7 +39,7 @@ export class CalendarPage {
         }
         else {
           this.halaman++;
-          this.api.get('table/z_schedule', { params: { limit: 10, filter: "status!='VERIFIKASI'", sort: "date" + " ASC " } })
+          this.api.get('table/z_schedule', { params: { limit: 10, offset: offset,  filter: "status!='VERIFIKASI'", sort: "date" + " ASC " } })
             .subscribe(val => {
               let data = val['data'];
               for (let i = 0; i < data.length; i++) {
@@ -61,7 +61,7 @@ export class CalendarPage {
         }
         else {
           this.halaman++;
-          this.api.get('table/z_schedule', { params: { limit: 10, filter: "status!='VERIFIKASI'" + " AND " + "league=" + "'" + this.league + "'", sort: "date" + " ASC " } })
+          this.api.get('table/z_schedule', { params: { limit: 10, offset: offset,  filter: "status!='VERIFIKASI'" + " AND " + "league=" + "'" + this.league + "'", sort: "date" + " ASC " } })
             .subscribe(val => {
               let data = val['data'];
               for (let i = 0; i < data.length; i++) {

@@ -37,7 +37,7 @@ export class HomePage {
     private iab: InAppBrowser) {
     this.loader = this.loadingCtrl.create({
       // cssClass: 'transparent',
-      content: 'Loading Content...'
+      content: 'Loading Style...'
     });
     this.loader.present().then(() => {
       var swiper = new Swiper('.swiper-container', {
@@ -93,7 +93,7 @@ export class HomePage {
       });
   }
   doGetScheduleAllActive() {
-    this.api.get('table/z_schedule', { params: { limit: 1, filter: "status='OPEN'" + " AND " + "date >=" + moment().format('YYYY-MM-DD') , sort: "date" + " ASC " } })
+    this.api.get('table/z_schedule', { params: { limit: 1, filter: "status='OPEN'" + " AND " + "date >=" + moment().format('YYYY-MM-DD'), sort: "date" + " ASC " } })
       .subscribe(val => {
         this.ScheduleAllActive = val['data'];
       });
@@ -146,7 +146,6 @@ export class HomePage {
     alert.present();
   }
   ngAfterViewInit() {
-    this.loader.dismiss();
     this.content.ionScroll.subscribe((event) => {
       this.scroll = event.scrollTop
       if (this.scroll == 0) {
@@ -203,5 +202,6 @@ export class HomePage {
         document.getElementById('centered-right').style.top = '20%'
       }
     });
+    this.loader.dismiss();
   }
 }
