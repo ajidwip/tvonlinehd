@@ -59,6 +59,11 @@
   </div>
 </ion-header>
 <ion-content id="content" class="content">
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content>
+      pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing..."
+    </ion-refresher-content>
+  </ion-refresher>
   <div class="content-all">
     <div class="content-news">
       <ion-item no-lines style="background:transparent;margin-bottom:-15px;">

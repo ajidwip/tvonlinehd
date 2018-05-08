@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LoadingController, Events, ViewController, App, AlertController, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, LoadingController, Events, ViewController, App, AlertController, NavController, NavParams } from 'ionic-angular';
 import { GooglePlus } from '@ionic-native/google-plus';
 import { AngularFireModule } from 'angularfire2';
 import firebase from 'firebase';
@@ -13,6 +13,7 @@ import { HttpHeaders } from "@angular/common/http";
 import moment from 'moment';
 import { Md5 } from 'ts-md5/dist/md5';
 
+@IonicPage()
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
@@ -170,7 +171,6 @@ export class LoginPage {
     this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
   }
   doLoginGoogle() {
-    this.googleplus.disconnect();
     this.googleplus.login({
       'webClientId': '798397482932-8go91dakhnar8c88plcl1nv2k8c7dg00.apps.googleusercontent.com',
       'offline': true

@@ -1,12 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, Slides, Content, NavController, NavParams, AlertController, LoadingController, App } from 'ionic-angular';
+import { IonicPage, Platform, Slides, Content, NavController, NavParams, AlertController, LoadingController, App } from 'ionic-angular';
 import { ApiProvider } from '../../providers/api/api';
 import { DomSanitizer } from '@angular/platform-browser';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import moment from 'moment';
+import { TabsPage } from '../tabs/tabs';
 
 declare var Swiper: any;
 
+@IonicPage()
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -146,6 +148,11 @@ export class HomePage {
     alert.present();
   }
   ngAfterViewInit() {
+    document.getElementById('header-navbar').style.height = 'auto'
+    document.getElementById('header-navbar').style.opacity = '1'
+    document.getElementById('content').style.marginTop = '0%'
+    document.getElementById('content').style.height = '100%'
+    this.loader.dismiss();
     this.content.ionScroll.subscribe((event) => {
       this.scroll = event.scrollTop
       if (this.scroll == 0) {
@@ -202,6 +209,8 @@ export class HomePage {
         document.getElementById('centered-right').style.top = '20%'
       }
     });
-    this.loader.dismiss();
+  }
+  doRefresh(refresher) {
+    this.app.getRootNav().setRoot(TabsPage);
   }
 }

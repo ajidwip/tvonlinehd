@@ -20,7 +20,7 @@ export class VideoPage {
     public api: ApiProvider,
     private iab: InAppBrowser,
     public loadingCtrl: LoadingController,
-    private admob: AdMobPro) {    
+    private admobvideo: AdMobPro) {    
       this.loader = this.loadingCtrl.create({
       // cssClass: 'transparent',
       content: 'Loading Content...'
@@ -69,22 +69,22 @@ export class VideoPage {
   doOpenVideo(video) {
     const browser = this.iab.create(video.video_url, '_blank', 'location=no');
   }
-  ionViewWillEnter() {
+  ionViewDidEnter() {
     var admobid = {
       banner: 'ca-app-pub-7488223921090533/9446361096',
       interstitial: 'ca-app-pub-7488223921090533/9226869245'
     };
 
-    this.admob.createBanner({
+    this.admobvideo.createBanner({
       adSize: 'SMART_BANNER',
       adId: admobid.banner,
       isTesting: true,
       autoShow: true,
-      position: this.admob.AD_POSITION.BOTTOM_CENTER,
+      position: this.admobvideo.AD_POSITION.BOTTOM_CENTER,
     });
   }
   ionViewWillLeave() {
-    this.admob.removeBanner();
+    this.admobvideo.removeBanner();
   }
 
 }

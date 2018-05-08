@@ -1,5 +1,5 @@
 import { ViewChild, Component } from '@angular/core';
-import { LoadingController, NavController, Events, MenuController, Platform, Nav, App } from 'ionic-angular';
+import { AlertController, LoadingController, NavController, Events, MenuController, Platform, Nav, App } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -7,6 +7,7 @@ import { LoginPage } from '../pages/login/login';
 import { HttpHeaders } from "@angular/common/http";
 import { Storage } from '@ionic/storage';
 import { GooglePlus } from '@ionic-native/google-plus';
+import { ApiProvider } from '../providers/api/api';
 
 @Component({
   templateUrl: 'app.html'
@@ -15,6 +16,7 @@ export class MyApp {
   @ViewChild('mycontent') Nav: NavController;
   rootPage: any = TabsPage;
   public users = [];
+  public user = [];
   public name = '';
   public email = '';
   public picture = '';
@@ -28,7 +30,9 @@ export class MyApp {
     public googleplus: GooglePlus,
     public events: Events,
     public app: App,
-    public loadingCtrl: LoadingController) {
+    public api: ApiProvider,
+    public loadingCtrl: LoadingController,
+    public alertCtrl: AlertController) {
     platform.ready().then(() => {
       statusBar.styleDefault();
       splashScreen.hide();
@@ -49,15 +53,20 @@ export class MyApp {
       this.storage.get('users').then((val) => {
         this.users = val;
         if (this.users) {
-          this.name = val.name;
           this.email = val.email;
-          this.picture = val.picture;
+          this.api.get('table/z_users', { params: { filter: "email=" + "'" + this.email + "'" } })
+            .subscribe(val => {
+              this.user = val['data']
+              this.name = this.user[0].first_name;
+              this.email = this.user[0].email;
+              this.picture = this.user[0].image_url;
+            })
         }
       });
     }
   }
   doLogin() {
-    this.rootPage = LoginPage;
+    this.rootPage = 'LoginPage';
     this.menuCtrl.close();
   }
   doLogout() {
@@ -82,7 +91,7 @@ export class MyApp {
       this.menuCtrl.close();
     }
     else {
-      this.app.getRootNav().setRoot(LoginPage);
+      this.rootPage = 'LoginPage';
       this.menuCtrl.close();
     }
   }

@@ -22,11 +22,10 @@
 
 
 <ion-content id="content" padding class="content">
-
   <div id="chatMessages">
     <div *ngFor="let message of messages;let last = last" [class]="message.specialMessage ? 'message special' : 'message'">
       <ion-avatar *ngIf="!message.specialMessage" [class]="message.email == email ? 'messageRight' : 'messageLeft'">
-        <img src="http://www.precision-spine.com/wp-content/uploads/2015/09/person-icon.png" height="50">
+        <img style="border-radius:50%;" src="{{message.picture}}" height="50">
       </ion-avatar>
       <div [class]="message.email == email ? 'username usernameRight' : 'username usernameLeft'">{{message.username}}</div>
       <div *ngIf="!message.specialMessage" [class]="message.email == email ? 'innerMessage messageRight' : 'innerMessage messageLeft'">

@@ -18,7 +18,7 @@ export class PhotoPage {
     public navParams: NavParams,
     public api: ApiProvider,
     public loadingCtrl: LoadingController,
-    private admob: AdMobPro) {
+    private admobphoto: AdMobPro) {
     this.loader = this.loadingCtrl.create({
       // cssClass: 'transparent',
       content: 'Loading Content...'
@@ -73,21 +73,21 @@ export class PhotoPage {
       uuid: gallery.uuid
     });
   }
-  ionViewWillEnter() {
+  ionViewDidEnter() {
     var admobid = {
       banner: 'ca-app-pub-7488223921090533/9446361096',
       interstitial: 'ca-app-pub-7488223921090533/9226869245'
     };
 
-    this.admob.createBanner({
+    this.admobphoto.createBanner({
       adSize: 'SMART_BANNER',
       adId: admobid.banner,
       isTesting: true,
       autoShow: true,
-      position: this.admob.AD_POSITION.BOTTOM_CENTER,
+      position: this.admobphoto.AD_POSITION.BOTTOM_CENTER,
     });
   }
   ionViewWillLeave() {
-    this.admob.removeBanner();
+    this.admobphoto.removeBanner();
   }
 }

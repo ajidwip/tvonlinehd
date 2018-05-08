@@ -4,9 +4,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
-import { LoginPage } from '../pages/login/login';
 import { ContentPhotoComponent } from '../components/content-photo/content-photo';
 import { ContentVideoComponent } from '../components/content-video/content-video';
 import { ContentNewsComponent } from '../components/content-news/content-news';
@@ -32,9 +30,7 @@ var config = {
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
     TabsPage,
-    LoginPage,
     ContentNewsComponent,
     ContentPhotoComponent,
     ContentVideoComponent
@@ -53,9 +49,7 @@ var config = {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
-    TabsPage,
-    LoginPage
+    TabsPage
   ],
   providers: [
     StatusBar,

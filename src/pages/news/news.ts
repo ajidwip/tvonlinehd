@@ -27,7 +27,7 @@ export class NewsPage {
     public navParams: NavParams,
     public api: ApiProvider,
     public loadingCtrl: LoadingController,
-    private admob: AdMobPro) {
+    private admobnews: AdMobPro) {
     this.loader = this.loadingCtrl.create({
       // cssClass: 'transparent',
       content: 'Loading Content...'
@@ -112,22 +112,22 @@ export class NewsPage {
       date: this.date
     });
   }
-  ionViewWillEnter() {
+  ionViewDidEnter() {
     var admobid = {
       banner: 'ca-app-pub-7488223921090533/9446361096',
       interstitial: 'ca-app-pub-7488223921090533/9226869245'
     };
 
-    this.admob.createBanner({
+    this.admobnews.createBanner({
       adSize: 'SMART_BANNER',
       adId: admobid.banner,
       isTesting: true,
       autoShow: true,
-      position: this.admob.AD_POSITION.BOTTOM_CENTER,
+      position: this.admobnews.AD_POSITION.BOTTOM_CENTER,
     });
   }
   ionViewWillLeave() {
-    this.admob.removeBanner();
+    this.admobnews.removeBanner();
   }
 
 }

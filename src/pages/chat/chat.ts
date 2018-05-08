@@ -26,6 +26,7 @@ export class ChatPage {
   public messages = [];
   public useronline = [];
   public email = '';
+  public picture = '';
   public time: any;
   public loader: any;
 
@@ -100,6 +101,7 @@ export class ChatPage {
         username: this.username,
         message: this.message,
         email: this.email,
+        picture: this.picture,
         time: moment().format('YYYY-MM-DD h:mm')
       }).then(() => {
       });
@@ -159,6 +161,7 @@ export class ChatPage {
           this.id = val.id;
           this.username = val.name;
           this.email = val.email;
+          this.picture = val.picture;
           this.db.list('/chat').push({
             specialMessage: true,
             message: `${this.username} has joined the room`
