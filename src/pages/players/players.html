@@ -11,8 +11,8 @@
       </button>
     </div>
     <div class="title-logo">
-      <ion-select [(ngModel)]="season" multiple="false" style="margin-left:40px;margin-top:5px;font-size:15px;color:#fff;text-align:left;font-weight: bold;max-width: 30%;" placeholder="{{season}}">
-        <ion-option value="{{season.seasons}}" *ngFor="let season of seasons">{{season.season}}</ion-option>
+      <ion-select [(ngModel)]="season" (ionChange)="doGetSelectSeason(season)" multiple="false" style="margin-left:40px;margin-top:5px;font-size:15px;color:#fff;text-align:left;font-weight: bold;max-width: 30%;" placeholder="{{season}}">
+        <ion-option value="{{season.season}}" *ngFor="let season of seasons">{{season.season}}</ion-option>
       </ion-select>
     </div>
   </div>

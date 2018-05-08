@@ -43,6 +43,11 @@ export class PlayersPage {
       });
     });
   }
+  doGetSelectSeason(season) {
+    this.api.get('table/z_players', { params: { limit: 100, filter: "season=" + "'" + season + "'", group: "season", sort: "season" + " DESC " } }).subscribe(val => {
+      this.seasons = val['data'];
+    });
+  }
   doGetPlayers() {
     this.api.get('table/z_players', { params: { limit: 100, filter: "position_group='PLAYER'", sort: "number" + " ASC " } }).subscribe(val => {
       this.players = val['data'];
