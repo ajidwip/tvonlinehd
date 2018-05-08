@@ -93,7 +93,7 @@ export class HomePage {
       });
   }
   doGetScheduleAllActive() {
-    this.api.get('table/z_schedule', { params: { limit: 1, filter: "status='OPEN'" + " AND " + "date >=" + moment().format('YYYY-MM-DD'), sort: "date" + " ASC " } })
+    this.api.get('table/z_schedule', { params: { limit: 1, filter: "status='OPEN'" + " AND " + "date >=" + "'" + moment().format('YYYY-MM-DD') + "'", sort: "date" + " ASC " } })
       .subscribe(val => {
         this.ScheduleAllActive = val['data'];
       });
