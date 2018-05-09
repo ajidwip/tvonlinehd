@@ -5,6 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import moment from 'moment';
 import { TabsPage } from '../tabs/tabs';
+import { HttpClient } from '@angular/common/http';
 
 declare var Swiper: any;
 
@@ -29,6 +30,8 @@ export class HomePage {
   public clubhome = '';
   public clubaway = '';
   public loader: any;
+  datas: any = [];
+  client_id: any = '&client_id=5cy1ey0t28y28smxbh2zbs9xt89bmv';
   constructor(
     public platform: Platform,
     public navCtrl: NavController,
@@ -38,7 +41,14 @@ export class HomePage {
     public api: ApiProvider,
     public sanitizer: DomSanitizer,
     public app: App,
-    private iab: InAppBrowser) {
+    public iab: InAppBrowser,
+    public http: HttpClient) {
+    this.http.get('https://api.twitch.tv/kraken/streams?' + this.client_id)      
+    .toPromise()
+    .then(data => {
+      let datas = Object.keys(data).map(i => data[i]);
+      this.datas = datas[1]
+    });
     this.loader = this.loadingCtrl.create({
       // cssClass: 'transparent',
       content: 'Loading Style...'
@@ -51,10 +61,15 @@ export class HomePage {
         pagination: {
           el: '.swiper-pagination',
           clickable: true,
-        },
+        },  
       });
     });
     this.doGetScheduleAllActive();
+  }
+  openChannel() {
+    this.navCtrl.push('ChannelPage', {
+      DataChannel: this.datas[10]
+    })
   }
   doDashboard() {
     this.app.getRootNav().setRoot('DashboardPage');
@@ -97,14 +112,14 @@ export class HomePage {
                 this.api.get('table/z_content_videos', { params: { filter: "status='OPEN'", sort: "id" + " DESC " } })
                   .subscribe(val => {
                     this.VideosAllactive = val['data'];
-                    this.api.get('table/z_club', { params: { filter: "name=" + "'" + this.ScheduleAllActive[0].club_home + "'"} })
-                    .subscribe(val => {
-                      this.clubhome = val['data'][0].alias;
-                      this.api.get('table/z_club', { params: { filter: "name=" + "'" + this.ScheduleAllActive[0].club_away + "'"} })
+                    this.api.get('table/z_club', { params: { filter: "name=" + "'" + this.ScheduleAllActive[0].club_home + "'" } })
                       .subscribe(val => {
-                        this.clubaway = val['data'][0].alias;
+                        this.clubhome = val['data'][0].alias;
+                        this.api.get('table/z_club', { params: { filter: "name=" + "'" + this.ScheduleAllActive[0].club_away + "'" } })
+                          .subscribe(val => {
+                            this.clubaway = val['data'][0].alias;
+                          });
                       });
-                    });
                   });
               });
           });

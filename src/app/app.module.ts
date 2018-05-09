@@ -17,6 +17,7 @@ import { ApiProvider } from '../providers/api/api';
 import { HttpClientModule } from '@angular/common/http';
 import { AdMobPro } from '@ionic-native/admob-pro';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { SafePipe } from '../pipes/safe/safe';
 
 var config = {
   apiKey: "AIzaSyBYa6NgqtjCTvrKX3o_4NDpKSol64PwcD4",
