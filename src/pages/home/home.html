@@ -31,7 +31,7 @@
           {{schedule.skor_home}} - {{schedule.skor_away}}
         </div>
         <div *ngIf="schedule.status =='OPEN'" id="result-sticky" class="result-sticky">
-          FCB&nbsp;&nbsp;{{schedule.date | date:"HH:mm"}}&nbsp;&nbsp;RMD
+          {{clubhome}}&nbsp;&nbsp;{{schedule.date | date:"HH:mm"}}&nbsp;&nbsp;{{clubaway}}
         </div>
         <div *ngIf="schedule.status =='CLSD'" id="result-sticky" class="result-sticky">
           {{schedule.club_home}} {{schedule.skor_home}} - {{schedule.skor_away}} {{schedule.club_away}}

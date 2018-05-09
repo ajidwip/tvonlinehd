@@ -26,6 +26,8 @@ export class HomePage {
   public GalleryAllactive = [];
   public VideosAllactive = [];
   public ScheduleAllActive = [];
+  public clubhome = '';
+  public clubaway = '';
   public loader: any;
   constructor(
     public platform: Platform,
@@ -52,9 +54,6 @@ export class HomePage {
         },
       });
     });
-    this.doGetNewsAllActive();
-    this.doGetGalleryAllActive();
-    this.doGetVideosAllActive();
     this.doGetScheduleAllActive();
   }
   doDashboard() {
@@ -76,28 +75,39 @@ export class HomePage {
     const browser = this.iab.create(video.video_url, '_blank', 'location=no');
   }
   doGetNewsAllActive() {
-    this.api.get('table/z_content_news', { params: { filter: "status='OPEN'", sort: "id" + " DESC " } })
-      .subscribe(val => {
-        this.NewsAllactive = val['data'];
-      });
+
 
   }
   doGetGalleryAllActive() {
-    this.api.get('table/z_content_photos', { params: { filter: "status='OPEN'", sort: "id" + " DESC " } })
-      .subscribe(val => {
-        this.GalleryAllactive = val['data'];
-      });
+
   }
   doGetVideosAllActive() {
-    this.api.get('table/z_content_videos', { params: { filter: "status='OPEN'", sort: "id" + " DESC " } })
-      .subscribe(val => {
-        this.VideosAllactive = val['data'];
-      });
+
   }
   doGetScheduleAllActive() {
     this.api.get('table/z_schedule', { params: { limit: 1, filter: "status='OPEN'" + " AND " + "date >=" + "'" + moment().format('YYYY-MM-DD') + "'", sort: "date" + " ASC " } })
       .subscribe(val => {
         this.ScheduleAllActive = val['data'];
+        this.api.get('table/z_content_news', { params: { filter: "status='OPEN'", sort: "id" + " DESC " } })
+          .subscribe(val => {
+            this.NewsAllactive = val['data'];
+            this.api.get('table/z_content_photos', { params: { filter: "status='OPEN'", sort: "id" + " DESC " } })
+              .subscribe(val => {
+                this.GalleryAllactive = val['data'];
+                this.api.get('table/z_content_videos', { params: { filter: "status='OPEN'", sort: "id" + " DESC " } })
+                  .subscribe(val => {
+                    this.VideosAllactive = val['data'];
+                    this.api.get('table/z_club', { params: { filter: "name=" + "'" + this.ScheduleAllActive[0].club_home + "'"} })
+                    .subscribe(val => {
+                      this.clubhome = val['data'][0].alias;
+                      this.api.get('table/z_club', { params: { filter: "name=" + "'" + this.ScheduleAllActive[0].club_away + "'"} })
+                      .subscribe(val => {
+                        this.clubaway = val['data'][0].alias;
+                      });
+                    });
+                  });
+              });
+          });
       });
   }
   doGoNewsDetail(news) {
