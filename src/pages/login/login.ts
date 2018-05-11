@@ -127,7 +127,7 @@ export class LoginPage {
                 "first_name": this.myForm.value.firstname,
                 "last_name": this.myForm.value.lastname,
                 "password": password,
-                "image_url": 'assets/imgs/people.jpg',
+                "image_url": 'assets/imgs/people.png',
                 "type": 0,
                 "date_create": moment().format('YYYY-MM-DD h:mm:ss'),
                 "uuid": this.uuid
