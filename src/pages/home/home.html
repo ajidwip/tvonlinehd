@@ -65,6 +65,22 @@
     </ion-refresher-content>
   </ion-refresher>
   <div class="content-all">
+    <div class="banner">
+      <ion-card>
+        <div class="container">
+          <img src="assets/imgs/game.jpg" />
+          <div class="centered-left-banner">
+            <img src="{{clubhomeurl}}" />
+          </div>
+          <div class="centered-right-banner">
+            <img src="{{clubawayurl}}" />
+          </div>
+          <div class="centered-bottom-banner">
+            <button ion-button color="secondary">TEBAK</button>
+          </div>
+        </div>
+      </ion-card>
+    </div>
     <div class="content-news">
       <ion-item no-lines style="background:transparent;margin-bottom:-15px;">
         <h5 style="font-weight:bold;font-size:17px;">NEWS</h5>
@@ -75,10 +91,16 @@
           <div class="swiper-slide" *ngFor="let news of NewsAllactive">
             <div style="margin-right:-15px;">
               <ion-card (click)="doGoNewsDetail(news)">
-                <img style="height:125px;width:100%;" src="{{news.image_url}}">
+                <!-- <img style="height:125px;width:100%;" src="{{news.image_url}}">
                 <ion-card-content style="text-align:left;height:80px;font-weight: bold;">
                   {{news.title}}
-                </ion-card-content>
+                </ion-card-content> -->
+                <div class="content-top">
+                  <div class="container">
+                    <img style="height:180px;width:100%;" src="{{news.image_url}}" height="150" />
+                    <div class="bottom">{{news.title}}</div>
+                  </div>
+                </div>
               </ion-card>
             </div>
           </div>
@@ -100,10 +122,16 @@
           <div class="swiper-slide" *ngFor="let gallery of GalleryAllactive">
             <div style="margin-right:-15px;">
               <ion-card (click)="doGoGalleryDetail(gallery)">
-                <img style="height:125px;width:100%;" src="{{gallery.image_url_thumb}}">
+                <!-- <img style="height:125px;width:100%;" src="{{gallery.image_url_thumb}}">
                 <ion-card-content style="text-align:left;height:80px;font-weight: bold;">
                   {{gallery.title}}
-                </ion-card-content>
+                </ion-card-content> -->
+                <div class="content-top">
+                  <div class="container">
+                    <img style="height:180px;width:100%;" src="{{gallery.image_url_thumb}}" height="150" />
+                    <div class="bottom">{{gallery.title}}</div>
+                  </div>
+                </div>
               </ion-card>
             </div>
           </div>

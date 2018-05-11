@@ -27,6 +27,8 @@ export class HomePage {
   public GalleryAllactive = [];
   public VideosAllactive = [];
   public ScheduleAllActive = [];
+  public clubhomeurl = '';
+  public clubawayurl = '';
   public clubhome = '';
   public clubaway = '';
   public loader: any;
@@ -103,6 +105,8 @@ export class HomePage {
     this.api.get('table/z_schedule', { params: { limit: 1, filter: "status='OPEN'" + " AND " + "date >=" + "'" + moment().format('YYYY-MM-DD') + "'", sort: "date" + " ASC " } })
       .subscribe(val => {
         this.ScheduleAllActive = val['data'];
+        this.clubhomeurl = this.ScheduleAllActive[0].club_home_icon_url;
+        this.clubawayurl = this.ScheduleAllActive[0].club_away_icon_url;
         this.api.get('table/z_content_news', { params: { filter: "status='OPEN'", sort: "id" + " DESC " } })
           .subscribe(val => {
             this.NewsAllactive = val['data'];
