@@ -16,7 +16,14 @@
 
 <ion-content style="background: #092e61">
   <ion-item no-lines style="text-align:center;background:#f8f8f8;">
-    <img src="{{imageurl}}" height="100" style="border-radius:100%;max-width:100px;max-height:100px;" />
+    <div class="container">
+      <img src="{{imageurl}}" height="100" style="border-radius:100%;max-width:100px;max-height:100px;" />
+      <div class="bottom-right">
+        <button ion-button clear color="bluedark" (click)="getImage()">
+          <ion-icon name="md-camera" style="font-size:30px;"></ion-icon>
+        </button>
+      </div>
+    </div>
   </ion-item>
   <ion-row style="background:transparent;">
     <ion-col col-12 style="background:transparent;background: #092e61">

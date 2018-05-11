@@ -18,4 +18,14 @@ page-settings {
         font-size: 50px;
         color: #ffffff;
     }
+    .container {
+        position: relative;
+        text-align: center;
+        color: white;
+    }
+    .bottom-right {
+        position: absolute;
+        bottom: 8px;
+        right: 0px;
+    }
 }
