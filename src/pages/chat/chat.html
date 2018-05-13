@@ -25,7 +25,7 @@
   <div id="chatMessages">
     <div *ngFor="let message of messages;let last = last" [class]="message.specialMessage ? 'message special' : 'message'">
       <ion-avatar *ngIf="!message.specialMessage" [class]="message.email == email ? 'messageRight' : 'messageLeft'">
-        <img style="border-radius:50%;" src="{{message.picture}}" height="50">
+        <img src="{{message.picture}}" style="width:50px;height:50px;border-radius:50%;">
       </ion-avatar>
       <div [class]="message.email == email ? 'username usernameRight' : 'username usernameLeft'">{{message.username}}</div>
       <div *ngIf="!message.specialMessage" [class]="message.email == email ? 'innerMessage messageRight' : 'innerMessage messageLeft'">

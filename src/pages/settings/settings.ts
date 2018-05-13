@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, LoadingController, ToastController } from 'ionic-angular';
+import { Events, IonicPage, NavController, LoadingController, ToastController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { ApiProvider } from '../../providers/api/api';
 import { HttpHeaders } from "@angular/common/http";
 import { Md5 } from 'ts-md5/dist/md5';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { UUID } from 'angular2-uuid';
 
 @IonicPage()
 @Component({
@@ -26,6 +27,7 @@ export class SettingsPage {
   public lastnameboolean: any;
   public emailboolean: any;
   public passwordboolean: any;
+  public uuid = '';
   imageURI: string = '';
   imageFileName: string = '';
   constructor(
@@ -35,24 +37,25 @@ export class SettingsPage {
     private transfer: FileTransfer,
     private camera: Camera,
     public loadingCtrl: LoadingController,
-    public toastCtrl: ToastController) {
+    public toastCtrl: ToastController,
+    public events: Events) {
     this.firstnameboolean = true;
     this.lastnameboolean = true;
     this.emailboolean = true;
     this.passwordboolean = true;
     if (this.storage.length) {
       this.storage.get('users').then((val) => {
-        this.users = val;
-        if (this.users) {
+        this.user = val;
+        if (this.user) {
           this.email = val.email;
           this.api.get('table/z_users', { params: { filter: "email=" + "'" + this.email + "'" } })
             .subscribe(val => {
-              this.user = val['data']
-              this.id = this.user[0].id;
-              this.firstname = this.user[0].first_name;
-              this.lastname = this.user[0].last_name;
-              this.password = this.user[0].password;
-              this.imageurl = this.user[0].image_url;
+              this.users = val['data']
+              this.id = this.users[0].id;
+              this.firstname = this.users[0].first_name;
+              this.lastname = this.users[0].last_name;
+              this.password = this.users[0].password;
+              this.imageurl = this.users[0].image_url;
             })
         }
       });
@@ -129,13 +132,14 @@ export class SettingsPage {
   }
   getImage() {
     let options: CameraOptions = {
-      quality: 100,
+      quality: 50,
       destinationType: this.camera.DestinationType.FILE_URI
     }
     options.sourceType = this.camera.PictureSourceType.PHOTOLIBRARY
     this.camera.getPicture(options).then((imageData) => {
       this.imageURI = imageData;
       this.imageFileName = this.imageURI;
+      this.uploadFile();
     }, (err) => {
       console.log(err);
       this.presentToast(err);
@@ -148,16 +152,17 @@ export class SettingsPage {
     });
     loader.present();
     const fileTransfer: FileTransferObject = this.transfer.create();
-
+    let uuid = UUID.UUID();
+    this.uuid = uuid;
     let options: FileUploadOptions = {
       fileKey: 'fileToUpload',
-      fileName: this.id,
+      fileName: this.uuid,
       chunkedMode: true,
       mimeType: "image/jpeg",
       headers: {}
     }
-
-    let url = "http://10.10.10.7/webapi5/api/Upload";
+    let filename = this.imageURI.substr(this.imageURI.lastIndexOf('/') + 1);
+    let url = "http://101.255.60.202/webapi5/api/Upload";
     fileTransfer.upload(this.imageURI, url, options)
       .then((data) => {
         loader.dismiss();
@@ -167,7 +172,7 @@ export class SettingsPage {
         this.api.put("table/z_users",
           {
             "id": this.id,
-            "image_url": 'http://101.255.60.202/webapi5/img/' + this.id
+            "image_url": 'http://101.255.60.202/webapi5/img/' + this.uuid
           },
           { headers })
           .subscribe(
@@ -175,12 +180,13 @@ export class SettingsPage {
               this.presentToast("Upload berhasil");
               this.api.get('table/z_users', { params: { filter: "email=" + "'" + this.email + "'" } })
                 .subscribe(val => {
-                  this.user = val['data']
-                  this.id = this.user[0].id;
-                  this.firstname = this.user[0].first_name;
-                  this.lastname = this.user[0].last_name;
-                  this.password = this.user[0].password;
-                  this.imageurl = this.user[0].image_url;
+                  this.users = val['data']
+                  this.events.publish('user:login', this.users, Date.now());
+                  this.id = this.users[0].id;
+                  this.firstname = this.users[0].first_name;
+                  this.lastname = this.users[0].last_name;
+                  this.password = this.users[0].password;
+                  this.imageurl = this.users[0].image_url;
                 })
             });
         this.imageURI = '';

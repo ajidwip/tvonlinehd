@@ -17,7 +17,10 @@
 <ion-content style="background: #092e61">
   <ion-item no-lines style="text-align:center;background:#f8f8f8;">
     <div class="container">
-      <img src="{{imageurl}}" height="100" style="border-radius:100%;max-width:100px;max-height:100px;" />
+      <img *ngIf="imageurl == 'assets/imgs/people.png'" src="{{imageurl}}" style="height:100px;width:100px;margin:auto;" />
+      <ion-avatar *ngIf="imageurl != 'assets/imgs/people.png'">
+        <img src="{{imageurl}}" style="height:100px;width:100px;margin:auto;" />
+      </ion-avatar>
       <div class="bottom-right">
         <button ion-button clear color="bluedark" (click)="getImage()">
           <ion-icon name="md-camera" style="font-size:30px;"></ion-icon>
