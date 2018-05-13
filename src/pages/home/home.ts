@@ -106,14 +106,6 @@ export class HomePage {
     this.api.get('table/z_content_videos', { params: { filter: "status='OPEN'", sort: "id" + " DESC " } })
       .subscribe(val => {
         this.VideosAllactive = val['data'];
-        this.api.get('table/z_club', { params: { filter: "name=" + "'" + this.ScheduleAllActive[0].club_home + "'" } })
-          .subscribe(val => {
-            this.clubhome = val['data'][0].alias;
-            this.api.get('table/z_club', { params: { filter: "name=" + "'" + this.ScheduleAllActive[0].club_away + "'" } })
-              .subscribe(val => {
-                this.clubaway = val['data'][0].alias;
-              });
-          });
       });
   }
   doGetScheduleAllActive() {
@@ -122,6 +114,14 @@ export class HomePage {
         this.ScheduleAllActive = val['data'];
         this.clubhomeurl = this.ScheduleAllActive[0].club_home_icon_url;
         this.clubawayurl = this.ScheduleAllActive[0].club_away_icon_url;
+        this.api.get('table/z_club', { params: { filter: "name=" + "'" + this.ScheduleAllActive[0].club_home + "'" } })
+          .subscribe(val => {
+            this.clubhome = val['data'][0].alias;
+            this.api.get('table/z_club', { params: { filter: "name=" + "'" + this.ScheduleAllActive[0].club_away + "'" } })
+              .subscribe(val => {
+                this.clubaway = val['data'][0].alias;
+              });
+          });
         this.api.get('table/z_content_news', { params: { filter: "status='OPEN'", sort: "id" + " DESC " } })
           .subscribe(val => {
             this.NewsAllactive = val['data'];

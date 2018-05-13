@@ -49,15 +49,17 @@ export class ChatPage {
       // cssClass: 'transparent',
       content: 'Loading Content...'
     });
-    this.loader.present();
-    this._chatSubscription = this.db.object('/chat').subscribe(data => {
-      this.messages = Object.keys(data).map(i => data[i])
-      this.api.get('table/z_users', { params: { filter: "status='ONLINE'" } })
-        .subscribe(val => {
-          this.useronline = val['data']
-          this.totalonline = val['count']
-        })
-    })
+    this.loader.present().then(() => {
+      this._chatSubscription = this.db.object('/chat').subscribe(data => {
+        this.messages = Object.keys(data).map(i => data[i])
+        this.api.get('table/z_users', { params: { filter: "status='ONLINE'" } })
+          .subscribe(val => {
+            this.useronline = val['data']
+            this.totalonline = val['count']
+          })
+      })
+      this.loader.dismiss();
+    });
   }
   ngOnInit(): void {
     const waitThenAdjust = (trial: number): void => {
@@ -90,7 +92,6 @@ export class ChatPage {
     }
   }
   ngAfterViewInit() {
-    this.loader.dismiss();
   }
   sendMessage() {
     if (this.message == '') {

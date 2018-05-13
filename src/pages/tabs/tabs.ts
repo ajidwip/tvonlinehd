@@ -9,7 +9,7 @@ export class TabsPage {
   home = 'HomePage';
   calendar = 'CalendarPage';
   nobar = 'NobarPage';
-  settings = 'SettingsPage';
+  players = 'PlayersPage';
   myindex: number;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }

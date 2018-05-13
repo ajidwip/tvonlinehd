@@ -8,19 +8,21 @@ import { HttpHeaders } from "@angular/common/http";
 import { Storage } from '@ionic/storage';
 import { GooglePlus } from '@ionic-native/google-plus';
 import { ApiProvider } from '../providers/api/api';
+import moment from 'moment';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   @ViewChild('mycontent') Nav: NavController;
-  rootPage: any = TabsPage;
+  rootPage: any;
   public users = [];
   public user = [];
   public name = '';
   public email = '';
   public picture = '';
   public loader: any;
+  public ScheduleAllActive = [];
   constructor(
     platform: Platform,
     statusBar: StatusBar,
@@ -34,39 +36,51 @@ export class MyApp {
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController) {
     platform.ready().then(() => {
-      statusBar.styleDefault();
-      splashScreen.hide();
+      this.api.get('table/z_schedule', { params: { limit: 1, filter: "status='OPEN'" + " AND " + "date >=" + "'" + moment().format('YYYY-MM-DD') + "'", sort: "date" + " ASC " } })
+        .subscribe(val => {
+          statusBar.styleDefault();
+          splashScreen.hide();
+          this.ScheduleAllActive = val['data'];
+          if (this.ScheduleAllActive.length == 0) {
+            this.app.getRootNav().setRoot('MaintenancePage')
+          }
+          else {
+            this.rootPage = TabsPage;
+            events.subscribe('user:login', (users, time) => {
+              this.users = users;
+              this.name = users[0].first_name;
+              this.email = users[0].email;
+              this.picture = users[0].image_url;
+            });
+            events.subscribe('user:logingoogle', (res, time) => {
+              this.users = res;
+              this.name = res[0].displayName;
+              this.email = res[0].email;
+              this.picture = res[0].imageUrl;
+            });
+            if (this.storage.length) {
+              this.storage.get('users').then((val) => {
+                this.users = val;
+                if (this.users) {
+                  this.email = val.email;
+                  this.api.get('table/z_users', { params: { filter: "email=" + "'" + this.email + "'" } })
+                    .subscribe(val => {
+                      this.user = val['data']
+                      this.name = this.user[0].first_name;
+                      this.email = this.user[0].email;
+                      this.picture = this.user[0].image_url;
+                    })
+                }
+              });
+            }
+          }
+        }, err => {
+          this.app.getRootNav().setRoot('MaintenancePage')
+        });
     });
-    events.subscribe('user:login', (users, time) => {
-      this.users = users;
-      this.name = users[0].first_name;
-      this.email = users[0].email;
-      this.picture = users[0].image_url;
-    });
-    events.subscribe('user:logingoogle', (res, time) => {
-      this.users = res;
-      this.name = res[0].displayName;
-      this.email = res[0].email;
-      this.picture = res[0].imageUrl;
-    });
-    if (this.storage.length) {
-      this.storage.get('users').then((val) => {
-        this.users = val;
-        if (this.users) {
-          this.email = val.email;
-          this.api.get('table/z_users', { params: { filter: "email=" + "'" + this.email + "'" } })
-            .subscribe(val => {
-              this.user = val['data']
-              this.name = this.user[0].first_name;
-              this.email = this.user[0].email;
-              this.picture = this.user[0].image_url;
-            })
-        }
-      });
-    }
   }
   doLogin() {
-    this.rootPage = 'LoginPage';
+    this.app.getRootNav().setRoot('LoginPage')
     this.menuCtrl.close();
   }
   doLogout() {
@@ -82,7 +96,7 @@ export class MyApp {
     this.menuCtrl.close();
   }
   doGoToPage(pageName) {
-    this.rootPage = pageName;
+    this.app.getRootNav().setRoot(pageName)
     this.menuCtrl.close();
   }
   doChat() {
@@ -91,7 +105,17 @@ export class MyApp {
       this.menuCtrl.close();
     }
     else {
-      this.rootPage = 'LoginPage';
+      this.app.getRootNav().setRoot('LoginPage')
+      this.menuCtrl.close();
+    }
+  }
+  doSettings() {
+    if (this.email != "") {
+      this.app.getRootNav().setRoot('SettingsPage');
+      this.menuCtrl.close();
+    }
+    else {
+      this.app.getRootNav().setRoot('LoginPage')
       this.menuCtrl.close();
     }
   }

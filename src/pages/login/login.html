@@ -34,10 +34,10 @@
         <input type="checkbox" [checked]="true">
         <span class="checkmark"></span>
       </label> -->
-      <label item-start style="color:#488aff;font-size: 1.2rem;">Forgot Password?</label>
+      <label item-start style="color:#488aff;font-size: 1.2rem;" (click)="doResetGetPassword()">Forgot Password?</label>
     </ion-item>
     <ion-buttons padding>
-      <button ion-button color="primary" block outline style="height:40px;" (click)="doGetLogin()">Sign In</button>
+      <button ion-button color="primary" block outline style="height:40px;" [disabled]="!myFormLogin.valid" (click)="doGetLogin()">Sign In</button>
     </ion-buttons>
     <ion-label style="color:#999;font-size: 1.2rem;text-align:center;">OR</ion-label>
     <ion-buttons padding>
@@ -57,7 +57,7 @@
         <ion-icon name="md-close" style="font-size:25px;"></ion-icon>
       </button>
     </div>
-    <div style="text-align:center;margin-bottom:20px;">
+    <div style="text-align:center;margin-bottom:20px;color:#fff;">
       SIGN UP
     </div>
     <form [formGroup]="myForm">
@@ -86,21 +86,112 @@
           </ion-item>
         </ion-col>
       </ion-row>
-      <!-- <ion-item style="background:transparent">
-        <label class="container">&nbsp;&nbsp;I accepted the
-          <u>Terms and Conditions</u> of Barca Info
-          <input type="checkbox">
-          <span class="checkmark"></span>
-        </label>
-      </ion-item> -->
+      <ion-item style="background:transparent;color:#fff;padding-right:12px;">
+        <ion-label stacked>Gender</ion-label>
+        <ion-select formControlName="gender">
+          <ion-option value="Male">Male</ion-option>
+          <ion-option value="Female">Female</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item style="background:transparent;color:#fff;padding-right:12px;">
+        <ion-label stacked>Phone Number</ion-label>
+        <ion-input formControlName="phonenumber" type="number"></ion-input>
+      </ion-item>
+      <ion-item style="background:transparent;color:#fff;padding-right:12px;">
+        <ion-label stacked>Region</ion-label>
+        <ion-select formControlName="region">
+          <ion-option value="{{region.regional}}" *ngFor="let region of regional">{{region.regional}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item style="background:transparent;color:#fff;padding-right:12px;">
+        <ion-label stacked>Question For Reset Password</ion-label>
+        <ion-select formControlName="listquestion">
+          <ion-option value="{{list.list}}" *ngFor="let list of listquestion">{{list.list}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item style="background:transparent;color:#fff;padding-right:12px;">
+        <ion-label stacked>Answer For Reset Password</ion-label>
+        <ion-input placeholder="Answer" formControlName="keypassword" type="text"></ion-input>
+      </ion-item>
     </form>
     <ion-buttons padding>
-      <button ion-button color="primary" block outline style="height:40px;" (click)="doPostRegister()">SIGN UP</button>
+      <button ion-button color="primary" block outline style="height:40px;" [disabled]="!myForm.valid" (click)="doPostRegister()">SIGN UP</button>
     </ion-buttons>
     <ion-label style="color:rgb(255, 255, 255);font-size: 1.2rem;text-align:center;">Already registered?
       <a (click)="doCloseRegister()">
         <u>Sign in</u>
       </a>
     </ion-label>
+  </ion-content>
+</div>
+<div id="getresetpassword" class="register" style="background:#fff;">
+  <ion-content padding>
+    <div style="text-align:right;height:15px;">
+      <button ion-button clear color="light" (click)="doCloseGetResetPassword()">
+        <ion-icon name="md-close" style="font-size:25px;"></ion-icon>
+      </button>
+    </div>
+    <div style="text-align:center;margin-bottom:20px;">
+      RESET PASSWORD
+    </div>
+    <form [formGroup]="myFormGetReset">
+      <ion-item style="background:transparent;color:rgb(0, 0, 0);padding-right:12px;">
+        <ion-label stacked>Email</ion-label>
+        <ion-input formControlName="email" type="text"></ion-input>
+      </ion-item>
+    </form>    
+    <ion-buttons padding>
+      <button ion-button color="primary" block outline style="height:40px;" [disabled]="!myFormGetReset.valid" (click)="doGetResetPassword()">SUBMIT</button>
+    </ion-buttons>
+  </ion-content>
+</div>
+<div id="forgotpassword" class="register" style="background:#fff;">
+  <ion-content padding>
+    <div style="text-align:right;height:15px;">
+      <button ion-button clear color="light" (click)="doCloseResetPassword()">
+        <ion-icon name="md-close" style="font-size:25px;"></ion-icon>
+      </button>
+    </div>
+    <div style="text-align:center;margin-bottom:20px;">
+      RESET PASSWORD
+    </div>
+    <form [formGroup]="myFormReset">
+      <ion-item style="background:transparent;color:rgb(0, 0, 0);padding-right:12px;">
+        <ion-label stacked>Question Key</ion-label>
+        <ion-input formControlName="question" type="text" disabled="true"></ion-input>
+      </ion-item>
+      <ion-item style="background:transparent;color:rgb(0, 0, 0);padding-right:12px;">
+        <ion-label stacked>Answer Key</ion-label>
+        <ion-input formControlName="answer" type="text"></ion-input>
+      </ion-item>
+    </form>    
+    <ion-buttons padding>
+      <button ion-button color="primary" block outline style="height:40px;" [disabled]="!myFormReset.valid" (click)="doResetPassword()">SUBMIT</button>
+    </ion-buttons>
+  </ion-content>
+</div>
+<div id="submitreset" class="register" style="background:#fff;">
+  <ion-content padding>
+    <div style="text-align:right;height:15px;">
+      <button ion-button clear color="light" (click)="doCloseSubmitReset()">
+        <ion-icon name="md-close" style="font-size:25px;"></ion-icon>
+      </button>
+    </div>
+    <div style="text-align:center;margin-bottom:20px;">
+      RESET PASSWORD
+    </div>
+    <form [formGroup]="myFormSubmitReset">
+      <ion-item style="background:transparent;color:rgb(0, 0, 0);padding-right:12px;">
+        <ion-label stacked>New Password</ion-label>
+        <ion-input formControlName="password" type="password"></ion-input>
+      </ion-item>
+      <ion-item style="background:transparent;color:rgb(0, 0, 0);padding-right:12px;">
+        <ion-label stacked>Confirm New Password</ion-label>
+        <ion-input formControlName="confirmpassword" type="password"></ion-input>
+      </ion-item>
+    </form>    
+    <ion-buttons padding>
+      <button ion-button color="primary" block outline style="height:40px;" [disabled]="!myFormReset.valid" (click)="doSubmitResetPassword()">SUBMIT</button>
+    </ion-buttons>
   </ion-content>
 </div>
