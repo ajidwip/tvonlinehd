@@ -20,6 +20,8 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { SafePipe } from '../pipes/safe/safe';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { FCM } from '@ionic-native/fcm';
+
 
 var config = {
   apiKey: "AIzaSyBYa6NgqtjCTvrKX3o_4NDpKSol64PwcD4",
@@ -63,7 +65,8 @@ var config = {
     AdMobPro,
     InAppBrowser,
     FileTransfer,
-    Camera
+    Camera,
+    FCM
   ]
 })
 export class AppModule {}

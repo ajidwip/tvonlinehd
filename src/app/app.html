@@ -2,7 +2,7 @@
     <ion-content style="background:#fff;">
         <ion-item no-lines style="text-align:center;background:url(assets/imgs/jersey.jpg);background-repeat:no-repeat;background-size:cover;border-bottom:5px solid;border-color:#488aff;">
             <img *ngIf="picture == ''" src="assets/imgs/people.png" style="width:100px;height:100px;margin:auto;" />
-            <ion-avatar *ngIf="picture != ''" >
+            <ion-avatar *ngIf="picture != ''">
                 <img src="{{picture}}" style="width:100px;height:100px;margin:auto;" />
             </ion-avatar>
             <div *ngIf="name == ''" style="color:#ffffff;margin-top:5px;margin-bottom:5px;">I`m Cules</div>

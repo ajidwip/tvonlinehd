@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "798397482932",
+    "firebase_url": "https://barcainfo-5eee1.firebaseio.com",
+    "project_id": "barcainfo-5eee1",
+    "storage_bucket": "barcainfo-5eee1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:798397482932:android:6bc77b0b33289174",
+        "android_client_info": {
+          "package_name": "com.barca.info"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "798397482932-aa9v9i906gi1m508h30sua0jfc6f6kie.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.barca.info",
+            "certificate_hash": "7c2a5bb5129f62814298774317a1cc627bccc30d"
+          }
+        },
+        {
+          "client_id": "798397482932-8go91dakhnar8c88plcl1nv2k8c7dg00.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYa6NgqtjCTvrKX3o_4NDpKSol64PwcD4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "798397482932-8go91dakhnar8c88plcl1nv2k8c7dg00.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
