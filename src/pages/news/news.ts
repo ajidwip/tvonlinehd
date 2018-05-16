@@ -40,7 +40,7 @@ export class NewsPage {
   }
   doGetNewsAllActive() {
     return new Promise(resolve => {
-      let offset = 30 * this.halaman
+      let offset = 10 * this.halaman
       if (this.halaman == -1) {
         resolve();
       }

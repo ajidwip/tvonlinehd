@@ -97,13 +97,13 @@ export class HomePage {
 
   }
   doGetGalleryAllActive() {
-    this.api.get('table/z_content_photos', { params: { filter: "status='OPEN'", sort: "id" + " DESC " } })
+    this.api.get('table/z_content_photos', { params: { limit: 5, filter: "status='OPEN'", sort: "id" + " DESC " } })
       .subscribe(val => {
         this.GalleryAllactive = val['data'];
       });
   }
   doGetVideosAllActive() {
-    this.api.get('table/z_content_videos', { params: { filter: "status='OPEN'", sort: "id" + " DESC " } })
+    this.api.get('table/z_content_videos', { params: { limit: 5, filter: "status='OPEN'", sort: "id" + " DESC " } })
       .subscribe(val => {
         this.VideosAllactive = val['data'];
       });
@@ -122,7 +122,7 @@ export class HomePage {
                 this.clubaway = val['data'][0].alias;
               });
           });
-        this.api.get('table/z_content_news', { params: { filter: "status='OPEN'", sort: "id" + " DESC " } })
+        this.api.get('table/z_content_news', { params: { limit: 5, filter: "status='OPEN'", sort: "id" + " DESC " } })
           .subscribe(val => {
             this.NewsAllactive = val['data'];
           });

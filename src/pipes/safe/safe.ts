@@ -16,7 +16,7 @@ export class SafePipe {
   transform(value: string, type: string) {
     switch (type) {
       case 'resourceUrl':
-        return this._sanitizer.bypassSecurityTrustResourceUrl('http://player.twitch.tv/channel=' + value)
+        return this._sanitizer.bypassSecurityTrustResourceUrl(value)
       case 'KFormate':
         return this.kFormater(value);
     }
