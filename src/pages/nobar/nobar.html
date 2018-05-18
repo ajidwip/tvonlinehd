@@ -51,35 +51,40 @@
         </ion-col>
       </ion-row>
     </ion-card-content>
-    <ion-row style="border-top:1px solid;border-color:#dedede;padding:5px;">
-      <ion-col col-3 style="text-align: left;">
-        <i style="font-size:100%" class="fas fa-futbol"> Datang</i>
+    <!--<ion-row style="border-top:1px solid;border-color:#dedede;padding:5px;">
+      <ion-col *ngIf="nobarusers.user_id != id" col-12 style="text-align: right;">
+        Datang
+        <i style="font-size:125%" class="fas fa-futbol" (click)="doDatangNobar(nobar)"></i>
+      </ion-col>
+      <ion-col *ngIf="nobarusers.user_id == id" col-12 style="text-align: right;">
+        Anda akan Datang
+        <i style="font-size:125%" class="fas fa-futbol" (click)="doDatangNobar(nobar)"></i>
       </ion-col>
       <ion-col col-9 style="text-align: left;">
         <i style="font-size:100%" class="fas fa-comment-alt"> Komentar</i>
       </ion-col>
     </ion-row>
     <ion-row style="border-top:1px solid;border-color:#dedede;padding:5px;background:#f6f7f9;">
-      <ion-col col-12 style="background:#f6f7f9;border-bottom:1px solid;border-color:#dedede;">
+      <ion-col col-12 style="background:#f6f7f9;">
         <b>10</b> Orang akan datang
       </ion-col>
-      <ion-col ion-item col-12 style="background:#f6f7f9;" text-wrap>
+      <!--<ion-col ion-item col-12 style="background:#f6f7f9;" text-wrap>
         <img item-start src="assets/imgs/logo.png" style="width:30px;height:30px;" />
         <p>
           <b>Aji</b>&nbsp;Testingadfaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafafa
         </p>
-      </ion-col>
-    </ion-row>
+      </ion-col>-->
+      <!--</ion-row>
     <ion-row style="border-top:1px solid;border-color:#dedede;padding:5px;background:#f6f7f9;">
       <ion-col col-10 style="background:#fff;">
         <ion-input style="border:0px;" placeholder="Write a comment.."></ion-input>
       </ion-col>
       <ion-col col-2>
-        <button ion-button color="bluedark">
+        <button ion-button color="bluedark" clear>
           <ion-icon name="md-send"></ion-icon>
         </button>
       </ion-col>
-    </ion-row>
+    </ion-row>-->
   </ion-card>
 
 </ion-content>

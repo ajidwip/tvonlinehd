@@ -45,15 +45,46 @@ export class NewsPage {
         resolve();
       }
       else {
+        this.halaman++;
+        this.api.get('table/z_content_news', { params: { limit: 10, offset: offset, filter: "status='OPEN'", sort: "id" + " DESC " } })
+          .subscribe(val => {
+            let data = val['data'];
+            for (let i = 0; i < data.length; i++) {
+              this.NewsAllactive.push(data[i]);
+              this.id = this.NewsAllactive[0].id;
+              this.title = this.NewsAllactive[0].title;
+              this.description = this.NewsAllactive[0].description;
+              this.image = this.NewsAllactive[0].image_url;
+              this.sumber = this.NewsAllactive[0].sumber;
+              this.date = this.NewsAllactive[0].date;
+            }
+            if (data.length == 0) {
+              this.halaman = -1
+            }
+            resolve();
+          });
+      }
+    })
+
+  }
+  /*doGetNewsAllActive() {
+    return new Promise(resolve => {
+      let offset = 10 * this.halaman
+      if (this.halaman == -1) {
+        resolve();
+      }
+      else {
         this.api.get('table/z_content_news', { params: { limit: 10, offset: offset, filter: "status='OPEN'", sort: "id" + " DESC " } })
           .subscribe(val => {
             this.NewsTop = val['data'];
-            this.id = this.NewsTop[0].id;
-            this.title = this.NewsTop[0].title;
-            this.description = this.NewsTop[0].description;
-            this.image = this.NewsTop[0].image_url;
-            this.sumber = this.NewsTop[0].sumber;
-            this.date = this.NewsTop[0].date;
+            if (this.NewsTop.length != 0) {
+              this.id = this.NewsTop[0].id;
+              this.title = this.NewsTop[0].title;
+              this.description = this.NewsTop[0].description;
+              this.image = this.NewsTop[0].image_url;
+              this.sumber = this.NewsTop[0].sumber;
+              this.date = this.NewsTop[0].date;
+            }
             this.halaman++;
             this.api.get('table/z_content_news', { params: { filter: "status='OPEN' AND image_url!=" + "'" + this.image + "'", sort: "id" + " DESC " } })
               .subscribe(val => {
@@ -71,7 +102,7 @@ export class NewsPage {
       }
     })
 
-  }
+  }*/
   doInfinite(infiniteScroll) {
     this.doGetNewsAllActive().then(response => {
       infiniteScroll.complete();
@@ -79,7 +110,7 @@ export class NewsPage {
     })
   }
   doRefresh(refresher) {
-    this.api.get('table/z_content_news', { params: { limit: 10, filter: "status='OPEN'", sort: "id" + " DESC " } })
+    /*this.api.get('table/z_content_news', { params: { limit: 10, filter: "status='OPEN'", sort: "id" + " DESC " } })
       .subscribe(val => {
         this.NewsTop = val['data'];
         this.title = this.NewsTop[0].title;
@@ -90,7 +121,10 @@ export class NewsPage {
             this.NewsAllactive = val['data']
             refresher.complete();
           });
-      });
+      });*/
+    this.doGetNewsAllActive().then(response => {
+      refresher.complete();
+    });
   }
   doGoNewsDetail(news) {
     this.navCtrl.push('NewsdetailPage', {

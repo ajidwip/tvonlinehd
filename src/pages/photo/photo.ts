@@ -59,10 +59,13 @@ export class PhotoPage {
     })
   }
   doRefresh(refresher) {
-    this.api.get("table/z_content_photos", { params: { limit: 10, filter: "status='OPEN'", sort: "id" + " DESC " } }).subscribe(val => {
-      this.GalleryAllactive = val['data'];
+    // this.api.get("table/z_content_photos", { params: { limit: 10, filter: "status='OPEN'", sort: "id" + " DESC " } }).subscribe(val => {
+    //   this.GalleryAllactive = val['data'];
+    //   refresher.complete();
+    // });
+    this.doGetGalleryAllActive().then(response => {
       refresher.complete();
-    });
+    })
   }
   doGoGalleryDetail(gallery) {
     this.navCtrl.push('PhotodetailPage', {

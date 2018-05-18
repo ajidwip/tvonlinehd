@@ -96,11 +96,13 @@ export class CalendarPage {
     })
   }
   doRefresh(refresher) {
-    this.api.get('table/z_schedule', { params: { limit: 10, filter: "status!='VERIFIKASI'", sort: "date" + " ASC " } }).subscribe(val => {
-      this.ScheduleAllActive = val['data'];
+    // this.api.get('table/z_schedule', { params: { limit: 10, filter: "status!='VERIFIKASI'", sort: "date" + " ASC " } }).subscribe(val => {
+    //   this.ScheduleAllActive = val['data'];
+    //   refresher.complete();
+    // });
+    this.doGetScheduleAllActive().then(response => {
       refresher.complete();
-    });
+
+    })
   }
-
-
 }

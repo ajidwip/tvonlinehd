@@ -33,13 +33,13 @@ export class VideoPage {
   }
   doGetVideosAllActive() {
     return new Promise(resolve => {
-      let offset = 10 * this.halaman
+      let offset = 5 * this.halaman
       if (this.halaman == -1) {
         resolve();
       }
       else {
         this.halaman++;
-        this.api.get('table/z_content_videos', { params: { limit: 10, offset: offset, filter: "status='OPEN'", sort: "id" + " DESC " } })
+        this.api.get('table/z_content_videos', { params: { limit: 5, offset: offset, filter: "status='OPEN'", sort: "id" + " DESC " } })
           .subscribe(val => {
             let data = val['data'];
             for (let i = 0; i < data.length; i++) {
@@ -61,10 +61,13 @@ export class VideoPage {
     })
   }
   doRefresh(refresher) {
-    this.api.get("table/z_content_videos", { params: { limit: 10, filter: "status='OPEN'", sort: "id" + " DESC " } }).subscribe(val => {
+    /*this.api.get("table/z_content_videos", { params: { limit: 5, filter: "status='OPEN'", sort: "id" + " DESC " } }).subscribe(val => {
       this.VideosAllactive = val['data'];
       refresher.complete();
-    });
+    });*/
+    this.doGetVideosAllActive().then(response => {
+      refresher.complete();
+    })
   }
   doOpenVideo(video) {
     const browser = this.iab.create(video.video_url, '_blank', 'location=no');
