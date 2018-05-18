@@ -1,11 +1,19 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>LIVE</ion-title>
-  </ion-navbar>
+<ion-header class="header">
+  <div id="header-navbar" class="header-navbar">
+    <div class="title-menu">
+      <button ion-button clear menuToggle color="light" style="top:3px;">
+        <ion-icon name="md-options" style="font-size:25px;"></ion-icon>
+      </button>
+    </div>
+    <div class="title-logo">
+      <h4>
+        BARCA
+        <img src="assets/icon/logo.gif" height="20" /> INFO&nbsp;&nbsp;&nbsp;&nbsp;
+      </h4>
+    </div>
+  </div>
 </ion-header>
 
-<ion-content>
-  <ion-card *ngFor="let stream of streaming">
-    <iframe allowfullscreen [src]="stream.source | safe:'resourceUrl'" width="100%" height="200"></iframe>
-  </ion-card>
+<ion-content style="background: #092e61;">
+    <iframe *ngFor="let stream of streaming" allowfullscreen [src]="stream.source | safe:'resourceUrl'" width="100%" height="200"></iframe>
 </ion-content>

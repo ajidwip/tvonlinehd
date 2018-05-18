@@ -1,12 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the NobarPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { LoadingController, IonicPage, NavController, NavParams, Refresher } from 'ionic-angular';
+import { ApiProvider } from '../../providers/api/api'
 
 @IonicPage()
 @Component({
@@ -14,12 +8,43 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'nobar.html',
 })
 export class NobarPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  public nobars = [];
+  public regional = [];
+  public regionalall = [];
+  public region = '';
+  public loader: any;
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public loadingCtrl: LoadingController,
+    public api: ApiProvider) {
+    this.loader = this.loadingCtrl.create({
+      // cssClass: 'transparent',
+      content: 'Loading Content...'
+    });
+    this.loader.present();
+    this.doGetRegional();
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad NobarPage');
+  ngAfterViewInit() {
+    this.loader.dismiss();
   }
-
+  doGetRegional() {
+    this.api.get('table/z_regional', { params: { limit: 100, sort: "regional" + " ASC " } }).subscribe(val => {
+      this.regionalall = val['data'];
+      this.region = this.regionalall[0].regional;
+      this.api.get('table/z_nobar', { params: { limit: 100, filter: "regional=" + "'" + this.region + "'",  sort: "regional" + " ASC " } }).subscribe(val => {
+        this.nobars = val['data'];
+      });
+    });
+  }
+  doGetSelectRegional() {
+    this.api.get('table/z_regional', { params: { limit: 100, sort: "regional" + " ASC " } }).subscribe(val => {
+      this.regional = val['data'];
+    });
+  }
+  doGetNobar(region) {
+    this.api.get('table/z_nobar', { params: { limit: 100, filter: "regional=" + "'" + region + "'",  sort: "regional" + " ASC " } }).subscribe(val => {
+      this.nobars = val['data'];
+    });
+  }
 }

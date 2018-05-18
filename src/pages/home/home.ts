@@ -71,9 +71,7 @@ export class HomePage {
     this.doGetVideosAllActive();
   }
   openChannel() {
-    this.navCtrl.push('ChannelPage', {
-      DataChannel: this.datas[10]
-    })
+    this.app.getRootNav().setRoot('ChannelPage')
   }
   doDashboard() {
     this.app.getRootNav().setRoot('DashboardPage');
