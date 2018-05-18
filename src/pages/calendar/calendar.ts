@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { LoadingController, IonicPage, NavController, NavParams, Refresher } from 'ionic-angular';
 import { ApiProvider } from '../../providers/api/api';
+import moment from 'moment';
 
 @IonicPage()
 @Component({
@@ -12,6 +13,7 @@ export class CalendarPage {
   public ScheduleAllActive = [];
   halaman = 0;
   public loader: any;
+  public datecurrent:any;
   public league = '';
 
   constructor(
@@ -26,6 +28,9 @@ export class CalendarPage {
     });
     this.loader.present();
     this.doGetScheduleAllActive();
+  }
+  ionViewDidEnter() {
+    this.datecurrent =  moment().format('YYYY-MM-DD h:mm:ss');
   }
   ngAfterViewInit() {
     this.loader.dismiss();

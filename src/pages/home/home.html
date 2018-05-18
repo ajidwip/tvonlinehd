@@ -24,20 +24,20 @@
         <div style="font-size:80%;">{{schedule.league}} - {{schedule.round}} - {{schedule.date | date:"dd MMMM yyyy"}}</div>
       </div>
       <div class="centered">
-        <div *ngIf="schedule.status =='OPEN'" id="result" class="result">
+        <div *ngIf="schedule.date > datecurrent" id="result" class="result">
           {{schedule.date | date:"HH:mm"}}
         </div>
-        <div *ngIf="schedule.status =='CLSD'" id="result" class="result">
+        <div *ngIf="schedule.date <= datecurrent" id="result" class="result">
           {{schedule.skor_home}} - {{schedule.skor_away}}
         </div>
-        <div *ngIf="schedule.status =='OPEN'" id="result-sticky" class="result-sticky">
+        <div *ngIf="schedule.date > datecurrent" id="result-sticky" class="result-sticky">
           {{clubhome}}&nbsp;&nbsp;{{schedule.date | date:"HH:mm"}}&nbsp;&nbsp;{{clubaway}}
         </div>
-        <div *ngIf="schedule.status =='CLSD'" id="result-sticky" class="result-sticky">
+        <div *ngIf="schedule.date <= datecurrent" id="result-sticky" class="result-sticky">
           {{schedule.club_home}} {{schedule.skor_home}} - {{schedule.skor_away}} {{schedule.club_away}}
         </div>
         <div id="statistics" class="statistics">
-          <button style="font-size:12px;height:25px;" ion-button color="danger" (click)="openChannel()">{{schedule.info_live}}</button>
+          <button style="font-size:12px;height:25px;" ion-button color="danger" (click)="openChannel(schedule)">{{schedule.info_live}}</button>
         </div>
       </div>
       <div id="centered-left" class="centered-left">

@@ -32,6 +32,7 @@ export class HomePage {
   public clubhome = '';
   public clubaway = '';
   public loader: any;
+  public datecurrent: any;
   datas: any = [];
   client_id: any = '&client_id=5cy1ey0t28y28smxbh2zbs9xt89bmv';
   constructor(
@@ -70,8 +71,11 @@ export class HomePage {
     this.doGetGalleryAllActive();
     this.doGetVideosAllActive();
   }
-  openChannel() {
-    this.app.getRootNav().setRoot('ChannelPage')
+  openChannel(schedule) {
+    this.app.getRootNav().setRoot('ChannelPage',
+      {
+        linkstreaming: schedule.link_streaming
+      })
   }
   doDashboard() {
     this.app.getRootNav().setRoot('DashboardPage');
@@ -144,6 +148,9 @@ export class HomePage {
       date: gallery.date,
       uuid: gallery.uuid
     });
+  }
+  ionViewDidEnter() {
+    this.datecurrent = moment().format('YYYY-MM-DD h:mm:ss');
   }
   ionViewWillLeave() {
     document.getElementById('container-img').style.height = 'auto'

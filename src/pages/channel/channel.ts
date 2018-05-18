@@ -13,6 +13,7 @@ export class ChannelPage {
 
   public streaming = [];
   public loader: any;
+  public linkstreaming = '';
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -24,17 +25,18 @@ export class ChannelPage {
       content: 'Loading Content...'
     });
     this.loader.present();
-    this.doGetLive();
+    // this.doGetLive();
+    this.linkstreaming = this.navParams.get('linkstreaming');
   }
   ngAfterViewInit() {
     this.loader.dismiss();
   }
-  doGetLive() {
+  /*doGetLive() {
     this.api.get('table/z_streaming', { params: { filter: "status='OPEN'" } })
       .subscribe(val => {
         this.streaming = val['data']
       });
-  }
+  }*/
   ionViewDidEnter() {
     var admobid = {
       banner: 'ca-app-pub-7488223921090533/9446361096',
