@@ -27,6 +27,7 @@ export class HomePage {
   public GalleryAllactive = [];
   public VideosAllactive = [];
   public ScheduleAllActive = [];
+  public streaming = [];
   public clubhomeurl = '';
   public clubawayurl = '';
   public clubhome = '';
@@ -151,6 +152,7 @@ export class HomePage {
   }
   ionViewDidEnter() {
     this.datecurrent = moment().format('YYYY-MM-DD h:mm:ss');
+    this.doGetLive();
   }
   ionViewWillLeave() {
     document.getElementById('container-img').style.height = 'auto'
@@ -245,5 +247,14 @@ export class HomePage {
   }
   doRefresh(refresher) {
     this.app.getRootNav().setRoot(TabsPage);
+  }
+  doGetLive() {
+    this.api.get('table/z_streaming', { params: { filter: "status='OPEN'" } })
+      .subscribe(val => {
+        this.streaming = val['data']
+      });
+  }
+  doStreaming(streaming) {
+    const browser = this.iab.create(streaming[0].source, '_blank', 'location=no');
   }
 }

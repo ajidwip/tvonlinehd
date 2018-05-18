@@ -1,7 +1,7 @@
 <ion-header id="header" class="header">
   <div id="header-navbar" class="header-navbar">
-    <div *ngIf="streaming" class="logo-streaming" style="text-align:right;height:0px;">
-      <button ion-button clear color="light" (click)="toggleSearch()">
+    <div *ngIf="streaming.length != 0" class="logo-streaming" style="text-align:right;height:0px;">
+      <button ion-button clear color="light" (click)="doStreaming(streaming)">
         <img src="assets/imgs/live.gif" height="25" style="margin-top:10px;" />
       </button>
     </div>
