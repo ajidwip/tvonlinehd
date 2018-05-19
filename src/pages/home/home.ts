@@ -5,7 +5,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import moment from 'moment';
 import { TabsPage } from '../tabs/tabs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { UUID } from 'angular2-uuid';
+import { Storage } from '@ionic/storage';
 
 declare var Swiper: any;
 
@@ -28,10 +30,14 @@ export class HomePage {
   public VideosAllactive = [];
   public ScheduleAllActive = [];
   public streaming = [];
+  public user = [];
   public clubhomeurl = '';
   public clubawayurl = '';
   public clubhome = '';
   public clubaway = '';
+  public users = '';
+  public id = '';
+  public email = '';
   public loader: any;
   public datecurrent: any;
   datas: any = [];
@@ -44,6 +50,7 @@ export class HomePage {
     public loadingCtrl: LoadingController,
     public api: ApiProvider,
     public sanitizer: DomSanitizer,
+    public storage: Storage,
     public app: App,
     public iab: InAppBrowser,
     public http: HttpClient) {
@@ -71,6 +78,19 @@ export class HomePage {
     this.doGetScheduleAllActive();
     this.doGetGalleryAllActive();
     this.doGetVideosAllActive();
+    if (this.storage.length) {
+      this.storage.get('users').then((val) => {
+        this.users = val;
+        if (this.users) {
+          this.email = val.email;
+          this.api.get('table/z_users', { params: { filter: "email=" + "'" + this.email + "'" } })
+            .subscribe(val => {
+              this.user = val['data']
+              this.id = this.user[0].id;
+            })
+        }
+      });
+    }
   }
   openChannel(schedule) {
     this.app.getRootNav().setRoot('ChannelPage',
@@ -256,5 +276,15 @@ export class HomePage {
   }
   doStreaming(streaming) {
     const browser = this.iab.create(streaming[0].source, '_blank', 'location=no');
+  }
+  doTebakSkor(ScheduleAllActive) {
+    if (this.id) {
+      this.app.getRootNav().setRoot('TebakskorPage', {
+        ScheduleAllActive
+      });
+    }
+    else {
+      this.app.getRootNav().setRoot('LoginPage');
+    }
   }
 }

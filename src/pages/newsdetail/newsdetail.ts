@@ -33,7 +33,7 @@ export class NewsdetailPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad NewsdetailPage');
   }
-  ionViewWillEnter() {
+  ionViewDidEnter() {
     var admobid = {
       banner: 'ca-app-pub-7488223921090533/9446361096',
       interstitial: 'ca-app-pub-7488223921090533/9226869245'
