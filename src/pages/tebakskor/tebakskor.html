@@ -125,9 +125,9 @@
     </ion-item>
     <ion-row>
       <ion-col *ngIf="prediction.length == 0" col-12 style="text-align: right;">
-        <button ion-button color="bluedark" (click)="doSavePrediction()">SIMPAN</button>
+        <button [disabled]="skorhome == '' || skoraway == '' || pencetakgol == ''" ion-button color="bluedark" (click)="doSavePrediction()">SIMPAN</button>
       </ion-col>
-      <ion-col *ngIf="prediction.length != 0"  col-12 style="text-align: center;border-top:1px solid;border-color:#dedede;">WAKTU: 21-05-2018 01:01</ion-col>
+      <ion-col *ngIf="prediction.length != 0"  col-12 style="text-align: center;border-top:1px solid;border-color:#dedede;">{{dateprediction | date:"dd MMMM yyyy HH:mm:ss " }}</ion-col>
     </ion-row>
   </ion-card>
   <ion-card *ngIf="ScheduleAllActive.status == 'CLSD'" padding>

@@ -26,6 +26,7 @@ export class TebakskorPage {
   public nextno = '';
   public skorhome: any;
   public skoraway: any;
+  public dateprediction:any;
   public pencetakgol = '';
 
   constructor(
@@ -73,10 +74,11 @@ export class TebakskorPage {
   doGetPrediction() {
     this.api.get('table/z_prediction', { params: { filter: "id_game=" + "'" + this.ScheduleAllActive[0].id + "'" + " AND " + "id_user=" + "'" + this.id + "'" } }).subscribe(val => {
       this.prediction = val['data'];
-      if (this.prediction) {
+      if (this.prediction.length != 0) {
         this.skorhome = this.prediction[0].prediction_skor_home;
         this.skoraway = this.prediction[0].prediction_skor_away;
         this.pencetakgol = this.prediction[0].prediction_first_scorer;
+        this.dateprediction = this.prediction[0].date;
       }
     });
   }
