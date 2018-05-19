@@ -42,7 +42,7 @@ export class ChatPage {
     public api: ApiProvider,
     public storage: Storage,
     public loadingCtrl: LoadingController,
-    private admob: AdMobPro,
+    private admobchat: AdMobPro,
     public platform: Platform,
     public element: ElementRef) {
     this.loader = this.loadingCtrl.create({
@@ -91,8 +91,6 @@ export class ChatPage {
       ta.style.height = ta.scrollHeight + "px";
     }
   }
-  ngAfterViewInit() {
-  }
   sendMessage() {
     if (this.message == '') {
 
@@ -110,25 +108,13 @@ export class ChatPage {
       this.element.nativeElement.querySelector("textarea").style.height = "auto"
     }
   }
-  ionViewWillEnter() {
+  ionViewDidEnter() {
     var admobid = {
       banner: 'ca-app-pub-7488223921090533/9446361096',
       interstitial: 'ca-app-pub-7488223921090533/9226869245'
     };
 
-    /*this.admob.createBanner({
-      adSize: 'SMART_BANNER',
-      adId: admobid.banner,
-      isTesting: true,
-      autoShow: true,
-      // width: 360,
-      // height: 50,
-      position: this.admob.AD_POSITION.POS_XY,
-      overlap: true,
-      y: 80
-    })*/
-
-    this.admob.prepareInterstitial({
+    this.admobchat.prepareInterstitial({
       adId: admobid.interstitial,
       isTesting: true,
       autoShow: false
@@ -151,7 +137,7 @@ export class ChatPage {
       { headers })
       .subscribe(val => {
         // this.admob.removeBanner();
-        this.admob.showInterstitial();
+        this.admobchat.showInterstitial();
       })
   }
   ionViewDidLoad() {
