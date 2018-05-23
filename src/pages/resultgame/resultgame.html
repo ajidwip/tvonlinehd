@@ -1,0 +1,181 @@
+<ion-header>
+  <ion-navbar color="bluedark">
+    <ion-title>
+      <h6 style="margin:auto;">{{schedule.club_home}} Vs {{schedule.club_away}}
+      </h6>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div class="container">
+    <img id="container-img" class="container-img" src="assets/imgs/white.jpg" style="width:100%;height:100px;" />
+    <div class="centered-top">
+      <div style="font-size:80%;font-weight: bold;">{{schedule.league}} - {{schedule.round}}</div>
+      <div *ngIf="schedule.date > datecurrent" style="font-size:80%;font-weight: bold;">{{schedule.date | date:"dd MMMM yyyy"}}</div>
+      <div *ngIf="schedule.date <= datecurrent" style="font-size:80%;font-weight: bold;">HALF TIME</div>
+    </div>
+    <div class="centered">
+      <div id="result" *ngIf="schedule.date <= datecurrent" class="result">
+        {{schedule.skor_home}} - {{schedule.skor_away}}
+      </div>
+      <div *ngIf="schedule.date > datecurrent" id="time" class="result">
+        {{schedule.date | date:"HH:mm"}}
+      </div>
+    </div>
+    <div id="centered-left" class="centered-left">
+      <div class="logo-club-left">
+        <img id="logo-clubleft" style="width:40%;margin-left:0%;" src="{{schedule.club_home_icon_url}}" />
+        <div id="name-clubleft" class="logo-name">{{schedule.club_home}}</div>
+      </div>
+    </div>
+    <div id="centered-right" class="centered-right">
+      <div class="logo-club-right">
+        <img id="logo-clubright" style="width:40%;margin-left:0%;" src="{{schedule.club_away_icon_url}}" />
+        <div id="name-clubright" class="logo-name">{{schedule.club_away}}</div>
+      </div>
+    </div>
+    <ion-segment style="border-top:1px solid;border-color:#dedede;" [(ngModel)]="game" color="dark">
+      <ion-segment-button value="result">
+        RESULTS
+      </ion-segment-button>
+      <ion-segment-button value="stats">
+        STATS
+      </ion-segment-button>
+      <ion-segment-button value="timeline">
+        TIMELINE
+      </ion-segment-button>
+      <ion-segment-button value="lineups">
+        LINEUPS
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+  <div [ngSwitch]="game">
+    <div *ngSwitchCase="'result'" style="border:1px solid;border-color:#dedede;">
+      <div style="width:100%;position: absolute;text-align: center;padding-top:5px;">
+        <img src="https://ssl.gstatic.com/onebox/sports/soccer_timeline/soccer-ball.svg" />
+      </div>
+      <div style="width:45%;position: absolute;left:0px;padding-left:30px;">
+        <div style="text-align: left;color:#787878;font-size: 12px;font-family: Roboto-Medium,HelveticaNeue-Medium,HelveticaNeue,sans-serif-medium,Arial,sans-serif;font-weight: normal;"
+          *ngFor="let resulthome of resultshome">
+          <p *ngIf="!resulthome.time_stats_other && !resulthome.stats">{{resulthome.players}} {{resulthome.time_stats}}'</p>
+          <p *ngIf="!resulthome.time_stats_other && resulthome.stats">{{resulthome.players}} {{resulthome.time_stats}}' ({{resulthome.stats}})</p>
+          <p *ngIf="resulthome.time_stats_other && !resulthome.stats">{{resulthome.players}} {{resulthome.time_stats}}+{{resulthome.time_stats_other}}'</p>
+          <p *ngIf="resulthome.time_stats_other && resulthome.stats">{{resulthome.players}} {{resulthome.time_stats}}+{{resulthome.time_stats_other}}' ({{resulthome.stats}})</p>
+        </div>
+      </div>
+      <div style="width:45%;position: absolute;right:0px;padding-right:30px;">
+        <div style="text-align: right;color:#787878;font-size: 12px;font-family: Roboto-Medium,HelveticaNeue-Medium,HelveticaNeue,sans-serif-medium,Arial,sans-serif;font-weight: normal;"
+          *ngFor="let resultaway of resultsaway">
+          <p *ngIf="!resultaway.time_stats_other && !resultaway.stats">{{resultaway.players}} {{resultaway.time_stats}}'</p>
+          <p *ngIf="!resultaway.time_stats_other && resultaway.stats">{{resultaway.players}} {{resultaway.time_stats}}' ({{resultaway.stats}})</p>
+          <p *ngIf="resultaway.time_stats_other && !resultaway.stats">{{resultaway.players}} {{resultaway.time_stats}}+{{resultaway.time_stats_other}}'</p>
+          <p *ngIf="resultaway.time_stats_other && resultaway.stats">{{resultaway.players}} {{resultaway.time_stats}}+{{resultaway.time_stats_other}}' ({{resultaway.stats}})</p>
+        </div>
+      </div>
+    </div>
+    <div *ngSwitchCase="'stats'">
+      <ion-card padding>
+        <ion-row>
+          <ion-col col-4 style="margin:auto;text-align: center;">
+            <img style="height:25px;width:25px;margin:auto;" src="{{schedule.club_home_icon_url}}" />
+          </ion-col>
+          <ion-col col-4 style="color:#787878;margin:auto;text-align: center;font-weight: 600;font-size:12px;font-family: Roboto-Medium,HelveticaNeue-Medium,HelveticaNeue,sans-serif-medium,Arial,sans-serif;">
+            TEAM STATS
+          </ion-col>
+          <ion-col col-4 style="margin:auto;text-align: center;">
+            <img style="height:25px;width:25px;margin:auto;" src="{{schedule.club_away_icon_url}}" />
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-4 style="color:#787878;margin:auto;text-align: center;">
+            18
+          </ion-col>
+          <ion-col col-4 style="color:#787878;margin:auto;text-align: center;font-weight: 600;font-size:12px;font-family: Roboto-Medium,HelveticaNeue-Medium,HelveticaNeue,sans-serif-medium,Arial,sans-serif;">
+            Shots
+          </ion-col>
+          <ion-col col-4 style="color:#787878;margin:auto;text-align: center;">
+            11
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-4 style="color:#787878;margin:auto;text-align: center;">
+            6
+          </ion-col>
+          <ion-col col-4 style="color:#787878;margin:auto;text-align: center;font-weight: 600;font-size:12px;font-family: Roboto-Medium,HelveticaNeue-Medium,HelveticaNeue,sans-serif-medium,Arial,sans-serif;">
+            Shots on target
+          </ion-col>
+          <ion-col col-4 style="color:#787878;margin:auto;text-align: center;">
+            6
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-4 style="color:#787878;margin:auto;text-align: center;">
+            62%
+          </ion-col>
+          <ion-col col-4 style="color:#787878;margin:auto;text-align: center;font-weight: 600;font-size:12px;font-family: Roboto-Medium,HelveticaNeue-Medium,HelveticaNeue,sans-serif-medium,Arial,sans-serif;">
+            Possession
+          </ion-col>
+          <ion-col col-4 style="color:#787878;margin:auto;text-align: center;">
+            38%
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-4 style="color:#787878;margin:auto;text-align: center;">
+            8
+          </ion-col>
+          <ion-col col-4 style="color:#787878;margin:auto;text-align: center;font-weight: 600;font-size:12px;font-family: Roboto-Medium,HelveticaNeue-Medium,HelveticaNeue,sans-serif-medium,Arial,sans-serif;">
+            Fouls
+          </ion-col>
+          <ion-col col-4 style="color:#787878;margin:auto;text-align: center;">
+            20
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-4 style="color:#787878;margin:auto;text-align: center;">
+            3
+          </ion-col>
+          <ion-col col-4 style="color:#787878;margin:auto;text-align: center;font-weight: 600;font-size:12px;font-family: Roboto-Medium,HelveticaNeue-Medium,HelveticaNeue,sans-serif-medium,Arial,sans-serif;">
+            Yellow cards
+          </ion-col>
+          <ion-col col-4 style="color:#787878;margin:auto;text-align: center;">
+            6
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-4 style="color:#787878;margin:auto;text-align: center;">
+            0
+          </ion-col>
+          <ion-col col-4 style="color:#787878;margin:auto;text-align: center;font-weight: 600;font-size:12px;font-family: Roboto-Medium,HelveticaNeue-Medium,HelveticaNeue,sans-serif-medium,Arial,sans-serif;">
+            Red cards
+          </ion-col>
+          <ion-col col-4 style="color:#787878;margin:auto;text-align: center;">
+            1
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-4 style="color:#787878;margin:auto;text-align: center;">
+            4
+          </ion-col>
+          <ion-col col-4 style="color:#787878;margin:auto;text-align: center;font-weight: 600;font-size:12px;font-family: Roboto-Medium,HelveticaNeue-Medium,HelveticaNeue,sans-serif-medium,Arial,sans-serif;">
+            Offsides
+          </ion-col>
+          <ion-col col-4 style="color:#787878;margin:auto;text-align: center;">
+            2
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-4 style="color:#787878;margin:auto;text-align: center;">
+            7
+          </ion-col>
+          <ion-col col-4 style="color:#787878;margin:auto;text-align: center;font-weight: 600;font-size:12px;font-family: Roboto-Medium,HelveticaNeue-Medium,HelveticaNeue,sans-serif-medium,Arial,sans-serif;">
+            Corners
+          </ion-col>
+          <ion-col col-4 style="color:#787878;margin:auto;text-align: center;">
+            3
+          </ion-col>
+        </ion-row>
+      </ion-card>
+    </div>
+  </div>
+</ion-content>

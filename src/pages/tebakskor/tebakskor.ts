@@ -64,7 +64,7 @@ export class TebakskorPage {
     }
   }
   ionViewDidEnter() {
-    this.datecurrent = moment().format('YYYY-MM-DD h:mm:ss');
+    this.datecurrent = moment().format();
   }
   doGetPlayers() {
     this.api.get('table/z_players', { params: { limit: 100, filter: "position_group='PLAYER'", sort: "number" + " ASC " } }).subscribe(val => {

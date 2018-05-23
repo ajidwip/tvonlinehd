@@ -30,7 +30,7 @@ export class CalendarPage {
     this.doGetScheduleAllActive();
   }
   ionViewDidEnter() {
-    this.datecurrent =  moment().format('YYYY-MM-DD h:mm:ss');
+    this.datecurrent = moment().format();
   }
   ngAfterViewInit() {
     this.loader.dismiss();

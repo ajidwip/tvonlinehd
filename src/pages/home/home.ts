@@ -110,8 +110,18 @@ export class HomePage {
   doMoreVideos() {
     this.app.getRootNav().setRoot('VideoPage');
   }
-  doSchedule() {
-    this.app.getRootNav().setRoot('CalendarPage');
+  doResultGame(schedule) {
+    this.app.getRootNav().push('ResultgamePage', {
+      ScheduleAllActive: schedule,
+      idgame: schedule.id,
+      league: schedule.league,
+      round: schedule.round,
+      clubhome: schedule.club_home,
+      clubhomeurl: schedule.club_home_icon_url,
+      clubaway: schedule.club_away,
+      clubawayurl: schedule.club_away_icon_url,
+      place: schedule.place
+    });
   }
   doOpenVideo(video) {
     const browser = this.iab.create(video.video_url, '_blank', 'location=no');
@@ -135,6 +145,7 @@ export class HomePage {
     this.api.get('table/z_schedule', { params: { limit: 1, filter: "status='OPEN'" + " AND " + "date >=" + "'" + moment().format('YYYY-MM-DD') + "'", sort: "date" + " ASC " } })
       .subscribe(val => {
         this.ScheduleAllActive = val['data'];
+        this.datecurrent = moment().format();
         this.clubhomeurl = this.ScheduleAllActive[0].club_home_icon_url;
         this.clubawayurl = this.ScheduleAllActive[0].club_away_icon_url;
         this.api.get('table/z_club', { params: { filter: "name=" + "'" + this.ScheduleAllActive[0].club_home + "'" } })
@@ -152,7 +163,7 @@ export class HomePage {
       });
   }
   doGoNewsDetail(news) {
-    this.navCtrl.push('NewsdetailPage', {
+    this.app.getRootNav().push('NewsdetailPage', {
       id: news.id,
       title: news.title,
       description: news.description,
@@ -162,7 +173,7 @@ export class HomePage {
     });
   }
   doGoGalleryDetail(gallery) {
-    this.navCtrl.push('PhotodetailPage', {
+    this.app.getRootNav().push('PhotodetailPage', {
       id: gallery.id,
       title: gallery.title,
       image: gallery.image_url_thumb,
@@ -171,7 +182,7 @@ export class HomePage {
     });
   }
   ionViewDidEnter() {
-    this.datecurrent = moment().format('YYYY-MM-DD h:mm:ss');
+    this.datecurrent = moment().format();
     this.doGetLive();
   }
   ionViewWillLeave() {
