@@ -114,4 +114,232 @@ page-resultgame {
     }
     .statistics{
     }
+    .container-pitch {
+        position: relative;
+        text-align: center;
+        color: #ffffff;
+    }
+    .home-gk {
+        position: absolute;
+        top: 10%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .home-lb {
+        position: absolute;
+        top: 20%;
+        left: 20%;
+    }
+    .home-cb-1 {
+        position: absolute;
+        top: 20%;
+        left: 30%;
+    }
+    .home-cb-2 {
+        position: absolute;
+        top: 20%;
+        left: 40%;
+    }
+    .home-cb-3 {
+        position: absolute;
+        top: 20%;
+        left: 50%;
+    }
+    .home-cb-4 {
+        position: absolute;
+        top: 20%;
+        left: 60%;
+    }
+    .home-cb-5 {
+        position: absolute;
+        top: 20%;
+        left: 70%;
+    }
+    .home-rb {
+        position: absolute;
+        top: 15%;
+        left: 80%;
+    }
+    .home-dm-1 {
+        position: absolute;
+        top: 25%;
+        left: 30%;
+    }
+    .home-dm-2 {
+        position: absolute;
+        top: 25%;
+        left: 40%;
+    }
+    .home-dm-3 {
+        position: absolute;
+        top: 25%;
+        left: 50%;
+    }
+    .home-dm-4 {
+        position: absolute;
+        top: 25%;
+        left: 60%;
+    }
+    .home-dm-5 {
+        position: absolute;
+        top: 25%;
+        left: 70%;
+    }
+    .home-cm-1 {
+        position: absolute;
+        top: 30%;
+        left: 30%;
+    }
+    .home-cm-2 {
+        position: absolute;
+        top: 30%;
+        left: 40%;
+    }
+    .home-cm-3 {
+        position: absolute;
+        top: 30%;
+        left: 50%;
+    }
+    .home-cm-4 {
+        position: absolute;
+        top: 30%;
+        left: 60%;
+    }
+    .home-cm-5 {
+        position: absolute;
+        top: 30%;
+        left: 70%;
+    }
+    .home-acm-1 {
+        position: absolute;
+        top: 35%;
+        left: 30%;
+    }
+    .home-acm-2 {
+        position: absolute;
+        top: 35%;
+        left: 40%;
+    }
+    .home-acm-3 {
+        position: absolute;
+        top: 35%;
+        left: 50%;
+    }
+    .home-acm-4 {
+        position: absolute;
+        top: 35%;
+        left: 60%;
+    }
+    .home-acm-5 {
+        position: absolute;
+        top: 35%;
+        left: 70%;
+    }
+    .home-cf-1 {
+        position: absolute;
+        top: 40%;
+        left: 30%;
+    }
+    .home-cf-2 {
+        position: absolute;
+        top: 40%;
+        left: 40%;
+    }
+    .home-cf-3 {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+    }
+    .home-cf-4 {
+        position: absolute;
+        top: 40%;
+        left: 60%;
+    }
+    .home-cf-5 {
+        position: absolute;
+        top: 40%;
+        left: 70%;
+    }
+
+    .away-gk {
+        position: absolute;
+        top: 80%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .away-lb {
+        position: absolute;
+    }
+    .away-cb-1 {
+        position: absolute;
+    }
+    .away-cb-2 {
+        position: absolute;
+    }
+    .away-cb-3 {
+        position: absolute;
+    }
+    .away-cb-4 {
+        position: absolute;
+    }
+    .away-cb-5 {
+        position: absolute;
+    }
+    .away-rb {
+        position: absolute;
+    }
+    .away-dm-1 {
+        position: absolute;
+    }
+    .away-dm-2 {
+        position: absolute;
+    }
+    .away-dm-3 {
+        position: absolute;
+    }
+    .away-cm-1 {
+        position: absolute;
+    }
+    .away-cm-2 {
+        position: absolute;
+    }
+    .away-cm-3 {
+        position: absolute;
+    }
+    .away-cm-4 {
+        position: absolute;
+    }
+    .away-cm-5 {
+        position: absolute;
+    }
+    .away-acm-1 {
+        position: absolute;
+    }
+    .away-acm-2 {
+        position: absolute;
+    }
+    .away-acm-3 {
+        position: absolute;
+    }
+    .away-acm-4 {
+        position: absolute;
+    }
+    .away-acm-5 {
+        position: absolute;
+    }
+    .away-cf-1 {
+        position: absolute;
+    }
+    .away-cf-2 {
+        position: absolute;
+    }
+    .away-cf-3 {
+        position: absolute;
+    }
+    .away-cf-4 {
+        position: absolute;
+    }
+    .away-cf-5 {
+        position: absolute;
+    }
 }
