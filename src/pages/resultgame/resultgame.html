@@ -177,6 +177,60 @@
         </ion-row>
       </ion-card>
     </div>
+    <div *ngSwitchCase="'timeline'">
+      <div *ngFor="let result of results">
+        <ion-item *ngIf="result.type_stats == 'SUBSTITUTE' && result.homeaway == 'HOME'" no-lines style="width:55%;float: left;border-right:2px solid;border-color:#dedede;margin:2%;">
+          <div>{{result.players}}</div>
+          <ion-note>{{result.players_2}}</ion-note>
+          <ion-note *ngIf="!result.time_stats_other" item-end>{{result.time_stats}}`</ion-note>
+          <ion-note *ngIf="result.time_stats_other" item-end>{{result.time_stats}}+{{result.time_stats_other}}`</ion-note>
+          <div item-end>
+            <img src="{{result.icon_stats}}" />
+            <img src="{{result.icon_stats_2}}" />
+          </div>
+        </ion-item>
+        <ion-item *ngIf="result.type_stats == 'SUBSTITUTE' && result.homeaway == 'AWAY'" no-lines style="width:55%;float: right;border-right:2px solid;border-color:#dedede;margin:2%;">
+          <ion-note *ngIf="!result.time_stats_other">{{result.time_stats}}`</ion-note>
+          <ion-note *ngIf="result.time_stats_other">{{result.time_stats}}+{{result.time_stats_other}}`</ion-note>
+          <div>
+            <img src="{{result.icon_stats}}" />
+            <img src="{{result.icon_stats_2}}" />
+          </div>
+          <div item-end>{{result.players}}</div>
+          <ion-note item-end>{{result.players_2}}</ion-note>
+        </ion-item>
+        <ion-item *ngIf="result.type_stats != 'SUBSTITUTE' && result.homeaway == 'HOME'" no-lines style="width:55%;float: left;border-right:2px solid;border-color:#dedede;margin:2%;">
+          <div item-start *ngIf="!result.time_stats_other">{{result.players}} {{result.time_stats}}`</div>
+          <div item-start *ngIf="result.time_stats_other">{{result.players}} {{result.time_stats}}+{{result.time_stats_other}}`</div>
+          <div item-end>
+            <img src="{{result.icon_stats}}" />
+          </div>
+        </ion-item>
+        <ion-item *ngIf="result.type_stats != 'SUBSTITUTE' && result.homeaway == 'AWAY'" no-lines style="width:55%;float: right;border-left:2px solid;border-color:#dedede;margin:2%;">
+          <div item-start>
+            <img src="{{result.icon_stats}}" />
+          </div>
+          <div item-end *ngIf="!result.time_stats_other">{{result.players}} {{result.time_stats}}`</div>
+          <div item-end *ngIf="result.time_stats_other">{{result.players}} {{result.time_stats}}+{{result.time_stats_other}}`</div>
+        </ion-item>
+        <ion-item *ngIf="result.type_stats == 'KICKOFF'" no-lines>
+          <div style="text-align: center;">
+            <img src="https://ssl.gstatic.com/onebox/sports/soccer_timeline/whistle.svg" />
+          </div>
+          <div style="text-align: center;">
+            KICKOFF
+          </div>
+        </ion-item>
+        <ion-item *ngIf="result.type_stats == 'FULLTIME'" no-lines>
+            <div style="text-align: center;">
+              <img src="https://ssl.gstatic.com/onebox/sports/soccer_timeline/whistle.svg" />
+            </div>
+            <div style="text-align: center;">
+              FULL-TIME
+            </div>
+          </ion-item>
+      </div>
+    </div>
     <div *ngSwitchCase="'lineups'">
       <ion-item style="background: #346210;" no-lines>
         <ion-avatar item-start>

@@ -17,6 +17,7 @@ export class ResultgamePage {
   public datecurrent: any;
   public game:any;
   public idgame:any;
+  public results = [];
   public resultshome = [];
   public resultsaway = [];
   public stats = [];
@@ -40,6 +41,7 @@ export class ResultgamePage {
     });
     this.game = 'result'
     this.loader.present();
+    this.doGetResults();
     this.doGetResultsHome();
     this.doGetResultsAway();
     this.doGetStats();
@@ -52,13 +54,13 @@ export class ResultgamePage {
     this.datecurrent = moment().format();
   }
   doGetResultsHome() {
-    this.api.get('table/z_game_results', { params: { limit: 100, filter: "id_game=" + "'" + this.idgame + "'" + " AND type_stats='RESULTS' AND homeaway='HOME'", sort: "time_stats" + " ASC " } }).subscribe(val => {
+    this.api.get('table/z_game_results', { params: { limit: 100, filter: "id_game=" + "'" + this.idgame + "'" + " AND type_stats='GOAL' AND homeaway='HOME'", sort: "time_stats" + " ASC " } }).subscribe(val => {
       this.resultshome = val['data'];
       console.log(this.resultshome);
     });
   }
   doGetResultsAway() {
-    this.api.get('table/z_game_results', { params: { limit: 100, filter: "id_game=" + "'" + this.idgame + "'" + " AND type_stats='RESULTS' AND homeaway='AWAY'", sort: "time_stats" + " ASC " } }).subscribe(val => {
+    this.api.get('table/z_game_results', { params: { limit: 100, filter: "id_game=" + "'" + this.idgame + "'" + " AND type_stats='GOAL' AND homeaway='AWAY'", sort: "time_stats" + " ASC " } }).subscribe(val => {
       this.resultsaway = val['data'];
       console.log(this.resultsaway);
     });
@@ -73,6 +75,12 @@ export class ResultgamePage {
     this.api.get('table/z_game_lineups', { params: { limit: 100, filter: "id_game=" + "'" + this.idgame + "'", sort: "id" + " ASC " } }).subscribe(val => {
       this.lineups = val['data'];
       console.log(this.lineups);
+    });
+  }
+  doGetResults() {
+    this.api.get('table/z_game_results', { params: { limit: 100, filter: "id_game=" + "'" + this.idgame + "'", sort: "time_stats" + " DESC, time_stats_other DESC " } }).subscribe(val => {
+      this.results = val['data'];
+      console.log(this.resultshome);
     });
   }
 
