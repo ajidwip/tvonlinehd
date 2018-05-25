@@ -183,178 +183,215 @@
           <img style="height:40px;width:40px;" src="{{schedule.club_home_icon_url}}" />
         </ion-avatar>
         <p style="color:#ffffff;">{{schedule.club_home}}</p>
-        <p style="color:#ffffff;" item-end>4-3-3</p>
+        <p style="color:#ffffff;" item-end>{{lineups[0].formation}}</p>
       </ion-item>
       <div class="container-pitch">
         <img src="assets/imgs/pitch.jpg" />
         <div class="home-gk">
-          <div class="home">1</div>
+          <div class="home">{{lineups[0].number_player_1}}<p>{{lineups[0].player_1}}</p></div>
         </div>
-        <div class="home-lb">
-          <div class="home">1</div>
+        <div *ngIf="lineups[0].formation_cb == '4'" class="home-lb">
+          <div class="home">{{lineups[0].number_player_2}}<p>{{lineups[0].player_2}}</p></div>
         </div>
-        <div class="home-cb-1">
-          <div class="home">1</div>
+        <div *ngIf="lineups[0].formation_cb == '3'" class="home-cb-1">
+          <div class="home">{{lineups[0].number_player_1}}<p>{{lineups[0].player_1}}</p></div>
         </div>
-        <div class="home-cb-2">
-          <div class="home">1</div>
+        <div *ngIf="lineups[0].formation_cb == '4'" class="home-cb-2">
+          <div class="home">{{lineups[0].number_player_3}}<p>{{lineups[0].player_3}}</p></div>
         </div>
-        <div class="home-cb-3">
-          <div class="home">1</div>
+        <div *ngIf="lineups[0].formation_cb == '3'" class="home-cb-3">
+          <div class="home">{{lineups[0].number_player_1}}<p>{{lineups[0].player_1}}</p></div>
         </div>
-        <div class="home-cb-4">
-          <div class="home">1</div>
+        <div *ngIf="lineups[0].formation_cb == '4'" class="home-cb-4">
+          <div class="home">{{lineups[0].number_player_4}}<p>{{lineups[0].player_4}}</p></div>
         </div>
-        <div class="home-cb-5">
-          <div class="home">1</div>
+        <div *ngIf="lineups[0].formation_cb == '3'" class="home-cb-5">
+          <div class="home">{{lineups[0].number_player_1}}<p>{{lineups[0].player_1}}</p></div>
         </div>
-        <div class="home-rb">
-          <div class="home">1</div>
+        <div *ngIf="lineups[0].formation_cb == '4'" class="home-rb">
+          <div class="home">{{lineups[0].number_player_5}}<p>{{lineups[0].player_5}}</p></div>
         </div>
-        <div class="home-dm-1">
-          <div class="home">1</div>
+        <div *ngIf="lineups[0].formation_dm == '3'" class="home-dm-1">
+          <div class="home">{{lineups[0].number_player_1}}<p>{{lineups[0].player_1}}</p></div>
         </div>
-        <div class="home-dm-2">
-          <div class="home">1</div>
+        <div *ngIf="lineups[0].formation_dm == '2'" class="home-dm-2">
+          <div class="home">{{lineups[0].number_player_1}}<p>{{lineups[0].player_1}}</p></div>
         </div>
-        <div class="home-dm-3">
-          <div class="home">1</div>
+        <div *ngIf="lineups[0].formation_dm == '3' || lineups[0].formation_dm == '1'" class="home-dm-3">
+          <div class="home">{{lineups[0].number_player_1}}<p>{{lineups[0].player_1}}</p></div>
         </div>
-        <div class="home-dm-4">
-          <div class="home">1</div>
+        <div *ngIf="lineups[0].formation_dm == '2'" class="home-dm-4">
+          <div class="home">{{lineups[0].number_player_1}}<p>{{lineups[0].player_1}}</p></div>
         </div>
-        <div class="home-dm-5">
-          <div class="home">1</div>
+        <div *ngIf="lineups[0].formation_dm == '3'" class="home-dm-5">
+          <div class="home">{{lineups[0].number_player_1}}<p>{{lineups[0].player_1}}</p></div>
         </div>
-        <div class="home-cm-1">
-          <div class="home">1</div>
+        <div *ngIf="lineups[0].formation_cm == '4'" class="home-lcm">
+          <div *ngIf="lineups[0].formation_cm == '4'" class="home">{{lineups[0].number_player_6}}<p>{{lineups[0].player_6}}</p></div>
         </div>
-        <div class="home-cm-2">
-          <div class="home">1</div>
+        <div *ngIf="lineups[0].formation_cm == '3'" class="home-cm-1">
+          <div class="home">{{lineups[0].number_player_6}}<p>{{lineups[0].player_6}}</p></div>
         </div>
-        <div class="home-cm-3">
-          <div class="home">1</div>
+        <div *ngIf="lineups[0].formation_cm == '2' || lineups[0].formation_cm == '4'" class="home-cm-2">
+          <div *ngIf="lineups[0].formation_cm == '4'" class="home">{{lineups[0].number_player_7}}<p>{{lineups[0].player_7}}</p></div>
         </div>
-        <div class="home-cm-4">
-          <div class="home">1</div>
+        <div *ngIf="lineups[0].formation_cm == '3' || lineups[0].formation_cm == '1'" class="home-cm-3">
+          <div class="home">{{lineups[0].number_player_7}}<p>{{lineups[0].player_7}}</p></div>
         </div>
-        <div class="home-cm-5">
-          <div class="home">1</div>
+        <div *ngIf="lineups[0].formation_cm == '2' || lineups[0].formation_cm == '4'" class="home-cm-4">
+          <div *ngIf="lineups[0].formation_cm == '4'" class="home">{{lineups[0].number_player_8}}<p>{{lineups[0].player_8}}</p></div>
         </div>
-        <div class="home-acm-1">
-          <div class="home">1</div>
+        <div *ngIf="lineups[0].formation_cm == '3'" class="home-cm-5">
+          <div class="home">{{lineups[0].number_player_8}}<p>{{lineups[0].player_8}}</p></div>
         </div>
-        <div class="home-acm-2">
-          <div class="home">1</div>
+        <div *ngIf="lineups[0].formation_cm == '4'" class="home-rcm">
+          <div *ngIf="lineups[0].formation_cm == '4'" class="home">{{lineups[0].number_player_9}}<p>{{lineups[0].player_9}}</p></div>
         </div>
-        <div class="home-acm-3">
-          <div class="home">1</div>
+        <div *ngIf="lineups[0].formation_acm == '4'" class="home-lacm">
+          <div class="home">{{lineups[0].number_player_1}}<p>{{lineups[0].player_1}}</p></div>
         </div>
-        <div class="home-acm-4">
-          <div class="home">1</div>
+        <div *ngIf="lineups[0].formation_acm == '3'" class="home-acm-1">
+          <div class="home">{{lineups[0].number_player_1}}<p>{{lineups[0].player_1}}</p></div>
         </div>
-        <div class="home-acm-5">
-          <div class="home">1</div>
+        <div *ngIf="lineups[0].formation_acm == '2'" class="home-acm-2">
+          <div class="home">{{lineups[0].number_player_1}}<p>{{lineups[0].player_1}}</p></div>
         </div>
-        <div class="home-cf-1">
-          <div class="home">1</div>
+        <div *ngIf="lineups[0].formation_acm == '3' || lineups[0].formation_acm == '1'" class="home-acm-3">
+          <div class="home">{{lineups[0].number_player_1}}<p>{{lineups[0].player_1}}</p></div>
         </div>
-        <div class="home-cf-2">
-          <div class="home">1</div>
+        <div *ngIf="lineups[0].formation_acm == '2'" class="home-acm-4">
+          <div class="home">{{lineups[0].number_player_1}}<p>{{lineups[0].player_1}}</p></div>
         </div>
-        <div class="home-cf-3">
-          <div class="home">1</div>
+        <div *ngIf="lineups[0].formation_acm == '3'" class="home-acm-5">
+          <div class="home">{{lineups[0].number_player_8}}<p>{{lineups[0].player_8}}</p></div>
         </div>
-        <div class="home-cf-4">
-          <div class="home">1</div>
+        <div *ngIf="lineups[0].formation_acm == '4'" class="home-racm">
+          <div class="home">{{lineups[0].number_player_8}}<p>{{lineups[0].player_8}}</p></div>
         </div>
-        <div class="home-cf-5">
-          <div class="home">1</div>
+        <div *ngIf="lineups[0].formation_cf == '4'" class="home-lcf">
+          <div *ngIf="lineups[0].formation_cf == '4'" class="home">{{lineups[0].number_player_9}}<p>{{lineups[0].player_9}}</p></div>
+        </div>
+        <div *ngIf="lineups[0].formation_cf == '3'" class="home-cf-1">
+          <div *ngIf="lineups[0].formation_cf == '3'" class="home">{{lineups[0].number_player_9}}<p>{{lineups[0].player_9}}</p></div>
+        </div>
+        <div *ngIf="lineups[0].formation_cf == '2' || lineups[0].formation_cf == '4'" class="home-cf-2">
+          <div class="home">{{lineups[0].number_player_10}}<p>{{lineups[0].player_10}}</p></div>
+        </div>
+        <div *ngIf="lineups[0].formation_cf == '3' || lineups[0].formation_cf == '1'" class="home-cf-3">
+          <div *ngIf="lineups[0].formation_cf == '1'" class="home">{{lineups[0].number_player_11}}<p>{{lineups[0].player_11}}</p></div>
+          <div *ngIf="lineups[0].formation_cf == '3'" class="home">{{lineups[0].number_player_10}}<p>{{lineups[0].player_10}}</p></div>
+        </div>
+        <div *ngIf="lineups[0].formation_cf == '2' || lineups[0].formation_cf == '4'" class="home-cf-4">
+          <div class="home">{{lineups[0].number_player_11}}<p>{{lineups[0].player_11}}</p></div>
+        </div>
+        <div *ngIf="lineups[0].formation_cf == '3'" class="home-cf-5">
+          <div *ngIf="lineups[0].formation_cf == '3'" class="home">{{lineups[0].number_player_11}}<p>{{lineups[0].player_11}}</p></div>
+        </div>
+        <div *ngIf="lineups[0].formation_cf == '4'" class="home-rcf">
+          <div *ngIf="lineups[0].formation_cf == '4'" class="home">{{lineups[0].number_player_11}}<p>{{lineups[0].player_11}}</p></div>
         </div>
 
         <div class="away-gk">
-          <div class="away">1</div>
+          <div class="away">1<p>Aji</p></div>
         </div>
         <div class="away-lb">
-          <div class="away">1</div>
+          <div class="away">1<p>Aji</p></div>
         </div>
-        <div class="away-cb-1">
-          <div class="away">1</div>
+        <div *ngIf="" class="away-cb-1">
+          <div class="away">1<p>Aji</p></div>
         </div>
         <div class="away-cb-2">
-          <div class="away">1</div>
+          <div class="away">1<p>Aji</p></div>
         </div>
-        <div class="away-cb-3">
-          <div class="away">1</div>
+        <div *ngIf="" class="away-cb-3">
+          <div class="away">1<p>Aji</p></div>
         </div>
         <div class="away-cb-4">
-          <div class="away">1</div>
+          <div class="away">1<p>Aji</p></div>
         </div>
-        <div class="away-cb-5">
-          <div class="away">1</div>
+        <div *ngIf="" class="away-cb-5">
+          <div class="away">1<p>Aji</p></div>
         </div>
         <div class="away-rb">
-          <div class="away">1</div>
+          <div class="away">1<p>Aji</p></div>
         </div>
-        <div class="away-dm-1">
-          <div class="away">1</div>
+        <div *ngIf="" class="away-dm-1">
+          <div class="away">1<p>Aji</p></div>
         </div>
         <div class="away-dm-2">
-          <div class="away">1</div>
+          <div class="away">1<p>Aji</p></div>
         </div>
-        <div class="away-dm-3">
-          <div class="away">1</div>
+        <div *ngIf="" class="away-dm-3">
+          <div class="away">1<p>Aji</p></div>
         </div>
         <div class="away-dm-4">
-          <div class="away">1</div>
+          <div class="away">1<p>Aji</p></div>
         </div>
-        <div class="away-dm-5">
-          <div class="away">1</div>
+        <div *ngIf="" class="away-dm-5">
+          <div class="away">1<p>Aji</p></div>
         </div>
-        <div class="away-cm-1">
-          <div class="away">1</div>
+        <div *ngIf="" class="away-lcm">
+          <div class="away">1<p>Aji</p></div>
         </div>
-        <div class="away-cm-2">
-          <div class="away">1</div>
+        <div *ngIf="" class="away-cm-1">
+          <div class="away">1<p>Aji</p></div>
         </div>
-        <div class="away-cm-3">
-          <div class="away">1</div>
+        <div *ngIf="" class="away-cm-2">
+          <div class="away">1<p>Aji</p></div>
         </div>
-        <div class="away-cm-4">
-          <div class="away">1</div>
+        <div *ngIf="" class="away-cm-3">
+          <div class="away">1<p>Aji</p></div>
         </div>
-        <div class="away-cm-5">
-          <div class="away">1</div>
+        <div *ngIf="" class="away-cm-4">
+          <div class="away">1<p>Aji</p></div>
+        </div>
+        <div *ngIf="" class="away-cm-5">
+          <div class="away">1<p>Aji</p></div>
+        </div>
+        <div *ngIf="" class="away-rcm">
+          <div class="away">1<p>Aji</p></div>
+        </div>
+        <div class="away-lacm">
+          <div class="away">1<p>Aji</p></div>
         </div>
         <div class="away-acm-1">
-          <div class="away">1</div>
+          <div class="away">1<p>Aji</p></div>
         </div>
-        <div class="away-acm-2">
-          <div class="away">1</div>
+        <div *ngIf="" class="away-acm-2">
+          <div class="away">1<p>Aji</p></div>
         </div>
         <div class="away-acm-3">
-          <div class="away">1</div>
+          <div class="away">1<p>Aji</p></div>
         </div>
-        <div class="away-acm-4">
-          <div class="away">1</div>
+        <div *ngIf="" class="away-acm-4">
+          <div class="away">1<p>Aji</p></div>
         </div>
         <div class="away-acm-5">
-          <div class="away">1</div>
+          <div class="away">1<p>Aji</p></div>
         </div>
-        <div class="away-cf-1">
-          <div class="away">1</div>
+        <div class="away-racm">
+          <div class="away">1<p>Aji</p></div>
         </div>
-        <div class="away-cf-2">
-          <div class="away">1</div>
+        <div *ngIf="" class="away-lcf">
+          <div class="away">1<p>Aji</p></div>
+        </div>
+        <div *ngIf="" class="away-cf-1">
+          <div class="away">1<p>Aji</p></div>
+        </div>
+        <div *ngIf="" class="away-cf-2">
+          <div class="away">1<p>Aji</p></div>
         </div>
         <div class="away-cf-3">
-          <div class="away">1</div>
+          <div class="away">1<p>Aji</p></div>
         </div>
-        <div class="away-cf-4">
-          <div class="away">1</div>
+        <div *ngIf="" class="away-cf-4">
+          <div class="away">1<p>Aji</p></div>
         </div>
-        <div class="away-cf-5">
-          <div class="away">1</div>
+        <div *ngIf="" class="away-cf-5">
+          <div class="away">1<p>Aji</p></div>
+        </div>
+        <div *ngIf="" class="away-rcf">
+          <div class="away">1<p>Aji</p></div>
         </div>
       </div>
       <ion-item style="background: #346210;margin-top:-2%;" no-lines>
