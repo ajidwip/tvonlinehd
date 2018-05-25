@@ -219,6 +219,17 @@ page-resultgame {
         height:40px;
         background: rgb(161, 33, 75);
     }
+    .home-ldm {
+        position: absolute;
+        top: 20%;
+        left: 5%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(161, 33, 75);
+    }
     .home-dm-1 {
         position: absolute;
         top: 20%;
@@ -267,6 +278,17 @@ page-resultgame {
         position: absolute;
         top: 20%;
         left: 73%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(161, 33, 75);
+    }
+    .home-rdm {
+        position: absolute;
+        top: 20%;
+        left: 85%;
         border-radius:50%;
         border:3px solid;
         border-color:#ffffff;
@@ -595,6 +617,17 @@ page-resultgame {
         height:40px;
         background: rgb(0, 82, 158);
     }
+    .away-ldm {
+        position: absolute;
+        top: 70%;
+        left: 5%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(0, 82, 158);
+    }
     .away-dm-1 {
         position: absolute;
         top: 70%;
@@ -643,6 +676,17 @@ page-resultgame {
         position: absolute;
         top: 70%;
         left: 73%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(0, 82, 158);
+    }
+    .away-rdm {
+        position: absolute;
+        top: 70%;
+        left: 85%;
         border-radius:50%;
         border:3px solid;
         border-color:#ffffff;
