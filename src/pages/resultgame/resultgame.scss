@@ -118,228 +118,631 @@ page-resultgame {
         position: relative;
         text-align: center;
         color: #ffffff;
+        margin-top:-1px;
+    }
+    .home {
+        margin-top:20%;
+    }
+    .away {
+        margin-top:20%;
     }
     .home-gk {
         position: absolute;
-        top: 10%;
+        top: 3%;
         left: 50%;
         transform: translate(-50%, -50%);
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(161, 33, 75);
     }
     .home-lb {
         position: absolute;
-        top: 20%;
-        left: 20%;
+        top: 10%;
+        left: 5%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(161, 33, 75);
     }
     .home-cb-1 {
         position: absolute;
-        top: 20%;
-        left: 30%;
+        top: 10%;
+        left: 17%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(161, 33, 75);
     }
     .home-cb-2 {
         position: absolute;
-        top: 20%;
-        left: 40%;
+        top: 10%;
+        left: 30%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(161, 33, 75);
     }
     .home-cb-3 {
         position: absolute;
-        top: 20%;
-        left: 50%;
+        top: 10%;
+        left: 45%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(161, 33, 75);
     }
     .home-cb-4 {
         position: absolute;
-        top: 20%;
+        top: 10%;
         left: 60%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(161, 33, 75);
     }
     .home-cb-5 {
         position: absolute;
-        top: 20%;
-        left: 70%;
+        top: 10%;
+        left: 73%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(161, 33, 75);
     }
     .home-rb {
         position: absolute;
-        top: 15%;
-        left: 80%;
+        top: 10%;
+        left: 85%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(161, 33, 75);
     }
     .home-dm-1 {
         position: absolute;
-        top: 25%;
-        left: 30%;
+        top: 20%;
+        left: 17%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(161, 33, 75);
     }
     .home-dm-2 {
         position: absolute;
-        top: 25%;
-        left: 40%;
+        top: 20%;
+        left: 30%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(161, 33, 75);
     }
     .home-dm-3 {
         position: absolute;
-        top: 25%;
-        left: 50%;
+        top: 20%;
+        left: 45%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(161, 33, 75);
     }
     .home-dm-4 {
         position: absolute;
-        top: 25%;
+        top: 20%;
         left: 60%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(161, 33, 75);
     }
     .home-dm-5 {
         position: absolute;
-        top: 25%;
-        left: 70%;
+        top: 20%;
+        left: 73%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(161, 33, 75);
     }
     .home-cm-1 {
         position: absolute;
-        top: 30%;
-        left: 30%;
+        top: 25%;
+        left: 17%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(161, 33, 75);
     }
     .home-cm-2 {
         position: absolute;
-        top: 30%;
-        left: 40%;
+        top: 25%;
+        left: 30%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(161, 33, 75);
     }
     .home-cm-3 {
         position: absolute;
-        top: 30%;
-        left: 50%;
+        top: 25%;
+        left: 45%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(161, 33, 75);
     }
     .home-cm-4 {
         position: absolute;
-        top: 30%;
+        top: 25%;
         left: 60%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(161, 33, 75);
     }
     .home-cm-5 {
         position: absolute;
-        top: 30%;
-        left: 70%;
+        top: 25%;
+        left: 73%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(161, 33, 75);
     }
     .home-acm-1 {
         position: absolute;
-        top: 35%;
-        left: 30%;
+        top: 30%;
+        left: 17%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(161, 33, 75);
     }
     .home-acm-2 {
         position: absolute;
-        top: 35%;
-        left: 40%;
+        top: 30%;
+        left: 30%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(161, 33, 75);
     }
     .home-acm-3 {
         position: absolute;
-        top: 35%;
-        left: 50%;
+        top: 30%;
+        left: 45%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(161, 33, 75);
     }
     .home-acm-4 {
         position: absolute;
-        top: 35%;
+        top: 30%;
         left: 60%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(161, 33, 75);
     }
     .home-acm-5 {
         position: absolute;
-        top: 35%;
-        left: 70%;
+        top: 30%;
+        left: 73%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(161, 33, 75);
     }
     .home-cf-1 {
         position: absolute;
         top: 40%;
-        left: 30%;
+        left: 17%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(161, 33, 75);
     }
     .home-cf-2 {
         position: absolute;
         top: 40%;
-        left: 40%;
+        left: 30%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(161, 33, 75);
     }
     .home-cf-3 {
         position: absolute;
         top: 40%;
-        left: 50%;
+        left: 45%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(161, 33, 75);
     }
     .home-cf-4 {
         position: absolute;
         top: 40%;
         left: 60%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(161, 33, 75);
     }
     .home-cf-5 {
         position: absolute;
         top: 40%;
-        left: 70%;
+        left: 73%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(161, 33, 75);
     }
 
     .away-gk {
         position: absolute;
-        top: 80%;
+        top: 93%;
         left: 50%;
         transform: translate(-50%, -50%);
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(0, 82, 158);
     }
     .away-lb {
         position: absolute;
+        top: 80%;
+        left: 5%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(0, 82, 158);
     }
     .away-cb-1 {
         position: absolute;
+        top: 80%;
+        left: 17%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(0, 82, 158);
     }
     .away-cb-2 {
         position: absolute;
+        top: 80%;
+        left: 30%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(0, 82, 158);
     }
     .away-cb-3 {
         position: absolute;
+        top: 80%;
+        left: 45%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(0, 82, 158);
     }
     .away-cb-4 {
         position: absolute;
+        top: 80%;
+        left: 60%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(0, 82, 158);
     }
     .away-cb-5 {
         position: absolute;
+        top: 80%;
+        left: 73%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(0, 82, 158);
     }
     .away-rb {
         position: absolute;
+        top: 80%;
+        left: 85%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(0, 82, 158);
     }
     .away-dm-1 {
         position: absolute;
+        top: 70%;
+        left: 17%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(0, 82, 158);
     }
     .away-dm-2 {
         position: absolute;
+        top: 70%;
+        left: 30%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(0, 82, 158);
     }
     .away-dm-3 {
         position: absolute;
+        top: 70%;
+        left: 45%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(0, 82, 158);
+    }
+    .away-dm-4 {
+        position: absolute;
+        top: 70%;
+        left: 60%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(0, 82, 158);
+    }
+    .away-dm-5 {
+        position: absolute;
+        top: 70%;
+        left: 73%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(0, 82, 158);
     }
     .away-cm-1 {
         position: absolute;
+        top: 65%;
+        left: 17%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(0, 82, 158);
     }
     .away-cm-2 {
         position: absolute;
+        top: 65%;
+        left: 30%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(0, 82, 158);
     }
     .away-cm-3 {
         position: absolute;
+        top: 65%;
+        left: 45%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(0, 82, 158);
     }
     .away-cm-4 {
         position: absolute;
+        top: 65%;
+        left: 60%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(0, 82, 158);
     }
     .away-cm-5 {
         position: absolute;
+        top: 65%;
+        left: 73%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(0, 82, 158);
     }
     .away-acm-1 {
         position: absolute;
+        top: 60%;
+        left: 17%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(0, 82, 158);
     }
     .away-acm-2 {
         position: absolute;
+        top: 60%;
+        left: 30%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(0, 82, 158);
     }
     .away-acm-3 {
         position: absolute;
+        top: 60%;
+        left: 45%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(0, 82, 158);
     }
     .away-acm-4 {
         position: absolute;
+        top: 60%;
+        left: 60%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(0, 82, 158);
     }
     .away-acm-5 {
         position: absolute;
+        top: 60%;
+        left: 73%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(0, 82, 158);
     }
     .away-cf-1 {
         position: absolute;
+        top: 50%;
+        left: 17%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(0, 82, 158);
     }
     .away-cf-2 {
         position: absolute;
+        top: 50%;
+        left: 30%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(0, 82, 158);
     }
     .away-cf-3 {
         position: absolute;
+        top: 50%;
+        left: 45%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(0, 82, 158);
     }
     .away-cf-4 {
         position: absolute;
+        top: 50%;
+        left: 60%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(0, 82, 158);
     }
     .away-cf-5 {
         position: absolute;
+        top: 50%;
+        left: 73%;
+        border-radius:50%;
+        border:3px solid;
+        border-color:#ffffff;
+        width:40px;
+        height:40px;
+        background: rgb(0, 82, 158);
     }
 }

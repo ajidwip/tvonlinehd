@@ -178,80 +178,195 @@
       </ion-card>
     </div>
     <div *ngSwitchCase="'lineups'">
+      <ion-item style="background: #346210;" no-lines>
+        <ion-avatar item-start>
+          <img style="height:40px;width:40px;" src="{{schedule.club_home_icon_url}}" />
+        </ion-avatar>
+        <p style="color:#ffffff;">{{schedule.club_home}}</p>
+        <p style="color:#ffffff;" item-end>4-3-3</p>
+      </ion-item>
       <div class="container-pitch">
         <img src="assets/imgs/pitch.jpg" />
-        <ion-item style="position: absolute;top:-1%;background: transparent;" no-lines>
-          <ion-avatar item-start>
-            <img style="height:30px;width:30px;" src="{{schedule.club_home_icon_url}}" />
-          </ion-avatar>
-          <p style="color:#ffffff;margin-top:-2%;">{{schedule.club_home}}</p>
-          <p style="color:#ffffff;margin-top:-1%;margin-right:5%;" item-end>4-3-3</p>
-        </ion-item>
-        <div class="home-gk">1</div>
-        <div class="home-lb">1</div>
-        <div class="home-cb-1">1</div>
-        <div class="home-cb-2">1</div>
-        <div class="home-cb-3">1</div>
-        <div class="home-cb-4">1</div>
-        <div class="home-cb-5">1</div>
-        <div class="home-rb">1</div>
-        <div class="home-dm-1">1</div>
-        <div class="home-dm-2">1</div>
-        <div class="home-dm-3">1</div>
-        <div class="home-dm-4">1</div>
-        <div class="home-dm-5">1</div>
-        <div class="home-cm-1">1</div>
-        <div class="home-cm-2">1</div>
-        <div class="home-cm-3">1</div>
-        <div class="home-cm-4">1</div>
-        <div class="home-cm-5">1</div>
-        <div class="home-acm-1">1</div>
-        <div class="home-acm-2">1</div>
-        <div class="home-acm-3">1</div>
-        <div class="home-acm-4">1</div>
-        <div class="home-acm-5">1</div>
-        <div class="home-cf-1">1</div>
-        <div class="home-cf-2">1</div>
-        <div class="home-cf-3">1</div>
-        <div class="home-cf-4">1</div>
-        <div class="home-cf-5">1</div>
+        <div class="home-gk">
+          <div class="home">1</div>
+        </div>
+        <div class="home-lb">
+          <div class="home">1</div>
+        </div>
+        <div class="home-cb-1">
+          <div class="home">1</div>
+        </div>
+        <div class="home-cb-2">
+          <div class="home">1</div>
+        </div>
+        <div class="home-cb-3">
+          <div class="home">1</div>
+        </div>
+        <div class="home-cb-4">
+          <div class="home">1</div>
+        </div>
+        <div class="home-cb-5">
+          <div class="home">1</div>
+        </div>
+        <div class="home-rb">
+          <div class="home">1</div>
+        </div>
+        <div class="home-dm-1">
+          <div class="home">1</div>
+        </div>
+        <div class="home-dm-2">
+          <div class="home">1</div>
+        </div>
+        <div class="home-dm-3">
+          <div class="home">1</div>
+        </div>
+        <div class="home-dm-4">
+          <div class="home">1</div>
+        </div>
+        <div class="home-dm-5">
+          <div class="home">1</div>
+        </div>
+        <div class="home-cm-1">
+          <div class="home">1</div>
+        </div>
+        <div class="home-cm-2">
+          <div class="home">1</div>
+        </div>
+        <div class="home-cm-3">
+          <div class="home">1</div>
+        </div>
+        <div class="home-cm-4">
+          <div class="home">1</div>
+        </div>
+        <div class="home-cm-5">
+          <div class="home">1</div>
+        </div>
+        <div class="home-acm-1">
+          <div class="home">1</div>
+        </div>
+        <div class="home-acm-2">
+          <div class="home">1</div>
+        </div>
+        <div class="home-acm-3">
+          <div class="home">1</div>
+        </div>
+        <div class="home-acm-4">
+          <div class="home">1</div>
+        </div>
+        <div class="home-acm-5">
+          <div class="home">1</div>
+        </div>
+        <div class="home-cf-1">
+          <div class="home">1</div>
+        </div>
+        <div class="home-cf-2">
+          <div class="home">1</div>
+        </div>
+        <div class="home-cf-3">
+          <div class="home">1</div>
+        </div>
+        <div class="home-cf-4">
+          <div class="home">1</div>
+        </div>
+        <div class="home-cf-5">
+          <div class="home">1</div>
+        </div>
 
-        <div class="away-gk">1</div>
-        <div class="away-lb">1</div>
-        <div class="away-cb-1">1</div>
-        <div class="away-cb-2">1</div>
-        <div class="away-cb-3">1</div>
-        <div class="away-cb-4">1</div>
-        <div class="away-cb-5">1</div>
-        <div class="away-rb">1</div>
-        <div class="away-dm-1">1</div>
-        <div class="away-dm-2">1</div>
-        <div class="away-dm-3">1</div>
-        <div class="away-dm-4">1</div>
-        <div class="away-dm-5">1</div>
-        <div class="away-cm-1">1</div>
-        <div class="away-cm-2">1</div>
-        <div class="away-cm-3">1</div>
-        <div class="away-cm-4">1</div>
-        <div class="away-cm-5">1</div>
-        <div class="away-acm-1">1</div>
-        <div class="away-acm-2">1</div>
-        <div class="away-acm-3">1</div>
-        <div class="away-acm-4">1</div>
-        <div class="away-acm-5">1</div>
-        <div class="away-cf-1">1</div>
-        <div class="away-cf-2">1</div>
-        <div class="away-cf-3">1</div>
-        <div class="away-cf-4">1</div>
-        <div class="away-cf-5">1</div>
+        <div class="away-gk">
+          <div class="away">1</div>
+        </div>
+        <div class="away-lb">
+          <div class="away">1</div>
+        </div>
+        <div class="away-cb-1">
+          <div class="away">1</div>
+        </div>
+        <div class="away-cb-2">
+          <div class="away">1</div>
+        </div>
+        <div class="away-cb-3">
+          <div class="away">1</div>
+        </div>
+        <div class="away-cb-4">
+          <div class="away">1</div>
+        </div>
+        <div class="away-cb-5">
+          <div class="away">1</div>
+        </div>
+        <div class="away-rb">
+          <div class="away">1</div>
+        </div>
+        <div class="away-dm-1">
+          <div class="away">1</div>
+        </div>
+        <div class="away-dm-2">
+          <div class="away">1</div>
+        </div>
+        <div class="away-dm-3">
+          <div class="away">1</div>
+        </div>
+        <div class="away-dm-4">
+          <div class="away">1</div>
+        </div>
+        <div class="away-dm-5">
+          <div class="away">1</div>
+        </div>
+        <div class="away-cm-1">
+          <div class="away">1</div>
+        </div>
+        <div class="away-cm-2">
+          <div class="away">1</div>
+        </div>
+        <div class="away-cm-3">
+          <div class="away">1</div>
+        </div>
+        <div class="away-cm-4">
+          <div class="away">1</div>
+        </div>
+        <div class="away-cm-5">
+          <div class="away">1</div>
+        </div>
+        <div class="away-acm-1">
+          <div class="away">1</div>
+        </div>
+        <div class="away-acm-2">
+          <div class="away">1</div>
+        </div>
+        <div class="away-acm-3">
+          <div class="away">1</div>
+        </div>
+        <div class="away-acm-4">
+          <div class="away">1</div>
+        </div>
+        <div class="away-acm-5">
+          <div class="away">1</div>
+        </div>
+        <div class="away-cf-1">
+          <div class="away">1</div>
+        </div>
+        <div class="away-cf-2">
+          <div class="away">1</div>
+        </div>
+        <div class="away-cf-3">
+          <div class="away">1</div>
+        </div>
+        <div class="away-cf-4">
+          <div class="away">1</div>
+        </div>
+        <div class="away-cf-5">
+          <div class="away">1</div>
+        </div>
       </div>
-      <ion-item style="background: #014100;margin-top:-4px;" no-lines>
+      <ion-item style="background: #346210;margin-top:-2%;" no-lines>
         <ion-avatar item-start>
           <img style="height:40px;width:40px;" src="{{schedule.club_away_icon_url}}" />
         </ion-avatar>
         <p style="color:#ffffff;">{{schedule.club_away}}</p>
         <p style="color:#ffffff;" item-end>4-3-3</p>
       </ion-item>
+      <ion-card>
+        Testing
+      </ion-card>
     </div>
   </div>
 </ion-content>
