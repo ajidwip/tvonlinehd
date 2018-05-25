@@ -19,6 +19,7 @@ export class ResultgamePage {
   public idgame:any;
   public resultshome = [];
   public resultsaway = [];
+  public stats = [];
   public lineups = [];
 
   constructor(
@@ -41,6 +42,7 @@ export class ResultgamePage {
     this.loader.present();
     this.doGetResultsHome();
     this.doGetResultsAway();
+    this.doGetStats();
     this.doGetLineups();
   }
   ngAfterViewInit() {
@@ -59,6 +61,12 @@ export class ResultgamePage {
     this.api.get('table/z_game_results', { params: { limit: 100, filter: "id_game=" + "'" + this.idgame + "'" + " AND type_stats='RESULTS' AND homeaway='AWAY'", sort: "time_stats" + " ASC " } }).subscribe(val => {
       this.resultsaway = val['data'];
       console.log(this.resultsaway);
+    });
+  }
+  doGetStats() {
+    this.api.get('table/z_game_stats', { params: { limit: 100, filter: "id_game=" + "'" + this.idgame + "'", sort: "id" + " ASC " } }).subscribe(val => {
+      this.stats = val['data'];
+      console.log(this.stats);
     });
   }
   doGetLineups() {

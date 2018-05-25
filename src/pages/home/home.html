@@ -34,7 +34,7 @@
           {{clubhome}}&nbsp;&nbsp;{{schedule.date | date:"HH:mm"}}&nbsp;&nbsp;{{clubaway}}
         </div>
         <div *ngIf="schedule.date <= datecurrent" id="result-sticky" class="result-sticky">
-          {{schedule.club_home}} {{schedule.skor_home}} - {{schedule.skor_away}} {{schedule.club_away}}
+          {{clubhome}} {{schedule.skor_home}} - {{schedule.skor_away}} {{clubaway}}
         </div>
         <div id="statistics" class="statistics">
           <button style="font-size:12px;height:25px;" ion-button color="danger" (click)="openChannel(schedule)">{{schedule.info_live}}</button>
@@ -48,7 +48,7 @@
       </div>
       <div id="centered-right" class="centered-right">
         <div class="logo-club-right">
-          <img id="logo-clubright" style="width:40%;" src="{{schedule.club_away_icon_url}}" />
+          <img id="logo-clubright" style="width:40%;margin:auto;" src="{{schedule.club_away_icon_url}}" />
           <div id="name-clubright" class="logo-name">{{schedule.club_away}}</div>
         </div>
       </div>

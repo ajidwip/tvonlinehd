@@ -95,12 +95,14 @@ page-resultgame {
         width: 100%;
     }
     .logo-club-left {
-        float: left;
+        position: absolute;
         width: 35%;
+        left:0%;
     }
     .logo-club-right {
-        float: right;
+        position: absolute;
         width: 35%;
+        right: 0%;
     }
     .logo-name {
         font-family: Arial, Helvetica, sans-serif;

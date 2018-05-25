@@ -237,13 +237,13 @@ export class HomePage {
 
       }
       if (this.scroll > 100) {
-        document.getElementById('container-img').style.height = '65px'
+        document.getElementById('container-img').style.height = '70px'
         document.getElementById('container-img').style.transition = 'height 1s'
         document.getElementById('statistics').style.display = 'none'
         document.getElementById('name-clubleft').style.display = 'none'
         document.getElementById('name-clubright').style.display = 'none'
-        document.getElementById('logo-clubleft').style.width = '30%'
-        document.getElementById('logo-clubright').style.width = '30%'
+        document.getElementById('logo-clubleft').style.width = '27%'
+        document.getElementById('logo-clubright').style.width = '27%'
         document.getElementById('result').style.display = 'none'
         document.getElementById('result-sticky').style.display = 'block'
         document.getElementById('centered-left').style.left = '12%'
