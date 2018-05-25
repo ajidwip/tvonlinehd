@@ -194,95 +194,115 @@
           <div class="home">{{lineups[0].number_player_2}}<p>{{lineups[0].player_2}}</p></div>
         </div>
         <div *ngIf="lineups[0].formation_cb == '3'" class="home-cb-1">
-          <div class="home">{{lineups[0].number_player_1}}<p>{{lineups[0].player_1}}</p></div>
+          <div class="home">{{lineups[0].number_player_2}}<p>{{lineups[0].player_2}}</p></div>
         </div>
         <div *ngIf="lineups[0].formation_cb == '4'" class="home-cb-2">
           <div class="home">{{lineups[0].number_player_3}}<p>{{lineups[0].player_3}}</p></div>
         </div>
         <div *ngIf="lineups[0].formation_cb == '3'" class="home-cb-3">
-          <div class="home">{{lineups[0].number_player_1}}<p>{{lineups[0].player_1}}</p></div>
+          <div class="home">{{lineups[0].number_player_3}}<p>{{lineups[0].player_3}}</p></div>
         </div>
         <div *ngIf="lineups[0].formation_cb == '4'" class="home-cb-4">
           <div class="home">{{lineups[0].number_player_4}}<p>{{lineups[0].player_4}}</p></div>
         </div>
         <div *ngIf="lineups[0].formation_cb == '3'" class="home-cb-5">
-          <div class="home">{{lineups[0].number_player_1}}<p>{{lineups[0].player_1}}</p></div>
+          <div class="home">{{lineups[0].number_player_4}}<p>{{lineups[0].player_4}}</p></div>
         </div>
         <div *ngIf="lineups[0].formation_cb == '4'" class="home-rb">
           <div class="home">{{lineups[0].number_player_5}}<p>{{lineups[0].player_5}}</p></div>
         </div>
         <div *ngIf="lineups[0].formation_dm == '3'" class="home-dm-1">
-          <div class="home">{{lineups[0].number_player_1}}<p>{{lineups[0].player_1}}</p></div>
+          <div *ngIf="lineups[0].formation_dm == '3' && lineups[0].formation_cb == '4'" class="home">{{lineups[0].number_player_6}}<p>{{lineups[0].player_6}}</p></div>
+          <div *ngIf="lineups[0].formation_dm == '3' && lineups[0].formation_cb == '3'" class="home">{{lineups[0].number_player_5}}<p>{{lineups[0].player_5}}</p></div>
         </div>
         <div *ngIf="lineups[0].formation_dm == '2'" class="home-dm-2">
-          <div class="home">{{lineups[0].number_player_1}}<p>{{lineups[0].player_1}}</p></div>
+          <div class="home">{{lineups[0].number_player_6}}<p>{{lineups[0].player_6}}</p></div>
         </div>
         <div *ngIf="lineups[0].formation_dm == '3' || lineups[0].formation_dm == '1'" class="home-dm-3">
-          <div class="home">{{lineups[0].number_player_1}}<p>{{lineups[0].player_1}}</p></div>
+          <div *ngIf="lineups[0].formation_dm == '3' && lineups[0].formation_cb == '4'" class="home">{{lineups[0].number_player_7}}<p>{{lineups[0].player_7}}</p></div>
+          <div *ngIf="lineups[0].formation_dm == '3' && lineups[0].formation_cb == '3'" class="home">{{lineups[0].number_player_6}}<p>{{lineups[0].player_6}}</p></div>
+          <div *ngIf="lineups[0].formation_dm == '1'" class="home">{{lineups[0].number_player_6}}<p>{{lineups[0].player_6}}</p></div>
         </div>
         <div *ngIf="lineups[0].formation_dm == '2'" class="home-dm-4">
-          <div class="home">{{lineups[0].number_player_1}}<p>{{lineups[0].player_1}}</p></div>
+          <div class="home">{{lineups[0].number_player_7}}<p>{{lineups[0].player_7}}</p></div>
         </div>
         <div *ngIf="lineups[0].formation_dm == '3'" class="home-dm-5">
-          <div class="home">{{lineups[0].number_player_1}}<p>{{lineups[0].player_1}}</p></div>
+          <div *ngIf="lineups[0].formation_dm == '3'&& lineups[0].formation_cb == '4'" class="home">{{lineups[0].number_player_8}}<p>{{lineups[0].player_8}}</p></div>
+          <div *ngIf="lineups[0].formation_dm == '3'&& lineups[0].formation_cb == '3'" class="home">{{lineups[0].number_player_7}}<p>{{lineups[0].player_7}}</p></div>
         </div>
         <div *ngIf="lineups[0].formation_cm == '4'" class="home-lcm">
-          <div *ngIf="lineups[0].formation_cm == '4'" class="home">{{lineups[0].number_player_6}}<p>{{lineups[0].player_6}}</p></div>
+          <div *ngIf="lineups[0].formation_cm == '4' && lineups[0].formation_cf == '1'" class="home">{{lineups[0].number_player_6}}<p>{{lineups[0].player_6}}</p></div>
+          <div *ngIf="lineups[0].formation_cm == '4' && lineups[0].formation_cf == '3'" class="home">{{lineups[0].number_player_5}}<p>{{lineups[0].player_5}}</p></div>
         </div>
         <div *ngIf="lineups[0].formation_cm == '3'" class="home-cm-1">
           <div class="home">{{lineups[0].number_player_6}}<p>{{lineups[0].player_6}}</p></div>
         </div>
         <div *ngIf="lineups[0].formation_cm == '2' || lineups[0].formation_cm == '4'" class="home-cm-2">
-          <div *ngIf="lineups[0].formation_cm == '4'" class="home">{{lineups[0].number_player_7}}<p>{{lineups[0].player_7}}</p></div>
+          <div *ngIf="lineups[0].formation_cm == '4' && lineups[0].formation_cf == '1'" class="home">{{lineups[0].number_player_7}}<p>{{lineups[0].player_7}}</p></div>
+          <div *ngIf="lineups[0].formation_cm == '4' && lineups[0].formation_cf == '3'" class="home">{{lineups[0].number_player_6}}<p>{{lineups[0].player_6}}</p></div>
+          <div *ngIf="lineups[0].formation_cm == '2'" class="home">{{lineups[0].number_player_6}}<p>{{lineups[0].player_6}}</p></div>
         </div>
         <div *ngIf="lineups[0].formation_cm == '3' || lineups[0].formation_cm == '1'" class="home-cm-3">
           <div class="home">{{lineups[0].number_player_7}}<p>{{lineups[0].player_7}}</p></div>
         </div>
         <div *ngIf="lineups[0].formation_cm == '2' || lineups[0].formation_cm == '4'" class="home-cm-4">
-          <div *ngIf="lineups[0].formation_cm == '4'" class="home">{{lineups[0].number_player_8}}<p>{{lineups[0].player_8}}</p></div>
+          <div *ngIf="lineups[0].formation_cm == '4' && lineups[0].formation_cf == '1'" class="home">{{lineups[0].number_player_8}}<p>{{lineups[0].player_8}}</p></div>
+          <div *ngIf="lineups[0].formation_cm == '4' && lineups[0].formation_cf == '3'" class="home">{{lineups[0].number_player_7}}<p>{{lineups[0].player_7}}</p></div>
+          <div *ngIf="lineups[0].formation_cm == '2'" class="home">{{lineups[0].number_player_7}}<p>{{lineups[0].player_7}}</p></div>
         </div>
         <div *ngIf="lineups[0].formation_cm == '3'" class="home-cm-5">
           <div class="home">{{lineups[0].number_player_8}}<p>{{lineups[0].player_8}}</p></div>
         </div>
         <div *ngIf="lineups[0].formation_cm == '4'" class="home-rcm">
-          <div *ngIf="lineups[0].formation_cm == '4'" class="home">{{lineups[0].number_player_9}}<p>{{lineups[0].player_9}}</p></div>
+          <div *ngIf="lineups[0].formation_cm == '4' && lineups[0].formation_cf == '1'" class="home">{{lineups[0].number_player_9}}<p>{{lineups[0].player_9}}</p></div>
+          <div *ngIf="lineups[0].formation_cm == '4' && lineups[0].formation_cf == '3'" class="home">{{lineups[0].number_player_8}}<p>{{lineups[0].player_8}}</p></div>
         </div>
-        <div *ngIf="lineups[0].formation_acm == '4'" class="home-lacm">
-          <div class="home">{{lineups[0].number_player_1}}<p>{{lineups[0].player_1}}</p></div>
+        <div *ngIf="lineups[0].formation_acm == '4' || (lineups[0].formation_acm == '2' && (lineups[0].formation == '4-5-1' || lineups[0].formation == '3-5-2'))" class="home-lacm">
+          <div *ngIf="lineups[0].formation_acm == '4'" class="home">{{lineups[0].number_player_7}}<p>{{lineups[0].player_7}}</p></div>
+          <div *ngIf="lineups[0].formation_acm == '2' && (lineups[0].formation == '4-5-1')" class="home">{{lineups[0].number_player_9}}<p>{{lineups[0].player_9}}</p></div>
+          <div *ngIf="lineups[0].formation_acm == '2' && (lineups[0].formation == '3-5-2')" class="home">{{lineups[0].number_player_8}}<p>{{lineups[0].player_8}}</p></div>
         </div>
         <div *ngIf="lineups[0].formation_acm == '3'" class="home-acm-1">
-          <div class="home">{{lineups[0].number_player_1}}<p>{{lineups[0].player_1}}</p></div>
+          <div class="home">{{lineups[0].number_player_8}}<p>{{lineups[0].player_8}}</p></div>
         </div>
-        <div *ngIf="lineups[0].formation_acm == '2'" class="home-acm-2">
-          <div class="home">{{lineups[0].number_player_1}}<p>{{lineups[0].player_1}}</p></div>
+        <div *ngIf="lineups[0].formation_acm == '4' || (lineups[0].formation_acm == '2' && (lineups[0].formation != '4-5-1' && lineups[0].formation != '3-5-2'))" class="home-acm-2">
+            <div *ngIf="lineups[0].formation_acm == '4'" class="home">{{lineups[0].number_player_8}}<p>{{lineups[0].player_8}}</p></div>
+          <div *ngIf="lineups[0].formation_acm == '2' && (lineups[0].formation != '4-5-1' && lineups[0].formation != '3-5-2')" class="home">{{lineups[0].number_player_9}}<p>{{lineups[0].player_9}}</p></div>
         </div>
         <div *ngIf="lineups[0].formation_acm == '3' || lineups[0].formation_acm == '1'" class="home-acm-3">
-          <div class="home">{{lineups[0].number_player_1}}<p>{{lineups[0].player_1}}</p></div>
+          <div *ngIf="lineups[0].formation_acm == '3'" class="home">{{lineups[0].number_player_9}}<p>{{lineups[0].player_9}}</p></div>
+          <div *ngIf="lineups[0].formation_acm == '1' && lineups[0].formation_cf == '1'" class="home">{{lineups[0].number_player_10}}<p>{{lineups[0].player_10}}</p></div>
+          <div *ngIf="lineups[0].formation_acm == '1' && lineups[0].formation_cf == '2'" class="home">{{lineups[0].number_player_9}}<p>{{lineups[0].player_9}}</p></div>
         </div>
-        <div *ngIf="lineups[0].formation_acm == '2'" class="home-acm-4">
-          <div class="home">{{lineups[0].number_player_1}}<p>{{lineups[0].player_1}}</p></div>
+        <div *ngIf="lineups[0].formation_acm == '4' || (lineups[0].formation_acm == '2' && (lineups[0].formation != '4-5-1' && lineups[0].formation != '3-5-2'))" class="home-acm-4">
+            <div *ngIf="lineups[0].formation_acm == '4'" class="home">{{lineups[0].number_player_9}}<p>{{lineups[0].player_9}}</p></div>
+          <div *ngIf="lineups[0].formation_acm == '2' && (lineups[0].formation != '4-5-1' && lineups[0].formation != '3-5-2')" class="home">{{lineups[0].number_player_10}}<p>{{lineups[0].player_10}}</p></div>
         </div>
         <div *ngIf="lineups[0].formation_acm == '3'" class="home-acm-5">
-          <div class="home">{{lineups[0].number_player_8}}<p>{{lineups[0].player_8}}</p></div>
+          <div class="home">{{lineups[0].number_player_10}}<p>{{lineups[0].player_10}}</p></div>
         </div>
-        <div *ngIf="lineups[0].formation_acm == '4'" class="home-racm">
-          <div class="home">{{lineups[0].number_player_8}}<p>{{lineups[0].player_8}}</p></div>
+        <div *ngIf="lineups[0].formation_acm == '4' || (lineups[0].formation_acm == '2' && (lineups[0].formation == '4-5-1' || lineups[0].formation == '3-5-2'))" class="home-racm">
+          <div *ngIf="lineups[0].formation_acm == '4'" class="home">{{lineups[0].number_player_10}}<p>{{lineups[0].player_10}}</p></div>
+          <div *ngIf="lineups[0].formation_acm == '2' && (lineups[0].formation == '4-5-1')" class="home">{{lineups[0].number_player_10}}<p>{{lineups[0].player_10}}</p></div>
+          <div *ngIf="lineups[0].formation_acm == '2' && (lineups[0].formation == '3-5-2')" class="home">{{lineups[0].number_player_9}}<p>{{lineups[0].player_9}}</p></div>
         </div>
         <div *ngIf="lineups[0].formation_cf == '4'" class="home-lcf">
-          <div *ngIf="lineups[0].formation_cf == '4'" class="home">{{lineups[0].number_player_9}}<p>{{lineups[0].player_9}}</p></div>
+          <div *ngIf="lineups[0].formation_cf == '4'" class="home">{{lineups[0].number_player_8}}<p>{{lineups[0].player_8}}</p></div>
         </div>
         <div *ngIf="lineups[0].formation_cf == '3'" class="home-cf-1">
           <div *ngIf="lineups[0].formation_cf == '3'" class="home">{{lineups[0].number_player_9}}<p>{{lineups[0].player_9}}</p></div>
         </div>
         <div *ngIf="lineups[0].formation_cf == '2' || lineups[0].formation_cf == '4'" class="home-cf-2">
-          <div class="home">{{lineups[0].number_player_10}}<p>{{lineups[0].player_10}}</p></div>
+          <div *ngIf="lineups[0].formation_cf == '2'" class="home">{{lineups[0].number_player_10}}<p>{{lineups[0].player_10}}</p></div>
+          <div *ngIf="lineups[0].formation_cf == '4'" class="home">{{lineups[0].number_player_9}}<p>{{lineups[0].player_9}}</p></div>
         </div>
         <div *ngIf="lineups[0].formation_cf == '3' || lineups[0].formation_cf == '1'" class="home-cf-3">
           <div *ngIf="lineups[0].formation_cf == '1'" class="home">{{lineups[0].number_player_11}}<p>{{lineups[0].player_11}}</p></div>
           <div *ngIf="lineups[0].formation_cf == '3'" class="home">{{lineups[0].number_player_10}}<p>{{lineups[0].player_10}}</p></div>
         </div>
         <div *ngIf="lineups[0].formation_cf == '2' || lineups[0].formation_cf == '4'" class="home-cf-4">
-          <div class="home">{{lineups[0].number_player_11}}<p>{{lineups[0].player_11}}</p></div>
+          <div *ngIf="lineups[0].formation_cf == '2'" class="home">{{lineups[0].number_player_11}}<p>{{lineups[0].player_11}}</p></div>
+          <div *ngIf="lineups[0].formation_cf == '4'" class="home">{{lineups[0].number_player_10}}<p>{{lineups[0].player_10}}</p></div>
         </div>
         <div *ngIf="lineups[0].formation_cf == '3'" class="home-cf-5">
           <div *ngIf="lineups[0].formation_cf == '3'" class="home">{{lineups[0].number_player_11}}<p>{{lineups[0].player_11}}</p></div>
