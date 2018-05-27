@@ -51,14 +51,12 @@ export class MyApp {
             this.name = users[0].first_name;
             this.email = users[0].email;
             this.picture = users[0].image_url;
-            console.log(this.email)
           });
           events.subscribe('user:logingoogle', (res, time) => {
             this.users = res;
             this.name = res[0].displayName;
             this.email = res[0].email;
             this.picture = res[0].imageUrl;
-            console.log(this.users)
           });
           if (this.storage.length) {
             this.storage.get('users').then((val) => {

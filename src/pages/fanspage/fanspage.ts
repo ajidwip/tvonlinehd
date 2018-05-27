@@ -43,7 +43,6 @@ export class FanspagePage {
     });
   }
   doOpenPage(fans) {
-    console.log(fans.page_url)
     const browser = this.iab.create(fans.page_url, '_blank', 'location=no');
   }
 

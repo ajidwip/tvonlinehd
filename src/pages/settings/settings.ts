@@ -141,7 +141,6 @@ export class SettingsPage {
       this.imageFileName = this.imageURI;
       this.uploadFile();
     }, (err) => {
-      console.log(err);
       this.presentToast(err);
     });
   }
@@ -192,7 +191,6 @@ export class SettingsPage {
         this.imageURI = '';
         this.imageFileName = '';
       }, (err) => {
-        console.log(err);
         loader.dismiss();
         this.presentToast(err);
       });
@@ -205,7 +203,6 @@ export class SettingsPage {
     });
 
     toast.onDidDismiss(() => {
-      console.log('Dismissed toast');
     });
 
     toast.present();

@@ -34,7 +34,6 @@ export class ResultgamePage {
     private http: HttpClient) {
     this.schedule = this.navParams.get('ScheduleAllActive');
     this.idgame = this.navParams.get('idgame');
-    console.log(this.schedule)
     this.loader = this.loadingCtrl.create({
       // cssClass: 'transparent',
       content: 'Loading Content...'
@@ -56,31 +55,26 @@ export class ResultgamePage {
   doGetResultsHome() {
     this.api.get('table/z_game_results', { params: { limit: 100, filter: "id_game=" + "'" + this.idgame + "'" + " AND type_stats='GOAL' AND homeaway='HOME'", sort: "time_stats" + " ASC " } }).subscribe(val => {
       this.resultshome = val['data'];
-      console.log(this.resultshome);
     });
   }
   doGetResultsAway() {
     this.api.get('table/z_game_results', { params: { limit: 100, filter: "id_game=" + "'" + this.idgame + "'" + " AND type_stats='GOAL' AND homeaway='AWAY'", sort: "time_stats" + " ASC " } }).subscribe(val => {
       this.resultsaway = val['data'];
-      console.log(this.resultsaway);
     });
   }
   doGetStats() {
     this.api.get('table/z_game_stats', { params: { limit: 100, filter: "id_game=" + "'" + this.idgame + "'", sort: "id" + " ASC " } }).subscribe(val => {
       this.stats = val['data'];
-      console.log(this.stats);
     });
   }
   doGetLineups() {
     this.api.get('table/z_game_lineups', { params: { limit: 100, filter: "id_game=" + "'" + this.idgame + "'", sort: "id" + " ASC " } }).subscribe(val => {
       this.lineups = val['data'];
-      console.log(this.lineups);
     });
   }
   doGetResults() {
     this.api.get('table/z_game_results', { params: { limit: 100, filter: "id_game=" + "'" + this.idgame + "'", sort: "time_stats" + " DESC, time_stats_other DESC " } }).subscribe(val => {
       this.results = val['data'];
-      console.log(this.resultshome);
     });
   }
 

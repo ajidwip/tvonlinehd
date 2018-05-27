@@ -32,7 +32,6 @@ export class PhotodetailPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad PhotodetailPage');
   }
   doGetGallery() {
     this.api.get('table/z_image_link', { params: { filter: "uuid_parent=" + "'" + this.uuid + "'" } })

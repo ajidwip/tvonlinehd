@@ -31,7 +31,6 @@ export class NewsdetailPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad NewsdetailPage');
   }
   ionViewDidEnter() {
     var admobid = {

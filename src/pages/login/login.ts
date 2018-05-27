@@ -335,7 +335,6 @@ export class LoginPage {
   }
   doResetPassword() {
     let passwordkey = Md5.hashStr(this.myFormReset.value.answer);
-    console.log(passwordkey)
     if (this.answer == passwordkey) {
       document.getElementById('header').style.display = 'none';
       document.getElementById('login').style.display = 'none';
