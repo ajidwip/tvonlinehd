@@ -35,13 +35,13 @@
     "angular2-uuid": "^1.1.1",
     "angularfire2": "^5.0.0-rc.6.0",
     "cordova-android": "6.4.0",
-    "cordova-plugin-admobpro": "^2.31.4",
+    "cordova-plugin-admobpro": "^2.31.6",
     "cordova-plugin-camera": "^4.0.3",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-extension": "^1.5.4",
+    "cordova-plugin-fcm": "^2.1.2",
     "cordova-plugin-file": "^6.0.1",
     "cordova-plugin-file-transfer": "^1.7.1",
-    "cordova-plugin-googleplus": "^5.3.0",
     "cordova-plugin-inappbrowser": "^3.0.0",
     "cordova-plugin-ionic-keyboard": "^2.0.5",
     "cordova-plugin-ionic-webview": "^1.2.0",
@@ -69,14 +69,12 @@
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-ionic-webview": {},
       "cordova-plugin-ionic-keyboard": {},
-      "cordova-plugin-googleplus": {
-        "REVERSED_CLIENT_ID": "com.googleusercontent.apps.798397482932-8go91dakhnar8c88plcl1nv2k8c7dg00"
-      },
       "cordova-sqlite-storage": {},
-      "cordova-plugin-admobpro": {},
       "cordova-plugin-inappbrowser": {},
       "cordova-plugin-file-transfer": {},
-      "cordova-plugin-camera": {}
+      "cordova-plugin-camera": {},
+      "cordova-plugin-admobpro": {},
+      "cordova-plugin-fcm": {}
     },
     "platforms": [
       "android"

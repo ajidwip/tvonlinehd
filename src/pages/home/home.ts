@@ -142,24 +142,52 @@ export class HomePage {
       });
   }
   doGetScheduleAllActive() {
-    this.api.get('table/z_schedule', { params: { limit: 1, filter: "status='OPEN'" + " AND " + "date >=" + "'" + moment().format('YYYY-MM-DD') + "'", sort: "date" + " ASC " } })
+    this.api.get('table/z_schedule', { params: { limit: 1, filter: "status!='VERIFIKASI'" + " AND " + "date >=" + "'" + moment().format('YYYY-MM-DD') + "'", sort: "date" + " ASC " } })
       .subscribe(val => {
         this.ScheduleAllActive = val['data'];
-        this.datecurrent = moment().format();
-        this.clubhomeurl = this.ScheduleAllActive[0].club_home_icon_url;
-        this.clubawayurl = this.ScheduleAllActive[0].club_away_icon_url;
-        this.api.get('table/z_club', { params: { filter: "name=" + "'" + this.ScheduleAllActive[0].club_home + "'" } })
-          .subscribe(val => {
-            this.clubhome = val['data'][0].alias;
-            this.api.get('table/z_club', { params: { filter: "name=" + "'" + this.ScheduleAllActive[0].club_away + "'" } })
-              .subscribe(val => {
-                this.clubaway = val['data'][0].alias;
-              });
-          });
-        this.api.get('table/z_content_news', { params: { limit: 5, filter: "status='OPEN'", sort: "id" + " DESC " } })
-          .subscribe(val => {
-            this.NewsAllactive = val['data'];
-          });
+        if (this.ScheduleAllActive.length == 0) {
+          this.api.get('table/z_schedule', { params: { limit: 1, filter: "status!='VERIFIKASI'", sort: "date" + " DESC " } })
+            .subscribe(val => {
+              this.ScheduleAllActive = val['data'];
+              if (this.ScheduleAllActive.length == 0) {
+                this.app.getRootNav().setRoot('MaintenancePage')
+              }
+              else {
+                this.datecurrent = moment().format();
+                this.clubhomeurl = this.ScheduleAllActive[0].club_home_icon_url;
+                this.clubawayurl = this.ScheduleAllActive[0].club_away_icon_url;
+                this.api.get('table/z_club', { params: { filter: "name=" + "'" + this.ScheduleAllActive[0].club_home + "'" } })
+                  .subscribe(val => {
+                    this.clubhome = val['data'][0].alias;
+                    this.api.get('table/z_club', { params: { filter: "name=" + "'" + this.ScheduleAllActive[0].club_away + "'" } })
+                      .subscribe(val => {
+                        this.clubaway = val['data'][0].alias;
+                      });
+                  });
+                this.api.get('table/z_content_news', { params: { limit: 5, filter: "status='OPEN'", sort: "id" + " DESC " } })
+                  .subscribe(val => {
+                    this.NewsAllactive = val['data'];
+                  });
+              }
+            });
+        }
+        else {
+          this.datecurrent = moment().format();
+          this.clubhomeurl = this.ScheduleAllActive[0].club_home_icon_url;
+          this.clubawayurl = this.ScheduleAllActive[0].club_away_icon_url;
+          this.api.get('table/z_club', { params: { filter: "name=" + "'" + this.ScheduleAllActive[0].club_home + "'" } })
+            .subscribe(val => {
+              this.clubhome = val['data'][0].alias;
+              this.api.get('table/z_club', { params: { filter: "name=" + "'" + this.ScheduleAllActive[0].club_away + "'" } })
+                .subscribe(val => {
+                  this.clubaway = val['data'][0].alias;
+                });
+            });
+          this.api.get('table/z_content_news', { params: { limit: 5, filter: "status='OPEN'", sort: "id" + " DESC " } })
+            .subscribe(val => {
+              this.NewsAllactive = val['data'];
+            });
+        }
       });
   }
   doGoNewsDetail(news) {
@@ -293,6 +321,22 @@ export class HomePage {
       this.app.getRootNav().setRoot('TebakskorPage', {
         ScheduleAllActive
       });
+    }
+    else {
+      this.app.getRootNav().setRoot('LoginPage');
+    }
+  }
+  doSettings() {
+    if (this.id) {
+      this.app.getRootNav().setRoot('SettingsPage');
+    }
+    else {
+      this.app.getRootNav().setRoot('LoginPage');
+    }
+  }
+  doChatroom() {
+    if (this.id) {
+      this.app.getRootNav().setRoot('ChatPage');
     }
     else {
       this.app.getRootNav().setRoot('LoginPage');

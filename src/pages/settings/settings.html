@@ -84,4 +84,30 @@
       </ion-item>
     </ion-col>
   </ion-row>
+  <ion-row style="background:transparent;">
+    <ion-col col-12 style="background:transparent;background: #092e61">
+      <ion-item style="background:transparent;color:#ffffff;">
+        <ion-label stacked>Notification starting lineups confirmed</ion-label>
+        <ion-toggle [(ngModel)]="lineups" (ionChange)="doUpdateNotifLineups()"></ion-toggle>
+      </ion-item>
+    </ion-col>
+    <ion-col col-12 style="background:transparent;background: #092e61">
+      <ion-item style="background:transparent;color:#ffffff;">
+        <ion-label stacked>Notification 1D before start of game</ion-label>
+        <ion-toggle [(ngModel)]="daybeforegame" (ngModelChange)="doUpdateNotifDay()"></ion-toggle>
+      </ion-item>
+    </ion-col>
+    <ion-col col-12 style="background:transparent;background: #092e61">
+      <ion-item style="background:transparent;color:#ffffff;">
+        <ion-label stacked>Notification 45 minutes before start of game</ion-label>
+        <ion-toggle [(ngModel)]="minutesbeforegame" (ngModelChange)="doUpdateNotifMinute()"></ion-toggle>
+      </ion-item>
+    </ion-col>
+    <ion-col col-12 style="background:transparent;background: #092e61">
+      <ion-item style="background:transparent;color:#ffffff;">
+        <ion-label stacked>Notification live streaming</ion-label>
+        <ion-toggle [(ngModel)]="livestreaming" (ngModelChange)="doUpdateNotifLive()"></ion-toggle>
+      </ion-item>
+    </ion-col>
+  </ion-row>
 </ion-content>

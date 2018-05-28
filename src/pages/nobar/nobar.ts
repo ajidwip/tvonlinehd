@@ -41,7 +41,6 @@ export class NobarPage {
     });
     this.loader.present();
     /*this.getNobarUsers();*/
-    this.doGetRegional();
     if (this.storage.length) {
       this.storage.get('users').then((val) => {
         this.users = val;
@@ -54,22 +53,31 @@ export class NobarPage {
               this.name = this.user[0].first_name + " " + this.user[0].last_name;
               this.email = this.user[0].email;
               this.picture = this.user[0].image_url;
+              this.region = this.user[0].region;
             })
         }
       });
     }
+    this.doGetRegional();
   }
   ngAfterViewInit() {
     this.loader.dismiss();
   }
   doGetRegional() {
-    this.api.get('table/z_regional', { params: { limit: 100, sort: "regional" + " ASC " } }).subscribe(val => {
-      this.regionalall = val['data'];
-      this.region = this.regionalall[0].regional;
+    if (this.id) {
       this.api.get('table/z_nobar', { params: { limit: 100, filter: "regional=" + "'" + this.region + "'", sort: "regional" + " ASC " } }).subscribe(val => {
         this.nobars = val['data'];
       });
-    });
+    }
+    else {
+      this.api.get('table/z_regional', { params: { limit: 100, sort: "regional" + " ASC " } }).subscribe(val => {
+        this.regionalall = val['data'];
+        this.region = this.regionalall[0].regional;
+        this.api.get('table/z_nobar', { params: { limit: 100, filter: "regional=" + "'" + this.region + "'", sort: "regional" + " ASC " } }).subscribe(val => {
+          this.nobars = val['data'];
+        });
+      });
+    }
   }
   doGetSelectRegional() {
     this.api.get('table/z_regional', { params: { limit: 100, sort: "regional" + " ASC " } }).subscribe(val => {

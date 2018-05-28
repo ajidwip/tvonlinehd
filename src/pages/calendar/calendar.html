@@ -30,7 +30,7 @@
       pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing..."
     </ion-refresher-content>
   </ion-refresher>
-  <ion-card class="container" *ngFor="let schedule of ScheduleAllActive">
+  <ion-card class="container" *ngFor="let schedule of ScheduleAllActive" (click)="doResultGame(schedule)">
     <img id="container-img" class="container-img" src="assets/imgs/white.jpg" style="width:100%;height:100px;" />
     <div class="centered-top">
       <div style="font-size:80%;font-weight: bold;">{{schedule.league}} - {{schedule.round}}</div>

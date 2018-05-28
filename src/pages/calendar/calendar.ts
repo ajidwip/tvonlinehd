@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LoadingController, IonicPage, NavController, NavParams, Refresher } from 'ionic-angular';
+import { App, LoadingController, IonicPage, NavController, NavParams, Refresher } from 'ionic-angular';
 import { ApiProvider } from '../../providers/api/api';
 import moment from 'moment';
 
@@ -19,6 +19,7 @@ export class CalendarPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    public app: App,
     public loadingCtrl: LoadingController,
     public api: ApiProvider) {
     this.league = 'Semua Pertandingan';
@@ -109,5 +110,18 @@ export class CalendarPage {
       refresher.complete();
 
     })
+  }
+  doResultGame(schedule) {
+    this.app.getRootNav().push('ResultgamePage', {
+      ScheduleAllActive: schedule,
+      idgame: schedule.id,
+      league: schedule.league,
+      round: schedule.round,
+      clubhome: schedule.club_home,
+      clubhomeurl: schedule.club_home_icon_url,
+      clubaway: schedule.club_away,
+      clubawayurl: schedule.club_away_icon_url,
+      place: schedule.place
+    });
   }
 }

@@ -37,7 +37,8 @@
           {{clubhome}} {{schedule.skor_home}} - {{schedule.skor_away}} {{clubaway}}
         </div>
         <div id="statistics" class="statistics">
-          <button style="font-size:12px;height:25px;" ion-button color="danger" (click)="openChannel(schedule)">{{schedule.info_live}}</button>
+          <button *ngIf="schedule.info_live != 'Final'" style="font-size:12px;height:25px;" ion-button color="danger" (click)="openChannel(schedule)">{{schedule.info_live}}</button>
+          <button *ngIf="schedule.info_live == 'Final'" style="font-size:12px;height:25px;" ion-button color="darklight" (click)="openChannel(schedule)">{{schedule.info_live}}</button>
         </div>
       </div>
       <div id="centered-left" class="centered-left">
@@ -110,11 +111,18 @@
         </div>
       </div>
     </div>
-    <div class="banner">
-      <ion-card>
-        <img src="assets/imgs/campnou.jpg" />
-      </ion-card>
-    </div>
+    <ion-card padding style="background:#092e61;" class="banner">
+      <ion-item style="background: #092e61;" no-lines>
+        <div style="color:#ffffff;padding-left:5px;padding-bottom:10px;">
+          Aktifkan Notifikasi Anda
+          <p style="font-size:10px;color:#ffffff;">Jangan sampai terlewatkan setiap pertandingannya.</p>
+        </div>  
+        <button ion-button outline color="light" (click)="doSettings()">AKTIFKAN DI PENGATURAN</button>
+        <div item-end>
+          <img style="width:50px;height:50px;" src="https://cdn.pixabay.com/photo/2015/12/16/17/41/bell-1096280_960_720.png" />
+        </div>
+      </ion-item>
+    </ion-card>
     <div class="content-photos">
       <ion-item no-lines style="background:transparent;margin-bottom:-15px;">
         <h5 style="font-weight:bold;font-size:17px;">Foto</h5>
@@ -141,11 +149,18 @@
         </div>
       </div>
     </div>
-    <div class="banner">
-      <ion-card>
-        <img src="assets/imgs/campnou.jpg" />
+    <ion-card padding style="background:#a50044;" class="banner">
+        <ion-item style="background: #a50044;" no-lines>
+          <div style="color:#ffffff;padding-left:5px;padding-bottom:10px;">
+            AYO Gabung Ke Chatroom!!!
+            <p style="font-size:10px;color:#ffffff;">Ruang untuk berbagi semua informasi tentang BARCA.</p>
+          </div>  
+          <button ion-button outline color="light" (click)="doChatroom()">CHATROOM</button>
+          <div item-end>
+            <img style="width:50px;height:70px;" src="https://cdn.icon-icons.com/icons2/928/PNG/512/mobile-chat_icon-icons.com_72197.png" />
+          </div>
+        </ion-item>
       </ion-card>
-    </div>
     <div class="content-videos">
       <ion-item no-lines style="background:transparent;margin-bottom:-15px;">
         <h5 style="font-weight:bold;font-size:17px;">VIDEO</h5>

@@ -24,6 +24,10 @@ export class MyApp {
   public picture = '';
   public loader: any;
   public ScheduleAllActive = [];
+  public lineups: any;
+  public daybeforegame: any;
+  public minutesbeforegame: any;
+  public livestreaming: any;
   constructor(
     public platform: Platform,
     public statusBar: StatusBar,
@@ -42,7 +46,101 @@ export class MyApp {
       .subscribe(val => {
         this.ScheduleAllActive = val['data'];
         if (this.ScheduleAllActive.length == 0) {
-          this.app.getRootNav().setRoot('MaintenancePage')
+          this.api.get('table/z_schedule', { params: { limit: 1, filter: "status!='VERIFIKASI'", sort: "date" + " DESC " } })
+            .subscribe(val => {
+              this.ScheduleAllActive = val['data'];
+              if (this.ScheduleAllActive.length == 0) {
+                this.app.getRootNav().setRoot('MaintenancePage')
+              }
+              else {
+                this.rootPage = TabsPage;
+                events.subscribe('user:login', (users, time) => {
+                  this.users = users;
+                  this.name = users[0].first_name;
+                  this.email = users[0].email;
+                  this.picture = users[0].image_url;
+                  this.lineups = users[0].notif_lineups;
+                  this.daybeforegame = users[0].notif_day;
+                  this.minutesbeforegame = users[0].notif_minutes;
+                  this.livestreaming = users[0].notif_livestreaming;
+                  console.log(this.lineups, this.daybeforegame, this.minutesbeforegame, this.livestreaming)
+                  if (this.lineups == 1) {
+                    this.fcm.subscribeToTopic('lineups');
+                  }
+                  else {
+                    this.fcm.unsubscribeFromTopic('lineups');
+                  }
+                  if (this.daybeforegame == 1) {
+                    this.fcm.subscribeToTopic('daybeforegame');
+                  }
+                  else {
+                    this.fcm.unsubscribeFromTopic('daybeforegame');
+                  }
+                  if (this.minutesbeforegame == 1) {
+                    this.fcm.subscribeToTopic('minutesbeforegame');
+                  }
+                  else {
+                    this.fcm.unsubscribeFromTopic('minutesbeforegame');
+                  }
+                  if (this.livestreaming == 1) {
+                    this.fcm.subscribeToTopic('livestreaming');
+                  }
+                  else {
+                    this.fcm.unsubscribeFromTopic('livestreaming');
+                  }
+                });
+                // events.subscribe('user:logingoogle', (res, time) => {
+                //   this.users = res;
+                //   this.name = res[0].displayName;
+                //   this.email = res[0].email;
+                //   this.picture = res[0].imageUrl;
+                // });
+                if (this.storage.length) {
+                  this.storage.get('users').then((val) => {
+                    this.users = val;
+                    if (this.users) {
+                      this.email = val.email;
+                      this.api.get('table/z_users', { params: { filter: "email=" + "'" + this.email + "'" } })
+                        .subscribe(val => {
+                          this.user = val['data']
+                          this.name = this.user[0].first_name;
+                          this.email = this.user[0].email;
+                          this.picture = this.user[0].image_url;
+                          this.lineups = this.user[0].notif_lineups;
+                          this.daybeforegame = this.user[0].notif_day;
+                          this.minutesbeforegame = this.user[0].notif_minutes;
+                          this.livestreaming = this.user[0].notif_livestreaming;
+                          console.log(this.lineups, this.daybeforegame, this.minutesbeforegame, this.livestreaming)
+                          if (this.lineups == 1) {
+                            this.fcm.subscribeToTopic('lineups');
+                          }
+                          else {
+                            this.fcm.unsubscribeFromTopic('lineups');
+                          }
+                          if (this.daybeforegame == 1) {
+                            this.fcm.subscribeToTopic('daybeforegame');
+                          }
+                          else {
+                            this.fcm.unsubscribeFromTopic('daybeforegame');
+                          }
+                          if (this.minutesbeforegame == 1) {
+                            this.fcm.subscribeToTopic('minutesbeforegame');
+                          }
+                          else {
+                            this.fcm.unsubscribeFromTopic('minutesbeforegame');
+                          }
+                          if (this.livestreaming == 1) {
+                            this.fcm.subscribeToTopic('livestreaming');
+                          }
+                          else {
+                            this.fcm.unsubscribeFromTopic('livestreaming');
+                          }
+                        })
+                    }
+                  });
+                }
+              }
+            });
         }
         else {
           this.rootPage = TabsPage;
@@ -51,13 +149,42 @@ export class MyApp {
             this.name = users[0].first_name;
             this.email = users[0].email;
             this.picture = users[0].image_url;
+            this.lineups = users[0].notif_lineups;
+            this.daybeforegame = users[0].notif_day;
+            this.minutesbeforegame = users[0].notif_minutes;
+            this.livestreaming = users[0].notif_livestreaming;
+            console.log(this.lineups, this.daybeforegame, this.minutesbeforegame, this.livestreaming)
+            if (this.lineups == 1) {
+              this.fcm.subscribeToTopic('lineups');
+            }
+            else {
+              this.fcm.unsubscribeFromTopic('lineups');
+            }
+            if (this.daybeforegame == 1) {
+              this.fcm.subscribeToTopic('daybeforegame');
+            }
+            else {
+              this.fcm.unsubscribeFromTopic('daybeforegame');
+            }
+            if (this.minutesbeforegame == 1) {
+              this.fcm.subscribeToTopic('minutesbeforegame');
+            }
+            else {
+              this.fcm.unsubscribeFromTopic('minutesbeforegame');
+            }
+            if (this.livestreaming == 1) {
+              this.fcm.subscribeToTopic('livestreaming');
+            }
+            else {
+              this.fcm.unsubscribeFromTopic('livestreaming');
+            }
           });
-          events.subscribe('user:logingoogle', (res, time) => {
-            this.users = res;
-            this.name = res[0].displayName;
-            this.email = res[0].email;
-            this.picture = res[0].imageUrl;
-          });
+          // events.subscribe('user:logingoogle', (res, time) => {
+          //   this.users = res;
+          //   this.name = res[0].displayName;
+          //   this.email = res[0].email;
+          //   this.picture = res[0].imageUrl;
+          // });
           if (this.storage.length) {
             this.storage.get('users').then((val) => {
               this.users = val;
@@ -69,6 +196,35 @@ export class MyApp {
                     this.name = this.user[0].first_name;
                     this.email = this.user[0].email;
                     this.picture = this.user[0].image_url;
+                    this.lineups = this.user[0].notif_lineups;
+                    this.daybeforegame = this.user[0].notif_day;
+                    this.minutesbeforegame = this.user[0].notif_minutes;
+                    this.livestreaming = this.user[0].notif_livestreaming;
+                    console.log(this.lineups, this.daybeforegame, this.minutesbeforegame, this.livestreaming)
+                    if (this.lineups == 1) {
+                      this.fcm.subscribeToTopic('lineups');
+                    }
+                    else {
+                      this.fcm.unsubscribeFromTopic('lineups');
+                    }
+                    if (this.daybeforegame == 1) {
+                      this.fcm.subscribeToTopic('daybeforegame');
+                    }
+                    else {
+                      this.fcm.unsubscribeFromTopic('daybeforegame');
+                    }
+                    if (this.minutesbeforegame == 1) {
+                      this.fcm.subscribeToTopic('minutesbeforegame');
+                    }
+                    else {
+                      this.fcm.unsubscribeFromTopic('minutesbeforegame');
+                    }
+                    if (this.livestreaming == 1) {
+                      this.fcm.subscribeToTopic('livestreaming');
+                    }
+                    else {
+                      this.fcm.unsubscribeFromTopic('livestreaming');
+                    }
                   })
               }
             });

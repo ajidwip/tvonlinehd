@@ -28,6 +28,10 @@ export class SettingsPage {
   public emailboolean: any;
   public passwordboolean: any;
   public uuid = '';
+  public lineups: any;
+  public daybeforegame: any;
+  public minutesbeforegame: any;
+  public livestreaming: any;
   imageURI: string = '';
   imageFileName: string = '';
   constructor(
@@ -56,6 +60,10 @@ export class SettingsPage {
               this.lastname = this.users[0].last_name;
               this.password = this.users[0].password;
               this.imageurl = this.users[0].image_url;
+              this.lineups = this.users[0].notif_lineups;
+              this.daybeforegame = this.users[0].notif_day;
+              this.minutesbeforegame = this.users[0].notif_minutes;
+              this.livestreaming = this.users[0].notif_livestreaming;
             })
         }
       });
@@ -206,5 +214,125 @@ export class SettingsPage {
     });
 
     toast.present();
+  }
+  doUpdateNotifLineups() {
+    if (this.lineups == true) {
+      const headers = new HttpHeaders()
+        .set("Content-Type", "application/json");
+
+      this.api.put("table/z_users",
+        {
+          "id": this.id,
+          "notif_lineups": true
+        },
+        { headers })
+        .subscribe(val => {
+          this.lineups = true;
+        })
+    }
+    else {
+      const headers = new HttpHeaders()
+        .set("Content-Type", "application/json");
+
+      this.api.put("table/z_users",
+        {
+          "id": this.id,
+          "notif_lineups": false
+        },
+        { headers })
+        .subscribe(val => {
+          this.lineups = false;
+        })
+    }
+  }
+  doUpdateNotifDay() {
+    if (this.daybeforegame == true) {
+      const headers = new HttpHeaders()
+        .set("Content-Type", "application/json");
+
+      this.api.put("table/z_users",
+        {
+          "id": this.id,
+          "notif_day": true
+        },
+        { headers })
+        .subscribe(val => {
+          this.daybeforegame = true;
+        })
+    }
+    else {
+      const headers = new HttpHeaders()
+        .set("Content-Type", "application/json");
+
+      this.api.put("table/z_users",
+        {
+          "id": this.id,
+          "notif_day": false
+        },
+        { headers })
+        .subscribe(val => {
+          this.daybeforegame = false;
+        })
+    }
+  }
+  doUpdateNotifMinute() {
+    if (this.minutesbeforegame == true) {
+      const headers = new HttpHeaders()
+        .set("Content-Type", "application/json");
+
+      this.api.put("table/z_users",
+        {
+          "id": this.id,
+          "notif_minutes": true
+        },
+        { headers })
+        .subscribe(val => {
+          this.minutesbeforegame = true;
+        })
+    }
+    else {
+      const headers = new HttpHeaders()
+        .set("Content-Type", "application/json");
+
+      this.api.put("table/z_users",
+        {
+          "id": this.id,
+          "notif_minutes": false
+        },
+        { headers })
+        .subscribe(val => {
+          this.minutesbeforegame = false;
+        })
+    }
+  }
+  doUpdateNotifLive() {
+    if (this.livestreaming == true) {
+      const headers = new HttpHeaders()
+        .set("Content-Type", "application/json");
+
+      this.api.put("table/z_users",
+        {
+          "id": this.id,
+          "notif_livestreaming": true
+        },
+        { headers })
+        .subscribe(val => {
+          this.livestreaming = true;
+        })
+    }
+    else {
+      const headers = new HttpHeaders()
+        .set("Content-Type", "application/json");
+
+      this.api.put("table/z_users",
+        {
+          "id": this.id,
+          "notif_livestreaming": false
+        },
+        { headers })
+        .subscribe(val => {
+          this.livestreaming = false;
+        })
+    }
   }
 }
