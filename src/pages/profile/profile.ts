@@ -18,7 +18,6 @@ export class ProfilePage {
     this.api.get('table/z_users', { params: { filter: "id=" + "'" + this.userid + "'" } })
       .subscribe(val => {
         this.users = val['data']
-        console.log(this.users)
       });
   }
 

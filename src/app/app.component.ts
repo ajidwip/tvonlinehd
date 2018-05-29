@@ -63,7 +63,6 @@ export class MyApp {
                   this.daybeforegame = users[0].notif_day;
                   this.minutesbeforegame = users[0].notif_minutes;
                   this.livestreaming = users[0].notif_livestreaming;
-                  console.log(this.lineups, this.daybeforegame, this.minutesbeforegame, this.livestreaming)
                   if (this.lineups == 1) {
                     this.fcm.subscribeToTopic('lineups');
                   }
@@ -110,7 +109,6 @@ export class MyApp {
                           this.daybeforegame = this.user[0].notif_day;
                           this.minutesbeforegame = this.user[0].notif_minutes;
                           this.livestreaming = this.user[0].notif_livestreaming;
-                          console.log(this.lineups, this.daybeforegame, this.minutesbeforegame, this.livestreaming)
                           if (this.lineups == 1) {
                             this.fcm.subscribeToTopic('lineups');
                           }
@@ -153,7 +151,6 @@ export class MyApp {
             this.daybeforegame = users[0].notif_day;
             this.minutesbeforegame = users[0].notif_minutes;
             this.livestreaming = users[0].notif_livestreaming;
-            console.log(this.lineups, this.daybeforegame, this.minutesbeforegame, this.livestreaming)
             if (this.lineups == 1) {
               this.fcm.subscribeToTopic('lineups');
             }
@@ -200,7 +197,6 @@ export class MyApp {
                     this.daybeforegame = this.user[0].notif_day;
                     this.minutesbeforegame = this.user[0].notif_minutes;
                     this.livestreaming = this.user[0].notif_livestreaming;
-                    console.log(this.lineups, this.daybeforegame, this.minutesbeforegame, this.livestreaming)
                     if (this.lineups == 1) {
                       this.fcm.subscribeToTopic('lineups');
                     }

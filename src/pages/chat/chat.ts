@@ -185,7 +185,6 @@ export class ChatPage {
     this.app.getRootNav().push('ProfilePage', {
       userid: user.id
     });
-    console.log(user)
   }
 
 }

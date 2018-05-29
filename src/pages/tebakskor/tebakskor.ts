@@ -41,7 +41,6 @@ export class TebakskorPage {
     public app: App,
     private http: HttpClient) {
     this.ScheduleAllActive = this.navParams.get('ScheduleAllActive')
-    console.log('schedule',this.ScheduleAllActive)
     this.api.get('table/z_club', { params: { filter: "name=" + "'" + this.ScheduleAllActive[0].club_home + "'" } })
       .subscribe(val => {
         this.clubhome = val['data'][0].alias;
@@ -143,7 +142,6 @@ export class TebakskorPage {
     this.api.get('table/z_prediction', { params: { limit: 2, filter: "id_game=" + "'" + this.ScheduleAllActive[0].id + "'" + " AND " + "prediction_skor_home=" + this.ScheduleAllActive[0].skor_home + " AND " + "prediction_skor_away=" + this.ScheduleAllActive[0].skor_away, sort: "date ASC" } })
     .subscribe(val => {
       this.winners = val['data'];
-      console.log('winners',this.winners)
     });
   }
   doProfile(winner) {
