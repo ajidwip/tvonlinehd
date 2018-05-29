@@ -20,33 +20,22 @@ page-home {
         font-size: 50px;
         color: #ffffff;
     }
-    @media only screen and (min-width: 360px) {   
+    @media only screen and (max-width: 360px) {   
         .content {
             .scroll-content {
                 margin-top: 0% !important;
-                padding-bottom:42%;
-            }
-            background: #dedede;
-            position: absolute;
-            top:27%;
-        }
-    }
-    @media only screen and (min-width: 380px) {   
-        .content {
-            .scroll-content {
-                margin-top: 0% !important;
-                padding-bottom:42%;
+                padding-bottom:44%;
             }
             background: #dedede;
             position: absolute;
             top:25%;
         }
     }
-    @media only screen and (min-width: 400px) {   
+    @media only screen and (min-width: 361px) {   
         .content {
             .scroll-content {
                 margin-top: 0% !important;
-                padding-bottom:42%;
+                padding-bottom:44%;
             }
             background: #dedede;
             position: absolute;

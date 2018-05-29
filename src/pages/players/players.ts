@@ -35,26 +35,26 @@ export class PlayersPage {
     this.loader.dismiss();
   }
   doGetSeason() {
-    this.api.get('table/z_players', { params: { limit: 100, group: "season", sort: "season" + " DESC " } }).subscribe(val => {
+    this.api.get('table/z_players', { params: { limit: 100, filter: "club='Barcelona'", group: "season", sort: "season" + " DESC " } }).subscribe(val => {
       this.seasonsall = val['data'];
       this.season = this.seasonsall[0].season;
-      this.api.get('table/z_players', { params: { limit: 100, filter: "season=" + "'" + this.season + "'", group: "season", sort: "season" + " DESC " } }).subscribe(val => {
+      this.api.get('table/z_players', { params: { limit: 100, filter: "season=" + "'" + this.season + "'" + " AND club='Barcelona'", group: "season", sort: "season" + " DESC " } }).subscribe(val => {
         this.seasons = val['data'];
       });
     });
   }
   doGetSelectSeason(season) {
-    this.api.get('table/z_players', { params: { limit: 100, filter: "season=" + "'" + season + "'", group: "season", sort: "season" + " DESC " } }).subscribe(val => {
+    this.api.get('table/z_players', { params: { limit: 100, filter: "season=" + "'" + season + "'" + " AND club='Barcelona'", group: "season", sort: "season" + " DESC " } }).subscribe(val => {
       this.seasons = val['data'];
     });
   }
   doGetPlayers() {
-    this.api.get('table/z_players', { params: { limit: 100, filter: "position_group='PLAYER'", sort: "number" + " ASC " } }).subscribe(val => {
+    this.api.get('table/z_players', { params: { limit: 100, filter: "position_group='PLAYER'" + " AND club='Barcelona'", sort: "number" + " ASC " } }).subscribe(val => {
       this.players = val['data'];
     });
   }
   doGetStaffs() {
-    this.api.get('table/z_players', { params: { limit: 100, filter: "position_group='STAFF'" } }).subscribe(val => {
+    this.api.get('table/z_players', { params: { limit: 100, filter: "position_group='STAFF'" + " AND club='Barcelona'" } }).subscribe(val => {
       this.staffs = val['data'];
     });
   }
