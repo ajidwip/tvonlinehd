@@ -127,14 +127,19 @@
       <ion-col *ngIf="prediction.length == 0" col-12 style="text-align: right;">
         <button [disabled]="skorhome == '' || skoraway == '' || pencetakgol == ''" ion-button color="bluedark" (click)="doSavePrediction()">SIMPAN</button>
       </ion-col>
-      <ion-col *ngIf="prediction.length != 0"  col-12 style="text-align: center;border-top:1px solid;border-color:#dedede;">{{dateprediction | date:"dd MMMM yyyy HH:mm:ss " }}</ion-col>
+      <ion-col *ngIf="prediction.length != 0" col-12 style="text-align: center;border-top:1px solid;border-color:#dedede;">{{dateprediction | date:"dd MMMM yyyy HH:mm:ss " }}</ion-col>
     </ion-row>
   </ion-card>
-  <ion-card *ngIf="ScheduleAllActive.status == 'CLSD'" padding>
+  <ion-card *ngIf="ScheduleAllActive[0].status == 'CLSD'" padding>
     <strong>PEMENANG</strong>
     <div style="padding-top:10px;padding-left:10px;">
-      <p>1. Aji SKOR: FCB 3-0 RSD WAKTU: 21-05-2018 01:01</p>
-      <p>2. Dwi SKOR: FCB 3-0 RSD WAKTU: 21-05-2018 01:01</p>
+      <div style="border-bottom:1px solid;border-color:#dedede;" *ngFor="let winner of winners">
+        <strong (click)="doProfile(winner)">{{winner.name_user}}</strong>
+        <p>
+          SKOR: {{winner.club_home}} {{winner.prediction_skor_home}}-{{winner.prediction_skor_away}} {{winner.club_away}} WAKTU: {{winner.date
+          | date:"dd MMMM yyyy"}} {{winner.date | date:"HH:mm:ss"}}
+        </p>
+      </div>
     </div>
   </ion-card>
 </ion-content>

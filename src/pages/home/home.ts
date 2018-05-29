@@ -76,6 +76,7 @@ export class HomePage {
       });
     });
     this.doGetScheduleAllActive();
+    this.doGetNewsAllActive();
     this.doGetGalleryAllActive();
     this.doGetVideosAllActive();
     if (this.storage.length) {
@@ -127,7 +128,10 @@ export class HomePage {
     const browser = this.iab.create(video.video_url, '_blank', 'location=no');
   }
   doGetNewsAllActive() {
-
+    this.api.get('table/z_content_news', { params: { limit: 5, filter: "status='OPEN'", sort: "id" + " DESC " } })
+    .subscribe(val => {
+      this.NewsAllactive = val['data'];
+    });
   }
   doGetGalleryAllActive() {
     this.api.get('table/z_content_photos', { params: { limit: 5, filter: "status='OPEN'", sort: "id" + " DESC " } })
@@ -164,10 +168,6 @@ export class HomePage {
                         this.clubaway = val['data'][0].alias;
                       });
                   });
-                this.api.get('table/z_content_news', { params: { limit: 5, filter: "status='OPEN'", sort: "id" + " DESC " } })
-                  .subscribe(val => {
-                    this.NewsAllactive = val['data'];
-                  });
               }
             });
         }
@@ -182,10 +182,6 @@ export class HomePage {
                 .subscribe(val => {
                   this.clubaway = val['data'][0].alias;
                 });
-            });
-          this.api.get('table/z_content_news', { params: { limit: 5, filter: "status='OPEN'", sort: "id" + " DESC " } })
-            .subscribe(val => {
-              this.NewsAllactive = val['data'];
             });
         }
       });

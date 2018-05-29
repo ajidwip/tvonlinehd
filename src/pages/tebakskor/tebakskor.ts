@@ -21,12 +21,14 @@ export class TebakskorPage {
   public email = '';
   public user = [];
   public prediction = [];
+  public winners = [];
   public id = '';
+  public name = '';
   public uuid = '';
   public nextno = '';
   public skorhome: any;
   public skoraway: any;
-  public dateprediction:any;
+  public dateprediction: any;
   public pencetakgol = '';
 
   constructor(
@@ -39,6 +41,7 @@ export class TebakskorPage {
     public app: App,
     private http: HttpClient) {
     this.ScheduleAllActive = this.navParams.get('ScheduleAllActive')
+    console.log('schedule',this.ScheduleAllActive)
     this.api.get('table/z_club', { params: { filter: "name=" + "'" + this.ScheduleAllActive[0].club_home + "'" } })
       .subscribe(val => {
         this.clubhome = val['data'][0].alias;
@@ -48,6 +51,7 @@ export class TebakskorPage {
           });
       });
     this.doGetPlayers();
+    this.doGetWinners();
     if (this.storage.length) {
       this.storage.get('users').then((val) => {
         this.users = val;
@@ -57,6 +61,7 @@ export class TebakskorPage {
             .subscribe(val => {
               this.user = val['data']
               this.id = this.user[0].id;
+              this.name = this.user[0].first_name + " " + this.user[0].last_name;
               this.doGetPrediction();
             })
         }
@@ -110,8 +115,9 @@ export class TebakskorPage {
                   "id": this.nextno,
                   "id_game": this.ScheduleAllActive[0].id,
                   "club_home": this.clubhome,
-                  "club_away": this.clubhome,
+                  "club_away": this.clubaway,
                   "id_user": this.id,
+                  "name_user": this.name,
                   "prediction_skor_home": this.skorhome,
                   "prediction_skor_away": this.skoraway,
                   "prediction_first_scorer": this.pencetakgol,
@@ -132,6 +138,18 @@ export class TebakskorPage {
   }
   getNextNo() {
     return this.api.get('nextno/z_prediction/id')
+  }
+  doGetWinners() {
+    this.api.get('table/z_prediction', { params: { limit: 2, filter: "id_game=" + "'" + this.ScheduleAllActive[0].id + "'" + " AND " + "prediction_skor_home=" + this.ScheduleAllActive[0].skor_home + " AND " + "prediction_skor_away=" + this.ScheduleAllActive[0].skor_away, sort: "date ASC" } })
+    .subscribe(val => {
+      this.winners = val['data'];
+      console.log('winners',this.winners)
+    });
+  }
+  doProfile(winner) {
+    this.app.getRootNav().push('ProfilePage', {
+      userid: winner.id_user
+    });
   }
 
 }

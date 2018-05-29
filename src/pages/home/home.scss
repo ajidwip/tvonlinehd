@@ -21,9 +21,15 @@ page-home {
         color: #ffffff;
     }
     .content {
+        .scroll-content {
+            margin-top: 50px !important;
+        }
         background: #dedede;
+        position: absolute;
+        top:16%;
     }
     .content-all {
+        padding:0px;
     }
     .container {
         position: relative;
