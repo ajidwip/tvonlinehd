@@ -52,7 +52,7 @@
 </ion-footer>
 
 <ion-content id="content-online" style="top:0px;display: none;height:100%;width:100%;">
-  <ion-item no-lines *ngFor="let user of useronline" style="border-bottom:1px solid;border-color:#eeeeee;">
+  <ion-item no-lines *ngFor="let user of useronline" style="border-bottom:1px solid;border-color:#eeeeee;" (click)="doProfile(user)">
     <ion-avatar item-start>
       <img src="{{user.image_url}}" />
     </ion-avatar>

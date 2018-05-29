@@ -61,7 +61,7 @@
         <b>{{clubhome}}</b>
       </ion-col>
       <ion-col col-2.5>
-        <ion-select [disabled]="prediction.length != 0" placeholder="-" [(ngModel)]="skorhome">
+        <ion-select [disabled]="prediction.length != 0 || ScheduleAllActive[0].status == 'CLSD'" placeholder="-" [(ngModel)]="skorhome">
           <ion-option value="0">0</ion-option>
           <ion-option value="1">1</ion-option>
           <ion-option value="2">2</ion-option>
@@ -89,7 +89,7 @@
         Vs
       </ion-col>
       <ion-col col-2.5>
-        <ion-select [disabled]="prediction.length != 0" style="margin:auto;" placeholder="-" [(ngModel)]="skoraway">
+        <ion-select [disabled]="prediction.length != 0 || ScheduleAllActive[0].status == 'CLSD'" style="margin:auto;" placeholder="-" [(ngModel)]="skoraway">
           <ion-option value="0">0</ion-option>
           <ion-option value="1">1</ion-option>
           <ion-option value="2">2</ion-option>
@@ -119,13 +119,13 @@
     </ion-row>
     <ion-item>
       <ion-label style="padding-left:15px;">Pencetak Gol Pertama</ion-label>
-      <ion-select [disabled]="prediction.length != 0" [(ngModel)]="pencetakgol">
+      <ion-select [disabled]="prediction.length != 0 || ScheduleAllActive[0].status == 'CLSD'" [(ngModel)]="pencetakgol">
         <ion-option value="{{player.name}}" *ngFor="let player of players">{{player.name}}</ion-option>
       </ion-select>
     </ion-item>
     <ion-row>
       <ion-col *ngIf="prediction.length == 0" col-12 style="text-align: right;">
-        <button [disabled]="skorhome == '' || skoraway == '' || pencetakgol == ''" ion-button color="bluedark" (click)="doSavePrediction()">SIMPAN</button>
+        <button [disabled]="skorhome == '' || skoraway == '' || pencetakgol == '' || ScheduleAllActive[0].status == 'CLSD'" ion-button color="bluedark" (click)="doSavePrediction()">SIMPAN</button>
       </ion-col>
       <ion-col *ngIf="prediction.length != 0" col-12 style="text-align: center;border-top:1px solid;border-color:#dedede;">{{dateprediction | date:"dd MMMM yyyy HH:mm:ss " }}</ion-col>
     </ion-row>

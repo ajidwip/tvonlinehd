@@ -1,12 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the ProfilePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { ApiProvider } from '../../providers/api/api'
 
 @IonicPage()
 @Component({
@@ -14,8 +8,18 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  public userid = '';
+  public users = [];
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public api: ApiProvider) {
+    this.userid = this.navParams.get('userid');
+    this.api.get('table/z_users', { params: { filter: "id=" + "'" + this.userid + "'" } })
+      .subscribe(val => {
+        this.users = val['data']
+        console.log(this.users)
+      });
   }
 
 }

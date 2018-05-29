@@ -1,5 +1,5 @@
 import { Directive, HostListener, Component, ViewChild, ElementRef } from '@angular/core';
-import { LoadingController, IonicPage, Platform, NavController, NavParams, Content } from 'ionic-angular';
+import { App, LoadingController, IonicPage, Platform, NavController, NavParams, Content } from 'ionic-angular';
 import { AngularFireDatabase, FirebaseListObservable } from "angularfire2/database-deprecated";
 import { Storage } from '@ionic/storage';
 import { ApiProvider } from '../../providers/api/api';
@@ -44,6 +44,7 @@ export class ChatPage {
     public loadingCtrl: LoadingController,
     private admobchat: AdMobPro,
     public platform: Platform,
+    public app: App,
     public element: ElementRef) {
     this.loader = this.loadingCtrl.create({
       // cssClass: 'transparent',
@@ -179,6 +180,12 @@ export class ChatPage {
       document.getElementById('chatMessages').style.display = 'none';
       document.getElementById('content-online').style.display = 'block'
     }
+  }
+  doProfile(user) {
+    this.app.getRootNav().push('ProfilePage', {
+      userid: user.id
+    });
+    console.log(user)
   }
 
 }

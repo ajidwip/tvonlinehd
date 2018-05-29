@@ -7,5 +7,28 @@
 </ion-header>
 
 <ion-content style="background: #ffffff">
-
+  <ion-item *ngFor="let user of users" no-lines style="text-align:center;background:#f8f8f8;border-bottom:3px solid;border-color:#dedede;">
+    <div class="container">
+      <img *ngIf="user.image_url == 'assets/imgs/people.png'" src="{{user.image_url}}" style="height:200px;width:200px;margin:auto;"
+      />
+      <ion-avatar *ngIf="user.image_url != 'assets/imgs/people.png'">
+        <img src="{{user.image_url}}" style="height:200px;width:200px;margin:auto;" />
+      </ion-avatar>
+    </div>
+  </ion-item>
+  <ion-row padding *ngFor="let user of users" style="border-bottom:1px solid;border-color:#dedede;">
+    <ion-col col-2.5>Nama</ion-col>
+    <ion-col col-0.5 style="text-align:right;">:</ion-col>
+    <ion-col col-9>{{user.first_name}} {{user.last_name}}</ion-col>
+  </ion-row>
+  <ion-row padding *ngFor="let user of users" style="border-bottom:1px solid;border-color:#dedede;">
+    <ion-col col-2.5>Gender</ion-col>
+    <ion-col col-0.5 style="text-align:right;">:</ion-col>
+    <ion-col col-9>{{user.gender}}</ion-col>
+  </ion-row>
+  <ion-row padding *ngFor="let user of users" style="border-bottom:1px solid;border-color:#dedede;">
+    <ion-col col-2.5>Regional</ion-col>
+    <ion-col col-0.5 style="text-align:right;">:</ion-col>
+    <ion-col col-9>{{user.region}}</ion-col>
+  </ion-row>
 </ion-content>
