@@ -1,237 +1,39 @@
 page-home {
-    .header {
-        background: #092e61;
-    }    
-    .header-sticky {
-
+    .segment-md .segment-button.activated, .segment-md .segment-button.segment-activated {
+        border-color: #2b2d53;
+        opacity: 1;
     }
-    .header-navbar {
-        text-align: center;
-        background: transparent;
-        padding: 0px;
-    }
-    .header-banner {
-    }
-    .title-menu {
-        text-align: left;
-        height:0px;
-    }
-    .title-logo {
-        font-size: 50px;
+    
+    .segment-md .segment-button {
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+        width: 0;
+        height: 4.2rem; 
+        border-bottom-width: 2px;
+        border-bottom-style: solid;
+        border-bottom-color: rgba(0, 0, 0, 0.1);
+        font-size: 1.2rem;
+        font-weight: 500;
+        line-height: 4rem;
+        text-transform: uppercase;
         color: #ffffff;
+        background-color: #2b2d53;
+        opacity: 0.7;
+        -webkit-transition: 100ms all linear;
+        transition: 100ms all linear;
+        padding: 0 6px;
     }
-    @media only screen and (max-width: 360px) {   
-        .content {
-            .scroll-content {
-                margin-top: 0% !important;
-                padding-bottom:44%;
-            }
-            background: #dedede;
-            position: absolute;
-            top:25%;
-        }
-    }
-    @media only screen and (min-width: 361px) {   
-        .content {
-            .scroll-content {
-                margin-top: 0% !important;
-                padding-bottom:44%;
-            }
-            background: #dedede;
-            position: absolute;
-            top:23%;
-        }
-    }
-    .content-all {
-        padding:0px;
-    }
-    .container {
-        position: relative;
+    .segment-button {
+        margin-left: 0;
+        margin-right: 0;
         text-align: center;
-        color: white;
-        background: #000;
-    }
-    .container-img {
-        opacity: 0.3;
-    }
-    .top-left {
-        position: absolute;
-        top: 8px;
-        left: 16px;
-    }
-    
-    .top-right {
-        position: absolute;
-        top: 8px;
-        right: 0px;
-        font-size: 100%;
-        font-family: 'Times New Roman', Times, serif;
-        color: #dedede;
-    }
-    .center-left {
-        position: absolute;
-        top: 40%;
-        left: 16px;
-    }
-    
-    .center-right {
-        position: absolute;
-        top: 40%;
-        right: 16px;
-    }
-    
-    .bottom-left {
-        position: absolute;
-        bottom: 8px;
-        left: 16px;
-    }
-    
-    .bottom-right {
-        position: absolute;
-        bottom: 8px;
-        right: 16px;
-    }
-    .centered {
-        position: absolute;
-        top: 60%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 100%;
-        z-index: 1;
-    }
-    .centered-sticky {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 100%;
-    }
-    .centered-top {
-        position: absolute;
-        top: 19%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-family: Arial, Helvetica, sans-serif;
-        color: #dedede;
-        width: 100%;
-    }
-    .centered-left {
-        position: absolute;
-        top: 20%;
-        font-family: Arial, Helvetica, sans-serif;
-        width: 100%;
-    }
-    .centered-right {
-        position: absolute;
-        top: 20%;
-        font-family: Arial, Helvetica, sans-serif;
-        width: 100%;
-    }
-    .centered-left-sticky {
-        position: absolute;
-        top: 25%;
-        left: 12%;
-        font-family: Arial, Helvetica, sans-serif;
-        width: 100%;
-    }
-    .centered-right-sticky {
-        position: absolute;
-        top: 25%;
-        right: 12%;
-        font-family: Arial, Helvetica, sans-serif;
-        width: 100%;
-    }
-    ion-loading.transparent {
-        .loading-wrapper {
-          background: transparent;
-          box-shadow: none;
-      
-          .spinner-crescent circle {
-            stroke-width: 8px;
-          }
-        }
-      }
-    .logo-club-left {
-        position: absolute;
-        width: 35%;
-        left:0%;
-    }
-    .logo-club-right {
-        position: absolute;
-        width: 35%;
-        right:0%;
-    }
-    .logo-name {
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: 80%;
-    }
-    .result {
-        height: 22px;
-    }
-    .result-sticky {
-        height: 22px;
-        display: none;
-    }
-    .statistics{
-    }
-    .swiper-pagination-bullet {
-        background: #ffffff;
-    }
-    .swiper-container-horizontal > .swiper-pagination-bullets {
-        left: 0;
-        bottom: 0px;
-        width: 100%;
-    }
-    .card-header-md {
-        font-size: 1.6rem;
-        color: #222;
-        padding: 16px;
-        text-align: left;
-    }
-    .playvideo:active {
+        position: relative;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
         cursor: pointer;
-        color:red;
-    }
-    .centered-left-banner {
-        position: absolute;
-        top: 12%;
-        left: 3%;
-        width: 45%;
-    }
-    .centered-right-banner {
-        position: absolute;
-        top: 12%;
-        right: 3%;
-        width: 45%;
-    }
-    .centered-bottom-banner {
-        position: absolute;
-        bottom: 10%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-    .bottom {
-        position: absolute;
-        bottom: 0px;
-        width: 100%;
-        height:50%;
-        background: rgba(34,39,51,0.6);
-        color:#D3D6D7;
-        opacity: 0.9;
-        text-align:left;
-        padding-left:10px;
-        padding-top:20px;
-    }
-    .top-banner {
-        position: absolute;
-        top: 0px;
-        width: 100%;
-        height:20%;
-        background: rgba(34,39,51,0.6);
-        color:#D3D6D7;
-        opacity: 0.9;
-        text-align:left;
-        padding-left:10px;
-        padding-top:15px;
     }
 }

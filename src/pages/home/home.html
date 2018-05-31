@@ -1,191 +1,34 @@
-<ion-header id="header" class="header">
-  <div id="header-navbar" class="header-navbar">
-    <div *ngIf="streaming.length != 0" class="logo-streaming" style="text-align:right;height:0px;">
-      <button ion-button clear color="light" (click)="doStreaming(streaming)">
-        <img src="assets/imgs/live.gif" height="25" style="margin-top:10px;" />
-      </button>
-    </div>
-    <div class="title-menu">
-      <button ion-button clear menuToggle color="light" style="top:3px;">
-        <ion-icon name="md-options" style="font-size:25px;"></ion-icon>
-      </button>
-    </div>
-    <div class="title-logo">
-      <h4>
-        BARCA
-        <img src="assets/icon/logo.gif" height="20" /> INFO&nbsp;&nbsp;&nbsp;&nbsp;
-      </h4>
-    </div>
-  </div>
-  <div id="header-banner" class="header-banner">
-    <div class="container" *ngFor="let schedule of ScheduleAllActive">
-      <img id="container-img" class="container-img" src="assets/imgs/campnou.jpg" style="width:100%;" />
-      <div class="centered-top">
-        <div style="font-size:80%;">{{schedule.league}} - {{schedule.round}} - {{schedule.date | date:"dd MMMM yyyy"}}</div>
-      </div>
-      <div class="centered">
-        <div *ngIf="schedule.date > datecurrent" id="result" class="result">
-          {{schedule.date | date:"HH:mm"}}
-        </div>
-        <div *ngIf="schedule.date <= datecurrent" id="result" class="result">
-          {{schedule.skor_home}} - {{schedule.skor_away}}
-        </div>
-        <div *ngIf="schedule.date > datecurrent" id="result-sticky" class="result-sticky">
-          {{clubhome}}&nbsp;&nbsp;{{schedule.date | date:"HH:mm"}}&nbsp;&nbsp;{{clubaway}}
-        </div>
-        <div *ngIf="schedule.date <= datecurrent" id="result-sticky" class="result-sticky">
-          {{clubhome}} {{schedule.skor_home}} - {{schedule.skor_away}} {{clubaway}}
-        </div>
-        <div id="statistics" class="statistics">
-          <button *ngIf="schedule.info_live != 'Final'" style="font-size:12px;height:25px;" ion-button color="danger" (click)="openChannel(schedule)">{{schedule.info_live}}</button>
-          <button *ngIf="schedule.info_live == 'Final'" style="font-size:12px;height:25px;" ion-button color="darklight" (click)="doResultGame(schedule)">{{schedule.info_live}}</button>
-        </div>
-      </div>
-      <div id="centered-left" class="centered-left">
-        <div class="logo-club-left">
-          <img id="logo-clubleft" style="width:40%;" src="{{schedule.club_home_icon_url}}" />
-          <div id="name-clubleft" class="logo-name">{{schedule.club_home}}</div>
-        </div>
-      </div>
-      <div id="centered-right" class="centered-right">
-        <div class="logo-club-right">
-          <img id="logo-clubright" style="width:40%;margin:auto;" src="{{schedule.club_away_icon_url}}" />
-          <div id="name-clubright" class="logo-name">{{schedule.club_away}}</div>
-        </div>
-      </div>
-      <div class="top-right">
-        <button ion-button clear color="light" (click)="doResultGame(schedule)">
-          <ion-icon name="md-more" style="font-size:30px;"></ion-icon>
-        </button>
-      </div>
-    </div>
-  </div>
+<ion-header>
+  <ion-navbar color="bluedark">
+    <ion-title style="text-align:center;">
+      TV Online HD
+    </ion-title>
+  </ion-navbar>
 </ion-header>
-<ion-content id="content" class="content">
-  <ion-refresher (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content>
-      pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing..."
-    </ion-refresher-content>
-  </ion-refresher>
-  <div class="content-all">
-    <div class="banner">
-      <ion-card>
-        <div class="container">
-          <img src="assets/imgs/game.jpg" />
-          <div class="centered-left-banner">
-            <img src="{{clubhomeurl}}" />
-          </div>
-          <div class="centered-right-banner">
-            <img src="{{clubawayurl}}" />
-          </div>
-          <div class="centered-bottom-banner">
-            <button ion-button color="secondary" (click)="doTebakSkor(ScheduleAllActive)">TEBAK</button>
-          </div>
-          <div class="top-banner">Tebak Skor & Menangkan Pulsanya</div>
-        </div>
-      </ion-card>
-    </div>
-    <div class="content-news">
-      <ion-item no-lines style="background:transparent;margin-bottom:-15px;">
-        <h5 style="font-weight:bold;font-size:17px;">BERITA</h5>
-        <a item-end style="color:#f53d3d;font-size:12px;" (click)="doMoreNews()">Lainnya..</a>
-      </ion-item>
-      <div class="swiper-container">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide" *ngFor="let news of NewsAllactive">
-            <div style="margin-right:-15px;">
-              <ion-card (click)="doGoNewsDetail(news)">
-                <!-- <img style="height:125px;width:100%;" src="{{news.image_url}}">
-                <ion-card-content style="text-align:left;height:80px;font-weight: bold;">
-                  {{news.title}}
-                </ion-card-content> -->
-                <div class="content-top">
-                  <div class="container">
-                    <img style="height:180px;width:100%;" src="{{news.image_url}}" height="150" />
-                    <div class="bottom">{{news.title}}</div>
-                  </div>
-                </div>
-              </ion-card>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <ion-card style="background:#092e61;padding-top:25px;padding-bottom:25px;" class="banner">
-      <ion-item style="background: #092e61;" no-lines>
-        <div style="color:#ffffff;padding-left:0px;padding-bottom:10px;">
-          Aktifkan Notifikasi Anda
-          <p style="font-size:10px;color:#ffffff;">Jangan sampai terlewatkan setiap pertandingannya.</p>
-        </div>
-        <button ion-button outline color="light" (click)="doSettings()">AKTIFKAN DI PENGATURAN</button>
-        <div item-end>
-          <img style="width:50px;height:50px;" src="https://cdn.pixabay.com/photo/2015/12/16/17/41/bell-1096280_960_720.png" />
-        </div>
-      </ion-item>
-    </ion-card>
-    <div class="content-photos">
-      <ion-item no-lines style="background:transparent;margin-bottom:-15px;">
-        <h5 style="font-weight:bold;font-size:17px;">Foto</h5>
-        <a item-end style="color:#f53d3d;font-size:12px;" (click)="doMoreGallery()">Lainnya..</a>
-      </ion-item>
-      <div class="swiper-container">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide" *ngFor="let gallery of GalleryAllactive">
-            <div style="margin-right:-15px;">
-              <ion-card (click)="doGoGalleryDetail(gallery)">
-                <!-- <img style="height:125px;width:100%;" src="{{gallery.image_url_thumb}}">
-                <ion-card-content style="text-align:left;height:80px;font-weight: bold;">
-                  {{gallery.title}}
-                </ion-card-content> -->
-                <div class="content-top">
-                  <div class="container">
-                    <img style="height:180px;width:100%;" src="{{gallery.image_url_thumb}}" height="150" />
-                    <div class="bottom">{{gallery.title}}</div>
-                  </div>
-                </div>
-              </ion-card>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <ion-card style="background:#a50044;padding-top:25px;padding-bottom:25px;" class="banner">
-      <ion-item style="background: #a50044;" no-lines>
-        <div style="color:#ffffff;padding-left:0px;padding-bottom:10px;">
-          AYO Gabung Ke Chatroom!!!
-          <p style="font-size:10px;color:#ffffff;">Ruang untuk berbagi semua informasi tentang BARCA.</p>
-        </div>
-        <button ion-button outline color="light" (click)="doChatroom()">CHATROOM</button>
-        <div item-end>
-          <img style="width:50px;height:70px;" src="https://cdn.icon-icons.com/icons2/928/PNG/512/mobile-chat_icon-icons.com_72197.png"
-          />
-        </div>
-      </ion-item>
-    </ion-card>
-    <div class="content-videos">
-      <ion-item no-lines style="background:transparent;margin-bottom:-15px;">
-        <h5 style="font-weight:bold;font-size:17px;">VIDEO</h5>
-        <a item-end style="color:#f53d3d;font-size:12px;" (click)="doMoreVideos()">Lainnya..</a>
-      </ion-item>
-      <div class="swiper-container">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide" *ngFor="let video of VideosAllactive">
-            <div style="margin-right:-15px;">
-              <ion-card>
-                <div class="container">
-                  <img style="height:125px;width:100%;" src="https://img.youtube.com/vi/{{video.image_url_thumb}}/maxresdefault.jpg">
-                  <div class="centered">
-                    <ion-icon (click)="doOpenVideo(video)" class="playvideo" name="logo-youtube" style="font-size:60px;"></ion-icon>
-                  </div>
-                </div>
-                <ion-card-content style="text-align:left;height:80px;font-weight: bold;">
-                  {{video.title}}
-                </ion-card-content>
-              </ion-card>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+
+<ion-content style="background:#ffffff;margin-top:1px;">
+  <ion-segment [(ngModel)]="tv">
+    <ion-segment-button value="indonesia">
+      TV Indonesia
+    </ion-segment-button>
+    <ion-segment-button value="olahraga">
+      TV Olahraga
+    </ion-segment-button>
+  </ion-segment>
+  <div [ngSwitch]="tv">
+    <ion-list style="padding-top:5px;" *ngSwitchCase="'indonesia'">
+      <ion-row>
+        <ion-col col-4 *ngFor="let indo of channelindo" (click)="goToLiveIndo(indo)">
+          <img style="width:100%;height:100%;" src="{{indo.thumbnail_picture}}" />
+        </ion-col>
+      </ion-row>
+    </ion-list>
+    <ion-list *ngSwitchCase="'olahraga'">
+      <ion-row>
+        <ion-col padding style="background:#2b2d53;color:#ffffff;border-top:2px solid;border-left:2px solid;border-right:2px solid;border-color:#ffffff;" col-6 *ngFor="let sports of channelsports" (click)="goToLiveSports(sports)">
+          {{sports.channel_name}}
+        </ion-col>
+      </ion-row>
+    </ion-list>
   </div>
 </ion-content>
