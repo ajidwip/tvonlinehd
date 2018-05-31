@@ -10,6 +10,7 @@ import { AdMobPro } from '@ionic-native/admob-pro';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { SafePipe } from '../pipes/safe/safe';
 import { HomePage } from '../pages/home/home';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { HomePage } from '../pages/home/home';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ApiProvider,
     AdMobPro,
-    InAppBrowser
+    InAppBrowser,
+    ScreenOrientation
   ]
 })
 export class AppModule {}

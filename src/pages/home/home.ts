@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, Platform } from 'ionic-angular';
-// import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ApiProvider } from '../../providers/api/api';
 import { AdMobPro } from '@ionic-native/admob-pro';
 
@@ -15,7 +15,7 @@ export class HomePage {
 
   constructor(
     public navCtrl: NavController,
-    // private screenOrientation: ScreenOrientation,
+    private screenOrientation: ScreenOrientation,
     public api: ApiProvider,
     public platform: Platform,
     private admob: AdMobPro) {
@@ -38,6 +38,9 @@ export class HomePage {
       autoShow: true,
       position: this.admob.AD_POSITION.BOTTOM_CENTER,
     });
+    if (this.platform.is('cordova')) {
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
+    }
   }
   ionViewWillLeave() {
     this.admob.removeBanner();
@@ -64,9 +67,4 @@ export class HomePage {
         this.channelsports = val['data']
       });
   }
-  /*ionViewDidEnter() {
-    if (this.platform.is('cordova')) {
-      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
-    }
-  }*/
 }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { LoadingController, IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
-// import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { AdMobPro } from '@ionic-native/admob-pro';
 
 @IonicPage()
@@ -14,7 +14,7 @@ export class LivePage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    // private screenOrientation: ScreenOrientation,
+    private screenOrientation: ScreenOrientation,
     public loadingCtrl: LoadingController,
     private admob: AdMobPro,
     public platform: Platform) {
@@ -28,11 +28,6 @@ export class LivePage {
   ngAfterViewInit() {
     this.loading.dismiss();
   }
-  /*ionViewDidEnter() {
-    if (this.platform.is('cordova')) {
-      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE);
-    }
-  }*/
   ionViewDidLoad() {
   }
   ionViewDidEnter() {
@@ -46,6 +41,9 @@ export class LivePage {
       isTesting: true,
       autoShow: true
     })
+    if (this.platform.is('cordova')) {
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE);
+    }
   }
   ionViewWillLeave() {
     this.admob.removeBanner();
