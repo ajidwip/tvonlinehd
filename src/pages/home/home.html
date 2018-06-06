@@ -1,34 +1,32 @@
 <ion-header>
-  <ion-navbar color="bluedark">
-    <ion-title style="text-align:center;">
-      TV Online HD
+  <ion-toolbar color="bluewhite">
+    <button ion-button menuToggle left>
+      <ion-icon style="font-size:25px;" name="md-menu"></ion-icon>
+    </button>
+    <ion-title>
+      <img style="width:35px;height:35px;margin-left:37%;margin-top:2%;" src="assets/imgs/logo.png" />
     </ion-title>
-  </ion-navbar>
+  </ion-toolbar>
 </ion-header>
 
-<ion-content style="background:#ffffff;margin-top:1px;">
-  <ion-segment [(ngModel)]="tv">
-    <ion-segment-button value="indonesia">
-      TV Indonesia
-    </ion-segment-button>
-    <ion-segment-button value="olahraga">
-      TV Olahraga
-    </ion-segment-button>
-  </ion-segment>
-  <div [ngSwitch]="tv">
-    <ion-list style="padding-top:5px;" *ngSwitchCase="'indonesia'">
-      <ion-row>
-        <ion-col col-4 *ngFor="let indo of channelindo" (click)="goToLiveIndo(indo)">
-          <img style="width:100%;height:100%;" src="{{indo.thumbnail_picture}}" />
-        </ion-col>
-      </ion-row>
-    </ion-list>
-    <ion-list *ngSwitchCase="'olahraga'">
-      <ion-row>
-        <ion-col padding style="background:#2b2d53;color:#ffffff;border-top:2px solid;border-left:2px solid;border-right:2px solid;border-color:#ffffff;" col-6 *ngFor="let sports of channelsports" (click)="goToLiveSports(sports)">
-          {{sports.channel_name}}
-        </ion-col>
-      </ion-row>
-    </ion-list>
-  </div>
+<ion-content style="background:#e8e8e8;margin-top:1px;">
+  <ion-slides style="height:25%;" autoplay="4000" loop="true" speed="400" pager="true">
+    <ion-slide style="background:#1ba0e2;">
+      <div (click)="doDetail()" style="z-index: 888;">
+        <div style="color: #fff;font-size:20px;margin-top:20px;">Barcelona vs Real Madrid</div>
+        <div style="color: #fff;">LIVE</div>
+        <div style="color: #fff;padding-bottom:40px;font-size:15px;">Selasa, 08 April 2018 23:30 WIB</div>
+      </div>
+      <button (click)="doLive()" style="position:absolute;right:10px;top:10%;font-size:30px;color:#ffffff;z-index: 999;background: #1ba0e2;">
+        <ion-icon name="md-more"></ion-icon>
+      </button>
+    </ion-slide>
+  </ion-slides>
+  <ion-grid>
+    <ion-row>
+      <ion-col *ngFor="let channel of channellist" col-4 padding style="text-align: center;background: #ffffff;border:1px solid;border-color:#dedede;" (click)="doDetail(channel)">
+        <p style="color:#666666;font-weight: bold;">{{channel.name}}</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

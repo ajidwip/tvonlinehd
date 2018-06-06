@@ -1,4 +1,11 @@
 page-home {
+    .swiper-pagination-bullet-active {
+        background: #ffffff;
+        opacity: 1;
+        }
+    .hiddenfirst {
+        display: none;
+    }
     .segment-md .segment-button.activated, .segment-md .segment-button.segment-activated {
         border-color: #2b2d53;
         opacity: 1;

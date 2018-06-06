@@ -1,27 +1,44 @@
 import { Component } from '@angular/core';
-import { NavController, Platform } from 'ionic-angular';
+import { LoadingController, NavController, Platform, AlertController } from 'ionic-angular';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ApiProvider } from '../../providers/api/api';
 import { AdMobPro } from '@ionic-native/admob-pro';
+import moment from 'moment';
+
+// declare var Swiper: any;
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
-  public tv = '';
-  public channelindo = [];
-  public channelsports = [];
+  public channellist = [];
+  public loader: any;
 
   constructor(
     public navCtrl: NavController,
     private screenOrientation: ScreenOrientation,
     public api: ApiProvider,
+    public alertCtrl: AlertController,
     public platform: Platform,
+    public loadingCtrl: LoadingController,
     private admob: AdMobPro) {
-    this.tv = 'indonesia'
-    this.doGetChannelIndonesia();
-    this.doGetChannelSports();
+    this.loader = this.loadingCtrl.create({
+      // cssClass: 'transparent',
+      content: 'Loading...'
+    });
+    this.loader.present().then(() => {
+      /*var swiper = new Swiper('.swiper-container', {
+        slidesPerView: 2,
+        spaceBetween: 3,
+        freeMode: false,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+      });*/
+    });
+    this.doGetListChannel();
   }
   ionViewDidLoad() {
   }
@@ -34,7 +51,7 @@ export class HomePage {
     this.admob.createBanner({
       adSize: 'SMART_BANNER',
       adId: admobid.banner,
-      isTesting: true,
+      isTesting: false,
       autoShow: true,
       position: this.admob.AD_POSITION.BOTTOM_CENTER,
     });
@@ -45,26 +62,19 @@ export class HomePage {
   ionViewWillLeave() {
     this.admob.removeBanner();
   }
-  goToLiveIndo(indo) {
-    this.navCtrl.push('LivePage', {
-      url: indo.url
-    })
-  }
-  goToLiveSports(sports) {
-    this.navCtrl.push('LivePage', {
-      url: sports.url
-    })
-  }
-  doGetChannelIndonesia() {
-    this.api.get("table/z_channel", { params: { limit: 100, filter: "country=" + "'Indonesia' AND status='OPEN'", sort: "channel_name" + " ASC " } })
+  doGetListChannel() {
+    this.api.get("table/z_list_channel", { params: { limit: 100, sort: "name" + " ASC " } })
       .subscribe(val => {
-        this.channelindo = val['data']
+        this.channellist = val['data']
       });
   }
-  doGetChannelSports() {
-    this.api.get("table/z_channel", { params: { limit: 100, filter: "category=" + "'Sports' AND status='OPEN'", sort: "channel_name" + " ASC " } })
-      .subscribe(val => {
-        this.channelsports = val['data']
-      });
+  ngAfterViewInit() {
+    this.loader.dismiss();
+  }
+  doDetail(channel) {
+    this.navCtrl.push('ChannelPage', {
+      name: channel.name,
+      category: channel.category
+    })
   }
 }

@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-navbar color="bluewhite">
+    <ion-title>{{channelname}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content style="background:#e8e8e8;">
+  <ion-grid>
+    <ion-row>
+      <ion-item item-start no-lines padding style="background: #fafafa;border:1px solid;border-color:#dedede;" *ngFor="let channel of channels"
+        col-12>
+        <p style="color:#666666;font-weight: bold;">{{channel.title}}</p>
+        <button (click)="doPlay(channel)" ion-button clear *ngIf="channelcategory == 'STREAM'" item-end><i style="font-size: 15px;" class="fas fa-chevron-right"></i></button>
+        <button (click)="doPlay(channel)" ion-button clear *ngIf="channelcategory != 'STREAM'" item-end><i *ngIf="!radiostream || channel.id != id" style="font-size: 15px;" class="fas fa-play"></i><i *ngIf="radiostream && channel.id == id" style="font-size: 15px;" class="fas fa-stop"></i></button>
+        <audio *ngIf="radiostream && channel.id == id" controls autoplay style="width: 100%;">
+          <source src="{{url}}" type="audio/mpeg">
+        </audio>
+      </ion-item>
+    </ion-row>
+  </ion-grid>
+</ion-content>

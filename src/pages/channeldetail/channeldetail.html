@@ -1,0 +1,30 @@
+<ion-header>
+
+  <ion-navbar color="bluewhite">
+    <ion-title>{{anime}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content>
+      pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing..."
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-row style="background: #dedede;">
+    <ion-col padding col-3 style="border-right:1px solid;border-color:#ffffff;">EPS</ion-col>
+    <ion-col padding col-6 style="border-right:1px solid;border-color:#ffffff;">JUDUL</ion-col>
+    <ion-col padding col-3>PUTAR</ion-col>
+  </ion-row>
+  <ion-row *ngFor="let channel of channeldetail">
+    <ion-col padding col-3 style="border-right:1px solid;border-bottom:1px solid;border-color:#dedede;">{{channel.episode}}</ion-col>
+    <ion-col padding col-6 style="border-right:1px solid;border-bottom:1px solid;border-color:#dedede;">{{channel.name}} Episode {{channel.episode}}</ion-col>
+    <ion-col padding col-3 style="border-bottom:1px solid;border-color:#dedede;text-align: center;" (click)="goToPlayAnime(channel)"><ion-icon style="color:#42b549;font-size:30px;" name="logo-youtube"></ion-icon></ion-col>
+  </ion-row>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content>
+      loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

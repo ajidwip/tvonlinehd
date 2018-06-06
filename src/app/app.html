@@ -1,1 +1,29 @@
-<ion-nav [root]="rootPage"></ion-nav>
+<ion-menu side="left" [content]="mycontent">
+    <ion-header>
+        <ion-toolbar color="bluewhite">
+            <button ion-button menuToggle right>
+                <ion-icon style="font-size:25px;" name="md-close"></ion-icon>
+            </button>
+            <ion-title style="margin:auto;">
+                Menu
+            </ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content>
+        <ion-list>
+            <ion-item *ngFor="let p of pages; let i=index" text-wrap (click)="toggleLevel1('idx'+i)" [ngClass]="{active: isLevel1Shown('idx'+i)}">
+                <h2>
+                    <ion-icon color="success" item-right [name]="isLevel1Shown('idx'+i) ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
+                    <b>{{p.name}}</b>
+                </h2>
+                <ion-list *ngIf="isLevel1Shown('idx'+i)">
+                    <ion-item *ngFor="let s of subs; let i2=index" text-wrap (click)="doDetailChannel()" [ngClass]="{active: isLevel2Shown('idx'+i+'idx'+i2)}">
+                        <h4>{{s.datestart | date:'dd/MM/yy HH:mm'}} {{s.name}} {{s.channel_name}}</h4>
+                    </ion-item>
+                </ion-list>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-menu>
+
+<ion-nav #mycontent [root]="rootPage"></ion-nav>

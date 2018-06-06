@@ -39,7 +39,6 @@
     "cordova-plugin-admobpro": "^2.31.6",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-extension": "^1.5.4",
-    "cordova-plugin-inappbrowser": "^3.0.0",
     "cordova-plugin-ionic-keyboard": "^2.1.2",
     "cordova-plugin-ionic-webview": "^1.2.1",
     "cordova-plugin-screen-orientation": "^3.0.1",
@@ -66,7 +65,6 @@
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-ionic-keyboard": {},
-      "cordova-plugin-inappbrowser": {},
       "cordova-plugin-admobpro": {},
       "cordova-plugin-ionic-webview": {},
       "cordova-plugin-screen-orientation": {}

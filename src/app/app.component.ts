@@ -11,7 +11,11 @@ import { HomePage } from '../pages/home/home';
 })
 export class MyApp {
   @ViewChild('mycontent') Nav: NavController;
-  rootPage:any = HomePage;
+  rootPage: any = HomePage;
+  public pages = [];
+  public subs = [];
+  showLevel1 = null;
+  showLevel2 = null;
   constructor(
     public platform: Platform,
     public statusBar: StatusBar,
@@ -25,8 +29,60 @@ export class MyApp {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.api.get("table/z_list_channel", { params: { limit: 100, sort: "name" + " ASC " } })
+        .subscribe(val => {
+          this.pages = val['data']
+        });
     });
   }
+  isLevel1Shown(idx) {
+    return this.showLevel1 === idx;
+  };
 
+  isLevel2Shown(idx) {
+    return this.showLevel2 === idx;
+  };
+  toggleLevel1(idx) {
+    this.subs = [];
+    if (idx == 'idx0') {
+      this.api.get("table/z_list_anime", { params: { limit: 200, sort: "name" + " ASC " } })
+        .subscribe(val => {
+          this.subs = val['data']
+        });
+    }
+    else if (idx == 'idx1') {
+      this.api.get("table/z_channel_live", { params: { limit: 100, filter: "status='TEST'", sort: "datestart" + " ASC " } })
+        .subscribe(val => {
+          this.subs = val['data']
+        });
+    }
+    else if (idx == 'idx2') {
+      this.api.get("table/z_channel", { params: { limit: 100, filter: "country=" + "'Indonesia' AND status='OPEN'", sort: "channel_name" + " ASC " } })
+        .subscribe(val => {
+          this.subs = val['data']
+        });
+    }
+    else if (idx == 'idx3') {
+      this.api.get("table/z_channel", { params: { limit: 100, filter: "category=" + "'Sports' AND status='OPEN'", sort: "channel_name" + " ASC " } })
+        .subscribe(val => {
+          this.subs = val['data']
+        });
+    }
+    if (this.isLevel1Shown(idx)) {
+      this.showLevel1 = null;
+    } else {
+      this.showLevel1 = idx;
+    }
+  };
+
+  toggleLevel2(idx) {
+    if (this.isLevel2Shown(idx)) {
+      this.showLevel1 = null;
+      this.showLevel2 = null;
+    } else {
+      this.showLevel1 = idx;
+      this.showLevel2 = idx;
+    }
+  };
 }
 

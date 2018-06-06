@@ -5,12 +5,14 @@ import { AdMobPro } from '@ionic-native/admob-pro';
 
 @IonicPage()
 @Component({
-  selector: 'page-live',
-  templateUrl: 'live.html',
+  selector: 'page-player',
+  templateUrl: 'player.html',
 })
-export class LivePage {
-  public url = '';
+export class PlayerPage {
+  public url: any;
+  public type:any;
   public loading: any;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -23,7 +25,8 @@ export class LivePage {
       content: 'Loading...'
     });
     this.loading.present();
-    this.url = this.navParams.get('url')
+    this.url = this.navParams.get('url');
+    this.type = this.navParams.get('type')
   }
   ngAfterViewInit() {
     this.loading.dismiss();
@@ -48,5 +51,4 @@ export class LivePage {
   ionViewWillLeave() {
     this.admob.removeBanner();
   }
-
 }
