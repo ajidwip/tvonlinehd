@@ -39,11 +39,11 @@ export class MyApp {
       this.splashScreen.hide();
       this.datecurrent = moment().format('YYYY-MM-DD');
       this.datetimecurrent = moment().format('YYYY-MM-DD h:mm');
-      this.api.get("table/z_list_channel", { params: { filter: "status='OPEN'", limit: 100, sort: "name" + " ASC " } })
+      this.api.get("table/z_list_channel", { params: { filter: "status='OPEN' AND category != 'STREAM'", limit: 500, sort: "name" + " ASC " } })
         .subscribe(val => {
           this.pages = val['data']
         });
-      this.api.get("table/z_status_app", { params: { filter: "status='TRUE'", limit: 100 } })
+      this.api.get("table/z_status_app", { params: { filter: "status=" + 1, limit: 500 } })
         .subscribe(val => {
           this.statusapp = val['data']
           if (this.statusapp.length) {
@@ -71,23 +71,17 @@ export class MyApp {
     this.subs = [];
     this.category = p.category;
     if (p.category == 'TV') {
-      this.api.get("table/z_channel", { params: { limit: 100, filter: "name=" + "'" + p.name + "' AND status='OPEN'", sort: "title" + " ASC " } })
-        .subscribe(val => {
-          this.subs = val['data']
-        });
-    }
-    else if (p.category == 'STREAM') {
-      this.api.get("table/z_channel_stream", { params: { limit: 500, filter: "name=" + "'" + p.name + "' AND status='OPEN'", sort: "title" + " ASC " } })
+      this.api.get("table/z_channel", { params: { limit: 500, filter: "name=" + "'" + p.name + "' AND status='OPEN'", sort: "title" + " ASC " } })
         .subscribe(val => {
           this.subs = val['data']
         });
     }
     else if (p.category == 'LIVE') {
-      this.api.get("table/z_channel_live", { params: { limit: 100, filter: "category=" + "'" + p.name + "' AND status='OPEN'" + " AND date >=" + "'" + this.datecurrent + "'", group: "date", sort: "date" + " ASC " } })
+      this.api.get("table/z_channel_live", { params: { limit: 500, filter: "category=" + "'" + p.name + "' AND status='OPEN'" + " AND date >=" + "'" + this.datecurrent + "'", group: "date", sort: "date" + " ASC " } })
         .subscribe(val => {
           this.subs = val['data'];
         });
-      this.api.get("table/z_channel_live", { params: { limit: 100, filter: "category=" + "'" + p.name + "' AND status='OPEN'" + " AND datefinish >=" + "'" + this.datetimecurrent + "'", sort: "date" + " ASC " } })
+      this.api.get("table/z_channel_live", { params: { limit: 500, filter: "category=" + "'" + p.name + "' AND status='OPEN'" + " AND datefinish >=" + "'" + this.datetimecurrent + "'", sort: "date" + " ASC " } })
         .subscribe(val => {
           this.subsdetail = val['data'];
         });
@@ -122,6 +116,13 @@ export class MyApp {
       })
       this.menuCtrl.close();
     }
+  }
+  doPlayLive(sd) {
+    console.log(sd)
+    this.Nav.push('LivePage', {
+      url: sd.url
+    })
+    this.menuCtrl.close();
   }
 }
 

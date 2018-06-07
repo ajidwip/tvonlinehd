@@ -32,7 +32,7 @@ export class ChanneldetailPage {
       }
       else {
         this.halaman++;
-        this.api.get('table/z_list_detail_anime', { params: { limit: 30, offset: offset, filter: "name=" + "'" + this.anime + "'", sort: "episode" + " DESC " } })
+        this.api.get('table/z_channel_stream_detail', { params: { limit: 30, offset: offset, filter: "name=" + "'" + this.anime + "'", sort: "episode" + " DESC " } })
           .subscribe(val => {
             let data = val['data'];
             for (let i = 0; i < data.length; i++) {

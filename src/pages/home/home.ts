@@ -13,8 +13,9 @@ import moment from 'moment';
 })
 export class HomePage {
   public channellist = [];
+  public channellive = [];
   public loader: any;
-
+  public datetimecurrent:any;
   constructor(
     public navCtrl: NavController,
     private screenOrientation: ScreenOrientation,
@@ -38,6 +39,8 @@ export class HomePage {
         },
       });*/
     });
+    this.datetimecurrent = moment().format('YYYY-MM-DD h:mm');
+    this.doGetLive();
     this.doGetListChannel();
   }
   ionViewDidLoad() {
@@ -63,7 +66,7 @@ export class HomePage {
     this.admob.removeBanner();
   }
   doGetListChannel() {
-    this.api.get("table/z_list_channel", { params: { filter: "status='OPEN'",limit: 100, sort: "name" + " ASC " } })
+    this.api.get("table/z_list_channel", { params: { filter: "status='OPEN'", limit: 100, sort: "name" + " ASC " } })
       .subscribe(val => {
         this.channellist = val['data']
       });
@@ -76,5 +79,17 @@ export class HomePage {
       name: channel.name,
       category: channel.category
     })
+  }
+  doDetailLive(live) {
+    this.navCtrl.push('ChannelPage', {
+      name: live.category,
+      category: live.type
+    })
+  }
+  doGetLive() {
+    this.api.get("table/z_channel_live", { params: { limit: 10, filter: "status='OPEN'" + " AND datefinish >=" + "'" + this.datetimecurrent + "'", sort: "datestart" + " ASC " } })
+      .subscribe(val => {
+        this.channellive = val['data']
+      });
   }
 }

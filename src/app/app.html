@@ -18,12 +18,9 @@
                 </h2>
                 <ion-list *ngIf="isLevel1Shown('idx'+i)">
                     <div *ngFor="let s of subs">
-                        <ion-item *ngIf="category != 'LIVE'" text-wrap>
+                        <ion-item padding *ngIf="category != 'LIVE'" text-wrap>
                             <h4>{{s.datestart | date:'dd/MM/yy HH:mm'}} {{s.title}}</h4>
-                            <button (click)="doPlay(s)" ion-button clear *ngIf="category == 'STREAM'" item-end>
-                                <i style="font-size: 15px;" class="fas fa-chevron-right"></i>
-                            </button>
-                            <button (click)="doPlay(s)" ion-button clear *ngIf="category != 'STREAM'" item-end>
+                            <button (click)="doPlay(s)" ion-button clear item-end>
                                 <i *ngIf="!radiostream || s.id != id" style="font-size: 15px;" class="fas fa-play"></i>
                                 <i *ngIf="radiostream && s.id == id" style="font-size: 15px;" class="fas fa-stop"></i>
                             </button>
@@ -33,12 +30,12 @@
                         </ion-item>
                         <ion-grid *ngIf="category == 'LIVE'">
                             <ion-row style="background: #7a7a7a;color:#ffffff;">
-                                <ion-col col-12>{{s.date | date:'EEEE, dd/MM/yyyy'}}</ion-col>
+                                <ion-col padding col-12>{{s.date | date:'EEEE, dd/MM/yyyy'}}</ion-col>
                             </ion-row>
                             <div *ngFor="let sd of subsdetail">
-                                <ion-row *ngIf="sd.date == s.date" style="border-bottom:1px solid;border-color:#dedede;">
-                                    <ion-col col-4 style="text-align:left;">{{sd.datestart | date:'HH:mm'}} WIB</ion-col>
-                                    <ion-col col-8 style="text-align:left;">{{sd.title}}</ion-col>
+                                <ion-row *ngIf="sd.date == s.date" style="border-bottom:1px solid;border-color:#dedede;" (click)="doPlayLive(sd)">
+                                    <ion-col padding col-4 style="text-align:left;">{{sd.datestart | date:'HH:mm'}} WIB</ion-col>
+                                    <ion-col padding col-8 style="text-align:left;">{{sd.title}}</ion-col>
                                 </ion-row>
                             </div>
                         </ion-grid>
