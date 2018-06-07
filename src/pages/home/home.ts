@@ -63,7 +63,7 @@ export class HomePage {
     this.admob.removeBanner();
   }
   doGetListChannel() {
-    this.api.get("table/z_list_channel", { params: { limit: 100, sort: "name" + " ASC " } })
+    this.api.get("table/z_list_channel", { params: { filter: "status='OPEN'",limit: 100, sort: "name" + " ASC " } })
       .subscribe(val => {
         this.channellist = val['data']
       });

@@ -16,9 +16,11 @@ export class ChannelPage {
   public channelcategory: any;
   public channelname: any;
   public loader: any;
-  public url:any;
-  public id:any;
-  public radiostream:boolean;
+  public url: any;
+  public id: any;
+  public radiostream: boolean;
+  public datecurrent:any;
+  public datetimecurrent:any;
   constructor(
     public navCtrl: NavController,
     private screenOrientation: ScreenOrientation,
@@ -28,6 +30,8 @@ export class ChannelPage {
     public navParam: NavParams,
     public loadingCtrl: LoadingController,
     private admob: AdMobPro) {
+    this.datecurrent = moment().format('YYYY-MM-DD');
+    this.datetimecurrent = moment().format('YYYY-MM-DD h:mm');
     this.radiostream = false;
     this.loader = this.loadingCtrl.create({
       content: 'Loading...'
@@ -48,16 +52,13 @@ export class ChannelPage {
         });
     }
     else if (this.channelcategory == 'LIVE') {
-      this.api.get("table/z_channel_live", { params: { limit: 100, filter: "category=" + "'" + this.channelname + "' AND status='OPEN'", group: "date", sort: "date" + " ASC " } })
+      this.api.get("table/z_channel_live", { params: { limit: 100, filter: "category=" + "'" + this.channelname + "' AND status='OPEN'" + " AND date >=" + "'" + this.datecurrent + "'", group: "date", sort: "date" + " ASC " } })
         .subscribe(val => {
-          let data = val['data'];
-          for (let i = 0; i < data.length; i++) {
-            this.channels.push(data[i]);
-            this.api.get("table/z_channel_live", { params: { limit: 100, filter: "category=" + "'" + this.channelname + "' AND status='OPEN'" + " AND " + "date=" + "'" + data[i].date + "'", sort: "date" + " ASC " } })
-              .subscribe(val => {
-                this.channeldetail = val['data']
-              });
-          }
+          this.channels = val['data'];
+        });
+      this.api.get("table/z_channel_live", { params: { limit: 100, filter: "category=" + "'" + this.channelname + "' AND status='OPEN'" + " AND datefinish >=" + "'" + this.datetimecurrent + "'", sort: "datestart" + " ASC " } })
+        .subscribe(val => {
+          this.channeldetail = val['data']
         });
     }
     else if (this.channelcategory == 'RADIO') {
@@ -66,6 +67,25 @@ export class ChannelPage {
           this.channels = val['data']
         });
     }
+  }
+  ionViewDidLoad() {
+  }
+  ionViewDidEnter() {
+    var admobid = {
+      banner: 'ca-app-pub-7488223921090533/3868398990',
+      interstitial: 'ca-app-pub-7488223921090533/2330836488'
+    };
+
+    this.admob.createBanner({
+      adSize: 'SMART_BANNER',
+      adId: admobid.banner,
+      isTesting: false,
+      autoShow: true,
+      position: this.admob.AD_POSITION.BOTTOM_CENTER,
+    });
+  }
+  ionViewWillLeave() {
+    this.admob.removeBanner();
   }
   ngAfterViewInit() {
     this.loader.dismiss();

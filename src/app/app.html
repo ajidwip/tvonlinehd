@@ -11,15 +11,38 @@
     </ion-header>
     <ion-content>
         <ion-list>
-            <ion-item *ngFor="let p of pages; let i=index" text-wrap (click)="toggleLevel1('idx'+i)" [ngClass]="{active: isLevel1Shown('idx'+i)}">
-                <h2>
+            <ion-item *ngFor="let p of pages; let i=index" text-wrap [ngClass]="{active: isLevel1Shown('idx'+i)}">
+                <h2 (click)="toggleLevel1('idx'+i,p)">
                     <ion-icon color="success" item-right [name]="isLevel1Shown('idx'+i) ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
                     <b>{{p.name}}</b>
                 </h2>
                 <ion-list *ngIf="isLevel1Shown('idx'+i)">
-                    <ion-item *ngFor="let s of subs; let i2=index" text-wrap (click)="doDetailChannel()" [ngClass]="{active: isLevel2Shown('idx'+i+'idx'+i2)}">
-                        <h4>{{s.datestart | date:'dd/MM/yy HH:mm'}} {{s.name}} {{s.channel_name}}</h4>
-                    </ion-item>
+                    <div *ngFor="let s of subs">
+                        <ion-item *ngIf="category != 'LIVE'" text-wrap>
+                            <h4>{{s.datestart | date:'dd/MM/yy HH:mm'}} {{s.title}}</h4>
+                            <button (click)="doPlay(s)" ion-button clear *ngIf="category == 'STREAM'" item-end>
+                                <i style="font-size: 15px;" class="fas fa-chevron-right"></i>
+                            </button>
+                            <button (click)="doPlay(s)" ion-button clear *ngIf="category != 'STREAM'" item-end>
+                                <i *ngIf="!radiostream || s.id != id" style="font-size: 15px;" class="fas fa-play"></i>
+                                <i *ngIf="radiostream && s.id == id" style="font-size: 15px;" class="fas fa-stop"></i>
+                            </button>
+                            <audio *ngIf="radiostream && s.id == id" controls autoplay style="width: 100%;">
+                                <source src="{{url}}" type="audio/mpeg">
+                            </audio>
+                        </ion-item>
+                        <ion-grid *ngIf="category == 'LIVE'">
+                            <ion-row style="background: #7a7a7a;color:#ffffff;">
+                                <ion-col col-12>{{s.date | date:'EEEE, dd/MM/yyyy'}}</ion-col>
+                            </ion-row>
+                            <div *ngFor="let sd of subsdetail">
+                                <ion-row *ngIf="sd.date == s.date" style="border-bottom:1px solid;border-color:#dedede;">
+                                    <ion-col col-4 style="text-align:left;">{{sd.datestart | date:'HH:mm'}} WIB</ion-col>
+                                    <ion-col col-8 style="text-align:left;">{{sd.title}}</ion-col>
+                                </ion-row>
+                            </div>
+                        </ion-grid>
+                    </div>
                 </ion-list>
             </ion-item>
         </ion-list>
