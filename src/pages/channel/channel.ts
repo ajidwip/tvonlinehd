@@ -33,7 +33,7 @@ export class ChannelPage {
     public loadingCtrl: LoadingController,
     private admob: AdMobPro) {
     this.datecurrent = moment().format('YYYY-MM-DD');
-    this.datetimecurrent = moment().format('YYYY-MM-DD h:mm');
+    this.datetimecurrent = moment().format('YYYY-MM-DD hh:mm');
     this.radiostream = false;
     this.loader = this.loadingCtrl.create({
       content: 'Loading...'
@@ -184,6 +184,9 @@ export class ChannelPage {
       autoShow: true,
       position: this.admob.AD_POSITION.BOTTOM_CENTER,
     });
+    if (this.platform.is('cordova')) {
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
+    }
   }
   ionViewWillLeave() {
     this.admob.removeBanner();
@@ -253,14 +256,25 @@ export class ChannelPage {
     }
     else {
       this.navCtrl.push('LivePage', {
-        url: channel.url
+        url: channel.url,
+        stream: channel.stream
       })
     }
   }
   doPlayLive(channeld) {
-    this.navCtrl.push('LivePage', {
-      url: channeld.url
-    })
+    if (channeld.url) {
+      this.navCtrl.push('LivePage', {
+        url: channeld.url,
+        stream: channeld.stream
+      })
+    }
+    else {
+      let alert = this.alertCtrl.create({
+        subTitle: 'Coming Soon',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
   }
   getSearch(ev: any) {
     // set val to the value of the searchbar

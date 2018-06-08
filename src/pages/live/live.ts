@@ -3,6 +3,8 @@ import { LoadingController, IonicPage, NavController, NavParams, Platform } from
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { AdMobPro } from '@ionic-native/admob-pro';
 
+declare var Clappr: any;
+
 @IonicPage()
 @Component({
   selector: 'page-live',
@@ -10,7 +12,10 @@ import { AdMobPro } from '@ionic-native/admob-pro';
 })
 export class LivePage {
   public url = '';
+  public stream: any;
   public loading: any;
+  public width: any;
+  public height: any;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -22,8 +27,32 @@ export class LivePage {
       // cssClass: 'transparent',
       content: 'Loading...'
     });
-    this.loading.present();
-    this.url = this.navParams.get('url')
+    if (this.platform.is('cordova')) {
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE);
+      this.width = platform.width();
+      this.height = platform.height();
+      this.stream = this.navParams.get('stream');
+      this.url = this.navParams.get('url');
+    }
+    this.width = platform.width();
+    this.height = platform.height();
+    this.stream = this.navParams.get('stream');
+    this.url = this.navParams.get('url');
+    this.loading.present().then(() => {
+      if (this.stream == '0') {
+        console.log(this.stream)
+        console.log(this.url)
+        var playerElement = document.getElementById("player-wrapper");
+        var player = new Clappr.Player({
+          source: this.url,
+          // poster: 'http://clappr.io/poster.png',
+          mute: true,
+          height: this.height,
+          width: this.width
+        });
+        player.attachTo(playerElement);
+      }
+    });
   }
   ngAfterViewInit() {
     this.loading.dismiss();
@@ -41,9 +70,6 @@ export class LivePage {
       isTesting: false,
       autoShow: true
     })
-    if (this.platform.is('cordova')) {
-      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE);
-    }
   }
   ionViewWillLeave() {
     this.admob.removeBanner();

@@ -22,8 +22,8 @@ export class MyApp {
   public url: any;
   showLevel1 = null;
   statusapp = [];
-  public datecurrent:any;
-  public datetimecurrent:any;
+  public datecurrent: any;
+  public datetimecurrent: any;
   constructor(
     public platform: Platform,
     public statusBar: StatusBar,
@@ -38,7 +38,7 @@ export class MyApp {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.datecurrent = moment().format('YYYY-MM-DD');
-      this.datetimecurrent = moment().format('YYYY-MM-DD h:mm');
+      this.datetimecurrent = moment().format('YYYY-MM-DD hh:mm');
       this.api.get("table/z_list_channel", { params: { filter: "status='OPEN' AND category != 'STREAM'", limit: 500, sort: "name" + " ASC " } })
         .subscribe(val => {
           this.pages = val['data']
@@ -118,11 +118,20 @@ export class MyApp {
     }
   }
   doPlayLive(sd) {
-    console.log(sd)
-    this.Nav.push('LivePage', {
-      url: sd.url
-    })
-    this.menuCtrl.close();
+    if (sd.url) {
+      this.Nav.push('LivePage', {
+        url: sd.url
+      })
+      this.menuCtrl.close();
+    }
+    else {
+      let alert = this.alertCtrl.create({
+        subTitle: 'Coming Soon',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
+
   }
 }
 

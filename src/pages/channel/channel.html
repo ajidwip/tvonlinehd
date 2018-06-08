@@ -36,8 +36,9 @@
         <ion-col padding col-12>{{channel.date | date:'EEEE, dd/MM/yyyy'}}</ion-col>
       </ion-row>
       <div *ngFor="let channeld of channeldetail">
-        <ion-row *ngIf="channeld.date == channel.date" style="border-bottom:1px solid;border-color:#7a7a7a;background: #ffffff;" (click)="doPlay(channeld)">
-          <ion-col padding col-4 style="text-align:left;">{{channeld.datestart | date:'HH:mm'}} WIB</ion-col>
+        <ion-row *ngIf="channeld.date == channel.date" style="border-bottom:1px solid;border-color:#7a7a7a;background: #ffffff;" (click)="doPlayLive(channeld)">
+          <ion-col *ngIf="!channeld.url" padding col-4 style="text-align:left;">{{channeld.datestart | date:'HH:mm'}} WIB</ion-col>
+          <ion-col *ngIf="channeld.url" padding col-4 style="text-align:left;color:red;font-weight: bold;">LIVE</ion-col>
           <ion-col padding col-8 style="text-align:left;">{{channeld.title}}</ion-col>
         </ion-row>
       </div>

@@ -39,7 +39,7 @@ export class HomePage {
         },
       });*/
     });
-    this.datetimecurrent = moment().format('YYYY-MM-DD h:mm');
+    this.datetimecurrent = moment().format('YYYY-MM-DD hh:mm');
     this.doGetLive();
     this.doGetListChannel();
   }

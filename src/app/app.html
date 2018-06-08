@@ -34,7 +34,8 @@
                             </ion-row>
                             <div *ngFor="let sd of subsdetail">
                                 <ion-row *ngIf="sd.date == s.date" style="border-bottom:1px solid;border-color:#dedede;" (click)="doPlayLive(sd)">
-                                    <ion-col padding col-4 style="text-align:left;">{{sd.datestart | date:'HH:mm'}} WIB</ion-col>
+                                    <ion-col *ngIf="!sd.url" padding col-4 style="text-align:left;">{{sd.datestart | date:'HH:mm'}} WIB</ion-col>
+                                    <ion-col *ngIf="sd.url" padding col-4 style="text-align:left;color:red;font-weight: bold;">LIVE</ion-col>
                                     <ion-col padding col-8 style="text-align:left;">{{sd.title}}</ion-col>
                                 </ion-row>
                             </div>

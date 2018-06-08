@@ -10,11 +10,12 @@
 </ion-header>
 
 <ion-content style="background:#f2f1f7;margin-top:1px;">
-  <ion-slides style="height:25%;" autoplay="2000" loop="true" speed="400" pager="true">
+  <ion-slides *ngIf="channellive && channellive.length" style="height:25%;" autoplay="2000" loop="true" speed="400" pager="true">
     <ion-slide *ngFor="let live of channellive" style="background:url(http://101.255.60.202/webapi5/img/back);background-repeat:no-repeat;background-size: 100% 100%;">
       <div (click)="doDetailLive(live)" style="z-index: 888;">
         <div style="color: #666666;font-size:20px;margin-top:20px;font-weight: bold;">{{live.title}}</div>
-        <div style="color: #666666;font-weight: bold;">LIVE</div>
+        <div *ngIf="live.url" style="color: #666666;font-weight: bold;color:red;font-weight: bold;" (click)="doDetailLive(live)">LIVE NOW</div>
+        <div *ngIf="!live.url" style="color: #666666;font-weight: bold;">LIVE</div>
         <div style="color: #666666;padding-bottom:60px;font-size:15px;">{{live.datestart | date:'EEEE, dd MMMM yyyy HH:mm'}} WIB</div>
       </div>
       <button (click)="doDetailLive(live)" style="position:absolute;right:10px;top:10%;font-size:30px;color:#666666;z-index: 999;background: transparent;">
