@@ -13,6 +13,7 @@ declare var Clappr: any;
 export class LivePage {
   public url = '';
   public stream: any;
+  public rotate: any;
   public loading: any;
   public width: any;
   public height: any;
@@ -27,32 +28,36 @@ export class LivePage {
       // cssClass: 'transparent',
       content: 'Loading...'
     });
-    if (this.platform.is('cordova')) {
-      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE);
-      this.width = platform.width();
-      this.height = platform.height();
+    this.rotate = this.navParams.get('rotate');
+    if (this.rotate != '0') {
+      if (this.platform.is('cordova')) {
+        this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE).then(() => {
+          this.width = platform.height();
+          this.height = platform.width();
+          this.stream = this.navParams.get('stream');
+          this.url = this.navParams.get('url');
+          this.loading.present().then(() => {
+            if (this.stream == '0') {
+              console.log(this.stream)
+              console.log(this.url)
+              var playerElement = document.getElementById("player-wrapper");
+              var player = new Clappr.Player({
+                source: this.url,
+                // poster: 'http://clappr.io/poster.png',
+                mute: true,
+                height: this.height,
+                width: this.width + 40
+              });
+              player.attachTo(playerElement);
+            }
+          });
+        })
+      }
+    }
+    else {
       this.stream = this.navParams.get('stream');
       this.url = this.navParams.get('url');
     }
-    this.width = platform.width();
-    this.height = platform.height();
-    this.stream = this.navParams.get('stream');
-    this.url = this.navParams.get('url');
-    this.loading.present().then(() => {
-      if (this.stream == '0') {
-        console.log(this.stream)
-        console.log(this.url)
-        var playerElement = document.getElementById("player-wrapper");
-        var player = new Clappr.Player({
-          source: this.url,
-          // poster: 'http://clappr.io/poster.png',
-          mute: true,
-          height: this.height,
-          width: this.width
-        });
-        player.attachTo(playerElement);
-      }
-    });
   }
   ngAfterViewInit() {
     this.loading.dismiss();

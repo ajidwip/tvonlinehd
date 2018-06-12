@@ -6,6 +6,7 @@ import { HttpHeaders } from "@angular/common/http";
 import { ApiProvider } from '../providers/api/api';
 import { HomePage } from '../pages/home/home';
 import moment from 'moment';
+import { AppVersion } from '@ionic-native/app-version';
 
 @Component({
   templateUrl: 'app.html'
@@ -24,6 +25,9 @@ export class MyApp {
   statusapp = [];
   public datecurrent: any;
   public datetimecurrent: any;
+  public versionNumber: any;
+  public packagename: any;
+  public appinfo = [];
   constructor(
     public platform: Platform,
     public statusBar: StatusBar,
@@ -32,6 +36,7 @@ export class MyApp {
     public events: Events,
     public app: App,
     public api: ApiProvider,
+    public appVersion: AppVersion,
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController) {
     this.platform.ready().then(() => {
@@ -43,25 +48,57 @@ export class MyApp {
         .subscribe(val => {
           this.pages = val['data']
         });
-      this.api.get("table/z_status_app", { params: { filter: "status=" + 1, limit: 500 } })
-        .subscribe(val => {
-          this.statusapp = val['data']
-          if (this.statusapp.length) {
-            let alert = this.alertCtrl.create({
-              title: 'Attention',
-              message: this.statusapp[0].description,
-              buttons: [
-                {
-                  text: 'Close',
-                  handler: () => {
-                    this.platform.exitApp();
-                  }
+      this.appVersion.getVersionNumber().then((version) => {
+        this.versionNumber = version;
+        this.appVersion.getPackageName().then((name) => {
+          this.packagename = name;
+          this.api.get("table/z_version", { params: { filter: "name=" + "'" + this.packagename + "'" } })
+            .subscribe(val => {
+              this.appinfo = val['data']
+              if (this.appinfo.length) {
+                if (this.appinfo[0].version != this.versionNumber) {
+                  let alert = this.alertCtrl.create({
+                    subTitle: 'Update version',
+                    message: this.appinfo[0].description,
+                    buttons: [
+                      {
+                        text: 'PLAYSTORE',
+                        handler: () => {
+                          window.location.href = this.appinfo[0].url
+                          this.platform.exitApp();
+                        }
+                      }
+                    ]
+                  });
+                  alert.present();
                 }
-              ]
+                else {
+                  this.api.get("table/z_status_app", { params: { filter: "status=" + 1, limit: 500 } })
+                    .subscribe(val => {
+                      this.statusapp = val['data']
+                      if (this.statusapp.length) {
+                        let alert = this.alertCtrl.create({
+                          title: 'Attention',
+                          message: this.statusapp[0].description,
+                          buttons: [
+                            {
+                              text: 'Close',
+                              handler: () => {
+                                this.platform.exitApp();
+                              }
+                            }
+                          ]
+                        });
+                        alert.present();
+                      }
+                    });
+                }
+              }
             });
-            alert.present();
-          }
-        });
+        })
+      }, (err)=> {
+
+      })
     });
   }
   isLevel1Shown(idx) {

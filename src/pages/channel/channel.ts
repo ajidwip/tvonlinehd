@@ -257,7 +257,8 @@ export class ChannelPage {
     else {
       this.navCtrl.push('LivePage', {
         url: channel.url,
-        stream: channel.stream
+        stream: channel.stream,
+        rotate: channel.orientation
       })
     }
   }
