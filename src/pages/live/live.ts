@@ -65,7 +65,7 @@ export class LivePage {
   ionViewDidLoad() {
   }
   ionViewDidEnter() {
-    var admobid = {
+    /*var admobid = {
       banner: 'ca-app-pub-7488223921090533/3868398990',
       interstitial: 'ca-app-pub-7488223921090533/2330836488'
     };
@@ -74,10 +74,10 @@ export class LivePage {
       adId: admobid.interstitial,
       isTesting: false,
       autoShow: true
-    })
+    })*/
   }
   ionViewWillLeave() {
-    this.admob.removeBanner();
+    //this.admob.removeBanner();
   }
 
 }

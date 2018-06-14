@@ -21,7 +21,7 @@ export class ChannelPage {
   public radiostream: boolean;
   public datecurrent: any;
   public datetimecurrent: any;
-  public searchfilm: any;
+  public search: any;
   halaman = 0;
   constructor(
     public navCtrl: NavController,
@@ -43,20 +43,30 @@ export class ChannelPage {
     this.channelname = this.navParam.get('name')
     if (this.channelcategory == 'TV') {
       this.doGetChannel();
+      this.doGetChannelSearch();
     }
     else if (this.channelcategory == 'STREAM') {
       this.doGetChannelStream();
+      this.doGetChannelStreamSearch();
     }
     else if (this.channelcategory == 'LIVE') {
       this.doGetChannelLive();
-      this.api.get("table/z_channel_live", { params: { limit: 30, filter: "category=" + "'" + this.channelname + "' AND status='OPEN'" + " AND datefinish >=" + "'" + this.datetimecurrent + "'", sort: "datestart" + " ASC " } })
-        .subscribe(val => {
-          this.channeldetail = val['data'];
-        });
+      this.doGetChannelLiveDetailSearch();  
+      this.api.get("table/z_channel_live", { params: { limit: 1000, filter: "category=" + "'" + this.channelname + "' AND status='OPEN'" + " AND datefinish >=" + "'" + this.datetimecurrent + "'", sort: "datestart" + " ASC " } })
+      .subscribe(val => {
+        this.channeldetail = val['data']
+      });
     }
     else if (this.channelcategory == 'RADIO') {
       this.doGetChannelRadio();
+      this.doGetChannelRadioSearch();
     }
+  }
+  doGetChannelSearch() {
+    this.api.get("table/z_channel", { params: { limit: 10000, filter: "name=" + "'" + this.channelname + "' AND status='OPEN'", sort: "title" + " ASC " } })
+      .subscribe(val => {
+        this.search = val['data']
+      });
   }
   doGetChannel() {
     return new Promise(resolve => {
@@ -80,6 +90,12 @@ export class ChannelPage {
       }
     });
   }
+  doGetChannelStreamSearch() {
+    this.api.get("table/z_channel_stream", { params: { limit: 10000, filter: "name=" + "'" + this.channelname + "' AND status='OPEN'", sort: "title" + " ASC " } })
+      .subscribe(val => {
+        this.search = val['data']
+      });
+  }
   doGetChannelStream() {
     return new Promise(resolve => {
       let offset = 30 * this.halaman
@@ -90,7 +106,6 @@ export class ChannelPage {
         this.halaman++;
         this.api.get("table/z_channel_stream", { params: { limit: 30, offset: offset, filter: "name=" + "'" + this.channelname + "' AND status='OPEN'", sort: "title" + " ASC " } })
           .subscribe(val => {
-            this.searchfilm = val['data']
             let data = val['data'];
             for (let i = 0; i < data.length; i++) {
               this.channels.push(data[i]);
@@ -102,6 +117,12 @@ export class ChannelPage {
           });
       }
     });
+  }
+  doGetChannelLiveSearch() {
+    this.api.get("table/z_channel_live", { params: { limit: 10000, filter: "category=" + "'" + this.channelname + "' AND status='OPEN'" + " AND date >=" + "'" + this.datecurrent + "'", group: "date", sort: "date" + " ASC " } })
+      .subscribe(val => {
+        this.search = val['data']
+      });
   }
   doGetChannelLive() {
     return new Promise(resolve => {
@@ -125,6 +146,12 @@ export class ChannelPage {
       }
     });
   }
+  doGetChannelLiveDetailSearch() {
+    this.api.get("table/z_channel_live", { params: { limit: 10000, filter: "category=" + "'" + this.channelname + "' AND status='OPEN'" + " AND datefinish >=" + "'" + this.datetimecurrent + "'", sort: "datestart" + " ASC " } })
+      .subscribe(val => {
+        this.search = val['data']
+      });
+  }
   doGetChannelLiveDetail() {
     return new Promise(resolve => {
       let offset = 30 * this.halaman
@@ -146,6 +173,12 @@ export class ChannelPage {
           });
       }
     });
+  }
+  doGetChannelRadioSearch() {
+    this.api.get("table/z_channel_radio", { params: { limit: 10000, filter: "status='OPEN'", sort: "title" + " ASC " } })
+      .subscribe(val => {
+        this.search = val['data']
+      });
   }
   doGetChannelRadio() {
     return new Promise(resolve => {
@@ -172,7 +205,7 @@ export class ChannelPage {
   ionViewDidLoad() {
   }
   ionViewDidEnter() {
-    var admobid = {
+    /*var admobid = {
       banner: 'ca-app-pub-7488223921090533/3868398990',
       interstitial: 'ca-app-pub-7488223921090533/2330836488'
     };
@@ -183,13 +216,13 @@ export class ChannelPage {
       isTesting: false,
       autoShow: true,
       position: this.admob.AD_POSITION.BOTTOM_CENTER,
-    });
+    });*/
     if (this.platform.is('cordova')) {
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
     }
   }
   ionViewWillLeave() {
-    this.admob.removeBanner();
+    //this.admob.removeBanner();
   }
   ngAfterViewInit() {
     this.loader.dismiss();
@@ -283,11 +316,28 @@ export class ChannelPage {
 
     // if the value is an empty string don't filter the items
     if (val && val.trim() != '') {
-      this.channels = this.searchfilm.filter(channel => {
+      this.channels = this.search.filter(channel => {
         return channel.title.toLowerCase().indexOf(val.toLowerCase()) > -1;
       })
     } else {
-      this.channels = this.searchfilm;
+      this.channels = [];
+      this.halaman = 0;
+      if (this.channelcategory == 'TV') {
+        this.doGetChannel();
+      }
+      else if (this.channelcategory == 'STREAM') {
+        this.doGetChannelStream();
+      }
+      else if (this.channelcategory == 'LIVE') {
+        this.doGetChannelLive(); 
+        this.api.get("table/z_channel_live", { params: { limit: 1000, filter: "category=" + "'" + this.channelname + "' AND status='OPEN'" + " AND datefinish >=" + "'" + this.datetimecurrent + "'", sort: "datestart" + " ASC " } })
+        .subscribe(val => {
+          this.channeldetail = val['data']
+        });
+      }
+      else if (this.channelcategory == 'RADIO') {
+        this.doGetChannelRadio();
+      }
     }
   }
 

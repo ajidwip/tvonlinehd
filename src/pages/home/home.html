@@ -1,9 +1,14 @@
 <ion-header>
   <ion-toolbar color="bluewhite">
+    <div style="text-align:right;height:0px;margin-top:-10px;">
+      <button ion-button clear color="light" style="z-index: 999;" (click)="doComment()">
+        <ion-icon name="ios-alert-outline" style="font-size: 30px;"></ion-icon>
+      </button>
+    </div>
     <button ion-button menuToggle left>
       <ion-icon style="font-size:25px;" name="md-menu"></ion-icon>
     </button>
-    <ion-title style="text-align: left;">
+    <ion-title style="text-align: left;margin-top:10px;">
       TV Streaming
     </ion-title>
   </ion-toolbar>
@@ -14,9 +19,9 @@
     <ion-slide *ngFor="let live of channellive" style="background:url(http://101.255.60.202/webapi5/img/back);background-repeat:no-repeat;background-size: 100% 100%;">
       <div (click)="doDetailLive(live)" style="z-index: 888;">
         <div style="color: #666666;font-size:80%;margin-top:20px;font-weight: bold;">{{live.title}}</div>
-        <div *ngIf="live.url" style="color: #666666;font-weight: bold;color:red;font-weight: bold;" (click)="doDetailLive(live)">LIVE NOW</div>
-        <div *ngIf="!live.url" style="color: #666666;font-weight: bold;font-size:80%">LIVE</div>
-        <div style="color: #666666;padding-bottom:60px;font-size:60%;">{{live.datestart | date:'EEEE, dd MMMM yyyy HH:mm'}} WIB</div>
+        <div style="color: #666666;font-weight: bold;font-size:80%">{{live.category}}</div>
+        <div *ngIf="live.url" style="color: #666666;font-weight: bold;color:red;font-weight: bold;font-size:100%;padding-bottom:60px;" (click)="doDetailLive(live)">LIVE NOW</div>
+        <div *ngIf="!live.url" style="color: #666666;padding-bottom:60px;font-size:60%;">{{live.datestart | date:'EEEE, dd MMMM yyyy HH:mm'}} WIB</div>
       </div>
       <button (click)="doDetailLive(live)" style="position:absolute;right:10px;top:10%;font-size:30px;color:#666666;z-index: 999;background: transparent;">
         <ion-icon name="md-more"></ion-icon>
@@ -25,7 +30,8 @@
   </ion-slides>
   <ion-grid>
     <ion-row>
-      <ion-col *ngFor="let channel of channellist" col-4 padding style="text-align: center;background: #ffffff;border:2px solid;border-color:#f2f1f7;border-radius: 5px;" (click)="doDetail(channel)">
+      <ion-col *ngFor="let channel of channellist" col-4 padding style="text-align: center;background: #ffffff;border:2px solid;border-color:#f2f1f7;border-radius: 5px;"
+        (click)="doDetail(channel)">
         <p style="color:#666666;font-weight: bold;font-size:80%">{{channel.name}}</p>
       </ion-col>
     </ion-row>

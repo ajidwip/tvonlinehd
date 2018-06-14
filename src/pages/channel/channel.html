@@ -2,7 +2,7 @@
   <ion-navbar color="bluewhite">
     <ion-title>{{channelname}}</ion-title>
   </ion-navbar>
-  <ion-searchbar *ngIf="channelcategory == 'STREAM'" style="margin-left:-10px;padding:0px;width:105%;" (ionInput)="getSearch($event)"
+  <ion-searchbar style="margin-left:-10px;padding:0px;width:105%;" (ionInput)="getSearch($event)"
     placeholder="Search"></ion-searchbar>
 </ion-header>
 
@@ -14,9 +14,9 @@
   </ion-refresher>
   <ion-grid *ngIf="channelcategory != 'LIVE'">
     <ion-row>
-      <ion-item item-start no-lines padding style="background: #fafafa;border:1px solid;border-color:#dedede;" *ngFor="let channel of channels"
+      <ion-item item-start no-lines padding text-wrap style="background: #fafafa;border:1px solid;border-color:#dedede;" *ngFor="let channel of channels"
         col-12>
-        <p style="color:#666666;font-weight: bold;">{{channel.title}}</p>
+        <h4 style="color:#666666;font-weight: bold;">{{channel.title}}</h4>
         <button (click)="doPlay(channel)" ion-button clear *ngIf="channelcategory =='STREAM' && channelname =='Anime'" item-end>
           <i style="font-size: 15px;" class="fas fa-chevron-right"></i>
         </button>

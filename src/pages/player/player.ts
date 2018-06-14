@@ -34,7 +34,7 @@ export class PlayerPage {
   ionViewDidLoad() {
   }
   ionViewDidEnter() {
-    var admobid = {
+    /*var admobid = {
       banner: 'ca-app-pub-7488223921090533/3868398990',
       interstitial: 'ca-app-pub-7488223921090533/2330836488'
     };
@@ -43,12 +43,12 @@ export class PlayerPage {
       adId: admobid.interstitial,
       isTesting: false,
       autoShow: true
-    })
+    })*/
     if (this.platform.is('cordova')) {
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE);
     }
   }
   ionViewWillLeave() {
-    this.admob.removeBanner();
+    //this.admob.removeBanner();
   }
 }

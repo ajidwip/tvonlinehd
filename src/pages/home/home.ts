@@ -46,7 +46,7 @@ export class HomePage {
   ionViewDidLoad() {
   }
   ionViewDidEnter() {
-    var admobid = {
+    /*var admobid = {
       banner: 'ca-app-pub-7488223921090533/3868398990',
       interstitial: 'ca-app-pub-7488223921090533/2330836488'
     };
@@ -57,13 +57,13 @@ export class HomePage {
       isTesting: false,
       autoShow: true,
       position: this.admob.AD_POSITION.BOTTOM_CENTER,
-    });
+    });*/
     if (this.platform.is('cordova')) {
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
     }
   }
   ionViewWillLeave() {
-    this.admob.removeBanner();
+    //this.admob.removeBanner();
   }
   doGetListChannel() {
     this.api.get("table/z_list_channel", { params: { filter: "status='OPEN'", limit: 100, sort: "name" + " ASC " } })
@@ -91,5 +91,8 @@ export class HomePage {
       .subscribe(val => {
         this.channellive = val['data']
       });
+  }
+  doComment() {
+    
   }
 }

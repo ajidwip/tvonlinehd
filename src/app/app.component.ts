@@ -56,7 +56,7 @@ export class MyApp {
             .subscribe(val => {
               this.appinfo = val['data']
               if (this.appinfo.length) {
-                if (this.appinfo[0].version != this.versionNumber) {
+                if (this.appinfo[0].version > this.versionNumber) {
                   let alert = this.alertCtrl.create({
                     subTitle: 'Update version',
                     message: this.appinfo[0].description,
@@ -77,26 +77,43 @@ export class MyApp {
                     .subscribe(val => {
                       this.statusapp = val['data']
                       if (this.statusapp.length) {
-                        let alert = this.alertCtrl.create({
-                          title: 'Attention',
-                          message: this.statusapp[0].description,
-                          buttons: [
-                            {
-                              text: 'Close',
-                              handler: () => {
-                                this.platform.exitApp();
+                        if (this.statusapp[0].type == '0') {
+                          let alert = this.alertCtrl.create({
+                            title: 'Attention',
+                            message: this.statusapp[0].description,
+                            buttons: [
+                              {
+                                text: 'Close',
+                                handler: () => {
+                                  this.platform.exitApp();
+                                }
                               }
-                            }
-                          ]
-                        });
-                        alert.present();
+                            ]
+                          });
+                          alert.present();
+                        }
+                        else {
+                          let alert = this.alertCtrl.create({
+                            title: 'Attention',
+                            message: this.statusapp[0].description,
+                            buttons: [
+                              {
+                                text: 'Close',
+                                handler: () => {
+
+                                }
+                              }
+                            ]
+                          });
+                          alert.present();
+                        }
                       }
                     });
                 }
               }
             });
         })
-      }, (err)=> {
+      }, (err) => {
 
       })
     });
