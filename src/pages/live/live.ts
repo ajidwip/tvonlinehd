@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { LoadingController, IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { LoadingController, IonicPage, NavController, NavParams, Platform, AlertController } from 'ionic-angular';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { AdMobPro } from '@ionic-native/admob-pro';
 
 declare var Clappr: any;
+declare var LevelSelector: any;
 
 @IonicPage()
 @Component({
@@ -13,13 +14,17 @@ declare var Clappr: any;
 export class LivePage {
   public url = '';
   public stream: any;
+  public xml: any;
   public rotate: any;
   public loading: any;
   public width: any;
   public height: any;
+  public subsbody1: any;
+  public subsbody2: any;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    public alertCtrl: AlertController,
     private screenOrientation: ScreenOrientation,
     public loadingCtrl: LoadingController,
     private admob: AdMobPro,
@@ -36,19 +41,46 @@ export class LivePage {
           this.height = platform.width();
           this.stream = this.navParams.get('stream');
           this.url = this.navParams.get('url');
+          this.xml = this.navParams.get('xml');
+          this.subsbody1 = this.navParams.get('subsbody1');
+          this.subsbody2 = this.navParams.get('subsbody2');
           this.loading.present().then(() => {
             if (this.stream == '0') {
-              console.log(this.stream)
-              console.log(this.url)
-              var playerElement = document.getElementById("player-wrapper");
-              var player = new Clappr.Player({
-                source: this.url,
-                // poster: 'http://clappr.io/poster.png',
-                mute: true,
-                height: this.height,
-                width: this.width + 40
-              });
-              player.attachTo(playerElement);
+              if (this.xml == '1') {
+                var self = this
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                  if (xhr.readyState == XMLHttpRequest.DONE) {
+                    var body = xhr.responseText.substring(self.subsbody1, self.subsbody2)
+                    xhr.onload = () => {
+                      var playerElement = document.getElementById("player-wrapper");
+                      var player = new Clappr.Player({
+                        source: body,
+                        mute: true,
+                        height: self.height,
+                        width: self.width + 40,
+                        autoPlay: true,
+                        plugins: [LevelSelector]
+                      });
+                      player.attachTo(playerElement);
+                    }
+                  }
+                }
+                xhr.open('GET', self.url, true);
+                xhr.send(null);
+              }
+              else {
+                var playerElement = document.getElementById("player-wrapper");
+                var player = new Clappr.Player({
+                  source: this.url,
+                  mute: true,
+                  height: this.height,
+                  width: this.width + 40,
+                  autoPlay: true,
+                  plugins: [LevelSelector]
+                });
+                player.attachTo(playerElement);
+              }
             }
           });
         })

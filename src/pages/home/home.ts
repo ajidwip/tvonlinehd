@@ -4,6 +4,9 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ApiProvider } from '../../providers/api/api';
 import { AdMobPro } from '@ionic-native/admob-pro';
 import moment from 'moment';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { HttpHeaders } from "@angular/common/http";
+import { AppVersion } from '@ionic-native/app-version';
 
 // declare var Swiper: any;
 
@@ -12,10 +15,14 @@ import moment from 'moment';
   templateUrl: 'home.html'
 })
 export class HomePage {
+  myForm: FormGroup;
   public channellist = [];
   public channellive = [];
   public loader: any;
-  public datetimecurrent:any;
+  public datetimecurrent: any;
+  public nextno: any;
+  public packagename: any;
+  public appinfo = [];
   constructor(
     public navCtrl: NavController,
     private screenOrientation: ScreenOrientation,
@@ -23,7 +30,12 @@ export class HomePage {
     public alertCtrl: AlertController,
     public platform: Platform,
     public loadingCtrl: LoadingController,
+    public fb: FormBuilder,
+    public appVersion: AppVersion,
     private admob: AdMobPro) {
+    this.myForm = fb.group({
+      comment: ['', Validators.compose([Validators.required])],
+    })
     this.loader = this.loadingCtrl.create({
       // cssClass: 'transparent',
       content: 'Loading...'
@@ -39,7 +51,7 @@ export class HomePage {
         },
       });*/
     });
-    this.datetimecurrent = moment().format('YYYY-MM-DD hh:mm');
+    this.datetimecurrent = moment().format('YYYY-MM-DD HH:mm');
     this.doGetLive();
     this.doGetListChannel();
   }
@@ -93,6 +105,62 @@ export class HomePage {
       });
   }
   doComment() {
-    
+    document.getElementById('header').style.display = 'none';
+    document.getElementById('content').style.display = 'none';
+    document.getElementById('comment').style.display = 'block';
+  }
+  doCloseComment() {
+    document.getElementById('header').style.display = 'block';
+    document.getElementById('content').style.display = 'block';
+    document.getElementById('comment').style.display = 'none';
+    this.myForm.reset();
+  }
+  doPostComment() {
+    this.getNextNo().subscribe(val => {
+      this.nextno = val['nextno'];
+      const headers = new HttpHeaders()
+        .set("Content-Type", "application/json");
+      this.api.post("table/z_comment",
+        {
+          "id": this.nextno,
+          "comment": this.myForm.value.comment,
+          "datetime": moment().format('YYYY-MM-DD HH:mm:ss'),
+        },
+        { headers })
+        .subscribe(val => {
+          this.myForm.reset();
+          let alert = this.alertCtrl.create({
+            subTitle: 'Success',
+            message: 'Terima kasih atas komen dan sarannya.',
+            buttons: ['OK']
+          });
+          alert.present();
+          this.doCloseComment();
+        }, (err) => {
+          let alert = this.alertCtrl.create({
+            subTitle: 'Error',
+            message: 'Submit error',
+            buttons: ['OK']
+          });
+          alert.present();
+        })
+    });
+  }
+  getNextNo() {
+    return this.api.get('nextno/z_comment/id')
+  }
+  doGoToPlaystore() {
+    this.appVersion.getPackageName().then((name) => {
+      this.packagename = name;
+      this.api.get("table/z_version", { params: { filter: "name=" + "'" + this.packagename + "'" } })
+        .subscribe(val => {
+          this.appinfo = val['data']
+          if (this.appinfo.length) {
+            window.location.href = this.appinfo[0].url
+          }
+        });
+    }, err => {
+
+    });
   }
 }

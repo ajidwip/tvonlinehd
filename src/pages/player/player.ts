@@ -3,6 +3,9 @@ import { LoadingController, IonicPage, NavController, NavParams, Platform } from
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { AdMobPro } from '@ionic-native/admob-pro';
 
+declare var Clappr: any;
+declare var LevelSelector: any;
+
 @IonicPage()
 @Component({
   selector: 'page-player',
@@ -10,9 +13,11 @@ import { AdMobPro } from '@ionic-native/admob-pro';
 })
 export class PlayerPage {
   public url: any;
-  public type:any;
+  public type: any;
+  public stream: any;
   public loading: any;
-
+  public width: any;
+  public height: any;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -24,9 +29,29 @@ export class PlayerPage {
       // cssClass: 'transparent',
       content: 'Loading...'
     });
-    this.loading.present();
-    this.url = this.navParams.get('url');
-    this.type = this.navParams.get('type')
+    if (this.platform.is('cordova')) {
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE).then(() => {
+        this.width = platform.height();
+        this.height = platform.width();
+        this.stream = this.navParams.get('stream');
+        this.type = this.navParams.get('type');
+        this.url = this.navParams.get('url');
+        this.loading.present().then(() => {
+          if (this.stream == '0') {
+            var playerElement = document.getElementById("player-wrapper");
+            var player = new Clappr.Player({
+              source: this.url,
+              mute: true,
+              height: this.height,
+              width: this.width + 40,
+              autoPlay: true,
+              plugins: [LevelSelector]
+            });
+            player.attachTo(playerElement);
+          }
+        });
+      })
+    }
   }
   ngAfterViewInit() {
     this.loading.dismiss();
@@ -44,9 +69,6 @@ export class PlayerPage {
       isTesting: false,
       autoShow: true
     })*/
-    if (this.platform.is('cordova')) {
-      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE);
-    }
   }
   ionViewWillLeave() {
     //this.admob.removeBanner();

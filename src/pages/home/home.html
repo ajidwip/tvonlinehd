@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header id="header">
   <ion-toolbar color="bluewhite">
     <div style="text-align:right;height:0px;margin-top:-10px;">
       <button ion-button clear color="light" style="z-index: 999;" (click)="doComment()">
@@ -14,13 +14,14 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content style="background:#f2f1f7;margin-top:1px;">
+<ion-content id="content" style="background:#f2f1f7;margin-top:1px;">
   <ion-slides *ngIf="channellive && channellive.length" style="height:25%;" autoplay="2000" loop="true" speed="400" pager="true">
     <ion-slide *ngFor="let live of channellive" style="background:url(http://101.255.60.202/webapi5/img/back);background-repeat:no-repeat;background-size: 100% 100%;">
       <div (click)="doDetailLive(live)" style="z-index: 888;">
         <div style="color: #666666;font-size:80%;margin-top:20px;font-weight: bold;">{{live.title}}</div>
         <div style="color: #666666;font-weight: bold;font-size:80%">{{live.category}}</div>
-        <div *ngIf="live.url" style="color: #666666;font-weight: bold;color:red;font-weight: bold;font-size:100%;padding-bottom:60px;" (click)="doDetailLive(live)">LIVE NOW</div>
+        <div *ngIf="live.url" style="color: #666666;font-weight: bold;color:red;font-weight: bold;font-size:100%;padding-bottom:60px;"
+          (click)="doDetailLive(live)">LIVE NOW</div>
         <div *ngIf="!live.url" style="color: #666666;padding-bottom:60px;font-size:60%;">{{live.datestart | date:'EEEE, dd MMMM yyyy HH:mm'}} WIB</div>
       </div>
       <button (click)="doDetailLive(live)" style="position:absolute;right:10px;top:10%;font-size:30px;color:#666666;z-index: 999;background: transparent;">
@@ -37,3 +38,30 @@
     </ion-row>
   </ion-grid>
 </ion-content>
+
+<div id="comment" class="comment" style="background:#fff;">
+  <ion-content padding>
+    <div style="text-align:right;height:15px;">
+      <button ion-button clear color="dark" (click)="doCloseComment()">
+        <ion-icon name="md-close" style="font-size:25px;"></ion-icon>
+      </button>
+    </div>
+    <div style="text-align:center;margin-bottom:20px;">
+      <h6>SARAN & KOMENTAR</h6>
+    </div>
+    <form [formGroup]="myForm">
+      <ion-item style="background:transparent;color:rgb(0, 0, 0);padding-right:12px;">
+        <ion-label stacked>ISI KOMENTAR</ion-label>
+        <ion-textarea formControlName="comment"></ion-textarea>
+      </ion-item>
+    </form>
+    <p padding style="color:#aaaaaa;">Harap isi komentar, saran ataupun keluhan anda tentang aplikasi ini, komentar dan saran kalian sangat membantu developer
+      untuk mengembangkan aplikasi ini dan jangan lupa untuk memberikan rate dan komentar di Google PLAYSTORE, Terima kasih
+      banyak.
+    </p>
+    <ion-buttons padding>
+      <button ion-button color="primary" block outline style="height:40px;" [disabled]="!myForm.valid" (click)="doPostComment()">SUBMIT</button>
+      <button ion-button color="primary" block outline style="height:40px;" (click)="doGoToPlaystore()">GO TO PLAYSTORE</button>
+    </ion-buttons>
+  </ion-content>
+</div>

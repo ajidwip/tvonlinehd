@@ -61,7 +61,8 @@ export class ChanneldetailPage {
   goToPlayAnime(channel) {
     this.navCtrl.push('PlayerPage', {
       url: channel.url,
-      type: channel.type
+      type: channel.type,
+      stream: channel.stream
     })
   }
   ionViewDidLoad() {

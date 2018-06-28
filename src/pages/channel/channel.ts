@@ -33,7 +33,7 @@ export class ChannelPage {
     public loadingCtrl: LoadingController,
     private admob: AdMobPro) {
     this.datecurrent = moment().format('YYYY-MM-DD');
-    this.datetimecurrent = moment().format('YYYY-MM-DD hh:mm');
+    this.datetimecurrent = moment().format('YYYY-MM-DD HH:mm');
     this.radiostream = false;
     this.loader = this.loadingCtrl.create({
       content: 'Loading...'
@@ -291,7 +291,10 @@ export class ChannelPage {
       this.navCtrl.push('LivePage', {
         url: channel.url,
         stream: channel.stream,
-        rotate: channel.orientation
+        xml: channel.xml,
+        rotate: channel.orientation,
+        subsbody1: channel.subsbody_1,
+        subsbody2: channel.subsbody_2
       })
     }
   }
