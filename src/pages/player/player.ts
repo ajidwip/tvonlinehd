@@ -43,7 +43,7 @@ export class PlayerPage {
               source: this.url,
               mute: true,
               height: this.height,
-              width: this.width + 40,
+              width: this.width,
               autoPlay: true,
               plugins: [LevelSelector]
             });

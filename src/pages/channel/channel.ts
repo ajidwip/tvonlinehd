@@ -307,7 +307,7 @@ export class ChannelPage {
     }
     else {
       let alert = this.alertCtrl.create({
-        subTitle: 'Coming Soon',
+        subTitle: 'Pertandingan belum dimulai',
         buttons: ['OK']
       });
       alert.present();

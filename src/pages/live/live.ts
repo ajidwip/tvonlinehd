@@ -60,7 +60,7 @@ export class LivePage {
                         source: body,
                         mute: true,
                         height: self.height,
-                        width: self.width + 40,
+                        width: self.width,
                         autoPlay: true,
                         plugins: [LevelSelector],
                       });
@@ -72,18 +72,13 @@ export class LivePage {
                 xhr.send(null);
               }
               else if (this.xml == '2') {
-                let alert = this.alertCtrl.create({
-                  subTitle: 'test' + this.url,
-                  buttons: ['OK']
-                });
-                alert.present();
                 var playerElement = document.getElementById("player-wrapper");
                 var player = new Clappr.Player({
                   source: this.url,
                   poster: 'https://i.ytimg.com/vi/' + this.url + '/hqdefault.jpg',
                   mute: true,
                   height: this.height,
-                  width: this.width + 40,
+                  width: this.width,
                   youtubeShowRelated: true,
                   plugins: { playback: [YoutubePlayback] }
                 });
@@ -96,7 +91,7 @@ export class LivePage {
                   source: this.url,
                   mute: true,
                   height: this.height,
-                  width: this.width + 40,
+                  width: this.width,
                   autoPlay: true,
                   plugins: [LevelSelector, Video360]
                 });
@@ -109,7 +104,7 @@ export class LivePage {
                   source: this.url,
                   mute: true,
                   height: this.height,
-                  width: this.width + 40,
+                  width: this.width,
                   autoPlay: true,
                   plugins: [LevelSelector]
                 });

@@ -40,7 +40,7 @@ export class MyApp {
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController) {
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
+      this.statusBar.hide();
       this.splashScreen.hide();
       this.datecurrent = moment().format('YYYY-MM-DD');
       this.datetimecurrent = moment().format('YYYY-MM-DD hh:mm');
