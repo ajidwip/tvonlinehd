@@ -40,8 +40,8 @@ export class MyApp {
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController) {
     this.platform.ready().then(() => {
-      this.statusBar.hide();
       this.splashScreen.hide();
+      this.statusBar.hide();
       this.datecurrent = moment().format('YYYY-MM-DD');
       this.datetimecurrent = moment().format('YYYY-MM-DD hh:mm');
       this.api.get("table/z_list_channel", { params: { filter: "status='OPEN' AND category != 'STREAM'", limit: 500, sort: "name" + " ASC " } })
@@ -86,6 +86,38 @@ export class MyApp {
                                 text: 'Close',
                                 handler: () => {
                                   this.platform.exitApp();
+                                }
+                              }
+                            ]
+                          });
+                          alert.present();
+                        }
+                        else if (this.statusapp[0].type == '1') {
+                          let alert = this.alertCtrl.create({
+                            title: 'Rate App',
+                            message: this.statusapp[0].description,
+                            buttons: [
+                              {
+                                text: 'Close',
+                                handler: () => {
+
+                                }
+                              },
+                              {
+                                text: 'Rate App',
+                                handler: () => {
+                                  this.appVersion.getPackageName().then((name) => {
+                                    this.packagename = name;
+                                    this.api.get("table/z_version", { params: { filter: "name=" + "'" + this.packagename + "'" } })
+                                      .subscribe(val => {
+                                        this.appinfo = val['data']
+                                        if (this.appinfo.length) {
+                                          window.location.href = this.appinfo[0].url
+                                        }
+                                      });
+                                  }, err => {
+
+                                  });
                                 }
                               }
                             ]
