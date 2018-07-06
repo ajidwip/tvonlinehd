@@ -1,12 +1,11 @@
-<ion-header>
+<ion-header id="header">
   <ion-navbar color="bluewhite">
     <ion-title>{{channelname}}</ion-title>
   </ion-navbar>
-  <ion-searchbar style="margin-left:-10px;padding:0px;width:105%;" (ionInput)="getSearch($event)"
-    placeholder="Search"></ion-searchbar>
+  <ion-searchbar style="margin-left:-10px;padding:0px;width:105%;" (ionInput)="getSearch($event)" placeholder="Search"></ion-searchbar>
 </ion-header>
 
-<ion-content style="background:#e8e8e8;">
+<ion-content id="content" style="background:#e8e8e8;">
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content>
       pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing..."
@@ -20,7 +19,11 @@
         <button (click)="doPlay(channel)" ion-button clear *ngIf="channelcategory =='STREAM' && channelname =='Anime'" item-end>
           <i style="font-size: 15px;" class="fas fa-chevron-right"></i>
         </button>
-        <button (click)="doPlay(channel)" ion-button clear *ngIf="channelname !='Anime'" item-end>
+        <button (click)="doPlay(channel)" ion-button clear *ngIf="channelname !='Anime' && channel.stream != '1'" item-end>
+          <i *ngIf="!radiostream || channel.id != id" style="font-size: 15px;" class="fas fa-play"></i>
+          <i *ngIf="radiostream && channel.id == id" style="font-size: 15px;" class="fas fa-stop"></i>
+        </button>
+        <button (click)="doPlayPlayer(channel)" ion-button clear *ngIf="channelname !='Anime' && channel.stream == '1'" item-end>
           <i *ngIf="!radiostream || channel.id != id" style="font-size: 15px;" class="fas fa-play"></i>
           <i *ngIf="radiostream && channel.id == id" style="font-size: 15px;" class="fas fa-stop"></i>
         </button>
@@ -36,7 +39,8 @@
         <ion-col padding col-12>{{channel.date | date:'EEEE, dd/MM/yyyy'}}</ion-col>
       </ion-row>
       <div *ngFor="let channeld of channeldetail">
-        <ion-row *ngIf="channeld.date == channel.date" style="border-bottom:1px solid;border-color:#7a7a7a;background: #ffffff;" (click)="doPlayLive(channeld)">
+        <ion-row *ngIf="channeld.date == channel.date" style="border-bottom:1px solid;border-color:#7a7a7a;background: #ffffff;"
+          (click)="doPlayLive(channeld)">
           <ion-col *ngIf="!channeld.url" padding col-4 style="text-align:left;">{{channeld.datestart | date:'HH:mm'}} WIB</ion-col>
           <ion-col *ngIf="channeld.url" padding col-4 style="text-align:left;color:red;font-weight: bold;">LIVE</ion-col>
           <ion-col padding col-8 style="text-align:left;">{{channeld.title}}</ion-col>
@@ -50,3 +54,8 @@
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>
+<div *ngFor="let channel of channels">
+  <video [id]="channel.id" poster="../../../resources/splash.png" style="width:100%;height: 100%;"
+    class="playerhide embed-responsive-item video-js vjs-default-skin vjs-big-play-centered" controls preload="auto">
+    <source [src]="channel.url" type="application/x-mpegURL"> </video>
+</div>

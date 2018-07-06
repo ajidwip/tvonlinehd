@@ -3,8 +3,7 @@ import { LoadingController, IonicPage, NavController, NavParams, Platform } from
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { AdMobPro } from '@ionic-native/admob-pro';
 
-declare var Clappr: any;
-declare var LevelSelector: any;
+declare var videojs: any;
 
 @IonicPage()
 @Component({
@@ -38,16 +37,9 @@ export class PlayerPage {
         this.url = this.navParams.get('url');
         this.loading.present().then(() => {
           if (this.stream == '0') {
-            var playerElement = document.getElementById("player-wrapper");
-            var player = new Clappr.Player({
-              source: this.url,
-              mute: true,
-              height: this.height,
-              width: this.width,
-              autoPlay: true,
-              plugins: [LevelSelector]
-            });
-            player.attachTo(playerElement);
+            let playerElement = document.getElementById("video-player");
+            var video = videojs(playerElement); 
+            video.qualityPickerPlugin(); 
           }
         });
       })

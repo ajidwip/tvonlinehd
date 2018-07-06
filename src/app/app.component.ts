@@ -39,115 +39,118 @@ export class MyApp {
     public appVersion: AppVersion,
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController) {
-    this.platform.ready().then(() => {
-      this.splashScreen.hide();
-      this.statusBar.hide();
-      this.datecurrent = moment().format('YYYY-MM-DD');
-      this.datetimecurrent = moment().format('YYYY-MM-DD hh:mm');
-      this.api.get("table/z_list_channel", { params: { filter: "status='OPEN' AND category != 'STREAM'", limit: 500, sort: "name" + " ASC " } })
-        .subscribe(val => {
-          this.pages = val['data']
-        });
-      this.appVersion.getVersionNumber().then((version) => {
-        this.versionNumber = version;
-        this.appVersion.getPackageName().then((name) => {
-          this.packagename = name;
-          this.api.get("table/z_version", { params: { filter: "name=" + "'" + this.packagename + "'" } })
-            .subscribe(val => {
-              this.appinfo = val['data']
-              if (this.appinfo.length) {
-                if (this.appinfo[0].version > this.versionNumber) {
-                  let alert = this.alertCtrl.create({
-                    subTitle: 'Update version',
-                    message: this.appinfo[0].description,
-                    buttons: [
-                      {
-                        text: 'PLAYSTORE',
-                        handler: () => {
-                          window.location.href = this.appinfo[0].url
-                          this.platform.exitApp();
-                        }
+    this.initializeApp();
+    this.datecurrent = moment().format('YYYY-MM-DD');
+    this.datetimecurrent = moment().format('YYYY-MM-DD hh:mm');
+    this.api.get("table/z_list_channel", { params: { filter: "status='OPEN' AND category != 'STREAM'", limit: 500, sort: "name" + " ASC " } })
+      .subscribe(val => {
+        this.pages = val['data']
+      });
+    this.appVersion.getVersionNumber().then((version) => {
+      this.versionNumber = version;
+      this.appVersion.getPackageName().then((name) => {
+        this.packagename = name;
+        this.api.get("table/z_version", { params: { filter: "name=" + "'" + this.packagename + "'" } })
+          .subscribe(val => {
+            this.appinfo = val['data']
+            if (this.appinfo.length) {
+              if (this.appinfo[0].version > this.versionNumber) {
+                let alert = this.alertCtrl.create({
+                  subTitle: 'Update version',
+                  message: this.appinfo[0].description,
+                  buttons: [
+                    {
+                      text: 'PLAYSTORE',
+                      handler: () => {
+                        window.location.href = this.appinfo[0].url
+                        this.platform.exitApp();
                       }
-                    ]
-                  });
-                  alert.present();
-                }
-                else {
-                  this.api.get("table/z_status_app", { params: { filter: "status=" + 1, limit: 500 } })
-                    .subscribe(val => {
-                      this.statusapp = val['data']
-                      if (this.statusapp.length) {
-                        if (this.statusapp[0].type == '0') {
-                          let alert = this.alertCtrl.create({
-                            title: 'Attention',
-                            message: this.statusapp[0].description,
-                            buttons: [
-                              {
-                                text: 'Close',
-                                handler: () => {
-                                  this.platform.exitApp();
-                                }
-                              }
-                            ]
-                          });
-                          alert.present();
-                        }
-                        else if (this.statusapp[0].type == '1') {
-                          let alert = this.alertCtrl.create({
-                            title: 'Rate App',
-                            message: this.statusapp[0].description,
-                            buttons: [
-                              {
-                                text: 'Close',
-                                handler: () => {
-
-                                }
-                              },
-                              {
-                                text: 'Rate App',
-                                handler: () => {
-                                  this.appVersion.getPackageName().then((name) => {
-                                    this.packagename = name;
-                                    this.api.get("table/z_version", { params: { filter: "name=" + "'" + this.packagename + "'" } })
-                                      .subscribe(val => {
-                                        this.appinfo = val['data']
-                                        if (this.appinfo.length) {
-                                          window.location.href = this.appinfo[0].url
-                                        }
-                                      });
-                                  }, err => {
-
-                                  });
-                                }
-                              }
-                            ]
-                          });
-                          alert.present();
-                        }
-                        else {
-                          let alert = this.alertCtrl.create({
-                            title: 'Attention',
-                            message: this.statusapp[0].description,
-                            buttons: [
-                              {
-                                text: 'Close',
-                                handler: () => {
-
-                                }
-                              }
-                            ]
-                          });
-                          alert.present();
-                        }
-                      }
-                    });
-                }
+                    }
+                  ]
+                });
+                alert.present();
               }
-            });
-        })
-      }, (err) => {
+              else {
+                this.api.get("table/z_status_app", { params: { filter: "status=" + 1, limit: 500 } })
+                  .subscribe(val => {
+                    this.statusapp = val['data']
+                    if (this.statusapp.length) {
+                      if (this.statusapp[0].type == '0') {
+                        let alert = this.alertCtrl.create({
+                          title: 'Attention',
+                          message: this.statusapp[0].description,
+                          buttons: [
+                            {
+                              text: 'Close',
+                              handler: () => {
+                                this.platform.exitApp();
+                              }
+                            }
+                          ]
+                        });
+                        alert.present();
+                      }
+                      else if (this.statusapp[0].type == '1') {
+                        let alert = this.alertCtrl.create({
+                          title: 'Beri Rating dan Komentar',
+                          message: this.statusapp[0].description,
+                          buttons: [
+                            {
+                              text: 'TIDAK SEKARANG',
+                              handler: () => {
 
+                              }
+                            },
+                            {
+                              text: 'YA, BERI RATING',
+                              handler: () => {
+                                this.appVersion.getPackageName().then((name) => {
+                                  this.packagename = name;
+                                  this.api.get("table/z_version", { params: { filter: "name=" + "'" + this.packagename + "'" } })
+                                    .subscribe(val => {
+                                      this.appinfo = val['data']
+                                      if (this.appinfo.length) {
+                                        window.location.href = this.appinfo[0].url
+                                      }
+                                    });
+                                }, err => {
+
+                                });
+                              }
+                            }
+                          ]
+                        });
+                        alert.present();
+                      }
+                      else {
+                        let alert = this.alertCtrl.create({
+                          title: 'Attention',
+                          message: this.statusapp[0].description,
+                          buttons: [
+                            {
+                              text: 'Close',
+                              handler: () => {
+
+                              }
+                            }
+                          ]
+                        });
+                        alert.present();
+                      }
+                    }
+                  });
+              }
+            }
+          });
       })
+    }, (err) => {
+
+    })
+  }
+  initializeApp() {
+    this.platform.ready().then(() => {
+      this.statusBar.styleDefault();
+      this.splashScreen.hide();
     });
   }
   isLevel1Shown(idx) {

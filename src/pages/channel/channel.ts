@@ -5,6 +5,8 @@ import { ApiProvider } from '../../providers/api/api';
 import { AdMobPro } from '@ionic-native/admob-pro';
 import moment from 'moment';
 
+declare var videojs: any;
+
 @IonicPage()
 @Component({
   selector: 'page-channel',
@@ -15,6 +17,7 @@ export class ChannelPage {
   public channeldetail = [];
   public channelcategory: any;
   public channelname: any;
+  public channelstream: any;
   public loader: any;
   public url: any;
   public id: any;
@@ -22,7 +25,9 @@ export class ChannelPage {
   public datecurrent: any;
   public datetimecurrent: any;
   public search: any;
+  public title: any;
   halaman = 0;
+
   constructor(
     public navCtrl: NavController,
     private screenOrientation: ScreenOrientation,
@@ -32,13 +37,15 @@ export class ChannelPage {
     public navParam: NavParams,
     public loadingCtrl: LoadingController,
     private admob: AdMobPro) {
-    this.datecurrent = moment().format('YYYY-MM-DD');
-    this.datetimecurrent = moment().format('YYYY-MM-DD HH:mm');
-    this.radiostream = false;
     this.loader = this.loadingCtrl.create({
       content: 'Loading...'
     });
-    this.loader.present()
+    this.loader.present().then(() => {
+
+    });
+    this.datecurrent = moment().format('YYYY-MM-DD');
+    this.datetimecurrent = moment().format('YYYY-MM-DD HH:mm');
+    this.radiostream = false;
     this.channelcategory = this.navParam.get('category')
     this.channelname = this.navParam.get('name')
     if (this.channelcategory == 'TV') {
@@ -51,11 +58,11 @@ export class ChannelPage {
     }
     else if (this.channelcategory == 'LIVE') {
       this.doGetChannelLive();
-      this.doGetChannelLiveDetailSearch();  
+      this.doGetChannelLiveDetailSearch();
       this.api.get("table/z_channel_live", { params: { limit: 1000, filter: "category=" + "'" + this.channelname + "' AND status='OPEN'" + " AND datefinish >=" + "'" + this.datetimecurrent + "'", sort: "datestart" + " ASC " } })
-      .subscribe(val => {
-        this.channeldetail = val['data']
-      });
+        .subscribe(val => {
+          this.channeldetail = val['data']
+        });
     }
     else if (this.channelcategory == 'RADIO') {
       this.doGetChannelRadio();
@@ -63,6 +70,12 @@ export class ChannelPage {
     }
   }
   doGetChannelSearch() {
+    this.api.get("table/z_channel", { params: { limit: 10000, filter: "name=" + "'" + this.channelname + "' AND status='OPEN'", sort: "title" + " ASC " } })
+      .subscribe(val => {
+        this.search = val['data']
+      });
+  }
+  doGetPlayer() {
     this.api.get("table/z_channel", { params: { limit: 10000, filter: "name=" + "'" + this.channelname + "' AND status='OPEN'", sort: "title" + " ASC " } })
       .subscribe(val => {
         this.search = val['data']
@@ -209,7 +222,7 @@ export class ChannelPage {
       banner: 'ca-app-pub-7488223921090533/3868398990',
       interstitial: 'ca-app-pub-7488223921090533/2330836488'
     };
-
+ 
     this.admob.createBanner({
       adSize: 'SMART_BANNER',
       adId: admobid.banner,
@@ -277,6 +290,7 @@ export class ChannelPage {
     }
   }
   doPlay(channel) {
+    this.channelstream = channel.stream
     if (channel.type == 'STREAM' && channel.name == 'Anime') {
       this.navCtrl.push('ChanneldetailPage', {
         anime: channel.title
@@ -296,6 +310,40 @@ export class ChannelPage {
         subsbody1: channel.subsbody_1,
         subsbody2: channel.subsbody_2
       })
+    }
+  }
+  doPlayPlayer(channel) {
+    if (channel.type == 'STREAM' && channel.name == 'Anime') {
+      this.navCtrl.push('ChanneldetailPage', {
+        anime: channel.title
+      })
+    }
+    else if (channel.type == 'RADIO') {
+      this.radiostream = this.radiostream ? false : true;
+      this.url = channel.url
+      this.id = channel.id
+    }
+    else {
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE).then(() => {
+        this.title = channel.id
+        let playerElement = document.getElementById(this.title)
+        var video = videojs(playerElement);
+        video.qualityPickerPlugin();
+        video.play();
+        document.getElementById(this.title).style.display = 'block';
+        this.channelstream = channel.stream
+        if (this.channelstream == '1') {
+          this.platform.registerBackButtonAction(() => {
+            this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT).then(() => {
+              let playerElement = document.getElementById(this.title);
+              var video = videojs(playerElement);
+              video.qualityPickerPlugin();
+              video.pause();
+              document.getElementById(this.title).style.display = 'none';
+            });
+          })
+        }
+      });
     }
   }
   doPlayLive(channeld) {
@@ -332,11 +380,11 @@ export class ChannelPage {
         this.doGetChannelStream();
       }
       else if (this.channelcategory == 'LIVE') {
-        this.doGetChannelLive(); 
+        this.doGetChannelLive();
         this.api.get("table/z_channel_live", { params: { limit: 1000, filter: "category=" + "'" + this.channelname + "' AND status='OPEN'" + " AND datefinish >=" + "'" + this.datetimecurrent + "'", sort: "datestart" + " ASC " } })
-        .subscribe(val => {
-          this.channeldetail = val['data']
-        });
+          .subscribe(val => {
+            this.channeldetail = val['data']
+          });
       }
       else if (this.channelcategory == 'RADIO') {
         this.doGetChannelRadio();

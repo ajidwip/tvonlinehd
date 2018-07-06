@@ -89,13 +89,15 @@ export class HomePage {
   doDetail(channel) {
     this.navCtrl.push('ChannelPage', {
       name: channel.name,
-      category: channel.category
+      category: channel.category,
+      stream: channel.stream
     })
   }
   doDetailLive(live) {
     this.navCtrl.push('ChannelPage', {
       name: live.category,
-      category: live.type
+      category: live.type,
+      stream: live.stream
     })
   }
   doGetLive() {

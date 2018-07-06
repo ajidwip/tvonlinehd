@@ -5,8 +5,8 @@ import { AdMobPro } from '@ionic-native/admob-pro';
 
 declare var Clappr: any;
 declare var LevelSelector: any;
-declare var YoutubePlayback: any;
-declare var Video360: any;
+declare var videojs: any;
+declare var jwplayer: any;
 
 @IonicPage()
 @Component({
@@ -31,6 +31,9 @@ export class LivePage {
     public loadingCtrl: LoadingController,
     private admob: AdMobPro,
     public platform: Platform) {
+    this.platform.registerBackButtonAction(() => {
+      this.navCtrl.pop()
+    });
     this.loading = this.loadingCtrl.create({
       // cssClass: 'transparent',
       content: 'Loading...'
@@ -54,52 +57,17 @@ export class LivePage {
                 xhr.onreadystatechange = function () {
                   if (xhr.readyState == XMLHttpRequest.DONE) {
                     var body = xhr.responseText.substring(self.subsbody1, self.subsbody2)
-                    xhr.onload = () => {
-                      var playerElement = document.getElementById("player-wrapper");
-                      var player = new Clappr.Player({
-                        source: body,
-                        mute: true,
-                        height: self.height,
-                        width: self.width,
-                        autoPlay: true,
-                        plugins: [LevelSelector],
-                      });
-                      player.attachTo(playerElement);
-                    }
+                    self.url = body
+                    let playerElement = document.getElementById("video-player");
+                    var video = videojs(playerElement);
+                    video.qualityPickerPlugin();
                   }
                 }
                 xhr.open('GET', self.url, true);
                 xhr.send(null);
               }
               else if (this.xml == '2') {
-                var playerElement = document.getElementById("player-wrapper");
-                var player = new Clappr.Player({
-                  source: this.url,
-                  poster: 'https://i.ytimg.com/vi/' + this.url + '/hqdefault.jpg',
-                  mute: true,
-                  height: this.height,
-                  width: this.width,
-                  youtubeShowRelated: true,
-                  plugins: { playback: [YoutubePlayback] }
-                });
-
-                player.attachTo(playerElement);
-              }
-              else if (this.xml == '3') {
-                var playerElement = document.getElementById("player-wrapper");
-                var player = new Clappr.Player({
-                  source: this.url,
-                  mute: true,
-                  height: this.height,
-                  width: this.width,
-                  autoPlay: true,
-                  plugins: [LevelSelector, Video360]
-                });
-                player.attachTo(playerElement);
-                player.getPlugin('click_to_pause').disable();
-              }
-              else {
-                var playerElement = document.getElementById("player-wrapper");
+                let playerElement = document.getElementById("player-wrapper");
                 var player = new Clappr.Player({
                   source: this.url,
                   mute: true,
@@ -108,7 +76,32 @@ export class LivePage {
                   autoPlay: true,
                   plugins: [LevelSelector]
                 });
+
                 player.attachTo(playerElement);
+              }
+              else if (this.xml == '3') {
+                let playerElement = document.getElementById("streaming");
+                jwplayer(playerElement).setup({
+                  sources: [{
+                    file: this.url
+                  }],
+                  rtmp: {
+                    bufferlength: 3
+                  },
+                  fallback: true,
+                  width: "100%",
+                  autostart: "true",
+                  androidhls: true,
+                  startparam: "start",
+                  aspectratio: "16:9",
+                  stretching: "exactfit"
+                });
+
+              }
+              else {
+                let playerElement = document.getElementById("video-player");
+                var video = videojs(playerElement);
+                video.qualityPickerPlugin();
               }
             }
           });
