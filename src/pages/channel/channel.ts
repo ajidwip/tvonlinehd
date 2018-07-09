@@ -312,7 +312,7 @@ export class ChannelPage {
       })
     }
   }
-  doPlayPlayer(channel) {
+  /*doPlayPlayer(channel) {
     if (channel.type == 'STREAM' && channel.name == 'Anime') {
       this.navCtrl.push('ChanneldetailPage', {
         anime: channel.title
@@ -345,7 +345,7 @@ export class ChannelPage {
         }
       });
     }
-  }
+  }*/
   doPlayLive(channeld) {
     if (channeld.url) {
       this.navCtrl.push('LivePage', {

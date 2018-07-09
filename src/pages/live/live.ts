@@ -31,9 +31,9 @@ export class LivePage {
     public loadingCtrl: LoadingController,
     private admob: AdMobPro,
     public platform: Platform) {
-    this.platform.registerBackButtonAction(() => {
+    /*this.platform.registerBackButtonAction(() => {
       this.navCtrl.pop()
-    });
+    });*/
     this.loading = this.loadingCtrl.create({
       // cssClass: 'transparent',
       content: 'Loading...'
@@ -58,9 +58,17 @@ export class LivePage {
                   if (xhr.readyState == XMLHttpRequest.DONE) {
                     var body = xhr.responseText.substring(self.subsbody1, self.subsbody2)
                     self.url = body
-                    let playerElement = document.getElementById("video-player");
-                    var video = videojs(playerElement);
-                    video.qualityPickerPlugin();
+                    let playerElement = document.getElementById("player-wrapper");
+                    var player = new Clappr.Player({
+                      source: body,
+                      mute: true,
+                      height: self.height,
+                      width: self.width,
+                      autoPlay: true,
+                      plugins: [LevelSelector]
+                    });
+    
+                    player.attachTo(playerElement);
                   }
                 }
                 xhr.open('GET', self.url, true);

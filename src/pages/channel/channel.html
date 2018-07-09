@@ -23,10 +23,10 @@
           <i *ngIf="!radiostream || channel.id != id" style="font-size: 15px;" class="fas fa-play"></i>
           <i *ngIf="radiostream && channel.id == id" style="font-size: 15px;" class="fas fa-stop"></i>
         </button>
-        <button (click)="doPlayPlayer(channel)" ion-button clear *ngIf="channelname !='Anime' && channel.stream == '1'" item-end>
+        <!-- <button (click)="doPlayPlayer(channel)" ion-button clear *ngIf="channelname !='Anime' && channel.stream == '1'" item-end>
           <i *ngIf="!radiostream || channel.id != id" style="font-size: 15px;" class="fas fa-play"></i>
           <i *ngIf="radiostream && channel.id == id" style="font-size: 15px;" class="fas fa-stop"></i>
-        </button>
+        </button> -->
         <audio *ngIf="radiostream && channel.id == id" controls autoplay style="width: 100%;">
           <source src="{{url}}" type="audio/mpeg">
         </audio>
@@ -54,8 +54,8 @@
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>
-<div *ngFor="let channel of channels">
+<!-- <div *ngFor="let channel of channels">
   <video [id]="channel.id" poster="../../../resources/splash.png" style="width:100%;height: 100%;"
     class="playerhide embed-responsive-item video-js vjs-default-skin vjs-big-play-centered" controls preload="auto">
     <source [src]="channel.url" type="application/x-mpegURL"> </video>
-</div>
+</div> -->
