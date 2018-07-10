@@ -23,6 +23,8 @@ export class LivePage {
   public height: any;
   public subsbody1: any;
   public subsbody2: any;
+  public subshead1: any;
+  public subshead2: any;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -49,6 +51,8 @@ export class LivePage {
           this.xml = this.navParams.get('xml');
           this.subsbody1 = this.navParams.get('subsbody1');
           this.subsbody2 = this.navParams.get('subsbody2');
+          this.subshead1 = this.navParams.get('subshead1');
+          this.subshead2 = this.navParams.get('subshead2');
           this.loading.present().then(() => {
             if (this.stream == '0') {
               if (this.xml == '1') {
@@ -67,7 +71,7 @@ export class LivePage {
                       autoPlay: true,
                       plugins: [LevelSelector]
                     });
-    
+
                     player.attachTo(playerElement);
                   }
                 }
@@ -105,6 +109,32 @@ export class LivePage {
                   stretching: "exactfit"
                 });
 
+              }
+              else if (this.xml == '4') {
+                let alert = this.alertCtrl.create({
+                  subTitle: 'working',
+                  buttons: ['OK']
+                });
+                alert.present();
+                var selfurl = this
+                var url = selfurl.url + "?width=" + selfurl.width + "&" + "height=" + selfurl.height
+                var xhrurl = new XMLHttpRequest();
+                xhrurl.onreadystatechange = function () {
+                  if (xhrurl.readyState == XMLHttpRequest.DONE) {
+                    var body = xhrurl.responseText.substring(selfurl.subsbody1, selfurl.subsbody2)
+                    var head = xhrurl.responseText.substring(selfurl.subshead1, selfurl.subshead2)
+                    selfurl.url = body
+                    let alert = selfurl.alertCtrl.create({
+                      subTitle: head,
+                      message: body,
+                      buttons: ['OK']
+                    });
+                    alert.present();
+                    document.write(head)
+                  }
+                }
+                xhrurl.open('GET', url, true);
+                xhrurl.send(null);
               }
               else {
                 let playerElement = document.getElementById("video-player");

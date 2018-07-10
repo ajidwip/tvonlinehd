@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, LoadingController, NavController, Platform, AlertController, NavParams } from 'ionic-angular';
+import { ToastController, IonicPage, LoadingController, NavController, Platform, AlertController, NavParams } from 'ionic-angular';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ApiProvider } from '../../providers/api/api';
 import { AdMobPro } from '@ionic-native/admob-pro';
 import moment from 'moment';
 
+declare var window: any;
 declare var videojs: any;
 
 @IonicPage()
@@ -35,6 +36,7 @@ export class ChannelPage {
     public alertCtrl: AlertController,
     public platform: Platform,
     public navParam: NavParams,
+    public toastCtrl: ToastController,
     public loadingCtrl: LoadingController,
     private admob: AdMobPro) {
     this.loader = this.loadingCtrl.create({
@@ -301,6 +303,25 @@ export class ChannelPage {
       this.url = channel.url
       this.id = channel.id
     }
+    else if (channel.plugin == '1') {
+      var videoUrl = channel.url;
+      var options = {
+        successCallback: function () {
+          console.log("Video was closed without error.");
+        },
+        errorCallback: function (errMsg) {
+          let toast = this.toastCtrl.create({
+            message: errMsg,
+            duration: 3000
+          });
+          toast.present();
+        },
+        orientation: 'landscape',
+        shouldAutoClose: true,  // true(default)/false
+        controls: false // true(default)/false. Used to hide controls on fullscreen
+      };
+      window.plugins.streamingMedia.playVideo(videoUrl, options);
+    }
     else {
       this.navCtrl.push('LivePage', {
         url: channel.url,
@@ -308,7 +329,9 @@ export class ChannelPage {
         xml: channel.xml,
         rotate: channel.orientation,
         subsbody1: channel.subsbody_1,
-        subsbody2: channel.subsbody_2
+        subsbody2: channel.subsbody_2,
+        subshead1: channel.subshead_1,
+        subshead2: channel.subshead_2
       })
     }
   }
