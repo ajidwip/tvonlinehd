@@ -86,5 +86,22 @@ export class SchedulePage {
         }
       });
   }
+  ionViewDidEnter() {
+    /*var admobid = {
+      banner: 'ca-app-pub-7488223921090533/3868398990',
+      interstitial: 'ca-app-pub-7488223921090533/2330836488'
+    };
+
+    this.admob.createBanner({
+      adSize: 'SMART_BANNER',
+      adId: admobid.banner,
+      isTesting: false,
+      autoShow: true,
+      position: this.admob.AD_POSITION.BOTTOM_CENTER,
+    });*/
+    if (this.platform.is('cordova')) {
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
+    }
+  }
 
 }
