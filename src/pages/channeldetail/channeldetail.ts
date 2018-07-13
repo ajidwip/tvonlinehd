@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Refresher, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Refresher, Platform, LoadingController } from 'ionic-angular';
 import { ApiProvider } from '../../providers/api/api';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { AdMobPro } from '@ionic-native/admob-pro';
@@ -13,6 +13,7 @@ export class ChanneldetailPage {
   public anime: any;
   public channeldetail = [];
   halaman = 0;
+  public loader: any;
 
   constructor(
     public navCtrl: NavController,
@@ -20,9 +21,15 @@ export class ChanneldetailPage {
     public platform: Platform,
     public navParams: NavParams,
     public admob: AdMobPro,
+    public loadingCtrl: LoadingController,
     public api: ApiProvider) {
     this.anime = this.navParams.get('anime')
-    this.doGetChannelDetail();
+    this.loader = this.loadingCtrl.create({
+      content: 'Loading...'
+    });
+    this.loader.present().then(() => {
+      this.doGetChannelDetail();
+    });
   }
   doGetChannelDetail() {
     return new Promise(resolve => {
@@ -38,6 +45,7 @@ export class ChanneldetailPage {
             for (let i = 0; i < data.length; i++) {
               this.channeldetail.push(data[i]);
             }
+            this.loader.dismiss();
             if (data.length == 0) {
               this.halaman = -1
             }

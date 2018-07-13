@@ -111,5 +111,12 @@ export class NewupdateinfoPage {
         }
       });
   }
+  goToPlayAnime(channel) {
+    this.navCtrl.push('PlayerPage', {
+      url: channel.url,
+      type: channel.type,
+      stream: channel.stream
+    })
+  }
 
 }

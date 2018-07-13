@@ -201,5 +201,17 @@ export class MyApp {
     })
     this.menuCtrl.close();
   }
+  doComment() {
+    this.Nav.push('CommentPage', {
+      param: '0'
+    })
+    this.menuCtrl.close();
+  }
+  doRequest() {
+    this.Nav.push('CommentPage', {
+      param: '1'
+    })
+    this.menuCtrl.close();
+  }
 }
 

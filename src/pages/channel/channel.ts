@@ -43,33 +43,32 @@ export class ChannelPage {
       content: 'Loading...'
     });
     this.loader.present().then(() => {
-
+      this.datecurrent = moment().format('YYYY-MM-DD');
+      this.datetimecurrent = moment().format('YYYY-MM-DD HH:mm');
+      this.radiostream = false;
+      this.channelcategory = this.navParam.get('category')
+      this.channelname = this.navParam.get('name')
+      if (this.channelcategory == 'TV') {
+        this.doGetChannel();
+        this.doGetChannelSearch();
+      }
+      else if (this.channelcategory == 'STREAM') {
+        this.doGetChannelStream();
+        this.doGetChannelStreamSearch();
+      }
+      else if (this.channelcategory == 'LIVE') {
+        this.doGetChannelLive();
+        this.doGetChannelLiveDetailSearch();
+        this.api.get("table/z_channel_live", { params: { limit: 1000, filter: "category=" + "'" + this.channelname + "' AND status='OPEN'" + " AND datefinish >=" + "'" + this.datetimecurrent + "'", sort: "datestart" + " ASC " } })
+          .subscribe(val => {
+            this.channeldetail = val['data']
+          });
+      }
+      else if (this.channelcategory == 'RADIO') {
+        this.doGetChannelRadio();
+        this.doGetChannelRadioSearch();
+      }
     });
-    this.datecurrent = moment().format('YYYY-MM-DD');
-    this.datetimecurrent = moment().format('YYYY-MM-DD HH:mm');
-    this.radiostream = false;
-    this.channelcategory = this.navParam.get('category')
-    this.channelname = this.navParam.get('name')
-    if (this.channelcategory == 'TV') {
-      this.doGetChannel();
-      this.doGetChannelSearch();
-    }
-    else if (this.channelcategory == 'STREAM') {
-      this.doGetChannelStream();
-      this.doGetChannelStreamSearch();
-    }
-    else if (this.channelcategory == 'LIVE') {
-      this.doGetChannelLive();
-      this.doGetChannelLiveDetailSearch();
-      this.api.get("table/z_channel_live", { params: { limit: 1000, filter: "category=" + "'" + this.channelname + "' AND status='OPEN'" + " AND datefinish >=" + "'" + this.datetimecurrent + "'", sort: "datestart" + " ASC " } })
-        .subscribe(val => {
-          this.channeldetail = val['data']
-        });
-    }
-    else if (this.channelcategory == 'RADIO') {
-      this.doGetChannelRadio();
-      this.doGetChannelRadioSearch();
-    }
   }
   doGetChannelSearch() {
     this.api.get("table/z_channel", { params: { limit: 10000, filter: "name=" + "'" + this.channelname + "' AND status='OPEN'", sort: "title" + " ASC " } })
@@ -94,6 +93,7 @@ export class ChannelPage {
         this.api.get("table/z_channel", { params: { limit: 30, offset: offset, filter: "name=" + "'" + this.channelname + "' AND status='OPEN'", sort: "title" + " ASC " } })
           .subscribe(val => {
             let data = val['data'];
+            this.loader.dismiss();
             for (let i = 0; i < data.length; i++) {
               this.channels.push(data[i]);
             }
@@ -122,6 +122,7 @@ export class ChannelPage {
         this.api.get("table/z_channel_stream", { params: { limit: 30, offset: offset, filter: "name=" + "'" + this.channelname + "' AND status='OPEN'", sort: "title" + " ASC " } })
           .subscribe(val => {
             let data = val['data'];
+            this.loader.dismiss();
             for (let i = 0; i < data.length; i++) {
               this.channels.push(data[i]);
             }
@@ -178,6 +179,7 @@ export class ChannelPage {
         this.api.get("table/z_channel_live", { params: { limit: 30, offset: offset, filter: "category=" + "'" + this.channelname + "' AND status='OPEN'" + " AND datefinish >=" + "'" + this.datetimecurrent + "'", sort: "datestart" + " ASC " } })
           .subscribe(val => {
             let data = val['data'];
+            this.loader.dismiss();
             for (let i = 0; i < data.length; i++) {
               this.channeldetail.push(data[i]);
             }
@@ -206,6 +208,7 @@ export class ChannelPage {
         this.api.get("table/z_channel_radio", { params: { limit: 30, offset: offset, filter: "status='OPEN'", sort: "title" + " ASC " } })
           .subscribe(val => {
             let data = val['data'];
+            this.loader.dismiss();
             for (let i = 0; i < data.length; i++) {
               this.channels.push(data[i]);
             }
@@ -238,9 +241,6 @@ export class ChannelPage {
   }
   ionViewWillLeave() {
     //this.admob.removeBanner();
-  }
-  ngAfterViewInit() {
-    this.loader.dismiss();
   }
   doInfinite(infiniteScroll) {
     if (this.channelcategory == 'TV') {
