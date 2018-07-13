@@ -75,41 +75,37 @@ export class NewupdateinfoPage {
     });
   }
   goToPlay(channel) {
-    this.api.get("table/z_channel", { params: { limit: 1000, filter: "id=" + "'" + channel.id_channel + "'" } })
-      .subscribe(val => {
-        this.url = val['data']
-        if (this.url[0].plugin == '1') {
-          var videoUrl = this.url[0].url;
-          var options = {
-            successCallback: function () {
-              console.log("Video was closed without error.");
-            },
-            errorCallback: function (errMsg) {
-              let toast = this.toastCtrl.create({
-                message: errMsg,
-                duration: 3000
-              });
-              toast.present();
-            },
-            orientation: 'landscape',
-            shouldAutoClose: true,  // true(default)/false
-            controls: false // true(default)/false. Used to hide controls on fullscreen
-          };
-          window.plugins.streamingMedia.playVideo(videoUrl, options);
-        }
-        else {
-          this.navCtrl.push('LivePage', {
-            url: this.url[0].url,
-            stream: this.url[0].stream,
-            xml: this.url[0].xml,
-            rotate: this.url[0].orientation,
-            subsbody1: this.url[0].subsbody_1,
-            subsbody2: this.url[0].subsbody_2,
-            subshead1: this.url[0].subshead_1,
-            subshead2: this.url[0].subshead_2
-          })
-        }
-      });
+    if (channel.plugin == '1') {
+      var videoUrl = channel.url;
+      var options = {
+        successCallback: function () {
+          console.log("Video was closed without error.");
+        },
+        errorCallback: function (errMsg) {
+          let toast = this.toastCtrl.create({
+            message: errMsg,
+            duration: 3000
+          });
+          toast.present();
+        },
+        orientation: 'landscape',
+        shouldAutoClose: true,  // true(default)/false
+        controls: false // true(default)/false. Used to hide controls on fullscreen
+      };
+      window.plugins.streamingMedia.playVideo(videoUrl, options);
+    }
+    else {
+      this.navCtrl.push('LivePage', {
+        url: channel.url,
+        stream: channel.stream,
+        xml: channel.xml,
+        rotate: channel.orientation,
+        subsbody1: channel.subsbody_1,
+        subsbody2: channel.subsbody_2,
+        subshead1: channel.subshead_1,
+        subshead2: channel.subshead_2
+      })
+    }
   }
   goToPlayAnime(channel) {
     this.navCtrl.push('PlayerPage', {
