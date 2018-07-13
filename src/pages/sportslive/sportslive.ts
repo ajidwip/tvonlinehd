@@ -9,17 +9,19 @@ declare var window: any;
 
 @IonicPage()
 @Component({
-  selector: 'page-schedule',
-  templateUrl: 'schedule.html',
+  selector: 'page-sportslive',
+  templateUrl: 'sportslive.html',
 })
-export class SchedulePage {
+export class SportslivePage {
 
   public channels = [];
   public datecurrent: any;
   public datetimecurrent: any;
   public channel: any;
   public url = [];
+  public param: any;
   public loader: any;
+  public name: any;
   public loading: any;
   constructor(
     public navCtrl: NavController,
@@ -33,20 +35,36 @@ export class SchedulePage {
     this.loading = this.loadingCtrl.create({
       content: 'Loading...'
     });
-
     this.loading.present().then(() => {
       this.datecurrent = moment().format('YYYY-MM-DD');
       this.datetimecurrent = moment().format('YYYY-MM-DD HH:mm');
-      this.channel = this.navParam.get('channel')
-      this.api.get("table/z_schedule_tv", { params: { limit: 1000, filter: "channel=" + "'" + this.channel + "'", sort: "date_start" + " ASC " } })
-        .subscribe(val => {
-          this.channels = val['data']
-          let data = val['data'];
-          for (let i = 0; i < data.length; i++) {
+      this.param = this.navParam.get('param')
+      if (this.param == '0') {
+        this.name = 'Live Today'
+        this.api.get("table/z_channel_live", { params: { limit: 1000, filter: "date=" + "'" + this.datecurrent + "'", sort: "datestart" + " ASC " } })
+          .subscribe(val => {
+            this.channels = val['data']
+            let data = val['data'];
+            for (let i = 0; i < data.length; i++) {
 
-          };
-          this.loading.dismiss()
-        });
+            };
+            this.loading.dismiss()
+          });
+      }
+      else {
+        this.name = 'Live Now'
+        this.api.get("table/z_channel_live", { params: { limit: 1000, filter: "datestart <=" + "'" + this.datetimecurrent + "'" + " AND " + "datestart >" + "'" + this.datetimecurrent + "'", sort: "datestart" + " ASC " } })
+          .subscribe(val => {
+            this.channels = val['data']
+            let data = val['data'];
+            for (let i = 0; i < data.length; i++) {
+              for (let i = 0; i < data.length; i++) {
+
+              };
+            };
+            this.loading.dismiss()
+          });
+      }
     });
   }
   goToPlay(channel) {

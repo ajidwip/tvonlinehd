@@ -9,10 +9,10 @@ declare var window: any;
 
 @IonicPage()
 @Component({
-  selector: 'page-schedule',
-  templateUrl: 'schedule.html',
+  selector: 'page-schedulelive',
+  templateUrl: 'schedulelive.html',
 })
-export class SchedulePage {
+export class SchedulelivePage {
 
   public channels = [];
   public datecurrent: any;
@@ -37,8 +37,7 @@ export class SchedulePage {
     this.loading.present().then(() => {
       this.datecurrent = moment().format('YYYY-MM-DD');
       this.datetimecurrent = moment().format('YYYY-MM-DD HH:mm');
-      this.channel = this.navParam.get('channel')
-      this.api.get("table/z_schedule_tv", { params: { limit: 1000, filter: "channel=" + "'" + this.channel + "'", sort: "date_start" + " ASC " } })
+      this.api.get("table/z_schedule_tv", { params: { limit: 1000, filter: "date_start <=" + "'" + this.datetimecurrent + "'" + " AND " + "date_finish >" + "'" + this.datetimecurrent + "'", sort: "channel" + " ASC " } })
         .subscribe(val => {
           this.channels = val['data']
           let data = val['data'];

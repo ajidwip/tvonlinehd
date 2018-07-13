@@ -9,16 +9,17 @@ declare var window: any;
 
 @IonicPage()
 @Component({
-  selector: 'page-schedule',
-  templateUrl: 'schedule.html',
+  selector: 'page-newupdateinfo',
+  templateUrl: 'newupdateinfo.html',
 })
-export class SchedulePage {
+export class NewupdateinfoPage {
 
   public channels = [];
   public datecurrent: any;
   public datetimecurrent: any;
   public channel: any;
   public url = [];
+  public param: any;
   public loader: any;
   public loading: any;
   constructor(
@@ -37,16 +38,40 @@ export class SchedulePage {
     this.loading.present().then(() => {
       this.datecurrent = moment().format('YYYY-MM-DD');
       this.datetimecurrent = moment().format('YYYY-MM-DD HH:mm');
-      this.channel = this.navParam.get('channel')
-      this.api.get("table/z_schedule_tv", { params: { limit: 1000, filter: "channel=" + "'" + this.channel + "'", sort: "date_start" + " ASC " } })
-        .subscribe(val => {
-          this.channels = val['data']
-          let data = val['data'];
-          for (let i = 0; i < data.length; i++) {
+      this.param = this.navParam.get('param')
+      if (this.param == '0') {
+        this.api.get("table/z_channel", { params: { limit: 10, filter: "status='OPEN'", sort: "date" + " DESC " } })
+          .subscribe(val => {
+            this.channels = val['data']
+            let data = val['data'];
+            for (let i = 0; i < data.length; i++) {
 
-          };
-          this.loading.dismiss()
-        });
+            };
+            this.loading.dismiss()
+          });
+      }
+      else if (this.param == '1') {
+        this.api.get("table/z_channel_stream", { params: { limit: 10, filter: "status='OPEN' AND name!='Anime'", sort: "date" + " DESC " } })
+          .subscribe(val => {
+            this.channels = val['data']
+            let data = val['data'];
+            for (let i = 0; i < data.length; i++) {
+
+            };
+            this.loading.dismiss()
+          });
+      }
+      else {
+        this.api.get("table/z_channel_stream_detail", { params: { limit: 10, filter: "status='OPEN'", sort: "date" + " DESC " } })
+          .subscribe(val => {
+            this.channels = val['data']
+            let data = val['data'];
+            for (let i = 0; i < data.length; i++) {
+
+            };
+            this.loading.dismiss()
+          });
+      }
     });
   }
   goToPlay(channel) {

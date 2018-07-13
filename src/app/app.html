@@ -11,26 +11,26 @@
     </ion-header>
     <ion-content>
         <ion-list>
-            <ion-item>
-                <i class="fas fa-tv"></i>&nbsp;&nbsp;&nbsp;New TV Channel Added
+            <ion-item (click)="doGoToChannel()">
+                <i class="fas fa-tv"></i>&nbsp;&nbsp;&nbsp;Channel Baru Ditambahkan
             </ion-item>
-            <ion-item>
-                <i class="fas fa-film"></i>&nbsp;&nbsp;&nbsp;&nbsp;New Films Added
+            <ion-item (click)="doGoToStream()">
+                <i class="fas fa-film"></i>&nbsp;&nbsp;&nbsp;&nbsp;Film Baru Ditambahkan
             </ion-item>
-            <ion-item>
-                <i class="fas fa-ticket-alt"></i>&nbsp;&nbsp;&nbsp;&nbsp;New Anime Added
+            <ion-item (click)="doGoToAnime()">
+                <i class="fas fa-ticket-alt"></i>&nbsp;&nbsp;&nbsp;&nbsp;Anime Baru Ditambahkan
             </ion-item>
-            <ion-item>
-                <i class="fas fa-clock"></i>&nbsp;&nbsp;&nbsp;&nbsp;Live TV Now
+            <ion-item (click)="doGotoLive()">
+                <i class="fas fa-clock"></i>&nbsp;&nbsp;&nbsp;&nbsp;Acara TV Sedang Tayang
             </ion-item>
-            <ion-item>
-                <i class="far fa-futbol"></i>&nbsp;&nbsp;&nbsp;&nbsp;Live Sports Now
+            <ion-item (click)="doGotoSportsLive()">
+                <i class="far fa-futbol"></i>&nbsp;&nbsp;&nbsp;&nbsp;Olahraga Sedang Tayang
             </ion-item>
-            <ion-item>
-                <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;&nbsp;&nbsp;Schedule TV Today
+            <ion-item (click)="doChannel()">
+                <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;&nbsp;&nbsp;Jadwal TV Hari Ini
             </ion-item>
-            <ion-item>
-                <i class="fas fa-calendar-check"></i>&nbsp;&nbsp;&nbsp;&nbsp;Live Sports Today
+            <ion-item (click)="doGotoSports()">
+                <i class="fas fa-calendar-check"></i>&nbsp;&nbsp;&nbsp;&nbsp;Olahraga Tayang Hari ini
             </ion-item>
             <ion-item>
                 <i class="fas fa-plus-circle"></i>&nbsp;&nbsp;&nbsp;&nbsp;Request Film & Anime

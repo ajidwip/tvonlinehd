@@ -1,0 +1,25 @@
+<ion-header>
+
+  <ion-navbar color="bluewhite">
+    <ion-title>Live Now</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+  <div *ngIf="channels.length != 0">
+    <ion-row style="background: #dedede;">
+      <ion-col padding col-3 style="border-right:1px solid;border-color:#ffffff;">JAM</ion-col>
+      <ion-col padding col-4 style="border-right:1px solid;border-color:#ffffff;">JUDUL</ion-col>
+      <ion-col padding col-5 style="border-right:1px solid;border-color:#ffffff;">ACARA</ion-col>
+    </ion-row>
+    <ion-row *ngFor="let channel of channels" (click)="goToPlay(channel)">
+      <ion-col padding col-3 style="border-right:1px solid;border-bottom:1px solid;border-color:#dedede;">{{channel.date_start | date:'HH:mm'}}</ion-col>
+      <ion-col padding col-4 style="border-right:1px solid;border-bottom:1px solid;border-color:#dedede;">{{channel.channel}}</ion-col>
+      <ion-col padding col-5 style="border-right:1px solid;border-bottom:1px solid;border-color:#dedede;">{{channel.title}}</ion-col>
+    </ion-row>
+  </div>
+  <div *ngIf="channels.length == 0">
+    <p padding>*Tidak ada jadwal pada hari ini</p>
+  </div>
+</ion-content>

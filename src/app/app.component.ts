@@ -163,5 +163,43 @@ export class MyApp {
 
     });
   }
+  doChannel() {
+    this.Nav.push('ListchannelPage')
+    this.menuCtrl.close();
+  }
+  doGotoLive() {
+    this.Nav.push('SchedulelivePage')
+    this.menuCtrl.close();
+  }
+  doGotoSports() {
+    this.Nav.push('SportslivePage', {
+      param: '0'
+    })
+    this.menuCtrl.close();
+  }
+  doGotoSportsLive() {
+    this.Nav.push('SportslivePage', {
+      param: '1'
+    })
+    this.menuCtrl.close();
+  }
+  doGoToChannel() {
+    this.Nav.push('NewupdateinfoPage', {
+      param: '0'
+    })
+    this.menuCtrl.close();
+  }
+  doGoToStream() {
+    this.Nav.push('NewupdateinfoPage', {
+      param: '1'
+    })
+    this.menuCtrl.close();
+  }
+  doGoToAnime() {
+    this.Nav.push('NewupdateinfoPage', {
+      param: '2'
+    })
+    this.menuCtrl.close();
+  }
 }
 

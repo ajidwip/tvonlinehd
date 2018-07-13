@@ -1,18 +1,23 @@
-<!--
-  Generated template for the ListchannelPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>listchannel</ion-title>
+<ion-header id="header">
+  <ion-navbar color="bluewhite">
+    <ion-title>TV Indonesia</ion-title>
   </ion-navbar>
-
 </ion-header>
-
-
-<ion-content padding>
-
+<ion-content id="content" style="background:#e8e8e8;">
+  <div *ngIf="channels.length != 0">
+    <ion-grid>
+      <ion-row>
+        <ion-item item-start no-lines text-wrap style="background: #fafafa;border:1px solid;border-color:#dedede;" *ngFor="let channel of channels"
+          col-12>
+          <h4 style="color:#666666;font-weight: bold;">{{channel.channel}}</h4>
+          <button (click)="doGotoSchedule(channel)" ion-button clear item-end>
+            <i style="font-size: 15px;" class="fas fa-chevron-right"></i>
+          </button>
+        </ion-item>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div *ngIf="channels.length == 0">
+    <p padding>*Tidak ada data</p>
+  </div>
 </ion-content>

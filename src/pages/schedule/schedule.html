@@ -1,18 +1,32 @@
-<!--
-  Generated template for the SchedulePage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>schedule</ion-title>
+  <ion-navbar color="bluewhite">
+    <ion-title>{{channel}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
-
-<ion-content padding>
-
+<ion-content>
+  <div *ngIf="channels.length != 0">
+    <ion-row style="background: #dedede;">
+      <ion-col padding col-3 style="border-right:1px solid;border-color:#ffffff;">JAM</ion-col>
+      <ion-col padding col-6 style="border-right:1px solid;border-color:#ffffff;">ACARA</ion-col>
+      <ion-col padding col-3>PUTAR</ion-col>
+    </ion-row>
+    <ion-row *ngFor="let channel of channels">
+      <ion-col padding col-3 style="border-right:1px solid;border-bottom:1px solid;border-color:#dedede;">{{channel.date_start | date:'HH:mm'}}</ion-col>
+      <ion-col padding col-6 style="border-right:1px solid;border-bottom:1px solid;border-color:#dedede;">{{channel.title}}</ion-col>
+      <ion-col *ngIf="((channel.date_finish | date:'yyyy-MM-dd HH:mm') < datetimecurrent) || ((channel.date_start | date:'yyyy-MM-dd HH:mm') > datetimecurrent && (channel.date_finish | date:'yyyy-MM-dd HH:mm') > datetimecurrent)"
+        padding col-3 style="border-bottom:1px solid;border-color:#dedede;text-align: center;">
+        <ion-icon style="color:#dedede;font-size:30px;" name="logo-youtube"></ion-icon>
+      </ion-col>
+      <ion-col *ngIf="(channel.date_start | date:'yyyy-MM-dd HH:mm') <= datetimecurrent && (channel.date_finish | date:'yyyy-MM-dd HH:mm') > datetimecurrent"
+        padding col-3 style="border-bottom:1px solid;border-color:#dedede;text-align: center;" (click)="goToPlay(channel)">
+        <ion-icon style="color:#42b549;font-size:30px;" name="logo-youtube"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </div>
+  <div *ngIf="channels.length == 0">
+    <p padding>*Tidak ada jadwal pada hari ini</p>
+  </div>
 </ion-content>

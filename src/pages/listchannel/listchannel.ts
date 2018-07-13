@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the ListchannelPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { ToastController, IonicPage, LoadingController, NavController, Platform, AlertController, NavParams } from 'ionic-angular';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { ApiProvider } from '../../providers/api/api';
+import { AdMobPro } from '@ionic-native/admob-pro';
+import moment from 'moment';
 
 @IonicPage()
 @Component({
@@ -15,11 +12,42 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ListchannelPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  public channels = [];
+  public datecurrent: any;
+  public datetimecurrent: any;
+  public loader: any;
+  public loading: any;
+  constructor(
+    public navCtrl: NavController,
+    private screenOrientation: ScreenOrientation,
+    public api: ApiProvider,
+    public alertCtrl: AlertController,
+    public platform: Platform,
+    public navParam: NavParams,
+    public toastCtrl: ToastController,
+    public loadingCtrl: LoadingController) {
+    this.loading = this.loadingCtrl.create({
+      content: 'Loading...'
+    });
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ListchannelPage');
+    this.loading.present().then(() => {
+      this.datecurrent = moment().format('YYYY-MM-DD');
+      this.datetimecurrent = moment().format('YYYY-MM-DD HH:mm');
+      this.api.get("table/z_schedule_tv", { params: { limit: 1000, filter: "date=" + "'" + this.datecurrent + "'", group: 'channel', sort: "channel" + " ASC " } })
+        .subscribe(val => {
+          this.channels = val['data']
+          let data = val['data'];
+          for (let i = 0; i < data.length; i++) {
+
+          };
+          this.loading.dismiss()
+        });
+    });
+  }
+  doGotoSchedule(channel) {
+    this.navCtrl.push('SchedulePage', {
+      channel: channel.channel
+    })
   }
 
 }
