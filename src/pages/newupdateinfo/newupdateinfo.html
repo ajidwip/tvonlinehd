@@ -35,13 +35,13 @@
     <div *ngIf="param == '2'">
       <ion-row style="background: #dedede;">
         <ion-col padding col-3 style="border-right:1px solid;border-color:#ffffff;">TGL</ion-col>
-        <ion-col padding col-4 style="border-right:1px solid;border-color:#ffffff;">EPS</ion-col>
-        <ion-col padding col-5 style="border-right:1px solid;border-color:#ffffff;">JUDUL</ion-col>
+        <ion-col padding col-2 style="border-right:1px solid;border-color:#ffffff;">EPS</ion-col>
+        <ion-col padding col-7 style="border-right:1px solid;border-color:#ffffff;">JUDUL</ion-col>
       </ion-row>
       <ion-row *ngFor="let channel of channels" (click)="goToPlay(channel)">
         <ion-col padding col-3 style="border-right:1px solid;border-bottom:1px solid;border-color:#dedede;">{{channel.date | date:'dd-MM-yy'}}</ion-col>
-        <ion-col padding col-4 style="border-right:1px solid;border-bottom:1px solid;border-color:#dedede;">{{channel.episode}}</ion-col>
-        <ion-col padding col-5 style="border-right:1px solid;border-bottom:1px solid;border-color:#dedede;">{{channel.name}}</ion-col>
+        <ion-col padding col-2 style="border-right:1px solid;border-bottom:1px solid;border-color:#dedede;">{{channel.episode}}</ion-col>
+        <ion-col padding col-7 style="border-right:1px solid;border-bottom:1px solid;border-color:#dedede;">{{channel.name}}</ion-col>
       </ion-row>
     </div>
   </div>
