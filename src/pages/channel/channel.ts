@@ -370,11 +370,30 @@ export class ChannelPage {
     }
   }*/
   doPlayLive(channeld) {
-    if (channeld.url) {
+    if (channeld.url && channeld.plugin != '1') {
       this.navCtrl.push('LivePage', {
         url: channeld.url,
         stream: channeld.stream
       })
+    }
+    else if (channeld.url && channeld.plugin == '1') {
+      var videoUrl = channeld.url;
+      var options = {
+        successCallback: function () {
+          console.log("Video was closed without error.");
+        },
+        errorCallback: function (errMsg) {
+          let toast = this.toastCtrl.create({
+            message: errMsg,
+            duration: 3000
+          });
+          toast.present();
+        },
+        orientation: 'landscape',
+        shouldAutoClose: true,  // true(default)/false
+        controls: false // true(default)/false. Used to hide controls on fullscreen
+      };
+      window.plugins.streamingMedia.playVideo(videoUrl, options);
     }
     else {
       let alert = this.alertCtrl.create({

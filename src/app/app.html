@@ -11,37 +11,35 @@
     </ion-header>
     <ion-content>
         <ion-list>
-            <ion-item *ngFor="let p of pages; let i=index" text-wrap [ngClass]="{active: isLevel1Shown('idx'+i)}">
-                <h2 (click)="toggleLevel1('idx'+i,p)">
-                    <ion-icon color="success" item-right [name]="isLevel1Shown('idx'+i) ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
-                    <b>{{p.name}}</b>
-                </h2>
-                <ion-list *ngIf="isLevel1Shown('idx'+i)">
-                    <div *ngFor="let s of subs">
-                        <ion-item padding *ngIf="category != 'LIVE'" text-wrap>
-                            <h4>{{s.datestart | date:'dd/MM/yy HH:mm'}} {{s.title}}</h4>
-                            <button (click)="doPlay(s)" ion-button clear item-end>
-                                <i *ngIf="!radiostream || s.id != id" style="font-size: 15px;" class="fas fa-play"></i>
-                                <i *ngIf="radiostream && s.id == id" style="font-size: 15px;" class="fas fa-stop"></i>
-                            </button>
-                            <audio *ngIf="radiostream && s.id == id" controls autoplay style="width: 100%;">
-                                <source src="{{url}}" type="audio/mpeg">
-                            </audio>
-                        </ion-item>
-                        <ion-grid *ngIf="category == 'LIVE'">
-                            <ion-row style="background: #7a7a7a;color:#ffffff;">
-                                <ion-col padding col-12>{{s.date | date:'EEEE, dd/MM/yyyy'}}</ion-col>
-                            </ion-row>
-                            <div *ngFor="let sd of subsdetail">
-                                <ion-row *ngIf="sd.date == s.date" style="border-bottom:1px solid;border-color:#dedede;" (click)="doPlayLive(sd)">
-                                    <ion-col *ngIf="!sd.url" padding col-4 style="text-align:left;">{{sd.datestart | date:'HH:mm'}} WIB</ion-col>
-                                    <ion-col *ngIf="sd.url" padding col-4 style="text-align:left;color:red;font-weight: bold;">LIVE</ion-col>
-                                    <ion-col padding col-8 style="text-align:left;">{{sd.title}}</ion-col>
-                                </ion-row>
-                            </div>
-                        </ion-grid>
-                    </div>
-                </ion-list>
+            <ion-item>
+                <i class="fas fa-tv"></i>&nbsp;&nbsp;&nbsp;New TV Channel Added
+            </ion-item>
+            <ion-item>
+                <i class="fas fa-film"></i>&nbsp;&nbsp;&nbsp;&nbsp;New Films Added
+            </ion-item>
+            <ion-item>
+                <i class="fas fa-ticket-alt"></i>&nbsp;&nbsp;&nbsp;&nbsp;New Anime Added
+            </ion-item>
+            <ion-item>
+                <i class="fas fa-clock"></i>&nbsp;&nbsp;&nbsp;&nbsp;Live TV Now
+            </ion-item>
+            <ion-item>
+                <i class="far fa-futbol"></i>&nbsp;&nbsp;&nbsp;&nbsp;Live Sports Now
+            </ion-item>
+            <ion-item>
+                <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;&nbsp;&nbsp;Schedule TV Today
+            </ion-item>
+            <ion-item>
+                <i class="fas fa-calendar-check"></i>&nbsp;&nbsp;&nbsp;&nbsp;Live Sports Today
+            </ion-item>
+            <ion-item>
+                <i class="fas fa-plus-circle"></i>&nbsp;&nbsp;&nbsp;&nbsp;Request Film & Anime
+            </ion-item>
+            <ion-item>
+                <i class="fas fa-exclamation-circle"></i>&nbsp;&nbsp;&nbsp;&nbsp;Saran & Komentar
+            </ion-item>
+            <ion-item (click)="doRate()">
+                <i class="fas fa-star"></i>&nbsp;&nbsp;&nbsp;&nbsp;Rate App
             </ion-item>
         </ion-list>
     </ion-content>

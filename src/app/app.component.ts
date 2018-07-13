@@ -42,10 +42,6 @@ export class MyApp {
     this.initializeApp();
     this.datecurrent = moment().format('YYYY-MM-DD');
     this.datetimecurrent = moment().format('YYYY-MM-DD hh:mm');
-    this.api.get("table/z_list_channel", { params: { filter: "status='OPEN' AND category != 'STREAM'", limit: 500, sort: "name" + " ASC " } })
-      .subscribe(val => {
-        this.pages = val['data']
-      });
     this.appVersion.getVersionNumber().then((version) => {
       this.versionNumber = version;
       this.appVersion.getPackageName().then((name) => {
@@ -153,74 +149,19 @@ export class MyApp {
       this.splashScreen.hide();
     });
   }
-  isLevel1Shown(idx) {
-    return this.showLevel1 === idx;
-  };
-  toggleLevel1(idx, p) {
-    this.subs = [];
-    this.category = p.category;
-    if (p.category == 'TV') {
-      this.api.get("table/z_channel", { params: { limit: 500, filter: "name=" + "'" + p.name + "' AND status='OPEN'", sort: "title" + " ASC " } })
+  doRate() {
+    this.appVersion.getPackageName().then((name) => {
+      this.packagename = name;
+      this.api.get("table/z_version", { params: { filter: "name=" + "'" + this.packagename + "'" } })
         .subscribe(val => {
-          this.subs = val['data']
+          this.appinfo = val['data']
+          if (this.appinfo.length) {
+            window.location.href = this.appinfo[0].url
+          }
         });
-    }
-    else if (p.category == 'LIVE') {
-      this.api.get("table/z_channel_live", { params: { limit: 500, filter: "category=" + "'" + p.name + "' AND status='OPEN'" + " AND date >=" + "'" + this.datecurrent + "'", group: "date", sort: "date" + " ASC " } })
-        .subscribe(val => {
-          this.subs = val['data'];
-        });
-      this.api.get("table/z_channel_live", { params: { limit: 500, filter: "category=" + "'" + p.name + "' AND status='OPEN'" + " AND datefinish >=" + "'" + this.datetimecurrent + "'", sort: "date" + " ASC " } })
-        .subscribe(val => {
-          this.subsdetail = val['data'];
-        });
-    }
-    else if (p.category == 'RADIO') {
-      this.api.get("table/z_channel_radio", { params: { limit: 500, filter: "status='OPEN'", sort: "title" + " ASC " } })
-        .subscribe(val => {
-          this.subs = val['data']
-        });
-    }
-    if (this.isLevel1Shown(idx)) {
-      this.showLevel1 = null;
-    } else {
-      this.showLevel1 = idx;
-    }
-  };
-  doPlay(s) {
-    if (s.type == 'STREAM') {
-      this.Nav.push('ChanneldetailPage', {
-        anime: s.title
-      })
-      this.menuCtrl.close();
-    }
-    else if (s.type == 'RADIO') {
-      this.radiostream = this.radiostream ? false : true;
-      this.id = s.id;
-      this.url = s.url;
-    }
-    else {
-      this.Nav.push('LivePage', {
-        url: s.url
-      })
-      this.menuCtrl.close();
-    }
-  }
-  doPlayLive(sd) {
-    if (sd.url) {
-      this.Nav.push('LivePage', {
-        url: sd.url
-      })
-      this.menuCtrl.close();
-    }
-    else {
-      let alert = this.alertCtrl.create({
-        subTitle: 'Coming Soon',
-        buttons: ['OK']
-      });
-      alert.present();
-    }
+    }, err => {
 
+    });
   }
 }
 
