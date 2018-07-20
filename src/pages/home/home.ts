@@ -57,7 +57,7 @@ export class HomePage {
     this.admob.createBanner({
       adSize: 'SMART_BANNER',
       adId: admobid.banner,
-      isTesting: false,
+      isTesting: true,
       autoShow: true,
       position: this.admob.AD_POSITION.BOTTOM_CENTER,
     });*/

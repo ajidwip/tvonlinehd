@@ -27,6 +27,7 @@ export class SchedulelivePage {
     public api: ApiProvider,
     public alertCtrl: AlertController,
     public platform: Platform,
+    public admob: AdMobPro,
     public navParam: NavParams,
     public toastCtrl: ToastController,
     public loadingCtrl: LoadingController) {
@@ -56,7 +57,7 @@ export class SchedulelivePage {
           var videoUrl = this.url[0].url;
           var options = {
             successCallback: function () {
-              console.log("Video was closed without error.");
+
             },
             errorCallback: function (errMsg) {
               let toast = this.toastCtrl.create({
@@ -70,6 +71,16 @@ export class SchedulelivePage {
             controls: false // true(default)/false. Used to hide controls on fullscreen
           };
           window.plugins.streamingMedia.playVideo(videoUrl, options);
+          var admobid = {
+            banner: 'ca-app-pub-7488223921090533/8319723789',
+            interstitial: 'ca-app-pub-7488223921090533/6830564057'
+          };
+      
+          this.admob.prepareInterstitial({
+            adId: admobid.interstitial,
+            isTesting: true,
+            autoShow: true
+          })
         }
         else {
           this.navCtrl.push('LivePage', {
@@ -86,21 +97,24 @@ export class SchedulelivePage {
       });
   }
   ionViewDidEnter() {
-    /*var admobid = {
-      banner: 'ca-app-pub-7488223921090533/3868398990',
-      interstitial: 'ca-app-pub-7488223921090533/2330836488'
+    var admobid = {
+      banner: 'ca-app-pub-7488223921090533/8319723789',
+      interstitial: 'ca-app-pub-7488223921090533/6830564057'
     };
 
     this.admob.createBanner({
       adSize: 'SMART_BANNER',
       adId: admobid.banner,
-      isTesting: false,
+      isTesting: true,
       autoShow: true,
       position: this.admob.AD_POSITION.BOTTOM_CENTER,
-    });*/
+    });
     if (this.platform.is('cordova')) {
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
     }
+  }
+  ionViewWillLeave() {
+    this.admob.removeBanner();
   }
 
 }

@@ -76,24 +76,24 @@ export class ChanneldetailPage {
   ionViewDidLoad() {
   }
   ionViewDidEnter() {
-    /*var admobid = {
-      banner: 'ca-app-pub-7488223921090533/3868398990',
-      interstitial: 'ca-app-pub-7488223921090533/2330836488'
+    var admobid = {
+      banner: 'ca-app-pub-7488223921090533/8319723789',
+      interstitial: 'ca-app-pub-7488223921090533/6830564057'
     };
-
+ 
     this.admob.createBanner({
       adSize: 'SMART_BANNER',
       adId: admobid.banner,
-      isTesting: false,
+      isTesting: true,
       autoShow: true,
       position: this.admob.AD_POSITION.BOTTOM_CENTER,
-    });*/
+    });
     if (this.platform.is('cordova')) {
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
     }
   }
   ionViewWillLeave() {
-    //this.admob.removeBanner();
+    this.admob.removeBanner();
   }
 
 }

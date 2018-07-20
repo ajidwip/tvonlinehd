@@ -28,6 +28,7 @@ export class SchedulePage {
     public alertCtrl: AlertController,
     public platform: Platform,
     public navParam: NavParams,
+    public admob: AdMobPro,
     public toastCtrl: ToastController,
     public loadingCtrl: LoadingController) {
     this.loading = this.loadingCtrl.create({
@@ -38,7 +39,7 @@ export class SchedulePage {
       this.datecurrent = moment().format('YYYY-MM-DD');
       this.datetimecurrent = moment().format('YYYY-MM-DD HH:mm');
       this.channel = this.navParam.get('channel')
-      this.api.get("table/z_schedule_tv", { params: { limit: 1000, filter: "channel=" + "'" + this.channel + "'", sort: "date_start" + " ASC " } })
+      this.api.get("table/z_schedule_tv", { params: { limit: 1000, filter: "channel=" + "'" + this.channel + "' AND date=" + "'" + this.datecurrent + "'", sort: "date_start" + " ASC " } })
         .subscribe(val => {
           this.channels = val['data']
           let data = val['data'];
@@ -57,7 +58,16 @@ export class SchedulePage {
           var videoUrl = this.url[0].url;
           var options = {
             successCallback: function () {
-              console.log("Video was closed without error.");
+              var admobid = {
+                banner: 'ca-app-pub-7488223921090533/8319723789',
+                interstitial: 'ca-app-pub-7488223921090533/6830564057'
+              };
+          
+              this.admob.prepareInterstitial({
+                adId: admobid.interstitial,
+                isTesting: true,
+                autoShow: true
+              })
             },
             errorCallback: function (errMsg) {
               let toast = this.toastCtrl.create({
@@ -87,21 +97,24 @@ export class SchedulePage {
       });
   }
   ionViewDidEnter() {
-    /*var admobid = {
-      banner: 'ca-app-pub-7488223921090533/3868398990',
-      interstitial: 'ca-app-pub-7488223921090533/2330836488'
+    var admobid = {
+      banner: 'ca-app-pub-7488223921090533/8319723789',
+      interstitial: 'ca-app-pub-7488223921090533/6830564057'
     };
 
     this.admob.createBanner({
       adSize: 'SMART_BANNER',
       adId: admobid.banner,
-      isTesting: false,
+      isTesting: true,
       autoShow: true,
       position: this.admob.AD_POSITION.BOTTOM_CENTER,
-    });*/
+    });
     if (this.platform.is('cordova')) {
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
     }
+  }
+  ionViewWillLeave() {
+    this.admob.removeBanner();
   }
 
 }

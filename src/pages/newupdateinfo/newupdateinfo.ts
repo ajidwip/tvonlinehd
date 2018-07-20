@@ -30,6 +30,7 @@ export class NewupdateinfoPage {
     public platform: Platform,
     public navParam: NavParams,
     public toastCtrl: ToastController,
+    public admob: AdMobPro,
     public loadingCtrl: LoadingController) {
     this.loading = this.loadingCtrl.create({
       content: 'Loading...'
@@ -75,36 +76,99 @@ export class NewupdateinfoPage {
     });
   }
   goToPlay(channel) {
-    if (channel.plugin == '1') {
-      var videoUrl = channel.url;
-      var options = {
-        successCallback: function () {
-          console.log("Video was closed without error.");
-        },
-        errorCallback: function (errMsg) {
-          let toast = this.toastCtrl.create({
-            message: errMsg,
-            duration: 3000
-          });
-          toast.present();
-        },
-        orientation: 'landscape',
-        shouldAutoClose: true,  // true(default)/false
-        controls: false // true(default)/false. Used to hide controls on fullscreen
-      };
-      window.plugins.streamingMedia.playVideo(videoUrl, options);
+    if (channel.type == 'TV') {
+      this.api.get("table/z_channel", { params: { limit: 30, filter: "id=" + "'" + channel.id + "'" } })
+        .subscribe(val => {
+          let data = val['data']
+          if (channel.plugin == '1') {
+            var videoUrl = data[0].url;
+            var options = {
+              successCallback: function () {
+
+              },
+              errorCallback: function (errMsg) {
+                let toast = this.toastCtrl.create({
+                  message: errMsg,
+                  duration: 3000
+                });
+                toast.present();
+              },
+              orientation: 'landscape',
+              shouldAutoClose: true,  // true(default)/false
+              controls: false // true(default)/false. Used to hide controls on fullscreen
+            };
+            window.plugins.streamingMedia.playVideo(videoUrl, options);
+            var admobid = {
+              banner: 'ca-app-pub-7488223921090533/3900298328',
+              interstitial: 'ca-app-pub-7488223921090533/8769481623'
+            };
+
+            this.admob.prepareInterstitial({
+              adId: admobid.interstitial,
+              isTesting: true,
+              autoShow: true
+            })
+          }
+          else {
+            this.navCtrl.push('LivePage', {
+              url: data[0].url,
+              stream: channel.stream,
+              xml: channel.xml,
+              rotate: channel.orientation,
+              subsbody1: channel.subsbody_1,
+              subsbody2: channel.subsbody_2,
+              subshead1: channel.subshead_1,
+              subshead2: channel.subshead_2
+            })
+          }
+        });
     }
-    else {
-      this.navCtrl.push('LivePage', {
-        url: channel.url,
-        stream: channel.stream,
-        xml: channel.xml,
-        rotate: channel.orientation,
-        subsbody1: channel.subsbody_1,
-        subsbody2: channel.subsbody_2,
-        subshead1: channel.subshead_1,
-        subshead2: channel.subshead_2
-      })
+    else if (channel.type == 'STREAM') {
+      this.api.get("table/z_channel_stream", { params: { limit: 30, filter: "id=" + "'" + channel.id + "'" } })
+        .subscribe(val => {
+          let data = val['data']
+          if (channel.plugin == '1') {
+            var videoUrl = data[0].url;
+            var options = {
+              successCallback: function () {
+
+              },
+              errorCallback: function (errMsg) {
+                let toast = this.toastCtrl.create({
+                  message: errMsg,
+                  duration: 3000
+                });
+                toast.present();
+              },
+              orientation: 'landscape',
+              shouldAutoClose: true,  // true(default)/false
+              controls: false // true(default)/false. Used to hide controls on fullscreen
+            };
+            window.plugins.streamingMedia.playVideo(videoUrl, options);
+            var admobid = {
+              banner: 'ca-app-pub-7488223921090533/3900298328',
+              interstitial: 'ca-app-pub-7488223921090533/8769481623'
+            };
+
+            this.admob.prepareInterstitial({
+              adId: admobid.interstitial,
+              isTesting: true,
+              autoShow: true
+            })
+          }
+          else {
+            this.navCtrl.push('LivePage', {
+              url: data[0].url,
+              stream: channel.stream,
+              xml: channel.xml,
+              rotate: channel.orientation,
+              subsbody1: channel.subsbody_1,
+              subsbody2: channel.subsbody_2,
+              subshead1: channel.subshead_1,
+              subshead2: channel.subshead_2
+            })
+          }
+        });
     }
   }
   goToPlayAnime(channel) {
@@ -115,21 +179,24 @@ export class NewupdateinfoPage {
     })
   }
   ionViewDidEnter() {
-    /*var admobid = {
-      banner: 'ca-app-pub-7488223921090533/3868398990',
-      interstitial: 'ca-app-pub-7488223921090533/2330836488'
+    var admobid = {
+      banner: 'ca-app-pub-7488223921090533/8319723789',
+      interstitial: 'ca-app-pub-7488223921090533/6830564057'
     };
 
     this.admob.createBanner({
       adSize: 'SMART_BANNER',
       adId: admobid.banner,
-      isTesting: false,
+      isTesting: true,
       autoShow: true,
       position: this.admob.AD_POSITION.BOTTOM_CENTER,
-    });*/
+    });
     if (this.platform.is('cordova')) {
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
     }
+  }
+  ionViewWillLeave() {
+    this.admob.removeBanner();
   }
 
 }

@@ -164,7 +164,7 @@ export class LivePage {
 
     this.admob.prepareInterstitial({
       adId: admobid.interstitial,
-      isTesting: false,
+      isTesting: true,
       autoShow: true
     })*/
   }

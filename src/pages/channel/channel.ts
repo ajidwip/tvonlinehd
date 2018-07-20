@@ -62,6 +62,7 @@ export class ChannelPage {
         this.api.get("table/z_channel_live", { params: { limit: 1000, filter: "category=" + "'" + this.channelname + "' AND status='OPEN'" + " AND datefinish >=" + "'" + this.datetimecurrent + "'", sort: "datestart" + " ASC " } })
           .subscribe(val => {
             this.channeldetail = val['data']
+            this.loader.dismiss()
           });
       }
       else if (this.channelcategory == 'RADIO') {
@@ -179,7 +180,6 @@ export class ChannelPage {
         this.api.get("table/z_channel_live", { params: { limit: 30, offset: offset, filter: "category=" + "'" + this.channelname + "' AND status='OPEN'" + " AND datefinish >=" + "'" + this.datetimecurrent + "'", sort: "datestart" + " ASC " } })
           .subscribe(val => {
             let data = val['data'];
-            this.loader.dismiss();
             for (let i = 0; i < data.length; i++) {
               this.channeldetail.push(data[i]);
             }
@@ -223,24 +223,24 @@ export class ChannelPage {
   ionViewDidLoad() {
   }
   ionViewDidEnter() {
-    /*var admobid = {
-      banner: 'ca-app-pub-7488223921090533/3868398990',
-      interstitial: 'ca-app-pub-7488223921090533/2330836488'
+    var admobid = {
+      banner: 'ca-app-pub-7488223921090533/8319723789',
+      interstitial: 'ca-app-pub-7488223921090533/6830564057'
     };
- 
+
     this.admob.createBanner({
       adSize: 'SMART_BANNER',
       adId: admobid.banner,
-      isTesting: false,
+      isTesting: true,
       autoShow: true,
       position: this.admob.AD_POSITION.BOTTOM_CENTER,
-    });*/
+    });
     if (this.platform.is('cordova')) {
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
     }
   }
   ionViewWillLeave() {
-    //this.admob.removeBanner();
+    this.admob.removeBanner();
   }
   doInfinite(infiniteScroll) {
     if (this.channelcategory == 'TV') {
@@ -293,7 +293,7 @@ export class ChannelPage {
   }
   doPlay(channel) {
     this.channelstream = channel.stream
-    if (channel.type == 'STREAM' && channel.name == 'Anime') {
+    if ((channel.type == 'STREAM' && channel.name == 'Anime') || (channel.type == 'STREAM' && channel.name == 'Series')) {
       this.navCtrl.push('ChanneldetailPage', {
         anime: channel.title
       })
@@ -304,35 +304,71 @@ export class ChannelPage {
       this.id = channel.id
     }
     else if (channel.plugin == '1') {
-      var videoUrl = channel.url;
-      var options = {
-        successCallback: function () {
-          console.log("Video was closed without error.");
-        },
-        errorCallback: function (errMsg) {
-          let toast = this.toastCtrl.create({
-            message: errMsg,
-            duration: 3000
-          });
-          toast.present();
-        },
-        orientation: 'landscape',
-        shouldAutoClose: true,  // true(default)/false
-        controls: false // true(default)/false. Used to hide controls on fullscreen
-      };
-      window.plugins.streamingMedia.playVideo(videoUrl, options);
+      this.api.get("table/z_channel", { params: { limit: 30, filter: "id=" + "'" + channel.id + "'" } })
+        .subscribe(val => {
+          let data = val['data']
+          var videoUrl = data[0].url;
+          var options = {
+            successCallback: function () {
+
+            },
+            errorCallback: function (errMsg) {
+              let toast = this.toastCtrl.create({
+                message: errMsg,
+                duration: 3000
+              });
+              toast.present();
+            },
+            orientation: 'landscape',
+            shouldAutoClose: true,  // true(default)/false
+            controls: false // true(default)/false. Used to hide controls on fullscreen
+          };
+          window.plugins.streamingMedia.playVideo(videoUrl, options);
+          var admobid = {
+            banner: 'ca-app-pub-7488223921090533/8319723789',
+            interstitial: 'ca-app-pub-7488223921090533/6830564057'
+          };
+
+          this.admob.prepareInterstitial({
+            adId: admobid.interstitial,
+            isTesting: true,
+            autoShow: true
+          })
+        });
     }
     else {
-      this.navCtrl.push('LivePage', {
-        url: channel.url,
-        stream: channel.stream,
-        xml: channel.xml,
-        rotate: channel.orientation,
-        subsbody1: channel.subsbody_1,
-        subsbody2: channel.subsbody_2,
-        subshead1: channel.subshead_1,
-        subshead2: channel.subshead_2
-      })
+      if (channel.type == 'TV') {
+        this.api.get("table/z_channel", { params: { limit: 30, filter: "id=" + "'" + channel.id + "'" } })
+          .subscribe(val => {
+            let data = val['data']
+            this.navCtrl.push('LivePage', {
+              url: data[0].url,
+              stream: channel.stream,
+              xml: channel.xml,
+              rotate: channel.orientation,
+              subsbody1: channel.subsbody_1,
+              subsbody2: channel.subsbody_2,
+              subshead1: channel.subshead_1,
+              subshead2: channel.subshead_2
+            })
+          });
+      }
+      else if (channel.type == 'STREAM') {
+        this.api.get("table/z_channel_stream", { params: { limit: 30, filter: "id=" + "'" + channel.id + "'" } })
+          .subscribe(val => {
+            let data = val['data']
+            this.navCtrl.push('LivePage', {
+              url: data[0].url,
+              stream: channel.stream,
+              xml: channel.xml,
+              rotate: channel.orientation,
+              subsbody1: channel.subsbody_1,
+              subsbody2: channel.subsbody_2,
+              subshead1: channel.subshead_1,
+              subshead2: channel.subshead_2
+            })
+          });
+      }
     }
   }
   /*doPlayPlayer(channel) {
@@ -370,38 +406,57 @@ export class ChannelPage {
     }
   }*/
   doPlayLive(channeld) {
-    if (channeld.url && channeld.plugin != '1') {
-      this.navCtrl.push('LivePage', {
-        url: channeld.url,
-        stream: channeld.stream
-      })
-    }
-    else if (channeld.url && channeld.plugin == '1') {
-      var videoUrl = channeld.url;
-      var options = {
-        successCallback: function () {
-          console.log("Video was closed without error.");
-        },
-        errorCallback: function (errMsg) {
-          let toast = this.toastCtrl.create({
-            message: errMsg,
-            duration: 3000
+    this.api.get("table/z_channel_live", { params: { limit: 30, filter: "id=" + "'" + channeld.id + "'" } })
+      .subscribe(val => {
+        let data = val['data'];
+        if (data[0].url && channeld.plugin != '1') {
+          this.navCtrl.push('LivePage', {
+            url: data[0].url,
+            stream: channeld.stream,
+            xml: channeld.xml,
+            rotate: channeld.orientation,
+            subsbody1: channeld.subsbody_1,
+            subsbody2: channeld.subsbody_2,
+            subshead1: channeld.subshead_1,
+            subshead2: channeld.subshead_2
+          })
+        }
+        else if (data[0].url && channeld.plugin == '1') {
+          var videoUrl = data[0].url;
+          var options = {
+            successCallback: function () {
+              var admobid = {
+                banner: 'ca-app-pub-7488223921090533/8319723789',
+                interstitial: 'ca-app-pub-7488223921090533/6830564057'
+              };
+
+              this.admob.prepareInterstitial({
+                adId: admobid.interstitial,
+                isTesting: true,
+                autoShow: true
+              })
+            },
+            errorCallback: function (errMsg) {
+              let toast = this.toastCtrl.create({
+                message: errMsg,
+                duration: 3000
+              });
+              toast.present();
+            },
+            orientation: 'landscape',
+            shouldAutoClose: true,  // true(default)/false
+            controls: false // true(default)/false. Used to hide controls on fullscreen
+          };
+          window.plugins.streamingMedia.playVideo(videoUrl, options);
+        }
+        else {
+          let alert = this.alertCtrl.create({
+            subTitle: 'Pertandingan belum dimulai',
+            buttons: ['OK']
           });
-          toast.present();
-        },
-        orientation: 'landscape',
-        shouldAutoClose: true,  // true(default)/false
-        controls: false // true(default)/false. Used to hide controls on fullscreen
-      };
-      window.plugins.streamingMedia.playVideo(videoUrl, options);
-    }
-    else {
-      let alert = this.alertCtrl.create({
-        subTitle: 'Pertandingan belum dimulai',
-        buttons: ['OK']
+          alert.present();
+        }
       });
-      alert.present();
-    }
   }
   getSearch(ev: any) {
     // set val to the value of the searchbar
