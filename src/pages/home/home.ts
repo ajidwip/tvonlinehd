@@ -9,6 +9,7 @@ import { HttpHeaders } from "@angular/common/http";
 import { AppVersion } from '@ionic-native/app-version';
 
 // declare var Swiper: any;
+declare var window: any;
 
 @Component({
   selector: 'page-home',
@@ -23,6 +24,17 @@ export class HomePage {
   public nextno: any;
   public packagename: any;
   public appinfo = [];
+  public listchannellive = [];
+  public searchlive = [];
+  public listchannelnotlive = [];
+  public listchannelnotlivestream = [];
+  public searchnotlive = [];
+  public listchannellivedetail = [];
+  public channelstream: any;
+  public radiostream: any;
+  public url: any;
+  public id: any;
+
   constructor(
     public navCtrl: NavController,
     private screenOrientation: ScreenOrientation,
@@ -153,5 +165,178 @@ export class HomePage {
     }, err => {
 
     });
+  }
+  getSearch(ev: any) {
+    let value = ev.target.value;
+
+    if (value && value.trim() != '') {
+      this.api.get("table/z_channel", { params: { limit: 500, filter: "status = 'OPEN'" } })
+        .subscribe(val => {
+          this.listchannelnotlive = val['data']
+          this.searchnotlive = this.listchannelnotlive
+          this.listchannelnotlive = this.searchnotlive.filter(notlive => {
+            return notlive.title.toLowerCase().indexOf(value.toLowerCase()) > -1;
+          })
+        });
+    } else {
+      this.listchannelnotlive = [];
+    }
+    if (value && value.trim() != '') {
+      this.api.get("table/z_channel_stream", { params: { limit: 500, filter: "status = 'OPEN'" } })
+        .subscribe(val => {
+          this.listchannelnotlivestream = val['data']
+          this.searchnotlive = this.listchannelnotlivestream
+          this.listchannelnotlivestream = this.searchnotlive.filter(notlive => {
+            return notlive.title.toLowerCase().indexOf(value.toLowerCase()) > -1;
+          })
+        });
+    } else {
+      this.listchannelnotlivestream = [];
+    }
+    if (value && value.trim() != '') {
+      this.api.get("table/z_channel_live", { params: { limit: 500, filter: "status = 'OPEN'" } })
+        .subscribe(val => {
+          this.listchannellive = val['data']
+          this.searchlive = this.listchannellive
+          this.listchannellive = this.searchlive.filter(live => {
+            return live.title.toLowerCase().indexOf(value.toLowerCase()) > -1;
+          })
+        });
+    } else {
+      this.listchannellive = [];
+    }
+  }
+  doPlay(notlive) {
+    this.channelstream = notlive.stream
+    if ((notlive.type == 'STREAM' && notlive.name == 'Anime') || (notlive.type == 'STREAM' && notlive.name == 'Film Series')) {
+      this.navCtrl.push('ChanneldetailPage', {
+        anime: notlive.title
+      })
+    }
+    else if (notlive.type == 'RADIO') {
+      this.radiostream = this.radiostream ? false : true;
+      this.url = notlive.url
+      this.id = notlive.id
+    }
+    else if (notlive.plugin == '1') {
+      this.api.get("table/z_channel", { params: { limit: 30, filter: "id=" + "'" + notlive.id + "'" } })
+        .subscribe(val => {
+          let data = val['data']
+          var videoUrl = data[0].url;
+          var options = {
+            successCallback: function () {
+
+            },
+            errorCallback: function (errMsg) {
+              let toast = this.toastCtrl.create({
+                message: errMsg,
+                duration: 3000
+              });
+              toast.present();
+            },
+            orientation: 'landscape',
+            shouldAutoClose: true,  // true(default)/false
+            controls: false // true(default)/false. Used to hide controls on fullscreen
+          };
+          window.plugins.streamingMedia.playVideo(videoUrl, options);
+          var admobid = {
+            banner: 'ca-app-pub-7488223921090533/8319723789',
+            interstitial: 'ca-app-pub-7488223921090533/6830564057'
+          };
+
+          this.admob.prepareInterstitial({
+            adId: admobid.interstitial,
+            isTesting: true,
+            autoShow: true
+          })
+        });
+    }
+    else {
+      if (notlive.type == 'TV') {
+        this.api.get("table/z_channel", { params: { limit: 30, filter: "id=" + "'" + notlive.id + "'" } })
+          .subscribe(val => {
+            let data = val['data']
+            this.navCtrl.push('LivePage', {
+              url: data[0].url,
+              stream: notlive.stream,
+              xml: notlive.xml,
+              rotate: notlive.orientation,
+              subsbody1: notlive.subsbody_1,
+              subsbody2: notlive.subsbody_2,
+              subshead1: notlive.subshead_1,
+              subshead2: notlive.subshead_2
+            })
+          });
+      }
+      else if (notlive.type == 'STREAM') {
+        this.api.get("table/z_channel_stream", { params: { limit: 30, filter: "id=" + "'" + notlive.id + "'" } })
+          .subscribe(val => {
+            let data = val['data']
+            this.navCtrl.push('LivePage', {
+              url: data[0].url,
+              stream: notlive.stream,
+              xml: notlive.xml,
+              rotate: notlive.orientation,
+              subsbody1: notlive.subsbody_1,
+              subsbody2: notlive.subsbody_2,
+              subshead1: notlive.subshead_1,
+              subshead2: notlive.subshead_2
+            })
+          });
+      }
+    }
+  }
+  doPlayLive(livedetail) {
+    this.api.get("table/z_channel_live", { params: { limit: 30, filter: "id=" + "'" + livedetail.id + "'" } })
+      .subscribe(val => {
+        let data = val['data'];
+        if (data[0].url && livedetail.plugin != '1') {
+          this.navCtrl.push('LivePage', {
+            url: data[0].url,
+            stream: livedetail.stream,
+            xml: livedetail.xml,
+            rotate: livedetail.orientation,
+            subsbody1: livedetail.subsbody_1,
+            subsbody2: livedetail.subsbody_2,
+            subshead1: livedetail.subshead_1,
+            subshead2: livedetail.subshead_2
+          })
+        }
+        else if (data[0].url && livedetail.plugin == '1') {
+          var videoUrl = data[0].url;
+          var options = {
+            successCallback: function () {
+              var admobid = {
+                banner: 'ca-app-pub-7488223921090533/8319723789',
+                interstitial: 'ca-app-pub-7488223921090533/6830564057'
+              };
+
+              this.admob.prepareInterstitial({
+                adId: admobid.interstitial,
+                isTesting: true,
+                autoShow: true
+              })
+            },
+            errorCallback: function (errMsg) {
+              let toast = this.toastCtrl.create({
+                message: errMsg,
+                duration: 3000
+              });
+              toast.present();
+            },
+            orientation: 'landscape',
+            shouldAutoClose: true,  // true(default)/false
+            controls: false // true(default)/false. Used to hide controls on fullscreen
+          };
+          window.plugins.streamingMedia.playVideo(videoUrl, options);
+        }
+        else {
+          let alert = this.alertCtrl.create({
+            subTitle: 'Pertandingan belum dimulai',
+            buttons: ['OK']
+          });
+          alert.present();
+        }
+      });
   }
 }

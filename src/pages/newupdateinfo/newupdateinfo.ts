@@ -99,8 +99,8 @@ export class NewupdateinfoPage {
             };
             window.plugins.streamingMedia.playVideo(videoUrl, options);
             var admobid = {
-              banner: 'ca-app-pub-7488223921090533/3900298328',
-              interstitial: 'ca-app-pub-7488223921090533/8769481623'
+              banner: 'ca-app-pub-7488223921090533/8319723789',
+              interstitial: 'ca-app-pub-7488223921090533/6830564057'
             };
 
             this.admob.prepareInterstitial({
@@ -146,8 +146,8 @@ export class NewupdateinfoPage {
             };
             window.plugins.streamingMedia.playVideo(videoUrl, options);
             var admobid = {
-              banner: 'ca-app-pub-7488223921090533/3900298328',
-              interstitial: 'ca-app-pub-7488223921090533/8769481623'
+              banner: 'ca-app-pub-7488223921090533/8319723789',
+              interstitial: 'ca-app-pub-7488223921090533/6830564057'
             };
 
             this.admob.prepareInterstitial({

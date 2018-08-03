@@ -2,7 +2,7 @@
   <ion-toolbar color="bluewhite">
     <div style="text-align:right;height:0px;margin-top:-10px;">
       <button ion-button clear color="light" style="z-index: 999;" (click)="doComment()">
-        <ion-icon name="ios-alert-outline" style="font-size: 30px;"></ion-icon>
+        <ion-icon name="md-search" style="font-size: 30px;"></ion-icon>
       </button>
     </div>
     <button ion-button menuToggle left>
@@ -39,28 +39,69 @@
 </ion-content>
 
 <div id="comment" class="comment" style="background:#fff;">
-  <ion-content padding>
-    <div style="text-align:right;height:15px;">
+  <ion-content>
+    <div style="text-align:right;z-index: 999;background: #1ba0e2;">
       <button ion-button clear color="dark" (click)="doCloseComment()">
-        <ion-icon name="md-close" style="font-size:25px;"></ion-icon>
+        <ion-icon name="md-close" style="font-size:25px;color:#ffffff;"></ion-icon>
       </button>
     </div>
-    <div style="text-align:center;margin-bottom:20px;">
-      <h6>SARAN & KOMENTAR</h6>
+    <div style="text-align:left;margin-top:-50px;color:#ffffff;padding-left:5px;">
+      <h6>SEARCH</h6>
     </div>
-    <form [formGroup]="myForm">
-      <ion-item style="background:transparent;color:rgb(0, 0, 0);padding-right:12px;">
-        <ion-label stacked>ISI KOMENTAR</ion-label>
-        <ion-textarea formControlName="comment"></ion-textarea>
-      </ion-item>
-    </form>
-    <p padding style="color:#aaaaaa;">Harap isi komentar, saran ataupun keluhan anda tentang aplikasi ini, komentar dan saran kalian sangat membantu developer
-      untuk mengembangkan aplikasi ini dan jangan lupa untuk memberikan rate dan komentar di Google PLAYSTORE, Terima kasih
-      banyak.
-    </p>
-    <ion-buttons padding>
-      <button ion-button color="primary" block outline style="height:40px;" [disabled]="!myForm.valid" (click)="doPostComment()">SUBMIT</button>
-      <button ion-button color="primary" block outline style="height:40px;" (click)="doGoToPlaystore()">GO TO PLAYSTORE</button>
-    </ion-buttons>
+    <ion-searchbar padding style="margin-left:-10px;padding:0px;width:105%;" (ionInput)="getSearch($event)" placeholder="TV, Film, Anime, Live Sports"></ion-searchbar>
+    <ion-grid>
+      <ion-row>
+        <ion-item item-start no-lines text-wrap style="background: #fafafa;border:1px solid;border-color:#dedede;" *ngFor="let notlive of listchannelnotlive"
+          col-12>
+          <h4 style="color:#666666;font-weight: bold;">{{notlive.title}}</h4>
+          <button (click)="doPlay(notlive)" ion-button clear *ngIf="(channelcategory =='STREAM' && channelname =='Anime') || (channelcategory =='STREAM' && channelname =='Film Series')"
+            item-end>
+            <i style="font-size: 15px;" class="fas fa-chevron-right"></i>
+          </button>
+          <button (click)="doPlay(notlive)" ion-button clear *ngIf="(channelname !='Anime' && channelname !='Film Series') && notlive.stream != '1'"
+            item-end>
+            <i *ngIf="!radiostream || notlive.id != id" style="font-size: 15px;" class="fas fa-play"></i>
+            <i *ngIf="radiostream && notlive.id == id" style="font-size: 15px;" class="fas fa-stop"></i>
+          </button>
+          <audio *ngIf="radiostream && notlive.id == id" controls autoplay style="width: 100%;">
+            <source src="{{url}}" type="audio/mpeg">
+          </audio>
+        </ion-item>
+      </ion-row>
+    </ion-grid>
+    <ion-grid>
+      <ion-row>
+        <ion-item item-start no-lines text-wrap style="background: #fafafa;border:1px solid;border-color:#dedede;" *ngFor="let notlive of listchannelnotlivestream"
+          col-12>
+          <h4 style="color:#666666;font-weight: bold;">{{notlive.title}}</h4>
+          <button (click)="doPlay(notlive)" ion-button clear *ngIf="(notlive.type =='STREAM' && notlive.name =='Anime') || (notlive.type =='STREAM' && notlive.name =='Film Series')"
+            item-end>
+            <i style="font-size: 15px;" class="fas fa-chevron-right"></i>
+          </button>
+          <button (click)="doPlay(notlive)" ion-button clear *ngIf="(notlive.name !='Anime' && notlive.name != 'Film Series')"
+            item-end>
+            <i *ngIf="!radiostream || notlive.id != id" style="font-size: 15px;" class="fas fa-play"></i>
+            <i *ngIf="radiostream && notlive.id == id" style="font-size: 15px;" class="fas fa-stop"></i>
+          </button>
+          <audio *ngIf="radiostream && notlive.id == id" controls autoplay style="width: 100%;">
+            <source src="{{url}}" type="audio/mpeg">
+          </audio>
+        </ion-item>
+      </ion-row>
+    </ion-grid>
+    <ion-grid>
+      <div *ngFor="let live of listchannellive">
+        <ion-row style="background: #7a7a7a;color:#ffffff;">
+          <ion-col padding col-12>{{live.date | date:'EEEE, dd/MM/yyyy'}}</ion-col>
+        </ion-row>
+        <div *ngFor="let livedetail of listchannellive">
+          <ion-row *ngIf="livedetail.date == live.date" style="border-bottom:1px solid;border-color:#7a7a7a;background: #ffffff;" (click)="doPlayLive(livedetail)">
+            <ion-col *ngIf="!livedetail.url" padding col-4 style="text-align:left;">{{livedetail.datestart | date:'HH:mm'}} WIB</ion-col>
+            <ion-col *ngIf="livedetail.url" padding col-4 style="text-align:left;color:red;font-weight: bold;">LIVE</ion-col>
+            <ion-col padding col-8 style="text-align:left;">{{livedetail.title}}</ion-col>
+          </ion-row>
+        </div>
+      </div>
+    </ion-grid>
   </ion-content>
 </div>

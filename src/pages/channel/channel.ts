@@ -293,7 +293,7 @@ export class ChannelPage {
   }
   doPlay(channel) {
     this.channelstream = channel.stream
-    if ((channel.type == 'STREAM' && channel.name == 'Anime') || (channel.type == 'STREAM' && channel.name == 'Series')) {
+    if ((channel.type == 'STREAM' && channel.name == 'Anime') || (channel.type == 'STREAM' && channel.name == 'Film Series')) {
       this.navCtrl.push('ChanneldetailPage', {
         anime: channel.title
       })
