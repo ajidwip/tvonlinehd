@@ -100,13 +100,19 @@ export class LivePage {
                   rtmp: {
                     bufferlength: 3
                   },
+                  qualityLabels: {
+                    "1024":"HD","512":"High","256":"Medium","128":"Low"
+                  },
                   fallback: true,
                   width: "100%",
                   autostart: "true",
                   androidhls: true,
                   startparam: "start",
                   aspectratio: "16:9",
-                  stretching: "exactfit"
+                  stretching: "exactfit",
+                  nextupoffset: -10,
+                  playbackRateControls: true,
+                  controls: true
                 });
 
               }

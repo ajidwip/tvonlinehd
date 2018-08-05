@@ -236,7 +236,7 @@ export class HomePage {
             },
             orientation: 'landscape',
             shouldAutoClose: true,  // true(default)/false
-            controls: false // true(default)/false. Used to hide controls on fullscreen
+            controls: notlive.controls // true(default)/false. Used to hide controls on fullscreen
           };
           window.plugins.streamingMedia.playVideo(videoUrl, options);
           var admobid = {
@@ -326,7 +326,7 @@ export class HomePage {
             },
             orientation: 'landscape',
             shouldAutoClose: true,  // true(default)/false
-            controls: false // true(default)/false. Used to hide controls on fullscreen
+            controls: livedetail.controls // true(default)/false. Used to hide controls on fullscreen
           };
           window.plugins.streamingMedia.playVideo(videoUrl, options);
         }

@@ -68,7 +68,7 @@ export class SchedulelivePage {
             },
             orientation: 'landscape',
             shouldAutoClose: true,  // true(default)/false
-            controls: false // true(default)/false. Used to hide controls on fullscreen
+            controls: channel.controls // true(default)/false. Used to hide controls on fullscreen
           };
           window.plugins.streamingMedia.playVideo(videoUrl, options);
           var admobid = {
