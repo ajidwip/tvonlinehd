@@ -4,6 +4,7 @@ import { ApiProvider } from '../../providers/api/api';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { AdMobPro } from '@ionic-native/admob-pro';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen';
+import { AppVersion } from '@ionic-native/app-version';
 
 @IonicPage()
 @Component({
@@ -15,6 +16,8 @@ export class ChanneldetailPage {
   public channeldetail = [];
   halaman = 0;
   public loader: any;
+  public packagename: any;
+  public ads: any;
 
   constructor(
     public navCtrl: NavController,
@@ -24,10 +27,18 @@ export class ChanneldetailPage {
     public admob: AdMobPro,
     public loadingCtrl: LoadingController,
     private androidFullScreen: AndroidFullScreen,
+    public appVersion: AppVersion,
     public api: ApiProvider) {
+    this.appVersion.getPackageName().then((name) => {
+      this.packagename = name;
+      this.api.get("table/z_admob", { params: { limit: 100, filter: "appid=" + "'" + this.packagename + "' AND status='OPEN'" } })
+        .subscribe(val => {
+          this.ads = val['data']
+        });
+    });
     this.anime = this.navParams.get('anime')
     this.loader = this.loadingCtrl.create({
-      
+
     });
     this.loader.present().then(() => {
       this.doGetChannelDetail();
@@ -79,17 +90,17 @@ export class ChanneldetailPage {
   }
   ionViewDidEnter() {
     this.androidFullScreen.isImmersiveModeSupported()
-    .then(() => this.androidFullScreen.showSystemUI())
-    .catch(err => console.log(err));
+      .then(() => this.androidFullScreen.showSystemUI())
+      .catch(err => console.log(err));
     var admobid = {
-      banner: 'ca-app-pub-7488223921090533/8319723789',
-      interstitial: 'ca-app-pub-7488223921090533/6830564057'
+      banner: this.ads[0].ads_banner,
+      interstitial: this.ads[0].ads_interstitial
     };
- 
+
     this.admob.createBanner({
       adSize: 'SMART_BANNER',
       adId: admobid.banner,
-      isTesting: true,
+      isTesting: this.ads[0].testing,
       autoShow: true,
       position: this.admob.AD_POSITION.BOTTOM_CENTER,
     });

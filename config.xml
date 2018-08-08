@@ -12,6 +12,7 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <allow-navigation href="https://*youtube.com/*" />
+    <preference name="ShowSplashScreenSpinner" value="false" />
     <preference name="fullscreen" value="false" />
     <preference name="loadUrlTimeoutValue" value="700000" />
     <preference name="ScrollEnabled" value="false" />
@@ -89,5 +90,7 @@
     <plugin name="cordova-plugin-app-version" spec="^0.1.9" />
     <plugin name="cordova-plugin-streaming-media" spec="https://github.com/nchutchind/cordova-plugin-streaming-media" />
     <plugin name="cordova-plugin-fullscreen" spec="^1.2.0" />
+    <plugin name="cordova-plugin-exoplayer" spec="^2.5.4" />
+    <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
     <engine name="android" spec="6.4.0" />
 </widget>

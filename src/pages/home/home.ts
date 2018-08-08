@@ -39,6 +39,7 @@ export class HomePage {
   public channelslive = [];
   public channellistall = [];
   public datashow: boolean = false;
+  public ads: any;
 
   constructor(
     public navCtrl: NavController,
@@ -51,6 +52,13 @@ export class HomePage {
     public appVersion: AppVersion,
     private statusBar: StatusBar,
     private admob: AdMobPro) {
+    this.appVersion.getPackageName().then((name) => {
+      this.packagename = name;
+      this.api.get("table/z_admob", { params: { limit: 100, filter: "appid=" + "'" + this.packagename + "' AND status='OPEN'" } })
+        .subscribe(val => {
+          this.ads = val['data']
+        });
+    });
     this.myForm = fb.group({
       comment: ['', Validators.compose([Validators.required])],
     })
@@ -75,7 +83,7 @@ export class HomePage {
     this.admob.createBanner({
       adSize: 'SMART_BANNER',
       adId: admobid.banner,
-      isTesting: true,
+      isTesting: this.ads[0].testing,
       autoShow: true,
       position: this.admob.AD_POSITION.BOTTOM_CENTER,
     });*/
@@ -276,13 +284,13 @@ export class HomePage {
           };
           window.plugins.streamingMedia.playVideo(videoUrl, options);
           var admobid = {
-            banner: 'ca-app-pub-7488223921090533/8319723789',
-            interstitial: 'ca-app-pub-7488223921090533/6830564057'
+            banner: this.ads[0].ads_banner,
+            interstitial: this.ads[0].ads_interstitial
           };
 
           this.admob.prepareInterstitial({
             adId: admobid.interstitial,
-            isTesting: true,
+            isTesting: this.ads[0].testing,
             autoShow: true
           })
         });
@@ -343,13 +351,13 @@ export class HomePage {
           var options = {
             successCallback: function () {
               var admobid = {
-                banner: 'ca-app-pub-7488223921090533/8319723789',
-                interstitial: 'ca-app-pub-7488223921090533/6830564057'
+                banner: this.ads[0].ads_banner,
+                interstitial: this.ads[0].ads_interstitial
               };
 
               this.admob.prepareInterstitial({
                 adId: admobid.interstitial,
-                isTesting: true,
+                isTesting: this.ads[0].testing,
                 autoShow: true
               })
             },

@@ -3,6 +3,9 @@ import { LoadingController, IonicPage, NavController, NavParams, Platform, Alert
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { AdMobPro } from '@ionic-native/admob-pro';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { AppVersion } from '@ionic-native/app-version';
+import { ApiProvider } from '../../providers/api/api';
 
 declare var Clappr: any;
 declare var LevelSelector: any;
@@ -26,6 +29,9 @@ export class LivePage {
   public subsbody2: any;
   public subshead1: any;
   public subshead2: any;
+  public packagename: any;
+  public ads: any;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -34,7 +40,17 @@ export class LivePage {
     public loadingCtrl: LoadingController,
     private admob: AdMobPro,
     private androidFullScreen: AndroidFullScreen,
+    public api: ApiProvider,
+    public appVersion: AppVersion,
+    private iab: InAppBrowser,
     public platform: Platform) {
+    this.appVersion.getPackageName().then((name) => {
+      this.packagename = name;
+      this.api.get("table/z_admob", { params: { limit: 100, filter: "appid=" + "'" + this.packagename + "' AND status='OPEN'" } })
+        .subscribe(val => {
+          this.ads = val['data']
+        });
+    });
     /*this.platform.registerBackButtonAction(() => {
       this.navCtrl.pop()
     });*/
@@ -150,6 +166,9 @@ export class LivePage {
                 video.qualityPickerPlugin();
               }
             }
+            else if (this.stream == '1') {
+              const browser = this.iab.create(this.url, '_blank', 'location=no');
+            }
           });
         })
       }
@@ -157,6 +176,14 @@ export class LivePage {
     else {
       this.stream = this.navParams.get('stream');
       this.url = this.navParams.get('url');
+      this.xml = this.navParams.get('xml');
+      if (this.stream == '1') {
+        const browser = this.iab.create(this.url, '_blank', 'location=no');
+      }
+      else {
+        this.stream = this.navParams.get('stream');
+        this.url = this.navParams.get('url');
+      }
     }
   }
   ngAfterViewInit() {
@@ -169,13 +196,13 @@ export class LivePage {
       .then(() => this.androidFullScreen.immersiveMode())
       .catch(err => console.log(err));
     var admobid = {
-      banner: 'ca-app-pub-7488223921090533/8319723789',
-      interstitial: 'ca-app-pub-7488223921090533/6830564057'
+      banner: this.ads[0].ads_banner,
+      interstitial: this.ads[0].ads_interstitial
     };
 
     this.admob.prepareInterstitial({
       adId: admobid.interstitial,
-      isTesting: true,
+      isTesting: this.ads[0].testing,
       autoShow: true
     })
   }

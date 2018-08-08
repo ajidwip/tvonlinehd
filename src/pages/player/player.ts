@@ -3,6 +3,9 @@ import { LoadingController, IonicPage, NavController, NavParams, Platform } from
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { AdMobPro } from '@ionic-native/admob-pro';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { AppVersion } from '@ionic-native/app-version';
+import { ApiProvider } from '../../providers/api/api';
 
 declare var videojs: any;
 
@@ -18,6 +21,9 @@ export class PlayerPage {
   public loading: any;
   public width: any;
   public height: any;
+  public packagename: any;
+  public ads: any;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -25,10 +31,20 @@ export class PlayerPage {
     public loadingCtrl: LoadingController,
     private admob: AdMobPro,
     private androidFullScreen: AndroidFullScreen,
+    private iab: InAppBrowser,
+    public api: ApiProvider,
+    public appVersion: AppVersion,
     public platform: Platform) {
+    this.appVersion.getPackageName().then((name) => {
+      this.packagename = name;
+      this.api.get("table/z_admob", { params: { limit: 100, filter: "appid=" + "'" + this.packagename + "' AND status='OPEN'" } })
+        .subscribe(val => {
+          this.ads = val['data']
+        });
+    });
     this.loading = this.loadingCtrl.create({
       // cssClass: 'transparent',
-      
+
     });
     if (this.platform.is('cordova')) {
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE).then(() => {
@@ -40,8 +56,11 @@ export class PlayerPage {
         this.loading.present().then(() => {
           if (this.stream == '0') {
             let playerElement = document.getElementById("video-player");
-            var video = videojs(playerElement); 
-            video.qualityPickerPlugin(); 
+            var video = videojs(playerElement);
+            video.qualityPickerPlugin();
+          }
+          else if (this.stream == '1') {
+            const browser = this.iab.create(this.url, '_blank', 'location=no');
           }
         });
       })
@@ -54,16 +73,16 @@ export class PlayerPage {
   }
   ionViewDidEnter() {
     this.androidFullScreen.isImmersiveModeSupported()
-    .then(() => this.androidFullScreen.immersiveMode())
-    .catch(err => console.log(err));
+      .then(() => this.androidFullScreen.immersiveMode())
+      .catch(err => console.log(err));
     var admobid = {
-      banner: 'ca-app-pub-7488223921090533/8319723789',
-      interstitial: 'ca-app-pub-7488223921090533/6830564057'
+      banner: this.ads[0].ads_banner,
+      interstitial: this.ads[0].ads_interstitial
     };
 
     this.admob.prepareInterstitial({
       adId: admobid.interstitial,
-      isTesting: true,
+      isTesting: this.ads[0].testing,
       autoShow: true
     })
   }

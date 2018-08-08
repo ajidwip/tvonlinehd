@@ -1,9 +1,9 @@
 <ion-content>
-  <video *ngIf="stream && !xml" id="video-player" poster="../../../resources/splash.png" style="width:100%;height: 100%;" class="embed-responsive-item video-js vjs-default-skin vjs-big-play-centered"
+  <video *ngIf="stream == '0' && !xml" id="video-player" poster="../../../resources/splash.png" style="width:100%;height: 100%;" class="embed-responsive-item video-js vjs-default-skin vjs-big-play-centered"
     autoplay controls preload="auto">
     <source [src]="url" type="application/x-mpegURL"> </video>
-  <div *ngIf="((stream && xml == '2') || (stream && xml == '1'))" style="margin:auto;" id="player-wrapper"></div>
-  <div *ngIf="stream && xml == '3'" id="streaming"></div>
+  <div *ngIf="((stream == '0' && xml == '2') || (stream == '0' && xml == '1'))" style="margin:auto;" id="player-wrapper"></div>
+  <div *ngIf="stream == '0' && xml == '3'" id="streaming"></div>
   <iframe *ngIf="!stream" [src]="url | safe:'resourceUrl'" allowfullscreen="allowfullscreen" allowtransparency="true" frameborder="0"
     height="100%" width="100%"></iframe>
 </ion-content>

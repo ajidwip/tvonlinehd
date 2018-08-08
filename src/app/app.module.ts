@@ -12,6 +12,7 @@ import { HomePage } from '../pages/home/home';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { AppVersion } from '@ionic-native/app-version';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { AndroidFullScreen } from '@ionic-native/android-full-screen';
     AdMobPro,
     ScreenOrientation,
     AppVersion,
-    AndroidFullScreen
+    AndroidFullScreen,
+    InAppBrowser
   ]
 })
 export class AppModule {}

@@ -5,6 +5,7 @@ import { ApiProvider } from '../../providers/api/api';
 import { AdMobPro } from '@ionic-native/admob-pro';
 import moment from 'moment';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen';
+import { AppVersion } from '@ionic-native/app-version';
 
 declare var window: any;
 declare var videojs: any;
@@ -30,6 +31,8 @@ export class ChannelPage {
   public title: any;
   public showsearch: boolean = false;
   halaman = 0;
+  public packagename: any;
+  public ads: any;
 
   constructor(
     public navCtrl: NavController,
@@ -38,12 +41,20 @@ export class ChannelPage {
     public alertCtrl: AlertController,
     public platform: Platform,
     public navParam: NavParams,
+    public appVersion: AppVersion,
     public toastCtrl: ToastController,
     public loadingCtrl: LoadingController,
     private androidFullScreen: AndroidFullScreen,
     private admob: AdMobPro) {
+    this.appVersion.getPackageName().then((name) => {
+      this.packagename = name;
+      this.api.get("table/z_admob", { params: { limit: 100, filter: "appid=" + "'" + this.packagename + "' AND status='OPEN'" } })
+        .subscribe(val => {
+          this.ads = val['data']
+        });
+    });
     this.loader = this.loadingCtrl.create({
-      
+
     });
     this.loader.present().then(() => {
       this.datecurrent = moment().format('YYYY-MM-DD');
@@ -235,17 +246,17 @@ export class ChannelPage {
   }
   ionViewDidEnter() {
     this.androidFullScreen.isImmersiveModeSupported()
-    .then(() => this.androidFullScreen.showSystemUI())
-    .catch(err => console.log(err));
+      .then(() => this.androidFullScreen.showSystemUI())
+      .catch(err => console.log(err));
     var admobid = {
-      banner: 'ca-app-pub-7488223921090533/8319723789',
-      interstitial: 'ca-app-pub-7488223921090533/6830564057'
+      banner: this.ads[0].ads_banner,
+      interstitial: this.ads[0].ads_interstitial
     };
 
     this.admob.createBanner({
       adSize: 'SMART_BANNER',
       adId: admobid.banner,
-      isTesting: true,
+      isTesting: this.ads[0].testing,
       autoShow: true,
       position: this.admob.AD_POSITION.BOTTOM_CENTER,
     });
@@ -339,15 +350,39 @@ export class ChannelPage {
           };
           window.plugins.streamingMedia.playVideo(videoUrl, options);
           var admobid = {
-            banner: 'ca-app-pub-7488223921090533/8319723789',
-            interstitial: 'ca-app-pub-7488223921090533/6830564057'
+            banner: this.ads[0].ads_banner,
+            interstitial: this.ads[0].ads_interstitial
           };
 
           this.admob.prepareInterstitial({
             adId: admobid.interstitial,
-            isTesting: true,
+            isTesting: this.ads[0].testing,
             autoShow: true
           })
+        });
+    }
+    else if (channel.plugin == '2') {
+      this.api.get("table/z_channel", { params: { limit: 30, filter: "id=" + "'" + channel.id + "'" } })
+        .subscribe(val => {
+          let data = val['data']
+          console.log('1', data[0].url)
+          var successCallback = function (json) {
+          };
+
+          var errorCallback = function (error) {
+          };
+
+          var parameters = {
+            url: data[0].url,
+            aspectRatio: 'FILL_SCREEN', // default is FIT_SCREEN
+            autoPlay: true, // When set to false stream will not automatically start
+            showBuffering: false, // When buffering, player will show indicator at the top of the screen, default is false
+            controller: { // If this object is not present controller will not be visible
+              streamImage: data[0].thumbnail_picture,
+              streamTitle: data[0].title
+            }
+          }
+          window.ExoPlayer.show(parameters, successCallback, errorCallback);
         });
     }
     else {
@@ -440,13 +475,13 @@ export class ChannelPage {
           var options = {
             successCallback: function () {
               var admobid = {
-                banner: 'ca-app-pub-7488223921090533/8319723789',
-                interstitial: 'ca-app-pub-7488223921090533/6830564057'
+                banner: this.ads[0].ads_banner,
+                interstitial: this.ads[0].ads_interstitial
               };
 
               this.admob.prepareInterstitial({
                 adId: admobid.interstitial,
-                isTesting: true,
+                isTesting: this.ads[0].testing,
                 autoShow: true
               })
             },
@@ -462,6 +497,25 @@ export class ChannelPage {
             controls: channeld.controls // true(default)/false. Used to hide controls on fullscreen
           };
           window.plugins.streamingMedia.playVideo(videoUrl, options);
+        }
+        else if (data[0].url && channeld.plugin == '2') {
+          console.log('1', data[0].url)
+          var successCallback = function (json) {
+          };
+
+          var errorCallback = function (error) {
+          };
+          var parameters = {
+            url: data[0].url,
+            aspectRatio: 'FILL_SCREEN', // default is FIT_SCREEN
+            autoPlay: true, // When set to false stream will not automatically start
+            showBuffering: false, // When buffering, player will show indicator at the top of the screen, default is false
+            controller: { // If this object is not present controller will not be visible
+              streamImage: data[0].thumbnail_picture,
+              streamTitle: data[0].title
+            }
+          }
+          window.ExoPlayer.show(parameters, successCallback, errorCallback);
         }
         else {
           let alert = this.alertCtrl.create({

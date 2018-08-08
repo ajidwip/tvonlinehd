@@ -33,7 +33,7 @@
           item-end>
           <i style="font-size: 15px;" class="fas fa-chevron-right"></i>
         </button>
-        <button (click)="doPlay(channel)" ion-button clear *ngIf="(channelname !='Anime' && channelname != 'Film Series') && channel.stream != '1'"
+        <button (click)="doPlay(channel)" ion-button clear *ngIf="(channelname !='Anime' && channelname != 'Film Series')"
           item-end>
           <i *ngIf="!radiostream || channel.id != id" style="font-size: 15px;" class="fas fa-play"></i>
           <i *ngIf="radiostream && channel.id == id" style="font-size: 15px;" class="fas fa-stop"></i>

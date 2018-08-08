@@ -4,6 +4,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ApiProvider } from '../../providers/api/api';
 import { AdMobPro } from '@ionic-native/admob-pro';
 import moment from 'moment';
+import { AppVersion } from '@ionic-native/app-version';
 
 declare var window: any;
 
@@ -22,6 +23,9 @@ export class NewupdateinfoPage {
   public param: any;
   public loader: any;
   public loading: any;
+  public packagename: any;
+  public ads: any;
+
   constructor(
     public navCtrl: NavController,
     private screenOrientation: ScreenOrientation,
@@ -30,10 +34,18 @@ export class NewupdateinfoPage {
     public platform: Platform,
     public navParam: NavParams,
     public toastCtrl: ToastController,
+    public appVersion: AppVersion,
     public admob: AdMobPro,
     public loadingCtrl: LoadingController) {
+    this.appVersion.getPackageName().then((name) => {
+      this.packagename = name;
+      this.api.get("table/z_admob", { params: { limit: 100, filter: "appid=" + "'" + this.packagename + "' AND status='OPEN'" } })
+        .subscribe(val => {
+          this.ads = val['data']
+        });
+    });
     this.loading = this.loadingCtrl.create({
-      
+
     });
 
     this.loading.present().then(() => {
@@ -99,13 +111,13 @@ export class NewupdateinfoPage {
             };
             window.plugins.streamingMedia.playVideo(videoUrl, options);
             var admobid = {
-              banner: 'ca-app-pub-7488223921090533/8319723789',
-              interstitial: 'ca-app-pub-7488223921090533/6830564057'
+              banner: this.ads[0].ads_banner,
+              interstitial: this.ads[0].ads_interstitial
             };
 
             this.admob.prepareInterstitial({
               adId: admobid.interstitial,
-              isTesting: true,
+              isTesting: this.ads[0].testing,
               autoShow: true
             })
           }
@@ -146,13 +158,13 @@ export class NewupdateinfoPage {
             };
             window.plugins.streamingMedia.playVideo(videoUrl, options);
             var admobid = {
-              banner: 'ca-app-pub-7488223921090533/8319723789',
-              interstitial: 'ca-app-pub-7488223921090533/6830564057'
+              banner: this.ads[0].ads_banner,
+              interstitial: this.ads[0].ads_interstitial
             };
 
             this.admob.prepareInterstitial({
               adId: admobid.interstitial,
-              isTesting: true,
+              isTesting: this.ads[0].testing,
               autoShow: true
             })
           }
@@ -182,14 +194,14 @@ export class NewupdateinfoPage {
   }
   ionViewDidEnter() {
     var admobid = {
-      banner: 'ca-app-pub-7488223921090533/8319723789',
-      interstitial: 'ca-app-pub-7488223921090533/6830564057'
+      banner: this.ads[0].ads_banner,
+      interstitial: this.ads[0].ads_interstitial
     };
 
     this.admob.createBanner({
       adSize: 'SMART_BANNER',
       adId: admobid.banner,
-      isTesting: true,
+      isTesting: this.ads[0].testing,
       autoShow: true,
       position: this.admob.AD_POSITION.BOTTOM_CENTER,
     });
