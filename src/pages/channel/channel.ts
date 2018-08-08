@@ -4,6 +4,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ApiProvider } from '../../providers/api/api';
 import { AdMobPro } from '@ionic-native/admob-pro';
 import moment from 'moment';
+import { AndroidFullScreen } from '@ionic-native/android-full-screen';
 
 declare var window: any;
 declare var videojs: any;
@@ -39,6 +40,7 @@ export class ChannelPage {
     public navParam: NavParams,
     public toastCtrl: ToastController,
     public loadingCtrl: LoadingController,
+    private androidFullScreen: AndroidFullScreen,
     private admob: AdMobPro) {
     this.loader = this.loadingCtrl.create({
       
@@ -232,6 +234,9 @@ export class ChannelPage {
   ionViewDidLoad() {
   }
   ionViewDidEnter() {
+    this.androidFullScreen.isImmersiveModeSupported()
+    .then(() => this.androidFullScreen.showSystemUI())
+    .catch(err => console.log(err));
     var admobid = {
       banner: 'ca-app-pub-7488223921090533/8319723789',
       interstitial: 'ca-app-pub-7488223921090533/6830564057'

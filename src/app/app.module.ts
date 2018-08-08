@@ -11,6 +11,7 @@ import { SafePipe } from '../pipes/safe/safe';
 import { HomePage } from '../pages/home/home';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { AppVersion } from '@ionic-native/app-version';
+import { AndroidFullScreen } from '@ionic-native/android-full-screen';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { AppVersion } from '@ionic-native/app-version';
     ApiProvider,
     AdMobPro,
     ScreenOrientation,
-    AppVersion
+    AppVersion,
+    AndroidFullScreen
   ]
 })
 export class AppModule {}

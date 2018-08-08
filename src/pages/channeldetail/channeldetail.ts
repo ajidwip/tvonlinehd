@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, Refresher, Platform, LoadingContro
 import { ApiProvider } from '../../providers/api/api';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { AdMobPro } from '@ionic-native/admob-pro';
+import { AndroidFullScreen } from '@ionic-native/android-full-screen';
 
 @IonicPage()
 @Component({
@@ -22,6 +23,7 @@ export class ChanneldetailPage {
     public navParams: NavParams,
     public admob: AdMobPro,
     public loadingCtrl: LoadingController,
+    private androidFullScreen: AndroidFullScreen,
     public api: ApiProvider) {
     this.anime = this.navParams.get('anime')
     this.loader = this.loadingCtrl.create({
@@ -76,6 +78,9 @@ export class ChanneldetailPage {
   ionViewDidLoad() {
   }
   ionViewDidEnter() {
+    this.androidFullScreen.isImmersiveModeSupported()
+    .then(() => this.androidFullScreen.showSystemUI())
+    .catch(err => console.log(err));
     var admobid = {
       banner: 'ca-app-pub-7488223921090533/8319723789',
       interstitial: 'ca-app-pub-7488223921090533/6830564057'

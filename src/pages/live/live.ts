@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { LoadingController, IonicPage, NavController, NavParams, Platform, AlertController } from 'ionic-angular';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { AdMobPro } from '@ionic-native/admob-pro';
+import { AndroidFullScreen } from '@ionic-native/android-full-screen';
 
 declare var Clappr: any;
 declare var LevelSelector: any;
@@ -32,13 +33,14 @@ export class LivePage {
     private screenOrientation: ScreenOrientation,
     public loadingCtrl: LoadingController,
     private admob: AdMobPro,
+    private androidFullScreen: AndroidFullScreen,
     public platform: Platform) {
     /*this.platform.registerBackButtonAction(() => {
       this.navCtrl.pop()
     });*/
     this.loading = this.loadingCtrl.create({
       // cssClass: 'transparent',
-      
+
     });
     this.rotate = this.navParams.get('rotate');
     if (this.rotate != '0') {
@@ -101,7 +103,7 @@ export class LivePage {
                     bufferlength: 3
                   },
                   qualityLabels: {
-                    "1024":"HD","512":"High","256":"Medium","128":"Low"
+                    "1024": "HD", "512": "High", "256": "Medium", "128": "Low"
                   },
                   fallback: true,
                   width: "100%",
@@ -163,6 +165,9 @@ export class LivePage {
   ionViewDidLoad() {
   }
   ionViewDidEnter() {
+    this.androidFullScreen.isImmersiveModeSupported()
+      .then(() => this.androidFullScreen.immersiveMode())
+      .catch(err => console.log(err));
     var admobid = {
       banner: 'ca-app-pub-7488223921090533/8319723789',
       interstitial: 'ca-app-pub-7488223921090533/6830564057'
