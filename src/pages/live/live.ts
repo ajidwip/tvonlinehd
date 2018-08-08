@@ -38,7 +38,7 @@ export class LivePage {
     });*/
     this.loading = this.loadingCtrl.create({
       // cssClass: 'transparent',
-      content: 'Loading...'
+      
     });
     this.rotate = this.navParams.get('rotate');
     if (this.rotate != '0') {

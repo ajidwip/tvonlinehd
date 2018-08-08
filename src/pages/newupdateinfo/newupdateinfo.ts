@@ -33,7 +33,7 @@ export class NewupdateinfoPage {
     public admob: AdMobPro,
     public loadingCtrl: LoadingController) {
     this.loading = this.loadingCtrl.create({
-      content: 'Loading...'
+      
     });
 
     this.loading.present().then(() => {

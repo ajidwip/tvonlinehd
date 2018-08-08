@@ -26,7 +26,7 @@ export class PlayerPage {
     public platform: Platform) {
     this.loading = this.loadingCtrl.create({
       // cssClass: 'transparent',
-      content: 'Loading...'
+      
     });
     if (this.platform.is('cordova')) {
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE).then(() => {

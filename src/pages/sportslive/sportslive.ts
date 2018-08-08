@@ -34,7 +34,7 @@ export class SportslivePage {
     public admob: AdMobPro,
     public loadingCtrl: LoadingController) {
     this.loading = this.loadingCtrl.create({
-      content: 'Loading...'
+      
     });
     this.loading.present().then(() => {
       this.datecurrent = moment().format('YYYY-MM-DD');

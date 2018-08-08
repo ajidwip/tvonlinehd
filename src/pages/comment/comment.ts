@@ -37,7 +37,7 @@ export class CommentPage {
     })
     this.loader = this.loadingCtrl.create({
       // cssClass: 'transparent',
-      content: 'Loading...'
+      
     });
     this.param = this.navParams.get('param')
     if (this.param == '0') {

@@ -41,7 +41,7 @@ export class ChannelPage {
     public loadingCtrl: LoadingController,
     private admob: AdMobPro) {
     this.loader = this.loadingCtrl.create({
-      content: 'Loading...'
+      
     });
     this.loader.present().then(() => {
       this.datecurrent = moment().format('YYYY-MM-DD');

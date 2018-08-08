@@ -82,9 +82,9 @@
     <ion-searchbar padding style="margin-left:-10px;padding:0px;width:105%;" (ionInput)="getSearch($event)" placeholder="TV, Film, Anime, Live Sports"></ion-searchbar>
     <ion-grid>
       <ion-row>
-        <ion-item item-start no-lines text-wrap style="background: #fafafa;border:1px solid;border-color:#dedede;" *ngFor="let notlive of listchannelnotlive"
+        <ion-item item-start no-lines text-wrap style="background: #26262d;border:1px solid;border-color:#dedede;" *ngFor="let notlive of listchannelnotlive"
           col-12>
-          <h4 style="color:#666666;font-weight: bold;">{{notlive.title}}</h4>
+          <h4 style="color:#ffffff;font-weight: bold;">{{notlive.title}}</h4>
           <button (click)="doPlay(notlive)" ion-button clear *ngIf="(channelcategory =='STREAM' && channelname =='Anime') || (channelcategory =='STREAM' && channelname =='Film Series')"
             item-end>
             <i style="font-size: 15px;" class="fas fa-chevron-right"></i>
@@ -102,9 +102,9 @@
     </ion-grid>
     <ion-grid>
       <ion-row>
-        <ion-item item-start no-lines text-wrap style="background: #fafafa;border:1px solid;border-color:#dedede;" *ngFor="let notlive of listchannelnotlivestream"
+        <ion-item item-start no-lines text-wrap style="background: #26262d;border:1px solid;border-color:#dedede;" *ngFor="let notlive of listchannelnotlivestream"
           col-12>
-          <h4 style="color:#666666;font-weight: bold;">{{notlive.title}}</h4>
+          <h4 style="color:#ffffff;font-weight: bold;">{{notlive.title}}</h4>
           <button (click)="doPlay(notlive)" ion-button clear *ngIf="(notlive.type =='STREAM' && notlive.name =='Anime') || (notlive.type =='STREAM' && notlive.name =='Film Series')"
             item-end>
             <i style="font-size: 15px;" class="fas fa-chevron-right"></i>

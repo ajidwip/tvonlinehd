@@ -32,7 +32,7 @@ export class SchedulelivePage {
     public toastCtrl: ToastController,
     public loadingCtrl: LoadingController) {
     this.loading = this.loadingCtrl.create({
-      content: 'Loading...'
+      
     });
 
     this.loading.present().then(() => {

@@ -7,6 +7,7 @@ import moment from 'moment';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpHeaders } from "@angular/common/http";
 import { AppVersion } from '@ionic-native/app-version';
+import { StatusBar } from '@ionic-native/status-bar';
 
 // declare var Swiper: any;
 declare var window: any;
@@ -48,6 +49,7 @@ export class HomePage {
     public loadingCtrl: LoadingController,
     public fb: FormBuilder,
     public appVersion: AppVersion,
+    private statusBar: StatusBar,
     private admob: AdMobPro) {
     this.myForm = fb.group({
       comment: ['', Validators.compose([Validators.required])],

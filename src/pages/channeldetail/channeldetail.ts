@@ -25,7 +25,7 @@ export class ChanneldetailPage {
     public api: ApiProvider) {
     this.anime = this.navParams.get('anime')
     this.loader = this.loadingCtrl.create({
-      content: 'Loading...'
+      
     });
     this.loader.present().then(() => {
       this.doGetChannelDetail();
