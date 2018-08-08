@@ -43,7 +43,9 @@ export class NewupdateinfoPage {
         .subscribe(val => {
           this.ads = val['data']
         });
-    });
+    }, (err) => {
+
+    })
     this.loading = this.loadingCtrl.create({
 
     });

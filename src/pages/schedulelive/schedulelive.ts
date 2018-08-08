@@ -42,7 +42,9 @@ export class SchedulelivePage {
         .subscribe(val => {
           this.ads = val['data']
         });
-    });
+    }, (err) => {
+
+    })
     this.loading = this.loadingCtrl.create({
 
     });

@@ -35,7 +35,9 @@ export class ChanneldetailPage {
         .subscribe(val => {
           this.ads = val['data']
         });
-    });
+    }, (err) => {
+
+    })
     this.anime = this.navParams.get('anime')
     this.loader = this.loadingCtrl.create({
 
@@ -83,7 +85,9 @@ export class ChanneldetailPage {
     this.navCtrl.push('PlayerPage', {
       url: channel.url,
       type: channel.type,
-      stream: channel.stream
+      stream: channel.stream,
+      xml: channel.xml,
+      thumbnail: channel.thumbnail_picture
     })
   }
   ionViewDidLoad() {

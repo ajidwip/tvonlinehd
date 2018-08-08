@@ -1,0 +1,31 @@
+<ion-header id="header">
+  <ion-navbar color="darkgrey">
+    <ion-title>
+      Preview
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content style="background:#26262d;">
+  <ion-list style="background:#26262d;color:#fff;">
+    <div padding style="text-align: center;border-bottom:1px solid;border-color:#dedede;font-size:15px;">TRAILER</div>
+    <div padding>{{title}}</div>
+  </ion-list>
+  <iframe style="margin-top:-18px;" width="100%" height="34%" [src]="trailer | safe:'resourceUrl'" frameborder="0" allowfullscreen></iframe>
+  <ion-list style="background:#26262d;color:#fff;">
+    <div padding style="text-align: center;border-bottom:1px solid;border-color:#dedede;font-size:15px;">
+      <ion-row>
+        <ion-col>
+          <button ion-button clear>
+            <ion-icon name="md-filing" style="font-size:40px;color:#fff;"></ion-icon>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button clear>
+            <ion-icon name="md-play" style="font-size:40px;color:#fff;"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+    </div>
+  </ion-list>
+</ion-content>

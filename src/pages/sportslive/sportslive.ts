@@ -44,7 +44,9 @@ export class SportslivePage {
         .subscribe(val => {
           this.ads = val['data']
         });
-    });
+    }, (err) => {
+
+    })
     this.loading = this.loadingCtrl.create({
 
     });

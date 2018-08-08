@@ -39,7 +39,7 @@
         <ion-slides *ngIf="channels && channels.length" style="height:25%;" freeMode="true" spaceBetween="-10" slidesPerView="3.2"
           loop="true">
           <div *ngFor="let channeldetail of channels">
-            <ion-slide *ngIf="channeldetail.name == channel.name">
+            <ion-slide *ngIf="channeldetail.name == channel.name" (click)="doPreview(channeldetail)">
               <ion-card>
                 <div class="container">
                   <img src="{{channeldetail.thumbnail_picture}}" style="height:125px;width:100%;" />
@@ -54,7 +54,7 @@
         <ion-slides *ngIf="channels && channels.length" style="height:25%;" freeMode="true" spaceBetween="-10" slidesPerView="3.2"
           loop="true">
           <div *ngFor="let channeldetail of channels">
-            <ion-slide *ngIf="channeldetail.name == channel.name">
+            <ion-slide *ngIf="channeldetail.name == channel.name" (click)="doPreview(channeldetail)">
               <ion-card>
                 <div class="container">
                   <img src="{{channeldetail.thumbnail_picture}}" style="height:125px;width:100%;" />

@@ -58,7 +58,9 @@ export class HomePage {
         .subscribe(val => {
           this.ads = val['data']
         });
-    });
+    }, (err) => {
+
+    })
     this.myForm = fb.group({
       comment: ['', Validators.compose([Validators.required])],
     })
@@ -115,6 +117,16 @@ export class HomePage {
       category: live.type,
       stream: live.stream
     })
+  }
+  doPreview(channeldetail) {
+    if (channeldetail.type == 'STREAM') {
+      this.navCtrl.push('PreviewPage', {
+        title: channeldetail.title,
+        category: channeldetail.category,
+        stream: channeldetail.stream,
+        trailer: channeldetail.trailer
+      })
+    }
   }
   doGetList() {
     this.api.get("table/z_list_channel", { params: { filter: "status='OPEN' AND (name LIKE 'TV%' OR category='STREAM')", limit: 100, sort: "name" + " ASC " } })

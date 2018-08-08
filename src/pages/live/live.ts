@@ -21,6 +21,7 @@ export class LivePage {
   public url = '';
   public stream: any;
   public xml: any;
+  public thumbnail: any;
   public rotate: any;
   public loading: any;
   public width: any;
@@ -50,7 +51,9 @@ export class LivePage {
         .subscribe(val => {
           this.ads = val['data']
         });
-    });
+    }, (err) => {
+
+    })
     /*this.platform.registerBackButtonAction(() => {
       this.navCtrl.pop()
     });*/
@@ -67,6 +70,7 @@ export class LivePage {
           this.stream = this.navParams.get('stream');
           this.url = this.navParams.get('url');
           this.xml = this.navParams.get('xml');
+          this.thumbnail = this.navParams.get('thumbnail');
           this.subsbody1 = this.navParams.get('subsbody1');
           this.subsbody2 = this.navParams.get('subsbody2');
           this.subshead1 = this.navParams.get('subshead1');
@@ -113,7 +117,8 @@ export class LivePage {
                 let playerElement = document.getElementById("streaming");
                 jwplayer(playerElement).setup({
                   sources: [{
-                    file: this.url
+                    file: this.url,
+                    image: this.thumbnail
                   }],
                   rtmp: {
                     bufferlength: 3

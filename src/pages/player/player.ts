@@ -7,7 +7,10 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { AppVersion } from '@ionic-native/app-version';
 import { ApiProvider } from '../../providers/api/api';
 
+declare var Clappr: any;
+declare var LevelSelector: any;
 declare var videojs: any;
+declare var jwplayer: any;
 
 @IonicPage()
 @Component({
@@ -17,6 +20,8 @@ declare var videojs: any;
 export class PlayerPage {
   public url: any;
   public type: any;
+  public xml: any;
+  public thumbnail: any;
   public stream: any;
   public loading: any;
   public width: any;
@@ -41,7 +46,9 @@ export class PlayerPage {
         .subscribe(val => {
           this.ads = val['data']
         });
-    });
+    }, (err) => {
+
+    })
     this.loading = this.loadingCtrl.create({
       // cssClass: 'transparent',
 
@@ -53,11 +60,55 @@ export class PlayerPage {
         this.stream = this.navParams.get('stream');
         this.type = this.navParams.get('type');
         this.url = this.navParams.get('url');
+        this.xml = this.navParams.get('xml');
+        this.thumbnail = this.navParams.get('thumbnail');
         this.loading.present().then(() => {
           if (this.stream == '0') {
-            let playerElement = document.getElementById("video-player");
-            var video = videojs(playerElement);
-            video.qualityPickerPlugin();
+            if (this.xml == '2') {
+              let playerElement = document.getElementById("player-wrapper");
+              var player = new Clappr.Player({
+                source: this.url,
+                mute: true,
+                height: this.height,
+                width: this.width,
+                autoPlay: true,
+                plugins: [LevelSelector]
+              });
+
+              player.attachTo(playerElement);
+            }
+            else if (this.xml == '3') {
+              let playerElement = document.getElementById("streaming");
+              jwplayer(playerElement).setup({
+                sources: [{
+                  file: this.url,
+                  image: this.thumbnail
+                }],
+                rtmp: {
+                  bufferlength: 3
+                },
+                qualityLabels: {
+                  "1024": "HD", "512": "High", "256": "Medium", "128": "Low"
+                },
+                image: this.thumbnail,
+                fallback: true,
+                width: "100%",
+                autostart: "true",
+                androidhls: true,
+                startparam: "start",
+                aspectratio: "16:9",
+                stretching: "exactfit",
+                nextupoffset: -10,
+                playbackRateControls: true,
+                controls: true
+              });
+
+            }
+            else {
+              let playerElement = document.getElementById("video-player");
+              var video = videojs(playerElement);
+              video.qualityPickerPlugin();
+            }
           }
           else if (this.stream == '1') {
             const browser = this.iab.create(this.url, '_blank', 'location=no');
