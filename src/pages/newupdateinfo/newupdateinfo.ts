@@ -175,7 +175,9 @@ export class NewupdateinfoPage {
     this.navCtrl.push('PlayerPage', {
       url: channel.url,
       type: channel.type,
-      stream: channel.stream
+      stream: channel.stream,
+      xml: channel.xml,
+      rotate: channel.orientation,
     })
   }
   ionViewDidEnter() {

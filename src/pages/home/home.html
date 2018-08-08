@@ -1,8 +1,11 @@
 <ion-header id="header">
-  <ion-toolbar color="bluewhite">
+  <ion-toolbar color="darkgrey">
     <div style="text-align:right;height:0px;margin-top:-10px;">
       <button ion-button clear color="light" style="z-index: 999;" (click)="doComment()">
-        <ion-icon name="md-search" style="font-size: 30px;"></ion-icon>
+        <ion-icon name="md-search" style="font-size: 25px;"></ion-icon>
+      </button>
+      <button ion-button clear color="light" style="z-index: 999;" (click)="doModal()">
+        <ion-icon name="md-apps" style="font-size: 25px;"></ion-icon>
       </button>
     </div>
     <button ion-button menuToggle left>
@@ -14,33 +17,61 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content id="content" style="background:#f2f1f7;margin-top:1px;">
-  <ion-slides *ngIf="channellive && channellive.length" style="height:25%;" autoplay="5000" loop="true" speed="400" pager="true">
-    <ion-slide *ngFor="let live of channellive" style="background:url(http://101.255.60.202/webapi5/img/back);background-repeat:no-repeat;background-size: 100% 100%;">
-      <div (click)="doDetailLive(live)" style="z-index: 888;">
-        <div style="color: #666666;font-size:80%;margin-top:20px;font-weight: bold;">{{live.title}}</div>
-        <div style="color: #666666;font-weight: bold;font-size:80%">{{live.category}}</div>
-        <div *ngIf="live.url" style="color: #666666;font-weight: bold;color:red;font-weight: bold;font-size:100%;padding-bottom:60px;">LIVE NOW</div>
-        <div *ngIf="!live.url" style="color: #666666;padding-bottom:60px;font-size:60%;">{{live.datestart | date:'EEEE, dd MMMM yyyy HH:mm'}} WIB</div>
+<ion-content id="content" style="background:#26262d;margin-top:1px;">
+  <div *ngIf="datashow">
+    <ion-slides *ngIf="channellive && channellive.length" effect="slide" autoplay="5000" loop="true" speed="400" pager="true"
+      style="height:25%;background: #26262d;opacity: 1;">
+      <ion-slide *ngFor="let live of channellive" style="background:url(http://101.255.60.202/webapi5/img/back3);background-repeat:no-repeat;background-size: 100% 100%;">
+        <div (click)="doDetailLive(live)" style="z-index: 888;">
+          <div style="color: #fff;z-index:999;font-weight:bold;font-size:70%;margin-top:20px;text-shadow: 2px 2px 2px #666">{{live.title}}</div>
+          <div style="color: #fff;font-weight:bold;font-size:70%;text-shadow: 2px 2px 2px #666;">{{live.category}}</div>
+          <div *ngIf="live.url" style="font-weight:bold;font-weight: bold;color:red;font-weight: bold;font-size:100%;padding-bottom:60px;text-shadow: 2px 2px 2px #fff;">LIVE NOW</div>
+          <div *ngIf="!live.url" style="color: #fff;padding-bottom:60px;font-size:60%;text-shadow: 2px 2px 2px #666;">{{live.datestart | date:'EEEE, dd MMMM yyyy HH:mm'}} WIB</div>
+        </div>
+      </ion-slide>
+    </ion-slides>
+    <div *ngFor="let channel of channellistall">
+      <ion-item no-lines style="background:transparent;margin-bottom:-15px;">
+        <div style="font-size:15px;color:#ffffff;">{{channel.name}}</div>
+        <ion-icon name="md-list" item-end style="font-size:23px;color:#ffffff;" (click)="doDetail(channel)"></ion-icon>
+      </ion-item>
+      <div *ngIf="channel.category == 'TV'">
+        <ion-slides *ngIf="channels && channels.length" style="height:25%;" freeMode="true" spaceBetween="-10" slidesPerView="3.2"
+          loop="true">
+          <div *ngFor="let channeldetail of channels">
+            <ion-slide *ngIf="channeldetail.name == channel.name">
+              <ion-card>
+                <div class="container">
+                  <img src="{{channeldetail.thumbnail_picture}}" style="height:125px;width:100%;" />
+                  <div class="bottom">{{channeldetail.title}}</div>
+                </div>
+              </ion-card>
+            </ion-slide>
+          </div>
+        </ion-slides>
       </div>
-      <button (click)="doDetailLive(live)" style="position:absolute;right:10px;top:10%;font-size:30px;color:#666666;z-index: 999;background: transparent;">
-        <ion-icon name="md-more"></ion-icon>
-      </button>
-    </ion-slide>
-  </ion-slides>
-  <ion-grid>
-    <ion-row>
-      <ion-col *ngFor="let channel of channellist" col-4 padding style="text-align: center;background: #ffffff;border:2px solid;border-color:#f2f1f7;border-radius: 5px;"
-        (click)="doDetail(channel)">
-        <p style="color:#666666;font-weight: bold;font-size:80%">{{channel.name}}</p>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+      <div *ngIf="channel.category == 'STREAM'">
+        <ion-slides *ngIf="channels && channels.length" style="height:25%;" freeMode="true" spaceBetween="-10" slidesPerView="3.2"
+          loop="true">
+          <div *ngFor="let channeldetail of channels">
+            <ion-slide *ngIf="channeldetail.name == channel.name">
+              <ion-card>
+                <div class="container">
+                  <img src="{{channeldetail.thumbnail_picture}}" style="height:125px;width:100%;" />
+                  <div class="bottom">{{channeldetail.title}}</div>
+                </div>
+              </ion-card>
+            </ion-slide>
+          </div>
+        </ion-slides>
+      </div>
+    </div>
+  </div>
 </ion-content>
 
 <div id="comment" class="comment" style="background:#fff;">
   <ion-content>
-    <div style="text-align:right;z-index: 999;background: #1ba0e2;">
+    <div style="text-align:right;z-index: 999;background: #26262d;">
       <button ion-button clear color="dark" (click)="doCloseComment()">
         <ion-icon name="md-close" style="font-size:25px;color:#ffffff;"></ion-icon>
       </button>
@@ -78,8 +109,7 @@
             item-end>
             <i style="font-size: 15px;" class="fas fa-chevron-right"></i>
           </button>
-          <button (click)="doPlay(notlive)" ion-button clear *ngIf="(notlive.name !='Anime' && notlive.name != 'Film Series')"
-            item-end>
+          <button (click)="doPlay(notlive)" ion-button clear *ngIf="(notlive.name !='Anime' && notlive.name != 'Film Series')" item-end>
             <i *ngIf="!radiostream || notlive.id != id" style="font-size: 15px;" class="fas fa-play"></i>
             <i *ngIf="radiostream && notlive.id == id" style="font-size: 15px;" class="fas fa-stop"></i>
           </button>
@@ -102,6 +132,23 @@
           </ion-row>
         </div>
       </div>
+    </ion-grid>
+  </ion-content>
+</div>
+<div id="modal" class="modal" style="background:#26262d;">
+  <ion-content style="background:#b7b7b7;">
+    <div style="text-align:right;z-index: 999;background: #26262d;">
+      <button ion-button clear color="dark" (click)="doCloseModal()">
+        <ion-icon name="md-close" style="font-size:25px;color:#ffffff;"></ion-icon>
+      </button>
+    </div>
+    <ion-grid>
+      <ion-row>
+        <ion-col *ngFor="let channel of channellist" col-4 padding style="text-align: center;background: #26262d;border:2px solid;border-color:#b7b7b7;border-radius: 5px;"
+          (click)="doDetail(channel)">
+          <p style="color:#fff;font-weight: bold;font-size:80%">{{channel.name}}</p>
+        </ion-col>
+      </ion-row>
     </ion-grid>
   </ion-content>
 </div>

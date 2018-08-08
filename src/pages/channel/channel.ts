@@ -27,6 +27,7 @@ export class ChannelPage {
   public datetimecurrent: any;
   public search: any;
   public title: any;
+  public showsearch: boolean = false;
   halaman = 0;
 
   constructor(
@@ -70,6 +71,14 @@ export class ChannelPage {
         this.doGetChannelRadioSearch();
       }
     });
+  }
+  doShowSearch() {
+    console.log(this.showsearch)
+    this.showsearch = this.showsearch ? false : true
+  }
+  doHideSearch() {
+    console.log(this.showsearch)
+    this.showsearch = this.showsearch ? false : true
   }
   doGetChannelSearch() {
     this.api.get("table/z_channel", { params: { limit: 10000, filter: "name=" + "'" + this.channelname + "' AND status='OPEN'", sort: "title" + " ASC " } })
@@ -171,13 +180,13 @@ export class ChannelPage {
   }
   doGetChannelLiveDetail() {
     return new Promise(resolve => {
-      let offset = 30 * this.halaman
+      let offset = 100 * this.halaman
       if (this.halaman == -1) {
         resolve();
       }
       else {
         this.halaman++;
-        this.api.get("table/z_channel_live", { params: { limit: 30, offset: offset, filter: "category=" + "'" + this.channelname + "' AND status='OPEN'" + " AND datefinish >=" + "'" + this.datetimecurrent + "'", sort: "datestart" + " ASC " } })
+        this.api.get("table/z_channel_live", { params: { limit: 100, offset: offset, filter: "category=" + "'" + this.channelname + "' AND status='OPEN'" + " AND datefinish >=" + "'" + this.datetimecurrent + "'", sort: "datestart" + " ASC " } })
           .subscribe(val => {
             let data = val['data'];
             for (let i = 0; i < data.length; i++) {

@@ -1,11 +1,24 @@
 <ion-header id="header">
-  <ion-navbar color="bluewhite">
-    <ion-title>{{channelname}}</ion-title>
+  <ion-navbar color="darkgrey">
+    <div *ngIf="!showsearch" style="text-align:right;height:0px;margin-top:-10px;">
+      <button ion-button clear color="light" style="z-index: 999;" (click)="doShowSearch()">
+        <ion-icon name="md-search" style="font-size: 25px;"></ion-icon>
+      </button>
+    </div>
+    <ion-title *ngIf="!showsearch" style="text-align: left;margin-top:10px;">
+      {{channelname}}
+    </ion-title>
+    <ion-searchbar *ngIf="showsearch" color="darkgrey" (ionInput)="getSearch($event)" placeholder="Search">
+    </ion-searchbar>
+    <ion-buttons end *ngIf="showsearch">
+      <button ion-button icon-only clear (click)='doHideSearch()'>
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
-  <ion-searchbar style="margin-left:-10px;padding:0px;width:105%;" (ionInput)="getSearch($event)" placeholder="Search"></ion-searchbar>
 </ion-header>
 
-<ion-content id="content" style="background:#e8e8e8;">
+<ion-content id="content" style="background:#26262d;">
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content>
       pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing..."
@@ -16,10 +29,12 @@
       <ion-item item-start no-lines text-wrap style="background: #fafafa;border:1px solid;border-color:#dedede;" *ngFor="let channel of channels"
         col-12>
         <h4 style="color:#666666;font-weight: bold;">{{channel.title}}</h4>
-        <button (click)="doPlay(channel)" ion-button clear *ngIf="(channelcategory =='STREAM' && channelname =='Anime') || (channelcategory =='STREAM' && channelname =='Film Series')" item-end>
+        <button (click)="doPlay(channel)" ion-button clear *ngIf="(channelcategory =='STREAM' && channelname =='Anime') || (channelcategory =='STREAM' && channelname =='Film Series')"
+          item-end>
           <i style="font-size: 15px;" class="fas fa-chevron-right"></i>
         </button>
-        <button (click)="doPlay(channel)" ion-button clear *ngIf="(channelname !='Anime' && channelname != 'Film Series') && channel.stream != '1'" item-end>
+        <button (click)="doPlay(channel)" ion-button clear *ngIf="(channelname !='Anime' && channelname != 'Film Series') && channel.stream != '1'"
+          item-end>
           <i *ngIf="!radiostream || channel.id != id" style="font-size: 15px;" class="fas fa-play"></i>
           <i *ngIf="radiostream && channel.id == id" style="font-size: 15px;" class="fas fa-stop"></i>
         </button>
@@ -50,8 +65,3 @@
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>
-<!-- <div *ngFor="let channel of channels">
-  <video [id]="channel.id" poster="../../../resources/splash.png" style="width:100%;height: 100%;"
-    class="playerhide embed-responsive-item video-js vjs-default-skin vjs-big-play-centered" controls preload="auto">
-    <source [src]="channel.url" type="application/x-mpegURL"> </video>
-</div> -->

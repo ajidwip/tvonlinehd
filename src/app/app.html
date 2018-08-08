@@ -1,6 +1,6 @@
 <ion-menu side="left" [content]="mycontent">
     <ion-header>
-        <ion-toolbar color="bluewhite">
+        <ion-toolbar color="darkgrey">
             <button ion-button menuToggle right>
                 <ion-icon style="font-size:25px;" name="md-close"></ion-icon>
             </button>
@@ -9,36 +9,36 @@
             </ion-title>
         </ion-toolbar>
     </ion-header>
-    <ion-content>
-        <ion-list>
-            <ion-item (click)="doGoToChannel()">
+    <ion-content style="background: #26262d;color:#fff;">
+        <ion-list style="background: #26262d;color:#fff;">
+            <ion-item no-lines (click)="doGoToChannel()" style="background: #26262d;color:#fff;">
                 <i class="fas fa-tv"></i>&nbsp;&nbsp;&nbsp;Channel Baru Ditambahkan
             </ion-item>
-            <ion-item (click)="doGoToStream()">
+            <ion-item no-lines (click)="doGoToStream()" style="background: #26262d;color:#fff;">
                 <i class="fas fa-film"></i>&nbsp;&nbsp;&nbsp;&nbsp;Film Baru Ditambahkan
             </ion-item>
-            <ion-item (click)="doGoToAnime()">
+            <ion-item no-lines (click)="doGoToAnime()" style="background: #26262d;color:#fff;">
                 <i class="fas fa-ticket-alt"></i>&nbsp;&nbsp;&nbsp;&nbsp;Anime Baru Ditambahkan
             </ion-item>
-            <ion-item (click)="doGotoLive()">
+            <ion-item no-lines (click)="doGotoLive()" style="background: #26262d;color:#fff;">
                 <i class="fas fa-clock"></i>&nbsp;&nbsp;&nbsp;&nbsp;Acara TV Sedang Tayang
             </ion-item>
-            <ion-item (click)="doGotoSportsLive()">
+            <ion-item no-lines (click)="doGotoSportsLive()" style="background: #26262d;color:#fff;">
                 <i class="far fa-futbol"></i>&nbsp;&nbsp;&nbsp;&nbsp;Olahraga Sedang Tayang
             </ion-item>
-            <ion-item (click)="doChannel()">
+            <ion-item no-lines (click)="doChannel()" style="background: #26262d;color:#fff;">
                 <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;&nbsp;&nbsp;Jadwal TV Hari Ini
             </ion-item>
-            <ion-item (click)="doGotoSports()">
+            <ion-item no-lines (click)="doGotoSports()" style="background: #26262d;color:#fff;">
                 <i class="fas fa-calendar-check"></i>&nbsp;&nbsp;&nbsp;&nbsp;Olahraga Tayang Hari ini
             </ion-item>
-            <ion-item (click)="doRequest()">
+            <ion-item no-lines (click)="doRequest()" style="background: #26262d;color:#fff;">
                 <i class="fas fa-plus-circle"></i>&nbsp;&nbsp;&nbsp;&nbsp;Request Film & Anime
             </ion-item>
-            <ion-item (click)="doComment()">
+            <ion-item no-lines (click)="doComment()" style="background: #26262d;color:#fff;">
                 <i class="fas fa-exclamation-circle"></i>&nbsp;&nbsp;&nbsp;&nbsp;Saran & Komentar
             </ion-item>
-            <ion-item (click)="doRate()">
+            <ion-item no-lines (click)="doRate()" style="background: #26262d;color:#fff;">
                 <i class="fas fa-star"></i>&nbsp;&nbsp;&nbsp;&nbsp;Rate App
             </ion-item>
         </ion-list>

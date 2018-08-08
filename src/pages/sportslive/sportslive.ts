@@ -82,7 +82,9 @@ export class SportslivePage {
         else if (data[0].url && channel.plugin != '1') {
           this.navCtrl.push('LivePage', {
             url: data[0].url,
-            stream: channel.stream
+            stream: channel.stream,
+            xml: channel.xml,
+            rotate: channel.orientation
           })
         }
         else if (data[0].url && channel.plugin == '1') {

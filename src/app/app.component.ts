@@ -145,8 +145,9 @@ export class MyApp {
   }
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.statusBar.overlaysWebView(true);
+      this.statusBar.backgroundColorByHexString('#26262d');
     });
   }
   doRate() {

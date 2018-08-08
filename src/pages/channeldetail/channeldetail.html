@@ -1,12 +1,12 @@
 <ion-header>
 
-  <ion-navbar color="bluewhite">
+  <ion-navbar color="darkgrey">
     <ion-title>{{anime}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
-<ion-content>
+<ion-content style="background:#26262d;">
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content>
       pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing..."

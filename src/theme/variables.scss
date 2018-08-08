@@ -47,6 +47,18 @@ $colors: (
   transparent: transparent
 );
 
+$searchbar-md-input-background-color: #26262d;
+$searchbar-md-input-text-color: #ffffff;
+$searchbar-md-input-placeholder-color: #dedede;
+$searchbar-md-input-clear-icon-color: #ffffff;
+$searchbar-md-input-box-shadow: #ffffff;
+$searchbar-md-input-search-icon-color: #ffffff;
+
+$loading-ios-background: transparent;
+$loading-md-background: $loading-ios-background;
+$loading-wp-background: $loading-ios-background;
+$loading-md-box-shadow: none;
+$loading-md-spinner-color: red;
 
 // App iOS Variables
 // --------------------------------------------------

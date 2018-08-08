@@ -34,6 +34,10 @@ export class HomePage {
   public radiostream: any;
   public url: any;
   public id: any;
+  public channels = [];
+  public channelslive = [];
+  public channellistall = [];
+  public datashow: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -50,12 +54,12 @@ export class HomePage {
     })
     this.loader = this.loadingCtrl.create({
       // cssClass: 'transparent',
-      content: 'Loading...'
     });
     this.loader.present().then(() => {
       this.datetimecurrent = moment().format('YYYY-MM-DD HH:mm');
       this.doGetLive();
       this.doGetListChannel();
+      this.doGetList();
     });
   }
   ionViewDidLoad() {
@@ -80,11 +84,12 @@ export class HomePage {
   ionViewWillLeave() {
     //this.admob.removeBanner();
   }
+  ngAfterViewInit() {
+  }
   doGetListChannel() {
     this.api.get("table/z_list_channel", { params: { filter: "status='OPEN'", limit: 100, sort: "name" + " ASC " } })
       .subscribe(val => {
         this.channellist = val['data']
-        this.loader.dismiss();
       });
   }
   doDetail(channel) {
@@ -100,6 +105,35 @@ export class HomePage {
       category: live.type,
       stream: live.stream
     })
+  }
+  doGetList() {
+    this.api.get("table/z_list_channel", { params: { filter: "status='OPEN' AND (name LIKE 'TV%' OR category='STREAM')", limit: 100, sort: "name" + " ASC " } })
+      .subscribe(val => {
+        this.channellistall = val['data']
+        let data = val['data']
+        for (let i = 0; i < data.length; i++) {
+          if (data[i].category == 'TV') {
+            this.api.get("table/z_channel", { params: { filter: "status='OPEN' AND name=" + "'" + data[i].name + "'", limit: 8, sort: "click" + " DESC " } })
+              .subscribe(val => {
+                let data = val['data']
+                for (let i = 0; i < data.length; i++) {
+                  this.channels.push(data[i]);
+                }
+              });
+          }
+          else {
+            this.api.get("table/z_channel_stream", { params: { filter: "status='OPEN' AND name=" + "'" + data[i].name + "'", limit: 8, sort: "date" + " DESC " } })
+              .subscribe(val => {
+                let data = val['data']
+                for (let i = 0; i < data.length; i++) {
+                  this.channels.push(data[i]);
+                }
+              });
+          }
+        }
+        this.loader.dismiss()
+        this.datashow = true;
+      });
   }
   doGetLive() {
     this.api.get("table/z_channel_live", { params: { limit: 10, filter: "status='OPEN'" + " AND datefinish >=" + "'" + this.datetimecurrent + "'", sort: "datestart" + " ASC " } })
@@ -338,5 +372,11 @@ export class HomePage {
           alert.present();
         }
       });
+  }
+  doModal() {
+    document.getElementById('modal').style.display = 'block';
+  }
+  doCloseModal() {
+    document.getElementById('modal').style.display = 'none';
   }
 }
