@@ -32,15 +32,6 @@ export class ListchannelPage {
     public toastCtrl: ToastController,
     public appVersion: AppVersion,
     public loadingCtrl: LoadingController) {
-    this.appVersion.getPackageName().then((name) => {
-      this.packagename = name;
-      this.api.get("table/z_admob", { params: { limit: 100, filter: "appid=" + "'" + this.packagename + "' AND status='OPEN'" } })
-        .subscribe(val => {
-          this.ads = val['data']
-        });
-    }, (err) => {
-
-    })
     this.loading = this.loadingCtrl.create({
 
     });
@@ -65,18 +56,27 @@ export class ListchannelPage {
     })
   }
   ionViewDidEnter() {
-    var admobid = {
-      banner: this.ads[0].ads_banner,
-      interstitial: this.ads[0].ads_interstitial
-    };
+    this.appVersion.getPackageName().then((name) => {
+      this.packagename = name;
+      this.api.get("table/z_admob", { params: { limit: 100, filter: "appid=" + "'" + this.packagename + "' AND status='OPEN'" } })
+        .subscribe(val => {
+          this.ads = val['data']
+          var admobid = {
+            banner: this.ads[0].ads_banner,
+            interstitial: this.ads[0].ads_interstitial
+          };
 
-    this.admob.createBanner({
-      adSize: 'SMART_BANNER',
-      adId: admobid.banner,
-      isTesting: this.ads[0].testing,
-      autoShow: true,
-      position: this.admob.AD_POSITION.BOTTOM_CENTER,
-    });
+          this.admob.createBanner({
+            adSize: 'SMART_BANNER',
+            adId: admobid.banner,
+            isTesting: this.ads[0].testing,
+            autoShow: true,
+            position: this.admob.AD_POSITION.BOTTOM_CENTER,
+          });
+        });
+    }, (err) => {
+
+    })
     if (this.platform.is('cordova')) {
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
     }

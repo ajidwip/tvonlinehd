@@ -24,17 +24,28 @@
       pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing..."
     </ion-refresher-content>
   </ion-refresher>
-  <ion-grid *ngIf="channelcategory != 'LIVE'">
+  <ion-grid *ngIf="channelcategory != 'LIVE' && channeltype == 'GRID'">
     <ion-row>
-      <ion-item item-start no-lines text-wrap style="background: #26262d;border:1px solid;border-color:#dedede;" *ngFor="let channel of channels"
+      <ion-col col-4 *ngFor="let channel of channels" (click)="doPlay(channel)" style="padding:0px;">
+        <ion-card>
+          <div class="container">
+            <img src="{{channel.thumbnail_picture}}" style="height:125px;width:100%;" />
+            <div class="bottom">{{channel.title}}</div>
+          </div>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid *ngIf="channelcategory != 'LIVE' && channeltype != 'GRID'">
+    <ion-row>
+      <ion-item item-start no-lines text-wrap style="background: #26262d;border-bottom:1px solid;border-color:#dedede;" *ngFor="let channel of channels"
         col-12>
         <h4 style="color:#ffffff;font-weight: bold;">{{channel.title}}</h4>
-        <button (click)="doPlay(channel)" ion-button clear *ngIf="(channelcategory =='STREAM' && channelname =='Anime') || (channelcategory =='STREAM' && channelname =='Film Series')"
+        <button (click)="doPlay(channel)" ion-button clear color="light" *ngIf="(channelcategory =='STREAM' && channelname =='Anime') || (channelcategory =='STREAM' && channelname =='Film Series')"
           item-end>
           <i style="font-size: 15px;" class="fas fa-chevron-right"></i>
         </button>
-        <button (click)="doPlay(channel)" ion-button clear *ngIf="(channelname !='Anime' && channelname != 'Film Series')"
-          item-end>
+        <button (click)="doPlay(channel)" ion-button clear color="light" *ngIf="(channelname !='Anime' && channelname != 'Film Series')" item-end>
           <i *ngIf="!radiostream || channel.id != id" style="font-size: 15px;" class="fas fa-play"></i>
           <i *ngIf="radiostream && channel.id == id" style="font-size: 15px;" class="fas fa-stop"></i>
         </button>
@@ -46,15 +57,15 @@
   </ion-grid>
   <ion-grid *ngIf="channelcategory == 'LIVE'">
     <div *ngFor="let channel of channels">
-      <ion-row style="background: #7a7a7a;color:#ffffff;">
+      <ion-row style="background: #ffffff;color:#26262d;">
         <ion-col padding col-12>{{channel.date | date:'EEEE, dd/MM/yyyy'}}</ion-col>
       </ion-row>
       <div *ngFor="let channeld of channeldetail">
-        <ion-row *ngIf="channeld.date == channel.date" style="border-bottom:1px solid;border-color:#7a7a7a;background: #ffffff;"
+        <ion-row *ngIf="channeld.date == channel.date" style="border-bottom:1px solid;border-color:#7a7a7a;background: #26262d;"
           (click)="doPlayLive(channeld)">
-          <ion-col *ngIf="!channeld.url" padding col-4 style="text-align:left;">{{channeld.datestart | date:'HH:mm'}} WIB</ion-col>
+          <ion-col *ngIf="!channeld.url" padding col-4 style="text-align:left;color:#ffffff;">{{channeld.datestart | date:'HH:mm'}} WIB</ion-col>
           <ion-col *ngIf="channeld.url" padding col-4 style="text-align:left;color:red;font-weight: bold;">LIVE</ion-col>
-          <ion-col padding col-8 style="text-align:left;">{{channeld.title}}</ion-col>
+          <ion-col padding col-8 style="text-align:left;color:#ffffff;">{{channeld.title}}</ion-col>
         </ion-row>
       </div>
     </div>

@@ -13,6 +13,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { AppVersion } from '@ionic-native/app-version';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
     ScreenOrientation,
     AppVersion,
     AndroidFullScreen,
-    InAppBrowser
+    InAppBrowser,
+    UniqueDeviceID
   ]
 })
 export class AppModule {}

@@ -1,9 +1,21 @@
-<ion-header>
-
+<ion-header id="header">
   <ion-navbar color="darkgrey">
-    <ion-title>{{anime}}</ion-title>
+    <div *ngIf="!showsearch" style="text-align:right;height:0px;margin-top:-10px;">
+      <button ion-button clear color="light" style="z-index: 999;" (click)="doShowSearch()">
+        <ion-icon name="md-search" style="font-size: 25px;"></ion-icon>
+      </button>
+    </div>
+    <ion-title *ngIf="!showsearch" style="text-align: left;margin-top:10px;">
+      {{anime}}
+    </ion-title>
+    <ion-searchbar *ngIf="showsearch" color="darkgrey" (ionInput)="getSearch($event)" placeholder="Search">
+    </ion-searchbar>
+    <ion-buttons end *ngIf="showsearch">
+      <button ion-button icon-only clear (click)='doHideSearch()'>
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
 <ion-content style="background:#26262d;">
@@ -18,9 +30,11 @@
     <ion-col padding col-3>PUTAR</ion-col>
   </ion-row>
   <ion-row *ngFor="let channel of channeldetail">
-    <ion-col padding col-3 style="border-right:1px solid;border-bottom:1px solid;border-color:#dedede;">{{channel.episode}}</ion-col>
-    <ion-col padding col-6 style="border-right:1px solid;border-bottom:1px solid;border-color:#dedede;">{{channel.name}} Episode {{channel.episode}}</ion-col>
-    <ion-col padding col-3 style="border-bottom:1px solid;border-color:#dedede;text-align: center;" (click)="goToPlayAnime(channel)"><ion-icon style="color:#42b549;font-size:30px;" name="logo-youtube"></ion-icon></ion-col>
+    <ion-col padding col-3 style="border-right:1px solid;border-bottom:1px solid;border-color:#dedede;color:#ffffff;">{{channel.episode}}</ion-col>
+    <ion-col padding col-6 style="border-right:1px solid;border-bottom:1px solid;border-color:#dedede;color:#ffffff;">{{channel.name}} Episode {{channel.episode}}</ion-col>
+    <ion-col padding col-3 style="border-bottom:1px solid;border-color:#dedede;text-align: center;color:#ffffff;" (click)="goToPlayAnime(channel)">
+      <ion-icon style="color:#42b549;font-size:30px;" name="logo-youtube"></ion-icon>
+    </ion-col>
   </ion-row>
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
     <ion-infinite-scroll-content>

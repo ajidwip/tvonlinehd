@@ -19,6 +19,7 @@ export class ChannelPage {
   public channels = [];
   public channeldetail = [];
   public channelcategory: any;
+  public channeltype: any;
   public channelname: any;
   public channelstream: any;
   public loader: any;
@@ -46,15 +47,6 @@ export class ChannelPage {
     public loadingCtrl: LoadingController,
     private androidFullScreen: AndroidFullScreen,
     private admob: AdMobPro) {
-    this.appVersion.getPackageName().then((name) => {
-      this.packagename = name;
-      this.api.get("table/z_admob", { params: { limit: 100, filter: "appid=" + "'" + this.packagename + "' AND status='OPEN'" } })
-        .subscribe(val => {
-          this.ads = val['data']
-        });
-    }, (err) => {
-
-    })
     this.loader = this.loadingCtrl.create({
 
     });
@@ -63,6 +55,7 @@ export class ChannelPage {
       this.datetimecurrent = moment().format('YYYY-MM-DD HH:mm');
       this.radiostream = false;
       this.channelcategory = this.navParam.get('category')
+      this.channeltype = this.navParam.get('type')
       this.channelname = this.navParam.get('name')
       if (this.channelcategory == 'TV') {
         this.doGetChannel();
@@ -167,13 +160,13 @@ export class ChannelPage {
   }
   doGetChannelLive() {
     return new Promise(resolve => {
-      let offset = 30 * this.halaman
+      let offset = 100 * this.halaman
       if (this.halaman == -1) {
         resolve();
       }
       else {
         this.halaman++;
-        this.api.get("table/z_channel_live", { params: { limit: 30, offset: offset, filter: "category=" + "'" + this.channelname + "' AND status='OPEN'" + " AND date >=" + "'" + this.datecurrent + "'", group: "date", sort: "date" + " ASC " } })
+        this.api.get("table/z_channel_live", { params: { limit: 100, offset: offset, filter: "category=" + "'" + this.channelname + "' AND status='OPEN'" + " AND date >=" + "'" + this.datecurrent + "'", group: "date", sort: "date" + " ASC " } })
           .subscribe(val => {
             let data = val['data'];
             for (let i = 0; i < data.length; i++) {
@@ -250,18 +243,27 @@ export class ChannelPage {
     this.androidFullScreen.isImmersiveModeSupported()
       .then(() => this.androidFullScreen.showSystemUI())
       .catch(err => console.log(err));
-    var admobid = {
-      banner: this.ads[0].ads_banner,
-      interstitial: this.ads[0].ads_interstitial
-    };
+    this.appVersion.getPackageName().then((name) => {
+      this.packagename = name;
+      this.api.get("table/z_admob", { params: { limit: 100, filter: "appid=" + "'" + this.packagename + "' AND status='OPEN'" } })
+        .subscribe(val => {
+          this.ads = val['data']
+          var admobid = {
+            banner: this.ads[0].ads_banner,
+            interstitial: this.ads[0].ads_interstitial
+          };
 
-    this.admob.createBanner({
-      adSize: 'SMART_BANNER',
-      adId: admobid.banner,
-      isTesting: this.ads[0].testing,
-      autoShow: true,
-      position: this.admob.AD_POSITION.BOTTOM_CENTER,
-    });
+          this.admob.createBanner({
+            adSize: 'SMART_BANNER',
+            adId: admobid.banner,
+            isTesting: this.ads[0].testing,
+            autoShow: true,
+            position: this.admob.AD_POSITION.BOTTOM_CENTER,
+          });
+        });
+    }, (err) => {
+
+    })
     if (this.platform.is('cordova')) {
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
     }
@@ -320,9 +322,19 @@ export class ChannelPage {
   }
   doPlay(channel) {
     this.channelstream = channel.stream
-    if ((channel.type == 'STREAM' && channel.name == 'Anime') || (channel.type == 'STREAM' && channel.name == 'Film Series')) {
-      this.navCtrl.push('ChanneldetailPage', {
-        anime: channel.title
+    if (channel.type == 'STREAM') {
+      this.navCtrl.push('PreviewPage', {
+        id: channel.id,
+        name: channel.name,
+        title: channel.title,
+        category: channel.category,
+        trailer: channel.trailer,
+        type: channel.type,
+        stream: channel.stream,
+        xml: channel.xml,
+        plugin: channel.plugin,
+        url: channel.url,
+        controls: channel.controls
       })
     }
     else if (channel.type == 'RADIO') {
@@ -381,7 +393,7 @@ export class ChannelPage {
             })
           });
       }
-      else if (channel.type == 'STREAM') {
+      /*else if (channel.type == 'STREAM') {
         this.api.get("table/z_channel_stream", { params: { limit: 30, filter: "id=" + "'" + channel.id + "'" } })
           .subscribe(val => {
             let data = val['data']
@@ -390,14 +402,10 @@ export class ChannelPage {
               stream: channel.stream,
               xml: channel.xml,
               rotate: channel.orientation,
-              thumbnail: channel.thumbnail_picture,
-              subsbody1: channel.subsbody_1,
-              subsbody2: channel.subsbody_2,
-              subshead1: channel.subshead_1,
-              subshead2: channel.subshead_2
+              thumbnail: channel.thumbnail_picture
             })
           });
-      }
+      }*/
     }
   }
   /*doPlayPlayer(channel) {

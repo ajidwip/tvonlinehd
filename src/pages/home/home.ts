@@ -8,6 +8,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpHeaders } from "@angular/common/http";
 import { AppVersion } from '@ionic-native/app-version';
 import { StatusBar } from '@ionic-native/status-bar';
+import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 
 // declare var Swiper: any;
 declare var window: any;
@@ -40,6 +41,9 @@ export class HomePage {
   public channellistall = [];
   public datashow: boolean = false;
   public ads: any;
+  public list: boolean = true;
+  public favorit = [];
+  public recent = [];
 
   constructor(
     public navCtrl: NavController,
@@ -51,16 +55,34 @@ export class HomePage {
     public fb: FormBuilder,
     public appVersion: AppVersion,
     private statusBar: StatusBar,
+    private uniqueDeviceID: UniqueDeviceID,
     private admob: AdMobPro) {
-    this.appVersion.getPackageName().then((name) => {
-      this.packagename = name;
-      this.api.get("table/z_admob", { params: { limit: 100, filter: "appid=" + "'" + this.packagename + "' AND status='OPEN'" } })
-        .subscribe(val => {
-          this.ads = val['data']
-        });
-    }, (err) => {
-
-    })
+    this.uniqueDeviceID.get()
+      .then((uuid: any) => {
+        this.api.get("table/z_arsip_users", { params: { limit: 1000, filter: "uuid_device=" + "'" + uuid + "' AND type='fav'", sort: "date" + " ASC " } })
+          .subscribe(val => {
+            let data = val['data']
+            for (let i = 0; i < data.length; i++) {
+              this.api.get("table/z_channel_stream", { params: { limit: 100, filter: "id=" + "'" + data[i].id_channel + "" } })
+                .subscribe(val => {
+                  let datafav = val['data']
+                  this.favorit.push(datafav);
+                });
+            }
+          });
+        this.api.get("table/z_arsip_users", { params: { limit: 1000, filter: "uuid_device=" + "'" + uuid + "' AND type='rec'", sort: "date" + " ASC " } })
+          .subscribe(val => {
+            let data = val['data']
+            for (let i = 0; i < data.length; i++) {
+              this.api.get("table/z_channel_stream", { params: { limit: 100, filter: "id=" + "'" + data[i].id_channel + "" } })
+                .subscribe(val => {
+                  let datarec = val['data']
+                  this.recent.push(datarec);
+                });
+            }
+          });
+      })
+      .catch((error: any) => console.log(error));
     this.myForm = fb.group({
       comment: ['', Validators.compose([Validators.required])],
     })
@@ -76,6 +98,12 @@ export class HomePage {
   }
   ionViewDidLoad() {
   }
+  getNextNoDevices() {
+    return this.api.get('nextno/z_devices/id')
+  }
+  doGetArsips() {
+
+  }
   ionViewDidEnter() {
     /*var admobid = {
       banner: 'ca-app-pub-7488223921090533/3868398990',
@@ -89,6 +117,66 @@ export class HomePage {
       autoShow: true,
       position: this.admob.AD_POSITION.BOTTOM_CENTER,
     });*/
+    this.appVersion.getPackageName().then((name) => {
+      this.packagename = name;
+      this.api.get("table/z_admob", { params: { limit: 100, filter: "appid=" + "'" + this.packagename + "' AND status='OPEN'" } })
+        .subscribe(val => {
+          this.ads = val['data']
+        });
+    }, (err) => {
+
+    })
+    this.uniqueDeviceID.get()
+      .then((uuid: any) => {
+        this.api.get("table/z_devices", { params: { limit: 100, filter: "uuid_device=" + "'" + uuid + "'" } })
+          .subscribe(val => {
+            let data = val['data']
+            if (data.length == 0) {
+              this.getNextNoDevices().subscribe(val => {
+                this.nextno = val['nextno'];
+                const headers = new HttpHeaders()
+                  .set("Content-Type", "application/json");
+                this.api.post("table/z_devices",
+                  {
+                    "id": this.nextno,
+                    "uuid_device": uuid
+                  },
+                  { headers })
+                  .subscribe(val => {
+                  }, (err) => {
+
+                  })
+              });
+            }
+            else {
+              this.favorit = [];
+              this.recent = [];
+              this.api.get("table/z_arsip_users", { params: { limit: 1000, filter: "uuid_device=" + "'" + uuid + "' AND type='fav'", sort: "date" + " ASC " } })
+                .subscribe(val => {
+                  let data = val['data']
+                  for (let i = 0; i < data.length; i++) {
+                    this.api.get("table/z_channel_stream", { params: { limit: 100, filter: "id=" + "'" + data[i].id_channel + "" } })
+                      .subscribe(val => {
+                        let datafav = val['data']
+                        this.favorit.push(datafav);
+                      });
+                  }
+                });
+              this.api.get("table/z_arsip_users", { params: { limit: 1000, filter: "uuid_device=" + "'" + uuid + "' AND type='rec'", sort: "date" + " ASC " } })
+                .subscribe(val => {
+                  let data = val['data']
+                  for (let i = 0; i < data.length; i++) {
+                    this.api.get("table/z_channel_stream", { params: { limit: 100, filter: "id=" + "'" + data[i].id_channel + "" } })
+                      .subscribe(val => {
+                        let datarec = val['data']
+                        this.recent.push(datarec);
+                      });
+                  }
+                });
+            }
+          });
+      })
+      .catch((error: any) => console.log(error));
     if (this.platform.is('cordova')) {
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
     }
@@ -108,6 +196,7 @@ export class HomePage {
     this.navCtrl.push('ChannelPage', {
       name: channel.name,
       category: channel.category,
+      type: channel.type,
       stream: channel.stream
     })
   }
@@ -121,11 +210,70 @@ export class HomePage {
   doPreview(channeldetail) {
     if (channeldetail.type == 'STREAM') {
       this.navCtrl.push('PreviewPage', {
+        id: channeldetail.id,
+        name: channeldetail.name,
         title: channeldetail.title,
         category: channeldetail.category,
+        trailer: channeldetail.trailer,
+        type: channeldetail.type,
         stream: channeldetail.stream,
-        trailer: channeldetail.trailer
+        xml: channeldetail.xml,
+        plugin: channeldetail.plugin,
+        url: channeldetail.url,
+        controls: channeldetail.controls
       })
+    }
+    else if (channeldetail.type == 'TV') {
+      if (channeldetail.plugin == '1') {
+        this.api.get("table/z_channel", { params: { limit: 30, filter: "id=" + "'" + channeldetail.id + "'" } })
+          .subscribe(val => {
+            let data = val['data']
+            var videoUrl = data[0].url;
+            var options = {
+              successCallback: function () {
+
+              },
+              errorCallback: function (errMsg) {
+                let toast = this.toastCtrl.create({
+                  message: errMsg,
+                  duration: 3000
+                });
+                toast.present();
+              },
+              orientation: 'landscape',
+              shouldAutoClose: true,  // true(default)/false
+              controls: channeldetail.controls // true(default)/false. Used to hide controls on fullscreen
+            };
+            window.plugins.streamingMedia.playVideo(videoUrl, options);
+            var admobid = {
+              banner: this.ads[0].ads_banner,
+              interstitial: this.ads[0].ads_interstitial
+            };
+
+            this.admob.prepareInterstitial({
+              adId: admobid.interstitial,
+              isTesting: this.ads[0].testing,
+              autoShow: true
+            })
+          });
+      }
+      else {
+        this.api.get("table/z_channel", { params: { limit: 30, filter: "id=" + "'" + channeldetail.id + "'" } })
+          .subscribe(val => {
+            let data = val['data']
+            this.navCtrl.push('LivePage', {
+              url: data[0].url,
+              stream: channeldetail.stream,
+              xml: channeldetail.xml,
+              rotate: channeldetail.orientation,
+              thumbnail: channeldetail.thumbnail_picture,
+              subsbody1: channeldetail.subsbody_1,
+              subsbody2: channeldetail.subsbody_2,
+              subshead1: channeldetail.subshead_1,
+              subshead2: channeldetail.subshead_2
+            })
+          });
+      }
     }
   }
   doGetList() {
@@ -395,10 +543,19 @@ export class HomePage {
         }
       });
   }
-  doModal() {
-    document.getElementById('modal').style.display = 'block';
+  doGrid() {
+    this.list = false;
+    document.getElementById('list').style.display = 'none'
+    document.getElementById('grid').style.display = 'block'
   }
-  doCloseModal() {
-    document.getElementById('modal').style.display = 'none';
+  doList() {
+    this.list = true;
+    document.getElementById('list').style.display = 'block'
+    document.getElementById('grid').style.display = 'none'
+  }
+  doSports() {
+    this.navCtrl.push('SportslivePage', {
+      param: '0'
+    })
   }
 }

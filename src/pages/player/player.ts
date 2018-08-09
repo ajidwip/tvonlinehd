@@ -40,15 +40,6 @@ export class PlayerPage {
     public api: ApiProvider,
     public appVersion: AppVersion,
     public platform: Platform) {
-    this.appVersion.getPackageName().then((name) => {
-      this.packagename = name;
-      this.api.get("table/z_admob", { params: { limit: 100, filter: "appid=" + "'" + this.packagename + "' AND status='OPEN'" } })
-        .subscribe(val => {
-          this.ads = val['data']
-        });
-    }, (err) => {
-
-    })
     this.loading = this.loadingCtrl.create({
       // cssClass: 'transparent',
 
@@ -113,6 +104,10 @@ export class PlayerPage {
           else if (this.stream == '1') {
             const browser = this.iab.create(this.url, '_blank', 'location=no');
           }
+          else {
+            this.stream = this.navParams.get('stream');
+            this.url = this.navParams.get('url');
+          }
         });
       })
     }
@@ -126,15 +121,25 @@ export class PlayerPage {
     this.androidFullScreen.isImmersiveModeSupported()
       .then(() => this.androidFullScreen.immersiveMode())
       .catch(err => console.log(err));
-    var admobid = {
-      banner: this.ads[0].ads_banner,
-      interstitial: this.ads[0].ads_interstitial
-    };
 
-    this.admob.prepareInterstitial({
-      adId: admobid.interstitial,
-      isTesting: this.ads[0].testing,
-      autoShow: true
+    this.appVersion.getPackageName().then((name) => {
+      this.packagename = name;
+      this.api.get("table/z_admob", { params: { limit: 100, filter: "appid=" + "'" + this.packagename + "' AND status='OPEN'" } })
+        .subscribe(val => {
+          this.ads = val['data']
+          var admobid = {
+            banner: this.ads[0].ads_banner,
+            interstitial: this.ads[0].ads_interstitial
+          };
+
+          this.admob.prepareInterstitial({
+            adId: admobid.interstitial,
+            isTesting: this.ads[0].testing,
+            autoShow: true
+          })
+        });
+    }, (err) => {
+
     })
   }
   ionViewWillLeave() {

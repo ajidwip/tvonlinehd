@@ -11,17 +11,19 @@
     <div padding style="text-align: center;border-bottom:1px solid;border-color:#dedede;font-size:15px;">TRAILER</div>
     <div padding>{{title}}</div>
   </ion-list>
-  <iframe style="margin-top:-18px;" width="100%" height="34%" [src]="trailer | safe:'resourceUrl'" frameborder="0" allowfullscreen></iframe>
+  <iframe *ngIf="trailer" style="margin-top:-18px;" width="100%" height="34%" [src]="trailer | safe:'resourceUrl'" frameborder="0"
+    allowfullscreen></iframe>
   <ion-list style="background:#26262d;color:#fff;">
     <div padding style="text-align: center;border-bottom:1px solid;border-color:#dedede;font-size:15px;">
       <ion-row>
         <ion-col>
-          <button ion-button clear>
-            <ion-icon name="md-filing" style="font-size:40px;color:#fff;"></ion-icon>
+          <button ion-button clear (click)="doFav()">
+            <ion-icon *ngIf="inifavorit.length == 0" name="md-filing" style="font-size:40px;color:#fff;"></ion-icon>
+            <ion-icon *ngIf="inifavorit.length != 0" name="md-filing" style="font-size:40px;color:#ced100;"></ion-icon>
           </button>
         </ion-col>
         <ion-col>
-          <button ion-button clear>
+          <button ion-button clear (click)="doPlay()">
             <ion-icon name="md-play" style="font-size:40px;color:#fff;"></ion-icon>
           </button>
         </ion-col>

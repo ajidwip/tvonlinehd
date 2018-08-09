@@ -18,6 +18,8 @@ export class ChanneldetailPage {
   public loader: any;
   public packagename: any;
   public ads: any;
+  public showsearch: boolean = false;
+  public search = [];
 
   constructor(
     public navCtrl: NavController,
@@ -29,22 +31,22 @@ export class ChanneldetailPage {
     private androidFullScreen: AndroidFullScreen,
     public appVersion: AppVersion,
     public api: ApiProvider) {
-    this.appVersion.getPackageName().then((name) => {
-      this.packagename = name;
-      this.api.get("table/z_admob", { params: { limit: 100, filter: "appid=" + "'" + this.packagename + "' AND status='OPEN'" } })
-        .subscribe(val => {
-          this.ads = val['data']
-        });
-    }, (err) => {
-
-    })
     this.anime = this.navParams.get('anime')
     this.loader = this.loadingCtrl.create({
 
     });
     this.loader.present().then(() => {
       this.doGetChannelDetail();
+      this.doGetSearch();
     });
+  }
+  doShowSearch() {
+    console.log(this.showsearch)
+    this.showsearch = this.showsearch ? false : true
+  }
+  doHideSearch() {
+    console.log(this.showsearch)
+    this.showsearch = this.showsearch ? false : true
   }
   doGetChannelDetail() {
     return new Promise(resolve => {
@@ -54,7 +56,7 @@ export class ChanneldetailPage {
       }
       else {
         this.halaman++;
-        this.api.get('table/z_channel_stream_detail', { params: { limit: 30, offset: offset, filter: "name=" + "'" + this.anime + "'", sort: "episode" + " DESC " } })
+        this.api.get('table/z_channel_stream_detail', { params: { limit: 30, offset: offset, filter: "name=" + "'" + this.anime + "' AND status='OPEN'", sort: "episode" + " DESC " } })
           .subscribe(val => {
             let data = val['data'];
             for (let i = 0; i < data.length; i++) {
@@ -69,6 +71,27 @@ export class ChanneldetailPage {
       }
     })
 
+  }
+  doGetSearch() {
+    this.api.get("table/z_channel_stream_detail", { params: { limit: 10000, filter: "name=" + "'" + this.anime + "' AND status='OPEN'", sort: "episode" + " DESC " } })
+      .subscribe(val => {
+        this.search = val['data']
+      });
+  }
+  getSearch(ev: any) {
+    // set val to the value of the searchbar
+    let val = ev.target.value;
+
+    // if the value is an empty string don't filter the items
+    if (val && val.trim() != '') {
+      this.channeldetail = this.search.filter(eps => {
+        return eps.episode.toLowerCase().indexOf(val.toLowerCase()) > -1;
+      })
+    } else {
+      this.channeldetail = [];
+      this.halaman = 0;
+      this.doGetChannelDetail();
+    }
   }
   doInfinite(infiniteScroll) {
     this.doGetChannelDetail().then(response => {
@@ -96,18 +119,27 @@ export class ChanneldetailPage {
     this.androidFullScreen.isImmersiveModeSupported()
       .then(() => this.androidFullScreen.showSystemUI())
       .catch(err => console.log(err));
-    var admobid = {
-      banner: this.ads[0].ads_banner,
-      interstitial: this.ads[0].ads_interstitial
-    };
+    this.appVersion.getPackageName().then((name) => {
+      this.packagename = name;
+      this.api.get("table/z_admob", { params: { limit: 100, filter: "appid=" + "'" + this.packagename + "' AND status='OPEN'" } })
+        .subscribe(val => {
+          this.ads = val['data']
+          var admobid = {
+            banner: this.ads[0].ads_banner,
+            interstitial: this.ads[0].ads_interstitial
+          };
 
-    this.admob.createBanner({
-      adSize: 'SMART_BANNER',
-      adId: admobid.banner,
-      isTesting: this.ads[0].testing,
-      autoShow: true,
-      position: this.admob.AD_POSITION.BOTTOM_CENTER,
-    });
+          this.admob.createBanner({
+            adSize: 'SMART_BANNER',
+            adId: admobid.banner,
+            isTesting: this.ads[0].testing,
+            autoShow: true,
+            position: this.admob.AD_POSITION.BOTTOM_CENTER,
+          });
+        });
+    }, (err) => {
+
+    })
     if (this.platform.is('cordova')) {
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
     }

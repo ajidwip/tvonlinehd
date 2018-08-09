@@ -4,8 +4,11 @@
       <button ion-button clear color="light" style="z-index: 999;" (click)="doComment()">
         <ion-icon name="md-search" style="font-size: 25px;"></ion-icon>
       </button>
-      <button ion-button clear color="light" style="z-index: 999;" (click)="doModal()">
+      <button *ngIf="list" ion-button clear color="light" style="z-index: 999;" (click)="doGrid()">
         <ion-icon name="md-apps" style="font-size: 25px;"></ion-icon>
+      </button>
+      <button *ngIf="!list" ion-button clear color="light" style="z-index: 999;" (click)="doList()">
+        <ion-icon name="md-keypad" style="font-size: 25px;"></ion-icon>
       </button>
     </div>
     <button ion-button menuToggle left>
@@ -28,43 +31,103 @@
           <div *ngIf="live.url" style="font-weight:bold;font-weight: bold;color:red;font-weight: bold;font-size:100%;padding-bottom:60px;text-shadow: 2px 2px 2px #fff;">LIVE NOW</div>
           <div *ngIf="!live.url" style="color: #fff;padding-bottom:60px;font-size:60%;text-shadow: 2px 2px 2px #666;">{{live.datestart | date:'EEEE, dd MMMM yyyy HH:mm'}} WIB</div>
         </div>
+        <button (click)="doSports()" style="position:absolute;right:10px;top:10%;font-size:30px;color:#fff;z-index: 999;background: transparent;">
+          <ion-icon name="md-more"></ion-icon>
+        </button>
       </ion-slide>
     </ion-slides>
-    <div *ngFor="let channel of channellistall">
-      <ion-item no-lines style="background:transparent;margin-bottom:-15px;">
-        <div style="font-size:15px;color:#ffffff;">{{channel.name}}</div>
-        <ion-icon name="md-list" item-end style="font-size:23px;color:#ffffff;" (click)="doDetail(channel)"></ion-icon>
-      </ion-item>
-      <div *ngIf="channel.category == 'TV'">
-        <ion-slides *ngIf="channels && channels.length" style="height:25%;" freeMode="true" spaceBetween="-10" slidesPerView="3.2"
-          loop="true">
-          <div *ngFor="let channeldetail of channels">
-            <ion-slide *ngIf="channeldetail.name == channel.name" (click)="doPreview(channeldetail)">
-              <ion-card>
-                <div class="container">
-                  <img src="{{channeldetail.thumbnail_picture}}" style="height:125px;width:100%;" />
-                  <div class="bottom">{{channeldetail.title}}</div>
-                </div>
-              </ion-card>
-            </ion-slide>
+    <div id="list">
+      <div *ngIf="recent && recent.length">
+        <div>
+          <ion-item no-lines style="background:transparent;margin-bottom:-15px;">
+            <div style="font-size:15px;color:#ffffff;">Recent</div>
+            <ion-icon name="md-list" item-end style="font-size:23px;color:#ffffff;" (click)="doDetail()"></ion-icon>
+          </ion-item>
+          <div>
+            <ion-slides *ngIf="recent && recent.length" style="height:25%;" freeMode="true" spaceBetween="-10" slidesPerView="3.2" loop="true">
+              <div *ngFor="let channeldetail of recent">
+                <ion-slide *ngIf="channeldetail.name == channel.name" (click)="doPreview(channeldetail)">
+                  <ion-card>
+                    <div class="container">
+                      <img src="{{channeldetail.thumbnail_picture}}" style="height:125px;width:100%;" />
+                      <div class="bottom">{{channeldetail.title}}</div>
+                    </div>
+                  </ion-card>
+                </ion-slide>
+              </div>
+            </ion-slides>
           </div>
-        </ion-slides>
+        </div>
       </div>
-      <div *ngIf="channel.category == 'STREAM'">
-        <ion-slides *ngIf="channels && channels.length" style="height:25%;" freeMode="true" spaceBetween="-10" slidesPerView="3.2"
-          loop="true">
-          <div *ngFor="let channeldetail of channels">
-            <ion-slide *ngIf="channeldetail.name == channel.name" (click)="doPreview(channeldetail)">
-              <ion-card>
-                <div class="container">
-                  <img src="{{channeldetail.thumbnail_picture}}" style="height:125px;width:100%;" />
-                  <div class="bottom">{{channeldetail.title}}</div>
-                </div>
-              </ion-card>
-            </ion-slide>
+      <div *ngIf="favorit && favorit.length">
+        <div>
+          <ion-item no-lines style="background:transparent;margin-bottom:-15px;">
+            <div style="font-size:15px;color:#ffffff;">Arsip</div>
+            <ion-icon name="md-list" item-end style="font-size:23px;color:#ffffff;" (click)="doDetail()"></ion-icon>
+          </ion-item>
+          <div>
+            <ion-slides *ngIf="favorit && favorit.length" style="height:25%;" freeMode="true" spaceBetween="-10" slidesPerView="3.2"
+              loop="true">
+              <div *ngFor="let channeldetail of favorit">
+                <ion-slide *ngIf="channeldetail.name == channel.name" (click)="doPreview(channeldetail)">
+                  <ion-card>
+                    <div class="container">
+                      <img src="{{channeldetail.thumbnail_picture}}" style="height:125px;width:100%;" />
+                      <div class="bottom">{{channeldetail.title}}</div>
+                    </div>
+                  </ion-card>
+                </ion-slide>
+              </div>
+            </ion-slides>
           </div>
-        </ion-slides>
+        </div>
       </div>
+      <div *ngFor="let channel of channellistall">
+        <ion-item no-lines style="background:transparent;margin-bottom:-15px;">
+          <div style="font-size:15px;color:#ffffff;">{{channel.name}}</div>
+          <ion-icon name="md-list" item-end style="font-size:23px;color:#ffffff;" (click)="doDetail(channel)"></ion-icon>
+        </ion-item>
+        <div *ngIf="channel.category == 'TV'">
+          <ion-slides *ngIf="channels && channels.length" style="height:25%;" freeMode="true" spaceBetween="-10" slidesPerView="3.2"
+            loop="true">
+            <div *ngFor="let channeldetail of channels">
+              <ion-slide *ngIf="channeldetail.name == channel.name" (click)="doPreview(channeldetail)">
+                <ion-card>
+                  <div class="container">
+                    <img src="{{channeldetail.thumbnail_picture}}" style="height:125px;width:100%;" />
+                    <div class="bottom">{{channeldetail.title}}</div>
+                  </div>
+                </ion-card>
+              </ion-slide>
+            </div>
+          </ion-slides>
+        </div>
+        <div *ngIf="channel.category == 'STREAM'">
+          <ion-slides *ngIf="channels && channels.length" style="height:25%;" freeMode="true" spaceBetween="-10" slidesPerView="3.2"
+            loop="true">
+            <div *ngFor="let channeldetail of channels">
+              <ion-slide *ngIf="channeldetail.name == channel.name" (click)="doPreview(channeldetail)">
+                <ion-card>
+                  <div class="container">
+                    <img src="{{channeldetail.thumbnail_picture}}" style="height:125px;width:100%;" />
+                    <div class="bottom">{{channeldetail.title}}</div>
+                  </div>
+                </ion-card>
+              </ion-slide>
+            </div>
+          </ion-slides>
+        </div>
+      </div>
+    </div>
+    <div id="grid" style="display: none;">
+      <ion-grid>
+        <ion-row>
+          <ion-col *ngFor="let channel of channellist" col-4 padding style="text-align: center;background: #333232;border:2px solid;border-color:#26262d;border-radius: 5px;"
+            (click)="doDetail(channel)">
+            <p style="color:#fff;font-weight: bold;font-size:80%">{{channel.name}}</p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </div>
   </div>
 </ion-content>
@@ -132,23 +195,6 @@
           </ion-row>
         </div>
       </div>
-    </ion-grid>
-  </ion-content>
-</div>
-<div id="modal" class="modal" style="background:#26262d;">
-  <ion-content style="background:#b7b7b7;">
-    <div style="text-align:right;z-index: 999;background: #26262d;">
-      <button ion-button clear color="dark" (click)="doCloseModal()">
-        <ion-icon name="md-close" style="font-size:25px;color:#ffffff;"></ion-icon>
-      </button>
-    </div>
-    <ion-grid>
-      <ion-row>
-        <ion-col *ngFor="let channel of channellist" col-4 padding style="text-align: center;background: #26262d;border:2px solid;border-color:#b7b7b7;border-radius: 5px;"
-          (click)="doDetail(channel)">
-          <p style="color:#fff;font-weight: bold;font-size:80%">{{channel.name}}</p>
-        </ion-col>
-      </ion-row>
     </ion-grid>
   </ion-content>
 </div>

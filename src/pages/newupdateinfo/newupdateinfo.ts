@@ -37,15 +37,6 @@ export class NewupdateinfoPage {
     public appVersion: AppVersion,
     public admob: AdMobPro,
     public loadingCtrl: LoadingController) {
-    this.appVersion.getPackageName().then((name) => {
-      this.packagename = name;
-      this.api.get("table/z_admob", { params: { limit: 100, filter: "appid=" + "'" + this.packagename + "' AND status='OPEN'" } })
-        .subscribe(val => {
-          this.ads = val['data']
-        });
-    }, (err) => {
-
-    })
     this.loading = this.loadingCtrl.create({
 
     });
@@ -138,51 +129,19 @@ export class NewupdateinfoPage {
         });
     }
     else if (channel.type == 'STREAM') {
-      this.api.get("table/z_channel_stream", { params: { limit: 30, filter: "id=" + "'" + channel.id + "'" } })
-        .subscribe(val => {
-          let data = val['data']
-          if (channel.plugin == '1') {
-            var videoUrl = data[0].url;
-            var options = {
-              successCallback: function () {
-
-              },
-              errorCallback: function (errMsg) {
-                let toast = this.toastCtrl.create({
-                  message: errMsg,
-                  duration: 3000
-                });
-                toast.present();
-              },
-              orientation: 'landscape',
-              shouldAutoClose: true,  // true(default)/false
-              controls: channel.controls // true(default)/false. Used to hide controls on fullscreen
-            };
-            window.plugins.streamingMedia.playVideo(videoUrl, options);
-            var admobid = {
-              banner: this.ads[0].ads_banner,
-              interstitial: this.ads[0].ads_interstitial
-            };
-
-            this.admob.prepareInterstitial({
-              adId: admobid.interstitial,
-              isTesting: this.ads[0].testing,
-              autoShow: true
-            })
-          }
-          else {
-            this.navCtrl.push('LivePage', {
-              url: data[0].url,
-              stream: channel.stream,
-              xml: channel.xml,
-              rotate: channel.orientation,
-              subsbody1: channel.subsbody_1,
-              subsbody2: channel.subsbody_2,
-              subshead1: channel.subshead_1,
-              subshead2: channel.subshead_2
-            })
-          }
-        });
+      this.navCtrl.push('PreviewPage', {
+        id: channel.id,
+        name: channel.name,
+        title: channel.title,
+        category: channel.category,
+        trailer: channel.trailer,
+        type: channel.type,
+        stream: channel.stream,
+        xml: channel.xml,
+        plugin: channel.plugin,
+        url: channel.url,
+        controls: channel.controls
+      })
     }
   }
   goToPlayAnime(channel) {
@@ -191,22 +150,31 @@ export class NewupdateinfoPage {
       type: channel.type,
       stream: channel.stream,
       xml: channel.xml,
-      rotate: channel.orientation,
+      thumbnail: channel.thumbnail_picture
     })
   }
   ionViewDidEnter() {
-    var admobid = {
-      banner: this.ads[0].ads_banner,
-      interstitial: this.ads[0].ads_interstitial
-    };
+    this.appVersion.getPackageName().then((name) => {
+      this.packagename = name;
+      this.api.get("table/z_admob", { params: { limit: 100, filter: "appid=" + "'" + this.packagename + "' AND status='OPEN'" } })
+        .subscribe(val => {
+          this.ads = val['data']
+          var admobid = {
+            banner: this.ads[0].ads_banner,
+            interstitial: this.ads[0].ads_interstitial
+          };
 
-    this.admob.createBanner({
-      adSize: 'SMART_BANNER',
-      adId: admobid.banner,
-      isTesting: this.ads[0].testing,
-      autoShow: true,
-      position: this.admob.AD_POSITION.BOTTOM_CENTER,
-    });
+          this.admob.createBanner({
+            adSize: 'SMART_BANNER',
+            adId: admobid.banner,
+            isTesting: this.ads[0].testing,
+            autoShow: true,
+            position: this.admob.AD_POSITION.BOTTOM_CENTER,
+          });
+        });
+    }, (err) => {
+
+    })
     if (this.platform.is('cordova')) {
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
     }

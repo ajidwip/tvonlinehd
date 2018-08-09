@@ -14,13 +14,13 @@
       <ion-col padding col-5 style="border-right:1px solid;border-color:#ffffff;">JUDUL</ion-col>
     </ion-row>
     <ion-row *ngFor="let channel of channels" (click)="goToPlay(channel)">
-      <ion-col padding col-3 style="border-right:1px solid;border-bottom:1px solid;border-color:#dedede;">{{channel.datestart | date:'HH:mm'}}</ion-col>
-      <ion-col padding col-4 style="border-right:1px solid;border-bottom:1px solid;border-color:#dedede;">{{channel.category}}</ion-col>
-      <ion-col padding col-5 style="border-right:1px solid;border-bottom:1px solid;border-color:#dedede;">{{channel.title}}</ion-col>
+      <ion-col padding col-3 style="border-right:1px solid;border-bottom:1px solid;border-color:#dedede;color:#ffffff;">{{channel.datestart | date:'HH:mm'}}</ion-col>
+      <ion-col padding col-4 style="border-right:1px solid;border-bottom:1px solid;border-color:#dedede;color:#ffffff;">{{channel.category}}</ion-col>
+      <ion-col padding col-5 style="border-right:1px solid;border-bottom:1px solid;border-color:#dedede;color:#ffffff;">{{channel.title}}</ion-col>
     </ion-row>
   </div>
   <div *ngIf="channels.length == 0">
-    <p *ngIf="param == '0'" padding>*Tidak ada pertandingan pada hari ini</p>
-    <p *ngIf="param == '1'" padding>*Tidak ada pertandingan yang sedang berlangsung</p>
+    <p *ngIf="param == '0'" padding style="color:#ffffff;">*Tidak ada pertandingan pada hari ini</p>
+    <p *ngIf="param == '1'" padding style="color:#ffffff;">*Tidak ada pertandingan yang sedang berlangsung</p>
   </div>
 </ion-content>
