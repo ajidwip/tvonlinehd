@@ -37,39 +37,17 @@
       </ion-slide>
     </ion-slides>
     <div id="list">
-      <div *ngIf="recent && recent.length">
-        <div>
-          <ion-item no-lines style="background:transparent;margin-bottom:-15px;">
-            <div style="font-size:15px;color:#ffffff;">Recent</div>
-            <ion-icon name="md-list" item-end style="font-size:23px;color:#ffffff;" (click)="doDetail()"></ion-icon>
-          </ion-item>
-          <div>
-            <ion-slides *ngIf="recent && recent.length" style="height:25%;" freeMode="true" spaceBetween="-10" slidesPerView="3.2" loop="true">
-              <div *ngFor="let channeldetail of recent">
-                <ion-slide *ngIf="channeldetail.name == channel.name" (click)="doPreview(channeldetail)">
-                  <ion-card>
-                    <div class="container">
-                      <img src="{{channeldetail.thumbnail_picture}}" style="height:125px;width:100%;" />
-                      <div class="bottom">{{channeldetail.title}}</div>
-                    </div>
-                  </ion-card>
-                </ion-slide>
-              </div>
-            </ion-slides>
-          </div>
-        </div>
-      </div>
       <div *ngIf="favorit && favorit.length">
         <div>
           <ion-item no-lines style="background:transparent;margin-bottom:-15px;">
             <div style="font-size:15px;color:#ffffff;">Arsip</div>
-            <ion-icon name="md-list" item-end style="font-size:23px;color:#ffffff;" (click)="doDetail()"></ion-icon>
+            <ion-icon name="md-list" item-end style="font-size:23px;color:#ffffff;" (click)="doDetailArsip()"></ion-icon>
           </ion-item>
           <div>
             <ion-slides *ngIf="favorit && favorit.length" style="height:25%;" freeMode="true" spaceBetween="-10" slidesPerView="3.2"
               loop="true">
               <div *ngFor="let channeldetail of favorit">
-                <ion-slide *ngIf="channeldetail.name == channel.name" (click)="doPreview(channeldetail)">
+                <ion-slide (click)="doPreviewArsip(channeldetail)">
                   <ion-card>
                     <div class="container">
                       <img src="{{channeldetail.thumbnail_picture}}" style="height:125px;width:100%;" />

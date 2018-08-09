@@ -34,6 +34,7 @@ export class ChannelPage {
   halaman = 0;
   public packagename: any;
   public ads: any;
+  public uuiddevices: any;
 
   constructor(
     public navCtrl: NavController,
@@ -57,6 +58,7 @@ export class ChannelPage {
       this.channelcategory = this.navParam.get('category')
       this.channeltype = this.navParam.get('type')
       this.channelname = this.navParam.get('name')
+      this.uuiddevices = this.navParam.get('uuiddevices')
       if (this.channelcategory == 'TV') {
         this.doGetChannel();
         this.doGetChannelSearch();
@@ -77,6 +79,10 @@ export class ChannelPage {
       else if (this.channelcategory == 'RADIO') {
         this.doGetChannelRadio();
         this.doGetChannelRadioSearch();
+      }
+      else if (this.channelcategory == 'ARSIP') {
+        this.doGetChannelArsip();
+        this.doGetChannelArsipSearch();
       }
     });
   }
@@ -138,6 +144,35 @@ export class ChannelPage {
       else {
         this.halaman++;
         this.api.get("table/z_channel_stream", { params: { limit: 30, offset: offset, filter: "name=" + "'" + this.channelname + "' AND status='OPEN'", sort: "title" + " ASC " } })
+          .subscribe(val => {
+            let data = val['data'];
+            this.loader.dismiss();
+            for (let i = 0; i < data.length; i++) {
+              this.channels.push(data[i]);
+            }
+            if (data.length == 0) {
+              this.halaman = -1
+            }
+            resolve();
+          });
+      }
+    });
+  }
+  doGetChannelArsipSearch() {
+    this.api.get("table/z_arsip_users", { params: { limit: 10000, filter: "type_arsip=" + "'" + this.channelname + "' AND uuid_devices=" + "'" + this.uuiddevices + "'", sort: "title" + " ASC " } })
+      .subscribe(val => {
+        this.search = val['data']
+      });
+  }
+  doGetChannelArsip() {
+    return new Promise(resolve => {
+      let offset = 30 * this.halaman
+      if (this.halaman == -1) {
+        resolve();
+      }
+      else {
+        this.halaman++;
+        this.api.get("table/z_arsip_users", { params: { limit: 30, offset: offset, filter: "type_arsip=" + "'" + this.channelname + "' AND uuid_devices=" + "'" + this.uuiddevices + "'", sort: "title" + " ASC " } })
           .subscribe(val => {
             let data = val['data'];
             this.loader.dismiss();
@@ -296,6 +331,11 @@ export class ChannelPage {
         infiniteScroll.complete();
       });
     }
+    else if (this.channelcategory == 'ARSIP') {
+      this.doGetChannelArsip().then(response => {
+        infiniteScroll.complete();
+      });
+    }
   }
   doRefresh(refresher) {
     if (this.channelcategory == 'TV') {
@@ -316,6 +356,11 @@ export class ChannelPage {
     }
     else if (this.channelcategory == 'RADIO') {
       this.doGetChannelRadio().then(response => {
+        refresher.complete();
+      });
+    }
+    else if (this.channelcategory == 'ARSIP') {
+      this.doGetChannelArsip().then(response => {
         refresher.complete();
       });
     }
@@ -523,6 +568,9 @@ export class ChannelPage {
       }
       else if (this.channelcategory == 'RADIO') {
         this.doGetChannelRadio();
+      }
+      else if (this.channelcategory == 'ARSIP') {
+        this.doGetChannelArsip();
       }
     }
   }

@@ -43,7 +43,6 @@ export class HomePage {
   public ads: any;
   public list: boolean = true;
   public favorit = [];
-  public recent = [];
 
   constructor(
     public navCtrl: NavController,
@@ -57,32 +56,6 @@ export class HomePage {
     private statusBar: StatusBar,
     private uniqueDeviceID: UniqueDeviceID,
     private admob: AdMobPro) {
-    this.uniqueDeviceID.get()
-      .then((uuid: any) => {
-        this.api.get("table/z_arsip_users", { params: { limit: 1000, filter: "uuid_device=" + "'" + uuid + "' AND type='fav'", sort: "date" + " ASC " } })
-          .subscribe(val => {
-            let data = val['data']
-            for (let i = 0; i < data.length; i++) {
-              this.api.get("table/z_channel_stream", { params: { limit: 100, filter: "id=" + "'" + data[i].id_channel + "" } })
-                .subscribe(val => {
-                  let datafav = val['data']
-                  this.favorit.push(datafav);
-                });
-            }
-          });
-        this.api.get("table/z_arsip_users", { params: { limit: 1000, filter: "uuid_device=" + "'" + uuid + "' AND type='rec'", sort: "date" + " ASC " } })
-          .subscribe(val => {
-            let data = val['data']
-            for (let i = 0; i < data.length; i++) {
-              this.api.get("table/z_channel_stream", { params: { limit: 100, filter: "id=" + "'" + data[i].id_channel + "" } })
-                .subscribe(val => {
-                  let datarec = val['data']
-                  this.recent.push(datarec);
-                });
-            }
-          });
-      })
-      .catch((error: any) => console.log(error));
     this.myForm = fb.group({
       comment: ['', Validators.compose([Validators.required])],
     })
@@ -150,28 +123,9 @@ export class HomePage {
             }
             else {
               this.favorit = [];
-              this.recent = [];
-              this.api.get("table/z_arsip_users", { params: { limit: 1000, filter: "uuid_device=" + "'" + uuid + "' AND type='fav'", sort: "date" + " ASC " } })
+              this.api.get("table/z_arsip_users", { params: { limit: 1000, filter: "uuid_device=" + "'" + uuid + "' AND type_arsip='fav'", sort: "date" + " DESC " } })
                 .subscribe(val => {
-                  let data = val['data']
-                  for (let i = 0; i < data.length; i++) {
-                    this.api.get("table/z_channel_stream", { params: { limit: 100, filter: "id=" + "'" + data[i].id_channel + "" } })
-                      .subscribe(val => {
-                        let datafav = val['data']
-                        this.favorit.push(datafav);
-                      });
-                  }
-                });
-              this.api.get("table/z_arsip_users", { params: { limit: 1000, filter: "uuid_device=" + "'" + uuid + "' AND type='rec'", sort: "date" + " ASC " } })
-                .subscribe(val => {
-                  let data = val['data']
-                  for (let i = 0; i < data.length; i++) {
-                    this.api.get("table/z_channel_stream", { params: { limit: 100, filter: "id=" + "'" + data[i].id_channel + "" } })
-                      .subscribe(val => {
-                        let datarec = val['data']
-                        this.recent.push(datarec);
-                      });
-                  }
+                  this.favorit = val['data']
                 });
             }
           });
@@ -192,6 +146,19 @@ export class HomePage {
         this.channellist = val['data']
       });
   }
+  doDetailArsip() {
+    this.uniqueDeviceID.get()
+      .then((uuid: any) => {
+        this.navCtrl.push('ChannelPage', {
+          name: 'fav',
+          category: 'ARSIP',
+          type: 'STREAM',
+          stream: '',
+          uuiddevices: uuid
+        })
+      })
+      .catch((error: any) => console.log(error));
+  }
   doDetail(channel) {
     this.navCtrl.push('ChannelPage', {
       name: channel.name,
@@ -205,6 +172,21 @@ export class HomePage {
       name: live.category,
       category: live.type,
       stream: live.stream
+    })
+  }
+  doPreviewArsip(channeldetail) {
+    this.navCtrl.push('PreviewPage', {
+      id: channeldetail.id,
+      name: channeldetail.name,
+      title: channeldetail.title,
+      category: channeldetail.category,
+      trailer: channeldetail.trailer,
+      type: channeldetail.type,
+      stream: channeldetail.stream,
+      xml: channeldetail.xml,
+      plugin: channeldetail.plugin,
+      url: channeldetail.url,
+      controls: channeldetail.controls
     })
   }
   doPreview(channeldetail) {

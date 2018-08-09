@@ -70,7 +70,7 @@ export class PreviewPage {
       }, 3000);
       this.uniqueDeviceID.get()
         .then((uuid: any) => {
-          this.api.get("table/z_arsip_users", { params: { limit: 30, filter: "id_channel=" + "'" + this.id + "'" } })
+          this.api.get("table/z_arsip_users", { params: { limit: 30, filter: "id=" + "'" + this.id + "'" } })
             .subscribe(val => {
               this.inifavorit = val['data']
             });
@@ -188,35 +188,64 @@ export class PreviewPage {
     this.admob.removeBanner();
   }
   getNextNoArsip() {
-    return this.api.get('nextno/z_arsip_users/id')
+    return this.api.get('nextno/z_arsip_users/id_device')
   }
   doFav() {
     this.uniqueDeviceID.get()
       .then((uuid: any) => {
         let date = moment().format('YYYY-MM-DD HH:mm');
-        this.getNextNoArsip().subscribe(val => {
-          this.nextno = val['nextno'];
+        if (this.inifavorit.length != 0) {
           const headers = new HttpHeaders()
             .set("Content-Type", "application/json");
-          this.api.post("table/z_arsip_users",
-            {
-              "id": this.nextno,
-              "uuid_device": uuid,
-              "type": 'fav',
-              "id_channel": this.id,
-              "date": date
-            },
-            { headers })
+          this.api.delete("table/z_arsip_users", { params: { filter: "id_device=" + "'" + this.inifavorit[0].id_device + "'" }, headers })
             .subscribe(val => {
               this.inifavorit = [];
-              this.api.get("table/z_arsip_users", { params: { limit: 30, filter: "id_channel=" + "'" + this.id + "'" } })
+              this.api.get("table/z_arsip_users", { params: { limit: 30, filter: "id=" + "'" + this.id + "'" } })
                 .subscribe(val => {
                   this.inifavorit = val['data']
                 });
-            }, (err) => {
+            });
+        }
+        else {
+          this.api.get("table/z_channel_stream", { params: { limit: 30, filter: "id=" + "'" + this.id + "'" } })
+            .subscribe(val => {
+              let data = val['data']
+              this.getNextNoArsip().subscribe(val => {
+                this.nextno = val['nextno'];
+                const headers = new HttpHeaders()
+                  .set("Content-Type", "application/json");
+                this.api.post("table/z_arsip_users",
+                  {
+                    "id_device": this.nextno,
+                    "uuid_device": uuid,
+                    "type_arsip": 'fav',
+                    "id": data[0].id,
+                    "name": data[0].name,
+                    "stream": data[0].stream,
+                    "category": data[0].category,
+                    "type": data[0].type,
+                    "controls": data[0].controls,
+                    "xml": data[0].xml,
+                    "plugin": data[0].plugin,
+                    "title": data[0].title,
+                    "thumbnail_picture": data[0].thumbnail_picture,
+                    "trailer": data[0].trailer,
+                    "url": data[0].url,
+                    "date": date
+                  },
+                  { headers })
+                  .subscribe(val => {
+                    this.inifavorit = [];
+                    this.api.get("table/z_arsip_users", { params: { limit: 30, filter: "id=" + "'" + this.id + "'" } })
+                      .subscribe(val => {
+                        this.inifavorit = val['data']
+                      });
+                  }, (err) => {
 
-            })
-        });
+                  })
+              });
+            });
+        }
       })
       .catch((error: any) => console.log(error));
   }
