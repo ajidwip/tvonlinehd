@@ -5,6 +5,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { AdMobPro } from '@ionic-native/admob-pro';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen';
 import { AppVersion } from '@ionic-native/app-version';
+import { HttpHeaders } from "@angular/common/http";
 
 @IonicPage()
 @Component({
@@ -105,6 +106,20 @@ export class ChanneldetailPage {
     })
   }
   goToPlayAnime(channel) {
+    this.api.get("table/z_channel_stream_detail", { params: { limit: 1, filter: "id=" + "'" + channel.id + "'" } })
+      .subscribe(val => {
+        let data = val['data']
+        const headers = new HttpHeaders()
+          .set("Content-Type", "application/json");
+        this.api.put("table/z_channel_stream_detail",
+          {
+            "id": channel.id,
+            "click": data[0].click + 1
+          },
+          { headers })
+          .subscribe(val => {
+          });
+      });
     this.navCtrl.push('PlayerPage', {
       url: channel.url,
       type: channel.type,

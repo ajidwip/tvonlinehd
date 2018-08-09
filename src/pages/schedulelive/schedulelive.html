@@ -14,9 +14,9 @@
       <ion-col padding col-5 style="border-right:1px solid;border-color:#ffffff;">ACARA</ion-col>
     </ion-row>
     <ion-row *ngFor="let channel of channels" (click)="goToPlay(channel)">
-      <ion-col padding col-3 style="border-right:1px solid;border-bottom:1px solid;border-color:#dedede;">{{channel.date_start | date:'HH:mm'}}</ion-col>
-      <ion-col padding col-4 style="border-right:1px solid;border-bottom:1px solid;border-color:#dedede;">{{channel.channel}}</ion-col>
-      <ion-col padding col-5 style="border-right:1px solid;border-bottom:1px solid;border-color:#dedede;">{{channel.title}}</ion-col>
+      <ion-col padding col-3 style="border-right:1px solid;border-bottom:1px solid;border-color:#dedede;color:#ffffff;">{{channel.date_start | date:'HH:mm'}}</ion-col>
+      <ion-col padding col-4 style="border-right:1px solid;border-bottom:1px solid;border-color:#dedede;color:#ffffff;">{{channel.channel}}</ion-col>
+      <ion-col padding col-5 style="border-right:1px solid;border-bottom:1px solid;border-color:#dedede;color:#ffffff;">{{channel.title}}</ion-col>
     </ion-row>
   </div>
   <div *ngIf="channels.length == 0">

@@ -5,6 +5,7 @@ import { ApiProvider } from '../../providers/api/api';
 import { AdMobPro } from '@ionic-native/admob-pro';
 import moment from 'moment';
 import { AppVersion } from '@ionic-native/app-version';
+import { HttpHeaders } from "@angular/common/http";
 
 declare var window: any;
 
@@ -81,6 +82,38 @@ export class NewupdateinfoPage {
     });
   }
   goToPlay(channel) {
+    if (channel.type == 'STREAM') {
+      this.api.get("table/z_channel_stream", { params: { limit: 1, filter: "id=" + "'" + channel.id + "'" } })
+        .subscribe(val => {
+          let data = val['data']
+          const headers = new HttpHeaders()
+            .set("Content-Type", "application/json");
+          this.api.put("table/z_channel_stream",
+            {
+              "id": channel.id,
+              "click": data[0].click + 1
+            },
+            { headers })
+            .subscribe(val => {
+            });
+        });
+    }
+    else if (channel.type == 'TV') {
+      this.api.get("table/z_channel", { params: { limit: 1, filter: "id=" + "'" + channel.id + "'" } })
+        .subscribe(val => {
+          let data = val['data']
+          const headers = new HttpHeaders()
+            .set("Content-Type", "application/json");
+          this.api.put("table/z_channel",
+            {
+              "id": channel.id,
+              "click": data[0].click + 1
+            },
+            { headers })
+            .subscribe(val => {
+            });
+        });
+    }
     if (channel.type == 'TV') {
       this.api.get("table/z_channel", { params: { limit: 30, filter: "id=" + "'" + channel.id + "'" } })
         .subscribe(val => {

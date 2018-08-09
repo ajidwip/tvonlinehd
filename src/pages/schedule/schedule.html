@@ -14,8 +14,8 @@
       <ion-col padding col-3>PUTAR</ion-col>
     </ion-row>
     <ion-row *ngFor="let channel of channels">
-      <ion-col padding col-3 style="border-right:1px solid;border-bottom:1px solid;border-color:#dedede;">{{channel.date_start | date:'HH:mm'}}</ion-col>
-      <ion-col padding col-6 style="border-right:1px solid;border-bottom:1px solid;border-color:#dedede;">{{channel.title}}</ion-col>
+      <ion-col padding col-3 style="border-right:1px solid;border-bottom:1px solid;border-color:#dedede;color:#ffffff;">{{channel.date_start | date:'HH:mm'}}</ion-col>
+      <ion-col padding col-6 style="border-right:1px solid;border-bottom:1px solid;border-color:#dedede;color:#ffffff;">{{channel.title}}</ion-col>
       <ion-col *ngIf="((channel.date_finish | date:'yyyy-MM-dd HH:mm') < datetimecurrent) || ((channel.date_start | date:'yyyy-MM-dd HH:mm') > datetimecurrent && (channel.date_finish | date:'yyyy-MM-dd HH:mm') > datetimecurrent)"
         padding col-3 style="border-bottom:1px solid;border-color:#dedede;text-align: center;">
         <ion-icon style="color:#dedede;font-size:30px;" name="logo-youtube"></ion-icon>

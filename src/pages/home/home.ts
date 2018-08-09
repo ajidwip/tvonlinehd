@@ -43,6 +43,7 @@ export class HomePage {
   public ads: any;
   public list: boolean = true;
   public favorit = [];
+  public mostwatch = [];
 
   constructor(
     public navCtrl: NavController,
@@ -67,6 +68,7 @@ export class HomePage {
       this.doGetLive();
       this.doGetListChannel();
       this.doGetList();
+      this.doGetMostWatched();
     });
   }
   ionViewDidLoad() {
@@ -90,6 +92,8 @@ export class HomePage {
       autoShow: true,
       position: this.admob.AD_POSITION.BOTTOM_CENTER,
     });*/
+    this.mostwatch = [];
+    this.doGetMostWatched();
     this.appVersion.getPackageName().then((name) => {
       this.packagename = name;
       this.api.get("table/z_admob", { params: { limit: 100, filter: "appid=" + "'" + this.packagename + "' AND status='OPEN'" } })
@@ -144,20 +148,30 @@ export class HomePage {
     this.api.get("table/z_list_channel", { params: { filter: "status='OPEN'", limit: 100, sort: "name" + " ASC " } })
       .subscribe(val => {
         this.channellist = val['data']
+      }, err => {
+        this.doGetListChannel();
       });
   }
   doDetailArsip() {
     this.uniqueDeviceID.get()
       .then((uuid: any) => {
         this.navCtrl.push('ChannelPage', {
-          name: 'fav',
+          name: 'Arsip',
           category: 'ARSIP',
-          type: 'STREAM',
+          type: 'GRID',
           stream: '',
           uuiddevices: uuid
         })
       })
       .catch((error: any) => console.log(error));
+  }
+  doDetailMostWatched() {
+    this.navCtrl.push('ChannelPage', {
+      name: 'Most Watched',
+      category: 'MOSTWATCHED',
+      type: 'GRID',
+      stream: ''
+    })
   }
   doDetail(channel) {
     this.navCtrl.push('ChannelPage', {
@@ -175,6 +189,38 @@ export class HomePage {
     })
   }
   doPreviewArsip(channeldetail) {
+    if (channeldetail.type == 'STREAM') {
+      this.api.get("table/z_channel_stream", { params: { limit: 1, filter: "id=" + "'" + channeldetail.id + "'" } })
+        .subscribe(val => {
+          let data = val['data']
+          const headers = new HttpHeaders()
+            .set("Content-Type", "application/json");
+          this.api.put("table/z_channel_stream",
+            {
+              "id": channeldetail.id,
+              "click": data[0].click + 1
+            },
+            { headers })
+            .subscribe(val => {
+            });
+        });
+    }
+    else if (channeldetail.type == 'TV') {
+      this.api.get("table/z_channel", { params: { limit: 1, filter: "id=" + "'" + channeldetail.id + "'" } })
+        .subscribe(val => {
+          let data = val['data']
+          const headers = new HttpHeaders()
+            .set("Content-Type", "application/json");
+          this.api.put("table/z_channel",
+            {
+              "id": channeldetail.id,
+              "click": data[0].click + 1
+            },
+            { headers })
+            .subscribe(val => {
+            });
+        });
+    }
     this.navCtrl.push('PreviewPage', {
       id: channeldetail.id,
       name: channeldetail.name,
@@ -190,6 +236,38 @@ export class HomePage {
     })
   }
   doPreview(channeldetail) {
+    if (channeldetail.type == 'STREAM') {
+      this.api.get("table/z_channel_stream", { params: { limit: 1, filter: "id=" + "'" + channeldetail.id + "'" } })
+        .subscribe(val => {
+          let data = val['data']
+          const headers = new HttpHeaders()
+            .set("Content-Type", "application/json");
+          this.api.put("table/z_channel_stream",
+            {
+              "id": channeldetail.id,
+              "click": data[0].click + 1
+            },
+            { headers })
+            .subscribe(val => {
+            });
+        });
+    }
+    else if (channeldetail.type == 'TV') {
+      this.api.get("table/z_channel", { params: { limit: 1, filter: "id=" + "'" + channeldetail.id + "'" } })
+        .subscribe(val => {
+          let data = val['data']
+          const headers = new HttpHeaders()
+            .set("Content-Type", "application/json");
+          this.api.put("table/z_channel",
+            {
+              "id": channeldetail.id,
+              "click": data[0].click + 1
+            },
+            { headers })
+            .subscribe(val => {
+            });
+        });
+    }
     if (channeldetail.type == 'STREAM') {
       this.navCtrl.push('PreviewPage', {
         id: channeldetail.id,
@@ -258,6 +336,17 @@ export class HomePage {
       }
     }
   }
+  doGetMostWatched() {
+    this.api.get("table/z_channel_stream", { params: { filter: "status='OPEN'", limit: 8, sort: "click" + " DESC " } })
+      .subscribe(val => {
+        let data = val['data']
+        for (let i = 0; i < data.length; i++) {
+          this.mostwatch.push(data[i]);
+        }
+      }, err => {
+        this.doGetMostWatched();
+      });
+  }
   doGetList() {
     this.api.get("table/z_list_channel", { params: { filter: "status='OPEN' AND (name LIKE 'TV%' OR category='STREAM')", limit: 100, sort: "name" + " ASC " } })
       .subscribe(val => {
@@ -285,12 +374,16 @@ export class HomePage {
         }
         this.loader.dismiss()
         this.datashow = true;
+      }, err => {
+        this.doGetList();
       });
   }
   doGetLive() {
     this.api.get("table/z_channel_live", { params: { limit: 10, filter: "status='OPEN'" + " AND datefinish >=" + "'" + this.datetimecurrent + "'", sort: "datestart" + " ASC " } })
       .subscribe(val => {
         this.channellive = val['data']
+      }, err => {
+        this.doGetLive();
       });
   }
   doComment() {
