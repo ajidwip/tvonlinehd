@@ -92,11 +92,9 @@ export class ChannelPage {
     });
   }
   doShowSearch() {
-    console.log(this.showsearch)
     this.showsearch = this.showsearch ? false : true
   }
   doHideSearch() {
-    console.log(this.showsearch)
     this.showsearch = this.showsearch ? false : true
   }
   doGetChannelSearch() {

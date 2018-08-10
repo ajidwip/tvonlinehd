@@ -63,8 +63,8 @@ export class PreviewPage {
       this.controls = this.navParam.get('controls')
       let trailer = this.navParam.get('trailer')
       let trailersubs = trailer.substring(32, 60)
-      this.trailer = 'https://www.youtube.com/embed/' + trailersubs + '?autoplay=0&showinfo=0&controls=0'
-      console.log(this.title, this.category, this.stream, this.trailer)
+      let link = trailer.substring(0, 22)
+      this.trailer = link + '/embed/' + trailersubs + '?autoplay=0&showinfo=0&controls=0'
       setTimeout(() => {
         this.loader.dismiss();
       }, 3000);

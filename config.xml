@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.tv.onlinehdnew" version="2.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>TV Streaming</name>
+<widget id="com.tv.onlinehd" version="2.0.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>TV Online</name>
     <description>TV Online Indonesia</description>
     <author email="ajidwip6@gmail.com" href="http://tvonline.co.id/" />
     <content src="index.html" />
