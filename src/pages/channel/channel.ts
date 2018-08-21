@@ -783,7 +783,7 @@ export class ChannelPage {
             }
             else if (data[0].plugin == '9') {
               let dataurl = data[0].url
-              let url = dataurl.substring(32, 60)
+              let url = dataurl.substring(30, 60)
               this.youtube.openVideo(url);
               var admobid = {
                 banner: this.ads[0].ads_banner,
@@ -883,7 +883,7 @@ export class ChannelPage {
                 }
                 else if (data[0].url && data[0].plugin == '9') {
                   let dataurl = data[0].url
-                  let url = dataurl.substring(32, 60)
+                  let url = dataurl.substring(30, 60)
                   this.youtube.openVideo(url);
                   var admobid = {
                     banner: this.ads[0].ads_banner,

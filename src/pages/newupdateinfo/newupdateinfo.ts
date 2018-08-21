@@ -6,6 +6,7 @@ import { AdMobPro } from '@ionic-native/admob-pro';
 import moment from 'moment';
 import { AppVersion } from '@ionic-native/app-version';
 import { HttpHeaders } from "@angular/common/http";
+import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player';
 
 declare var window: any;
 
@@ -37,6 +38,7 @@ export class NewupdateinfoPage {
     public toastCtrl: ToastController,
     public appVersion: AppVersion,
     public admob: AdMobPro,
+    private youtube: YoutubeVideoPlayer,
     public loadingCtrl: LoadingController) {
     this.loading = this.loadingCtrl.create({
 
@@ -155,6 +157,21 @@ export class NewupdateinfoPage {
             };
             window.plugins.streamingMedia.playVideo(videoUrl, options);
             var admobid = {
+              banner: this.ads[0].ads_banner,
+              interstitial: this.ads[0].ads_interstitial
+            };
+
+            this.admob.prepareInterstitial({
+              adId: admobid.interstitial,
+              isTesting: this.ads[0].testing,
+              autoShow: true
+            })
+          }
+          else if (channel.plugin == '9') {
+            let dataurl = data[0].url
+            let url = dataurl.substring(30, 60)
+            this.youtube.openVideo(url);
+            let admobid = {
               banner: this.ads[0].ads_banner,
               interstitial: this.ads[0].ads_interstitial
             };
