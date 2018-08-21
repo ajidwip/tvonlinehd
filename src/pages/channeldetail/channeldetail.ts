@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Refresher, Platform, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Refresher, Platform, LoadingController, AlertController } from 'ionic-angular';
 import { ApiProvider } from '../../providers/api/api';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { AdMobPro } from '@ionic-native/admob-pro';
@@ -21,6 +21,8 @@ export class ChanneldetailPage {
   public ads: any;
   public showsearch: boolean = false;
   public search = [];
+  public quality = [];
+  public qualityid: any;
 
   constructor(
     public navCtrl: NavController,
@@ -28,6 +30,7 @@ export class ChanneldetailPage {
     public platform: Platform,
     public navParams: NavParams,
     public admob: AdMobPro,
+    public alertCtrl: AlertController,
     public loadingCtrl: LoadingController,
     private androidFullScreen: AndroidFullScreen,
     public appVersion: AppVersion,
@@ -159,6 +162,57 @@ export class ChanneldetailPage {
   }
   ionViewWillLeave() {
     this.admob.removeBanner();
+  }
+  doCloseQuality() {
+    document.getElementById('qualitya').style.display = 'none';
+  }
+  doSelectQuality() {
+    console.log(this.qualityid)
+  }
+  doQuality(channel) {
+    this.qualityid = ''
+    this.api.get("table/z_channel_stream_detail_url", { params: { limit: 10, filter: "id_channel=" + "'" + channel.id + "'" + "AND status = 'OPEN'", sort: 'quality ASC' } })
+      .subscribe(val => {
+        this.quality = val['data']
+        document.getElementById('qualitya').style.display = 'block';
+      });
+  }
+  doPlayer() {
+    if (this.qualityid === '') {
+      let alert = this.alertCtrl.create({
+        subTitle: 'Silahkan pilih server terlebih dahulu !!!',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
+    else {
+      this.doCloseQuality()
+      this.api.get("table/z_channel_stream_detail", { params: { limit: 1, filter: "id=" + "'" + this.qualityid + "'" } })
+        .subscribe(val => {
+          let data = val['data']
+          const headers = new HttpHeaders()
+            .set("Content-Type", "application/json");
+          this.api.put("table/z_channel_stream_detail",
+            {
+              "id": this.qualityid,
+              "click": data[0].click + 1
+            },
+            { headers })
+            .subscribe(val => {
+            });
+        });
+      this.api.get("table/z_channel_stream_detail_url", { params: { limit: 1, filter: "id=" + "'" + this.qualityid + "'" } })
+        .subscribe(val => {
+          let data = val['data']
+          this.navCtrl.push('PlayerPage', {
+            url: data[0].url,
+            type: data[0].type,
+            stream: data[0].stream,
+            xml: data[0].xml,
+            thumbnail: data[0].thumbnail_picture
+          })
+        });
+    }
   }
 
 }

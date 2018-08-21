@@ -63,7 +63,7 @@
       </ion-row>
       <div *ngFor="let channeld of channeldetail">
         <ion-row *ngIf="channeld.date == channel.date" style="border-bottom:1px solid;border-color:#7a7a7a;background: #26262d;"
-          (click)="doPlayLive(channeld)">
+          (click)="doQualityLive(channeld)">
           <ion-col *ngIf="!channeld.url" padding col-4 style="text-align:left;color:#ffffff;">{{channeld.datestart | date:'HH:mm'}} WIB</ion-col>
           <ion-col *ngIf="channeld.url" padding col-4 style="text-align:left;color:red;font-weight: bold;">LIVE</ion-col>
           <ion-col padding col-8 style="text-align:left;color:#ffffff;">{{channeld.title}}</ion-col>
@@ -77,9 +77,9 @@
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>
-<div id="qualitys" class="quality" style="background:#fff;">
+<div id="qualitys" class="quality" style="background:#fff;border:1px solid;border-color:#26262d;">
   <ion-header>
-    <ion-toolbar color="darkgrey">
+    <ion-toolbar color="darkgrey" style="border:1px solid;border-color:#fff;">
       <ion-title>
         Server List
       </ion-title>
@@ -98,7 +98,7 @@
           <ion-icon name="md-play"></ion-icon>&nbsp;&nbsp;&nbsp;Play</button>
       </ion-col>
       <ion-col col-6>
-        <button ion-button full color="green2" style="font-weight: bold;font-size:15px;" (click)="doCloseQuality()">
+        <button ion-button full color="danger" style="font-weight: bold;font-size:15px;" (click)="doCloseQuality()">
           <ion-icon name="md-close-circle"></ion-icon>&nbsp;&nbsp;&nbsp;Cancel</button>
       </ion-col>
     </ion-row>

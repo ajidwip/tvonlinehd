@@ -47,7 +47,7 @@ export class NewupdateinfoPage {
       this.datetimecurrent = moment().format('YYYY-MM-DD HH:mm');
       this.param = this.navParam.get('param')
       if (this.param == '0') {
-        this.api.get("table/z_channel", { params: { limit: 10, filter: "status='OPEN'", sort: "date" + " DESC " } })
+        this.api.get("table/z_channel", { params: { limit: 10, filter: "status='OPEN' AND status_2 != 'CLSD'", sort: "date" + " DESC " } })
           .subscribe(val => {
             this.channels = val['data']
             let data = val['data'];

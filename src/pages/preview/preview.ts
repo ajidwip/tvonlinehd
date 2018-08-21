@@ -346,13 +346,13 @@ export class PreviewPage {
     this.youtube.openVideo(this.trailer);
   }
   doCloseQuality() {
-    this.qualityid = ''
     document.getElementById('qualitys').style.display = 'none';
   }
   doSelectQuality() {
     console.log(this.qualityid)
   }
   doQuality() {
+    this.qualityid = '';
     if ((this.type == 'STREAM' && this.name == 'Anime') || (this.type == 'STREAM' && this.name == 'Film Series')) {
       this.navCtrl.push('ChanneldetailPage', {
         anime: this.title
@@ -375,11 +375,92 @@ export class PreviewPage {
       alert.present();
     }
     else {
+      this.doCloseQuality();
       this.api.get("table/z_channel_stream_url", { params: { limit: 10, filter: "id=" + "'" + this.qualityid + "'" } })
         .subscribe(val => {
           let data = val['data']
+          if (data[0].plugin == '1') {
+            var self = this
+            let data = val['data']
+            var videoUrl = data[0].url;
+            var options = {
+              successCallback: function () {
+
+              },
+              errorCallback: function (errMsg) {
+                self.api.get('nextno/z_report_url/id').subscribe(val => {
+                  let nextno = val['nextno'];
+                  const headers = new HttpHeaders()
+                    .set("Content-Type", "application/json");
+                  self.api.post("table/z_report_url",
+                    {
+                      "id": nextno,
+                      "id_channel": data[0].id,
+                      "name": data[0].name,
+                      "title": data[0].title,
+                      "url": data[0].url,
+                      "date": moment().format('YYYY-MM-DD HH:mm:ss'),
+                    },
+                    { headers })
+                    .subscribe(val => {
+                      let toast = self.toastCtrl.create({
+                        message: 'Report has been sent',
+                        duration: 3000
+                      });
+                      toast.present();
+                    });
+                });
+              },
+              orientation: 'landscape',
+              shouldAutoClose: true,  // true(default)/false
+              controls: this.controls // true(default)/false. Used to hide controls on fullscreen
+            };
+            window.plugins.streamingMedia.playVideo(videoUrl, options);
+            var admobid = {
+              banner: this.ads[0].ads_banner,
+              interstitial: this.ads[0].ads_interstitial
+            };
+
+            this.admob.prepareInterstitial({
+              adId: admobid.interstitial,
+              isTesting: this.ads[0].testing,
+              autoShow: true
+            })
+          }
+          else {
+            if (this.type == 'TV') {
+              this.api.get("table/z_channel", { params: { limit: 30, filter: "id=" + "'" + this.id + "'" } })
+                .subscribe(val => {
+                  let data = val['data']
+                  this.navCtrl.push('LivePage', {
+                    url: data[0].url,
+                    stream: data[0].stream,
+                    xml: data[0].xml,
+                    rotate: data[0].orientation,
+                    thumbnail: data[0].thumbnail_picture,
+                    subsbody1: data[0].subsbody_1,
+                    subsbody2: data[0].subsbody_2,
+                    subshead1: data[0].subshead_1,
+                    subshead2: data[0].subshead_2
+                  })
+                });
+            }
+            else if (this.type == 'STREAM') {
+              this.api.get("table/z_channel_stream", { params: { limit: 30, filter: "id=" + "'" + this.id + "'" } })
+                .subscribe(val => {
+                  let data = val['data']
+                  this.navCtrl.push('LivePage', {
+                    url: data[0].url,
+                    stream: data[0].stream,
+                    xml: data[0].xml,
+                    rotate: data[0].orientation,
+                    thumbnail: data[0].thumbnail_picture
+                  })
+                });
+            }
+          }
         });
-      }
+    }
   }
 
 }

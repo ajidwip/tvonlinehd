@@ -9,6 +9,7 @@ import { HttpHeaders } from "@angular/common/http";
 import { AppVersion } from '@ionic-native/app-version';
 import { StatusBar } from '@ionic-native/status-bar';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id';
+import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player';
 
 // declare var Swiper: any;
 declare var window: any;
@@ -61,6 +62,7 @@ export class HomePage {
     private statusBar: StatusBar,
     private uniqueDeviceID: UniqueDeviceID,
     public toastCtrl: ToastController,
+    private youtube: YoutubeVideoPlayer,
     private admob: AdMobPro) {
     this.myForm = fb.group({
       comment: ['', Validators.compose([Validators.required])],
@@ -693,6 +695,7 @@ export class HomePage {
     })
   }
   doQuality(channeldetail) {
+    this.qualityid = ''
     if (channeldetail.type == 'STREAM') {
       this.navCtrl.push('PreviewPage', {
         id: channeldetail.id,
@@ -748,7 +751,6 @@ export class HomePage {
       });
   }
   doCloseQuality() {
-    this.qualityid = ''
     document.getElementById('quality').style.display = 'none';
   }
   doSelectQuality() {
@@ -763,6 +765,7 @@ export class HomePage {
       alert.present();
     }
     else {
+      this.doCloseQuality()
       this.api.get("table/z_channel_url", { params: { limit: 10, filter: "id=" + "'" + this.qualityid + "'" } })
         .subscribe(val => {
           let data = val['data']
@@ -817,6 +820,21 @@ export class HomePage {
                 })
               });
           }
+          else if (data[0].plugin == '9') {
+            let dataurl = data[0].url
+            let url = dataurl.substring(32, 60)
+            this.youtube.openVideo(url);
+            var admobid = {
+              banner: this.ads[0].ads_banner,
+              interstitial: this.ads[0].ads_interstitial
+            };
+
+            this.admob.prepareInterstitial({
+              adId: admobid.interstitial,
+              isTesting: this.ads[0].testing,
+              autoShow: true
+            })
+          }
           else {
             this.api.get("table/z_channel", { params: { limit: 30, filter: "id=" + "'" + data[0].id + "'" } })
               .subscribe(val => {
@@ -834,7 +852,6 @@ export class HomePage {
                 })
               });
           }
-          this.doCloseQuality()
         });
     }
   }
@@ -899,6 +916,21 @@ export class HomePage {
             controls: data[0].controls // true(default)/false. Used to hide controls on fullscreen
           };
           window.plugins.streamingMedia.playVideo(videoUrl, options);
+        }
+        else if (data[0].url && data[0].plugin == '9') {
+          let dataurl = data[0].url
+          let url = dataurl.substring(32, 60)
+          this.youtube.openVideo(url);
+          var admobid = {
+            banner: this.ads[0].ads_banner,
+            interstitial: this.ads[0].ads_interstitial
+          };
+
+          this.admob.prepareInterstitial({
+            adId: admobid.interstitial,
+            isTesting: this.ads[0].testing,
+            autoShow: true
+          })
         }
         else {
           let alert = this.alertCtrl.create({
