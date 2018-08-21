@@ -4,6 +4,6 @@
     <source [src]="url" type="application/x-mpegURL"> </video>
   <div *ngIf="((stream == '0' && xml == '2') || (stream == '0' && xml == '1'))" style="margin:auto;" id="player-wrapper"></div>
   <div *ngIf="stream == '0' && xml == '3'" id="streaming"></div>
-  <iframe *ngIf="!stream" [src]="url | safe:'resourceUrl'" allowfullscreen="allowfullscreen" allowtransparency="true" frameborder="0"
+  <iframe *ngIf="!stream" [src]="url | safe:'resourceUrl'" sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation" allowfullscreen="allowfullscreen" allowtransparency="true" frameborder="0"
     height="100%" width="100%"></iframe>
 </ion-content>

@@ -36,6 +36,8 @@ export class ChannelPage {
   public packagename: any;
   public ads: any;
   public uuiddevices: any;
+  public quality = [];
+  public qualityid: any;
 
   constructor(
     public navCtrl: NavController,
@@ -62,16 +64,13 @@ export class ChannelPage {
       this.uuiddevices = this.navParam.get('uuiddevices')
       if (this.channelcategory == 'TV') {
         this.doGetChannel();
-        this.doGetChannelSearch();
       }
       else if (this.channelcategory == 'STREAM') {
         this.doGetChannelStream();
-        this.doGetChannelStreamSearch();
       }
       else if (this.channelcategory == 'LIVE') {
         this.doGetChannelLive();
-        this.doGetChannelLiveDetailSearch();
-        this.api.get("table/z_channel_live", { params: { limit: 1000, filter: "category=" + "'" + this.channelname + "' AND status='OPEN'" + " AND datefinish >=" + "'" + this.datetimecurrent + "'", sort: "datestart" + " ASC " } })
+        this.api.get("table/z_channel_live", { params: { limit: 500, filter: "category=" + "'" + this.channelname + "' AND status='OPEN'" + " AND datefinish >=" + "'" + this.datetimecurrent + "'", sort: "datestart" + " ASC " } })
           .subscribe(val => {
             this.channeldetail = val['data']
             this.loader.dismiss()
@@ -79,15 +78,12 @@ export class ChannelPage {
       }
       else if (this.channelcategory == 'RADIO') {
         this.doGetChannelRadio();
-        this.doGetChannelRadioSearch();
       }
       else if (this.channelcategory == 'ARSIP') {
         this.doGetChannelArsip();
-        this.doGetChannelArsipSearch();
       }
       else if (this.channelcategory == 'MOSTWATCHED') {
         this.doGetChannelMostWatched();
-        this.doGetChannelMostWatchedSearch();
       }
     });
   }
@@ -97,18 +93,6 @@ export class ChannelPage {
   doHideSearch() {
     this.showsearch = this.showsearch ? false : true
   }
-  doGetChannelSearch() {
-    this.api.get("table/z_channel", { params: { limit: 10000, filter: "name=" + "'" + this.channelname + "' AND status='OPEN'", sort: "title" + " ASC " } })
-      .subscribe(val => {
-        this.search = val['data']
-      });
-  }
-  doGetPlayer() {
-    this.api.get("table/z_channel", { params: { limit: 10000, filter: "name=" + "'" + this.channelname + "' AND status='OPEN'", sort: "title" + " ASC " } })
-      .subscribe(val => {
-        this.search = val['data']
-      });
-  }
   doGetChannel() {
     return new Promise(resolve => {
       let offset = 30 * this.halaman
@@ -117,7 +101,7 @@ export class ChannelPage {
       }
       else {
         this.halaman++;
-        this.api.get("table/z_channel", { params: { limit: 30, offset: offset, filter: "name=" + "'" + this.channelname + "' AND status='OPEN'", sort: "title" + " ASC " } })
+        this.api.get("table/z_channel", { params: { limit: 30, offset: offset, filter: "name=" + "'" + this.channelname + "' AND status='OPEN' AND status_2 != 'CLSD'", sort: "title" + " ASC " } })
           .subscribe(val => {
             let data = val['data'];
             this.loader.dismiss();
@@ -131,12 +115,6 @@ export class ChannelPage {
           });
       }
     });
-  }
-  doGetChannelStreamSearch() {
-    this.api.get("table/z_channel_stream", { params: { limit: 10000, filter: "name=" + "'" + this.channelname + "' AND status='OPEN'", sort: "title" + " ASC " } })
-      .subscribe(val => {
-        this.search = val['data']
-      });
   }
   doGetChannelStream() {
     return new Promise(resolve => {
@@ -161,12 +139,6 @@ export class ChannelPage {
       }
     });
   }
-  doGetChannelArsipSearch() {
-    this.api.get("table/z_arsip_users", { params: { limit: 10000, filter: "uuid_device=" + "'" + this.uuiddevices + "'", sort: "title" + " ASC " } })
-      .subscribe(val => {
-        this.search = val['data']
-      });
-  }
   doGetChannelArsip() {
     return new Promise(resolve => {
       let offset = 30 * this.halaman
@@ -189,12 +161,6 @@ export class ChannelPage {
           });
       }
     });
-  }
-  doGetChannelMostWatchedSearch() {
-    this.api.get("table/z_channel_stream", { params: { limit: 10000, filter: "status='OPEN'", sort: "click" + " DESC " } })
-      .subscribe(val => {
-        this.search = val['data']
-      });
   }
   doGetChannelMostWatched() {
     return new Promise(resolve => {
@@ -219,12 +185,6 @@ export class ChannelPage {
       }
     });
   }
-  doGetChannelLiveSearch() {
-    this.api.get("table/z_channel_live", { params: { limit: 10000, filter: "category=" + "'" + this.channelname + "' AND status='OPEN'" + " AND date >=" + "'" + this.datecurrent + "'", group: "date", sort: "date" + " ASC " } })
-      .subscribe(val => {
-        this.search = val['data']
-      });
-  }
   doGetChannelLive() {
     return new Promise(resolve => {
       let offset = 100 * this.halaman
@@ -247,12 +207,6 @@ export class ChannelPage {
       }
     });
   }
-  doGetChannelLiveDetailSearch() {
-    this.api.get("table/z_channel_live", { params: { limit: 10000, filter: "category=" + "'" + this.channelname + "' AND status='OPEN'" + " AND datefinish >=" + "'" + this.datetimecurrent + "'", sort: "datestart" + " ASC " } })
-      .subscribe(val => {
-        this.search = val['data']
-      });
-  }
   doGetChannelLiveDetail() {
     return new Promise(resolve => {
       let offset = 100 * this.halaman
@@ -274,12 +228,6 @@ export class ChannelPage {
           });
       }
     });
-  }
-  doGetChannelRadioSearch() {
-    this.api.get("table/z_channel_radio", { params: { limit: 10000, filter: "status='OPEN'", sort: "title" + " ASC " } })
-      .subscribe(val => {
-        this.search = val['data']
-      });
   }
   doGetChannelRadio() {
     return new Promise(resolve => {
@@ -464,6 +412,7 @@ export class ChannelPage {
     else if (channel.plugin == '1') {
       this.api.get("table/z_channel", { params: { limit: 30, filter: "id=" + "'" + channel.id + "'" } })
         .subscribe(val => {
+          var self = this;
           let data = val['data']
           var videoUrl = data[0].url;
           var options = {
@@ -471,11 +420,28 @@ export class ChannelPage {
 
             },
             errorCallback: function (errMsg) {
-              let toast = this.toastCtrl.create({
-                message: errMsg,
-                duration: 3000
+              self.api.get('nextno/z_report_url/id').subscribe(val => {
+                let nextno = val['nextno'];
+                const headers = new HttpHeaders()
+                  .set("Content-Type", "application/json");
+                self.api.post("table/z_report_url",
+                  {
+                    "id": nextno,
+                    "id_channel": channel.id,
+                    "name": channel.name,
+                    "title": channel.title,
+                    "url": channel.url,
+                    "date": moment().format('YYYY-MM-DD HH:mm:ss'),
+                  },
+                  { headers })
+                  .subscribe(val => {
+                    let toast = self.toastCtrl.create({
+                      message: 'Report has been sent',
+                      duration: 3000
+                    });
+                    toast.present();
+                  });
               });
-              toast.present();
             },
             orientation: 'landscape',
             shouldAutoClose: true,  // true(default)/false
@@ -565,6 +531,7 @@ export class ChannelPage {
     this.api.get("table/z_channel_live", { params: { limit: 30, filter: "id=" + "'" + channeld.id + "'" } })
       .subscribe(val => {
         let data = val['data'];
+        var self = this;
         if (data[0].url && channeld.plugin != '1') {
           this.navCtrl.push('LivePage', {
             url: data[0].url,
@@ -594,11 +561,28 @@ export class ChannelPage {
               })
             },
             errorCallback: function (errMsg) {
-              let toast = this.toastCtrl.create({
-                message: errMsg,
-                duration: 3000
+              self.api.get('nextno/z_report_url/id').subscribe(val => {
+                let nextno = val['nextno'];
+                const headers = new HttpHeaders()
+                  .set("Content-Type", "application/json");
+                self.api.post("table/z_report_url",
+                  {
+                    "id": nextno,
+                    "id_channel": channeld.id,
+                    "name": channeld.name,
+                    "title": channeld.title,
+                    "url": channeld.url,
+                    "date": moment().format('YYYY-MM-DD HH:mm:ss'),
+                  },
+                  { headers })
+                  .subscribe(val => {
+                    let toast = self.toastCtrl.create({
+                      message: 'Report has been sent',
+                      duration: 3000
+                    });
+                    toast.present();
+                  });
               });
-              toast.present();
             },
             orientation: 'landscape',
             shouldAutoClose: true,  // true(default)/false
@@ -617,14 +601,57 @@ export class ChannelPage {
   }
   getSearch(ev: any) {
     // set val to the value of the searchbar
-    let val = ev.target.value;
+    let value = ev.target.value;
 
     // if the value is an empty string don't filter the items
-    if (val && val.trim() != '') {
-      this.channels = this.search.filter(channel => {
-        return channel.title.toLowerCase().indexOf(val.toLowerCase()) > -1;
-      })
-    } else {
+    if (value && value.trim() != '') {
+      if (this.channelcategory == 'TV') {
+        this.api.get("table/z_channel", { params: { limit: 10, filter: "name=" + "'" + this.channelname + "' AND title LIKE" + "'%" + value + "%' AND status='OPEN' AND status_2 != 'CLSD'", sort: "title" + " ASC " } })
+          .subscribe(val => {
+            let data = val['data']
+            this.channels = data.filter(channel => {
+              return channel.title.toLowerCase().indexOf(value.toLowerCase()) > -1;
+            })
+          });
+      }
+      else if (this.channelcategory == 'STREAM') {
+        this.api.get("table/z_channel_stream", { params: { limit: 10, filter: "name=" + "'" + this.channelname + "' AND title LIKE" + "'%" + value + "%' AND status='OPEN'", sort: "title" + " ASC " } })
+          .subscribe(val => {
+            let data = val['data']
+            this.channels = data.filter(channel => {
+              return channel.title.toLowerCase().indexOf(value.toLowerCase()) > -1;
+            })
+          });
+      }
+      else if (this.channelcategory == 'LIVE') {
+        this.api.get("table/z_channel_live", { params: { limit: 10, filter: "category=" + "'" + this.channelname + "' AND status='OPEN' AND title LIKE" + "'%" + value + "%'", sort: "datestart" + " ASC " } })
+          .subscribe(val => {
+            let data = val['data']
+            this.channeldetail = data.filter(channel => {
+              return channel.title.toLowerCase().indexOf(value.toLowerCase()) > -1;
+            })
+          });
+      }
+      else if (this.channelcategory == 'RADIO') {
+        this.api.get("table/z_channel_radio", { params: { limit: 10, filter: "title LIKE" + "'%" + value + "%' AND status='OPEN'", sort: "title" + " ASC " } })
+          .subscribe(val => {
+            let data = val['data']
+            this.channels = data.filter(channel => {
+              return channel.title.toLowerCase().indexOf(value.toLowerCase()) > -1;
+            })
+          });
+      }
+      else if (this.channelcategory == 'ARSIP') {
+        this.api.get("table/z_arsip_users", { params: { limit: 10, filter: "uuid_device=" + "'" + this.uuiddevices + "' AND title LIKE" + "'%" + value + "%'", sort: "title" + " ASC " } })
+          .subscribe(val => {
+            let data = val['data']
+            this.channels = data.filter(channel => {
+              return channel.title.toLowerCase().indexOf(value.toLowerCase()) > -1;
+            })
+          });
+      }
+    }
+    else {
       this.channels = [];
       this.halaman = 0;
       if (this.channelcategory == 'TV') {
@@ -635,7 +662,7 @@ export class ChannelPage {
       }
       else if (this.channelcategory == 'LIVE') {
         this.doGetChannelLive();
-        this.api.get("table/z_channel_live", { params: { limit: 1000, filter: "category=" + "'" + this.channelname + "' AND status='OPEN'" + " AND datefinish >=" + "'" + this.datetimecurrent + "'", sort: "datestart" + " ASC " } })
+        this.api.get("table/z_channel_live", { params: { limit: 500, filter: "category=" + "'" + this.channelname + "' AND status='OPEN'" + " AND datefinish >=" + "'" + this.datetimecurrent + "'", sort: "datestart" + " ASC " } })
           .subscribe(val => {
             this.channeldetail = val['data']
           });
@@ -651,5 +678,124 @@ export class ChannelPage {
       }
     }
   }
+  doCloseQuality() {
+    this.qualityid = ''
+    document.getElementById('qualitys').style.display = 'none';
+  }
+  doSelectQuality() {
+    console.log(this.qualityid)
+  }
+  doQuality(channel) {
+    if (channel.type == 'TV') {
+      this.api.get("table/z_channel_url", { params: { limit: 10, filter: "id_channel=" + "'" + channel.id + "'" + "AND status = 'OPEN'", sort: 'quality ASC' } })
+        .subscribe(val => {
+          this.quality = val['data']
+          document.getElementById('qualitys').style.display = 'block';
+        });
+    }
+    else if (channel.type == 'STREAM') {
+      this.navCtrl.push('PreviewPage', {
+        id: channel.id,
+        name: channel.name,
+        title: channel.title,
+        category: channel.category,
+        trailer: channel.trailer,
+        type: channel.type,
+        stream: channel.stream,
+        xml: channel.xml,
+        plugin: channel.plugin,
+        url: channel.url,
+        controls: channel.controls
+      })
+    }
+    else if (channel.type == 'RADIO') {
+      this.radiostream = this.radiostream ? false : true;
+      this.url = channel.url
+      this.id = channel.id
+    }
+  }
+  doPlayer() {
+    if (this.qualityid === '') {
+      let alert = this.alertCtrl.create({
+        subTitle: 'Silahkan pilih server terlebih dahulu !!!',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
+    else {
+      this.api.get("table/z_channel_url", { params: { limit: 10, filter: "id=" + "'" + this.qualityid + "'" } })
+        .subscribe(val => {
+          let data = val['data']
+          if (data[0].plugin == '1') {
+            this.api.get("table/z_channel", { params: { limit: 30, filter: "id=" + "'" + data[0].id + "'" } })
+              .subscribe(val => {
+                var self = this
+                let data = val['data']
+                var videoUrl = data[0].url;
+                var options = {
+                  successCallback: function () {
 
+                  },
+                  errorCallback: function (errMsg) {
+                    self.api.get('nextno/z_report_url/id').subscribe(val => {
+                      let nextno = val['nextno'];
+                      const headers = new HttpHeaders()
+                        .set("Content-Type", "application/json");
+                      self.api.post("table/z_report_url",
+                        {
+                          "id": nextno,
+                          "id_channel": data[0].id,
+                          "name": data[0].name,
+                          "title": data[0].title,
+                          "url": data[0].url,
+                          "date": moment().format('YYYY-MM-DD HH:mm:ss'),
+                        },
+                        { headers })
+                        .subscribe(val => {
+                          let toast = self.toastCtrl.create({
+                            message: 'Report has been sent',
+                            duration: 3000
+                          });
+                          toast.present();
+                        });
+                    });
+                  },
+                  orientation: 'landscape',
+                  shouldAutoClose: true,  // true(default)/false
+                  controls: data[0].controls // true(default)/false. Used to hide controls on fullscreen
+                };
+                window.plugins.streamingMedia.playVideo(videoUrl, options);
+                var admobid = {
+                  banner: this.ads[0].ads_banner,
+                  interstitial: this.ads[0].ads_interstitial
+                };
+
+                this.admob.prepareInterstitial({
+                  adId: admobid.interstitial,
+                  isTesting: this.ads[0].testing,
+                  autoShow: true
+                })
+              });
+          }
+          else {
+            this.api.get("table/z_channel", { params: { limit: 30, filter: "id=" + "'" + data[0].id + "'" } })
+              .subscribe(val => {
+                let data = val['data']
+                this.navCtrl.push('LivePage', {
+                  url: data[0].url,
+                  stream: data[0].stream,
+                  xml: data[0].xml,
+                  rotate: data[0].orientation,
+                  thumbnail: data[0].thumbnail_picture,
+                  subsbody1: data[0].subsbody_1,
+                  subsbody2: data[0].subsbody_2,
+                  subshead1: data[0].subshead_1,
+                  subshead2: data[0].subshead_2
+                })
+              });
+          }
+          this.doCloseQuality()
+        });
+    }
+  }
 }

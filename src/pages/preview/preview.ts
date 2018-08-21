@@ -8,6 +8,7 @@ import moment from 'moment';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen';
 import { AppVersion } from '@ionic-native/app-version';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id';
+import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player';
 
 declare var window;
 
@@ -33,6 +34,9 @@ export class PreviewPage {
   public controls: any;
   public nextno: any;
   public inifavorit = [];
+  public report = [];
+  public quality = [];
+  public qualityid: any;
 
   constructor(
     public navCtrl: NavController,
@@ -46,6 +50,7 @@ export class PreviewPage {
     public loadingCtrl: LoadingController,
     private androidFullScreen: AndroidFullScreen,
     private uniqueDeviceID: UniqueDeviceID,
+    private youtube: YoutubeVideoPlayer,
     private admob: AdMobPro) {
     this.loader = this.loadingCtrl.create({
 
@@ -64,13 +69,18 @@ export class PreviewPage {
       let trailer = this.navParam.get('trailer')
       let trailersubs = trailer.substring(32, 60)
       let link = trailer.substring(0, 22)
-      this.trailer = link + '/embed/' + trailersubs + '?autoplay=0&showinfo=0&controls=0'
+      this.trailer = trailersubs
+      // this.trailer = link + '/embed/' + trailersubs + '?autoplay=0&showinfo=0&controls=0'
       setTimeout(() => {
         this.loader.dismiss();
       }, 3000);
+      this.api.get("table/z_report_url", { params: { limit: 30, filter: "id_channel=" + "'" + this.id + "' AND (name LIKE '%Film%' OR name LIKE '%Anime%')" } })
+        .subscribe(val => {
+          this.report = val['data']
+        });
       this.uniqueDeviceID.get()
         .then((uuid: any) => {
-          this.api.get("table/z_arsip_users", { params: { limit: 30, filter: "id=" + "'" + this.id + "'" } })
+          this.api.get("table/z_arsip_users", { params: { limit: 30, filter: "id=" + "'" + this.id + "' AND uuid_device=" + "'" + uuid + "'" } })
             .subscribe(val => {
               this.inifavorit = val['data']
             });
@@ -90,6 +100,7 @@ export class PreviewPage {
     else if (this.plugin == '1') {
       this.api.get("table/z_channel", { params: { limit: 30, filter: "id=" + "'" + this.id + "'" } })
         .subscribe(val => {
+          var self = this
           let data = val['data']
           var videoUrl = data[0].url;
           var options = {
@@ -97,11 +108,28 @@ export class PreviewPage {
 
             },
             errorCallback: function (errMsg) {
-              let toast = this.toastCtrl.create({
-                message: errMsg,
-                duration: 3000
+              self.api.get('nextno/z_report_url/id').subscribe(val => {
+                let nextno = val['nextno'];
+                const headers = new HttpHeaders()
+                  .set("Content-Type", "application/json");
+                self.api.post("table/z_report_url",
+                  {
+                    "id": nextno,
+                    "id_channel": data[0].id,
+                    "name": data[0].name,
+                    "title": data[0].title,
+                    "url": data[0].url,
+                    "date": moment().format('YYYY-MM-DD HH:mm:ss'),
+                  },
+                  { headers })
+                  .subscribe(val => {
+                    let toast = self.toastCtrl.create({
+                      message: 'Report has been sent',
+                      duration: 3000
+                    });
+                    toast.present();
+                  });
               });
-              toast.present();
             },
             orientation: 'landscape',
             shouldAutoClose: true,  // true(default)/false
@@ -200,7 +228,7 @@ export class PreviewPage {
           this.api.delete("table/z_arsip_users", { params: { filter: "id_device=" + "'" + this.inifavorit[0].id_device + "'" }, headers })
             .subscribe(val => {
               this.inifavorit = [];
-              this.api.get("table/z_arsip_users", { params: { limit: 30, filter: "id=" + "'" + this.id + "'" } })
+              this.api.get("table/z_arsip_users", { params: { limit: 30, filter: "id=" + "'" + this.id + "' AND uuid_device=" + "'" + uuid + "'" } })
                 .subscribe(val => {
                   this.inifavorit = val['data']
                 });
@@ -236,7 +264,7 @@ export class PreviewPage {
                   { headers })
                   .subscribe(val => {
                     this.inifavorit = [];
-                    this.api.get("table/z_arsip_users", { params: { limit: 30, filter: "id=" + "'" + this.id + "'" } })
+                    this.api.get("table/z_arsip_users", { params: { limit: 30, filter: "id=" + "'" + this.id + "' AND uuid_device=" + "'" + uuid + "'" } })
                       .subscribe(val => {
                         this.inifavorit = val['data']
                       });
@@ -248,6 +276,110 @@ export class PreviewPage {
         }
       })
       .catch((error: any) => console.log(error));
+  }
+  doReport() {
+    this.api.get("table/z_report_url", { params: { limit: 30, filter: "id_channel=" + "'" + this.id + "' AND (name LIKE '%Film%' OR name LIKE '%Anime%')" } })
+      .subscribe(val => {
+        let data = val['data']
+        if (data.length != 0) {
+          let alert = this.alertCtrl.create({
+            subTitle: 'URL ini dilaporkan tidak aktif oleh seseorang dan sedang dalam pengecekan admin',
+            buttons: ['OK']
+          });
+          alert.present();
+        }
+        else {
+          let alert = this.alertCtrl.create({
+            title: 'Konfirmasi Laporan',
+            message: 'Apakah anda yakin URL ini tidak aktif?',
+            buttons: [
+              {
+                text: 'Cancel',
+                role: 'cancel',
+                handler: () => {
+
+                }
+              },
+              {
+                text: 'Yes',
+                handler: () => {
+                  this.api.get("table/z_channel_stream", { params: { limit: 30, filter: "id=" + "'" + this.id + "'" } })
+                    .subscribe(val => {
+                      let data = val['data']
+                      this.api.get('nextno/z_report_url/id').subscribe(val => {
+                        let nextno = val['nextno'];
+                        const headers = new HttpHeaders()
+                          .set("Content-Type", "application/json");
+                        this.api.post("table/z_report_url",
+                          {
+                            "id": nextno,
+                            "id_channel": data[0].id,
+                            "name": data[0].name,
+                            "title": data[0].title,
+                            "url": data[0].url,
+                            "date": moment().format('YYYY-MM-DD HH:mm:ss'),
+                          },
+                          { headers })
+                          .subscribe(val => {
+                            let toast = this.toastCtrl.create({
+                              message: 'Report has been sent',
+                              duration: 3000
+                            });
+                            toast.present();
+                            this.report = [];
+                            this.api.get("table/z_report_url", { params: { limit: 30, filter: "id_channel=" + "'" + this.id + "' AND (name LIKE '%Film%' OR name LIKE '%Anime%')" } })
+                              .subscribe(val => {
+                                this.report = val['data']
+                              });
+                          });
+                      });
+                    });
+                }
+              }
+            ]
+          });
+          alert.present();
+        }
+      });
+  }
+  doPlayYoutube() {
+    this.youtube.openVideo(this.trailer);
+  }
+  doCloseQuality() {
+    this.qualityid = ''
+    document.getElementById('qualitys').style.display = 'none';
+  }
+  doSelectQuality() {
+    console.log(this.qualityid)
+  }
+  doQuality() {
+    if ((this.type == 'STREAM' && this.name == 'Anime') || (this.type == 'STREAM' && this.name == 'Film Series')) {
+      this.navCtrl.push('ChanneldetailPage', {
+        anime: this.title
+      })
+    }
+    else {
+      this.api.get("table/z_channel_stream_url", { params: { limit: 10, filter: "id_channel=" + "'" + this.id + "'" + "AND status = 'OPEN'", sort: 'quality ASC' } })
+        .subscribe(val => {
+          this.quality = val['data']
+          document.getElementById('qualitys').style.display = 'block';
+        });
+    }
+  }
+  doPlayer() {
+    if (this.qualityid === '') {
+      let alert = this.alertCtrl.create({
+        subTitle: 'Silahkan pilih server terlebih dahulu !!!',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
+    else {
+      this.api.get("table/z_channel_stream_url", { params: { limit: 10, filter: "id=" + "'" + this.qualityid + "'" } })
+        .subscribe(val => {
+          let data = val['data']
+        });
+      }
   }
 
 }

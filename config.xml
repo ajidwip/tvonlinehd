@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.tv.onlinehd" version="2.0.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>TV Online</name>
-    <description>TV Online Indonesia</description>
+<widget id="com.tv.onlinehd" version="2.0.7" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>TV Indonesia</name>
+    <description>TV Indonesia, TV Streaming, TV Online Indonesia, Streaming Film, Streaming Bola, TV Online, Streaming Liga Inggris, Streaming Liga Spanyol, Streaming Liga Italia, Film Indonesia, Streaming Asian Games 2018</description>
     <author email="ajidwip6@gmail.com" href="http://tvonline.co.id/" />
     <content src="index.html" />
     <access origin="*" />
@@ -12,6 +12,7 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <allow-navigation href="https://*youtube.com/*" />
+    <preference name="YouTubeDataApiKey" value="AIzaSyC2ifbNbYor0RzsyZ4HpLqOh2TJBXaGFpg" />
     <preference name="ShowSplashScreenSpinner" value="false" />
     <preference name="fullscreen" value="false" />
     <preference name="loadUrlTimeoutValue" value="700000" />
@@ -92,5 +93,6 @@
     <plugin name="cordova-plugin-fullscreen" spec="^1.2.0" />
     <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
     <plugin name="cordova-plugin-uniquedeviceid" spec="^1.3.2" />
+    <plugin name="cordova-plugin-youtube-video-player" spec="^1.0.6" />
     <engine name="android" spec="6.4.0" />
 </widget>

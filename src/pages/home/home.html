@@ -26,8 +26,8 @@
       style="height:25%;background: #26262d;opacity: 1;">
       <ion-slide *ngFor="let live of channellive" style="background:url(http://101.255.60.202/webapi5/img/back3);background-repeat:no-repeat;background-size: 100% 100%;">
         <div (click)="doDetailLive(live)" style="z-index: 888;">
-          <div style="color: #fff;z-index:999;font-weight:bold;font-size:70%;margin-top:20px;text-shadow: 2px 2px 2px #666">{{live.title}}</div>
-          <div style="color: #fff;font-weight:bold;font-size:70%;text-shadow: 2px 2px 2px #666;">{{live.category}}</div>
+          <div *ngIf="channellive" style="color: #fff;z-index:999;font-weight:bold;font-size:70%;margin-top:20px;text-shadow: 2px 2px 2px #666">{{live.title}}</div>
+          <div *ngIf="channellive" style="color: #fff;font-weight:bold;font-size:70%;text-shadow: 2px 2px 2px #666;">{{live.category}}</div>
           <div *ngIf="live.url" style="font-weight:bold;font-weight: bold;color:red;font-weight: bold;font-size:100%;padding-bottom:60px;text-shadow: 2px 2px 2px #fff;">LIVE NOW</div>
           <div *ngIf="!live.url" style="color: #fff;padding-bottom:60px;font-size:60%;text-shadow: 2px 2px 2px #666;">{{live.datestart | date:'EEEE, dd MMMM yyyy HH:mm'}} WIB</div>
         </div>
@@ -92,7 +92,7 @@
           <ion-slides *ngIf="channels && channels.length" style="height:25%;" freeMode="true" spaceBetween="-10" slidesPerView="3.2"
             loop="true">
             <div *ngFor="let channeldetail of channels">
-              <ion-slide *ngIf="channeldetail.name == channel.name" (click)="doPreview(channeldetail)">
+              <ion-slide *ngIf="channeldetail.name == channel.name" (click)="doQuality(channeldetail)">
                 <ion-card>
                   <div class="container">
                     <img src="{{channeldetail.thumbnail_picture}}" style="height:125px;width:100%;" />
@@ -107,7 +107,7 @@
           <ion-slides *ngIf="channels && channels.length" style="height:25%;" freeMode="true" spaceBetween="-10" slidesPerView="3.2"
             loop="true">
             <div *ngFor="let channeldetail of channels">
-              <ion-slide *ngIf="channeldetail.name == channel.name" (click)="doPreview(channeldetail)">
+              <ion-slide *ngIf="channeldetail.name == channel.name" (click)="doQuality(channeldetail)">
                 <ion-card>
                   <div class="container">
                     <img src="{{channeldetail.thumbnail_picture}}" style="height:125px;width:100%;" />
@@ -149,11 +149,11 @@
         <ion-item item-start no-lines text-wrap style="background: #26262d;border:1px solid;border-color:#dedede;" *ngFor="let notlive of listchannelnotlive"
           col-12>
           <h4 style="color:#ffffff;font-weight: bold;">{{notlive.title}}</h4>
-          <button (click)="doPlay(notlive)" ion-button clear *ngIf="(channelcategory =='STREAM' && channelname =='Anime') || (channelcategory =='STREAM' && channelname =='Film Series')"
+          <button (click)="doQualityNotLive(notlive)" ion-button clear color="light" *ngIf="(channelcategory =='STREAM' && channelname =='Anime') || (channelcategory =='STREAM' && channelname =='Film Series')"
             item-end>
             <i style="font-size: 15px;" class="fas fa-chevron-right"></i>
           </button>
-          <button (click)="doPlay(notlive)" ion-button clear *ngIf="(channelname !='Anime' && channelname !='Film Series') && notlive.stream != '1'"
+          <button (click)="doQualityNotLive(notlive)" ion-button clear color="light" *ngIf="(channelname !='Anime' && channelname !='Film Series') && notlive.stream != '1'"
             item-end>
             <i *ngIf="!radiostream || notlive.id != id" style="font-size: 15px;" class="fas fa-play"></i>
             <i *ngIf="radiostream && notlive.id == id" style="font-size: 15px;" class="fas fa-stop"></i>
@@ -169,11 +169,11 @@
         <ion-item item-start no-lines text-wrap style="background: #26262d;border:1px solid;border-color:#dedede;" *ngFor="let notlive of listchannelnotlivestream"
           col-12>
           <h4 style="color:#ffffff;font-weight: bold;">{{notlive.title}}</h4>
-          <button (click)="doPlay(notlive)" ion-button clear *ngIf="(notlive.type =='STREAM' && notlive.name =='Anime') || (notlive.type =='STREAM' && notlive.name =='Film Series')"
+          <button (click)="doQualityNotLive(notlive)" ion-button clear color="light" *ngIf="(notlive.type =='STREAM' && notlive.name =='Anime') || (notlive.type =='STREAM' && notlive.name =='Film Series')"
             item-end>
             <i style="font-size: 15px;" class="fas fa-chevron-right"></i>
           </button>
-          <button (click)="doPlay(notlive)" ion-button clear *ngIf="(notlive.name !='Anime' && notlive.name != 'Film Series')" item-end>
+          <button (click)="doQualityNotLive(notlive)" ion-button clear color="light" *ngIf="(notlive.name !='Anime' && notlive.name != 'Film Series')" item-end>
             <i *ngIf="!radiostream || notlive.id != id" style="font-size: 15px;" class="fas fa-play"></i>
             <i *ngIf="radiostream && notlive.id == id" style="font-size: 15px;" class="fas fa-stop"></i>
           </button>
@@ -189,7 +189,7 @@
           <ion-col padding col-12>{{live.date | date:'EEEE, dd/MM/yyyy'}}</ion-col>
         </ion-row>
         <div *ngFor="let livedetail of listchannellive">
-          <ion-row *ngIf="livedetail.date == live.date" style="border-bottom:1px solid;border-color:#7a7a7a;background: #ffffff;" (click)="doPlayLive(livedetail)">
+          <ion-row *ngIf="livedetail.date == live.date" style="border-bottom:1px solid;border-color:#7a7a7a;background: #ffffff;" (click)="doQualityLive(livedetail)">
             <ion-col *ngIf="!livedetail.url" padding col-4 style="text-align:left;">{{livedetail.datestart | date:'HH:mm'}} WIB</ion-col>
             <ion-col *ngIf="livedetail.url" padding col-4 style="text-align:left;color:red;font-weight: bold;">LIVE</ion-col>
             <ion-col padding col-8 style="text-align:left;">{{livedetail.title}}</ion-col>
@@ -198,4 +198,31 @@
       </div>
     </ion-grid>
   </ion-content>
+</div>
+<div id="quality" class="quality" style="background:#fff;">
+  <ion-header>
+    <ion-toolbar color="darkgrey">
+      <ion-title>
+        Server List
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-list style="margin-top:60px;background:#fff;color:#26262d;" radio-group [(ngModel)]="qualityid">
+    <ion-item *ngFor="let qty of quality" style="background:#fff;color:#26262d;">
+      <ion-label style="color:#26262d;">{{qty.quality}}</ion-label>
+      <ion-radio color="darkgrey" value="{{qty.id}}" (ionSelect)="doSelectQuality()"></ion-radio>
+    </ion-item>
+  </ion-list>
+  <ion-footer>
+    <ion-row>
+      <ion-col col-6>
+        <button ion-button full color="darkgrey" style="font-weight: bold;font-size:15px;" (click)="doPlayer()">
+          <ion-icon name="md-play"></ion-icon>&nbsp;&nbsp;&nbsp;Play</button>
+      </ion-col>
+      <ion-col col-6>
+        <button ion-button full color="green2" style="font-weight: bold;font-size:15px;" (click)="doCloseQuality()">
+          <ion-icon name="md-close-circle"></ion-icon>&nbsp;&nbsp;&nbsp;Cancel</button>
+      </ion-col>
+    </ion-row>
+  </ion-footer>
 </div>

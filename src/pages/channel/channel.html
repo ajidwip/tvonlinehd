@@ -26,7 +26,7 @@
   </ion-refresher>
   <ion-grid *ngIf="channelcategory != 'LIVE' && channeltype == 'GRID'">
     <ion-row>
-      <ion-col col-4 *ngFor="let channel of channels" (click)="doPlay(channel)" style="padding:0px;">
+      <ion-col col-4 *ngFor="let channel of channels" (click)="doQuality(channel)" style="padding:0px;">
         <ion-card>
           <div class="container">
             <img src="{{channel.thumbnail_picture}}" style="height:125px;width:100%;" />
@@ -41,11 +41,12 @@
       <ion-item item-start no-lines text-wrap style="background: #26262d;border-bottom:1px solid;border-color:#dedede;" *ngFor="let channel of channels"
         col-12>
         <h4 style="color:#ffffff;font-weight: bold;">{{channel.title}}</h4>
-        <button (click)="doPlay(channel)" ion-button clear color="light" *ngIf="(channelcategory =='STREAM' && channelname =='Anime') || (channelcategory =='STREAM' && channelname =='Film Series')"
+        <button (click)="doQuality(channel)" ion-button clear color="light" *ngIf="(channelcategory =='STREAM' && channelname =='Anime') || (channelcategory =='STREAM' && channelname =='Film Series')"
           item-end>
           <i style="font-size: 15px;" class="fas fa-chevron-right"></i>
         </button>
-        <button (click)="doPlay(channel)" ion-button clear color="light" *ngIf="(channelname !='Anime' && channelname != 'Film Series')" item-end>
+        <button (click)="doQuality(channel)" ion-button clear color="light" *ngIf="(channelname !='Anime' && channelname != 'Film Series')"
+          item-end>
           <i *ngIf="!radiostream || channel.id != id" style="font-size: 15px;" class="fas fa-play"></i>
           <i *ngIf="radiostream && channel.id == id" style="font-size: 15px;" class="fas fa-stop"></i>
         </button>
@@ -76,3 +77,30 @@
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>
+<div id="qualitys" class="quality" style="background:#fff;">
+  <ion-header>
+    <ion-toolbar color="darkgrey">
+      <ion-title>
+        Server List
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-list style="margin-top:60px;background:#fff;color:#26262d;" radio-group [(ngModel)]="qualityid">
+    <ion-item *ngFor="let qty of quality" style="background:#fff;color:#26262d;">
+      <ion-label style="color:#26262d;">{{qty.quality}}</ion-label>
+      <ion-radio color="darkgrey" value="{{qty.id}}" (ionSelect)="doSelectQuality()"></ion-radio>
+    </ion-item>
+  </ion-list>
+  <ion-footer>
+    <ion-row>
+      <ion-col col-6>
+        <button ion-button full color="darkgrey" style="font-weight: bold;font-size:15px;" (click)="doPlayer()">
+          <ion-icon name="md-play"></ion-icon>&nbsp;&nbsp;&nbsp;Play</button>
+      </ion-col>
+      <ion-col col-6>
+        <button ion-button full color="green2" style="font-weight: bold;font-size:15px;" (click)="doCloseQuality()">
+          <ion-icon name="md-close-circle"></ion-icon>&nbsp;&nbsp;&nbsp;Cancel</button>
+      </ion-col>
+    </ion-row>
+  </ion-footer>
+</div>

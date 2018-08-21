@@ -14,6 +14,7 @@ import { AppVersion } from '@ionic-native/app-version';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id';
+import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { UniqueDeviceID } from '@ionic-native/unique-device-id';
     AppVersion,
     AndroidFullScreen,
     InAppBrowser,
-    UniqueDeviceID
+    UniqueDeviceID,
+    YoutubeVideoPlayer
   ]
 })
 export class AppModule {}

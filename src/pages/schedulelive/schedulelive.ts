@@ -5,6 +5,7 @@ import { ApiProvider } from '../../providers/api/api';
 import { AdMobPro } from '@ionic-native/admob-pro';
 import moment from 'moment';
 import { AppVersion } from '@ionic-native/app-version';
+import { HttpHeaders } from "@angular/common/http";
 
 declare var window: any;
 
@@ -59,17 +60,35 @@ export class SchedulelivePage {
       .subscribe(val => {
         this.url = val['data']
         if (this.url[0].plugin == '1') {
+          var self = this
           var videoUrl = this.url[0].url;
           var options = {
             successCallback: function () {
 
             },
             errorCallback: function (errMsg) {
-              let toast = this.toastCtrl.create({
-                message: errMsg,
-                duration: 3000
+              self.api.get('nextno/z_report_url/id').subscribe(val => {
+                let nextno = val['nextno'];
+                const headers = new HttpHeaders()
+                  .set("Content-Type", "application/json");
+                self.api.post("table/z_report_url",
+                  {
+                    "id": nextno,
+                    "id_channel": channel.id,
+                    "name": channel.name,
+                    "title": channel.title,
+                    "url": channel.url,
+                    "date": moment().format('YYYY-MM-DD HH:mm:ss'),
+                  },
+                  { headers })
+                  .subscribe(val => {
+                    let toast = self.toastCtrl.create({
+                      message: 'Report has been sent',
+                      duration: 3000
+                    });
+                    toast.present();
+                  });
               });
-              toast.present();
             },
             orientation: 'landscape',
             shouldAutoClose: true,  // true(default)/false

@@ -117,6 +117,7 @@ export class NewupdateinfoPage {
     if (channel.type == 'TV') {
       this.api.get("table/z_channel", { params: { limit: 30, filter: "id=" + "'" + channel.id + "'" } })
         .subscribe(val => {
+          var self = this;
           let data = val['data']
           if (channel.plugin == '1') {
             var videoUrl = data[0].url;
@@ -125,11 +126,28 @@ export class NewupdateinfoPage {
 
               },
               errorCallback: function (errMsg) {
-                let toast = this.toastCtrl.create({
-                  message: errMsg,
-                  duration: 3000
+                self.api.get('nextno/z_report_url/id').subscribe(val => {
+                  let nextno = val['nextno'];
+                  const headers = new HttpHeaders()
+                    .set("Content-Type", "application/json");
+                  self.api.post("table/z_report_url",
+                    {
+                      "id": nextno,
+                      "id_channel": channel.id,
+                      "name": channel.name,
+                      "title": channel.title,
+                      "url": channel.url,
+                      "date": moment().format('YYYY-MM-DD HH:mm:ss'),
+                    },
+                    { headers })
+                    .subscribe(val => {
+                      let toast = self.toastCtrl.create({
+                        message: 'Report has been sent',
+                        duration: 3000
+                      });
+                      toast.present();
+                    });
                 });
-                toast.present();
               },
               orientation: 'landscape',
               shouldAutoClose: true,  // true(default)/false

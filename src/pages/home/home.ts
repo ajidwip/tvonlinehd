@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LoadingController, NavController, Platform, AlertController } from 'ionic-angular';
+import { LoadingController, NavController, Platform, AlertController, ToastController } from 'ionic-angular';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ApiProvider } from '../../providers/api/api';
 import { AdMobPro } from '@ionic-native/admob-pro';
@@ -44,6 +44,10 @@ export class HomePage {
   public list: boolean = true;
   public favorit = [];
   public mostwatch = [];
+  public quality = [];
+  public notlive = [];
+  public livedetail = [];
+  public qualityid: any;
 
   constructor(
     public navCtrl: NavController,
@@ -56,6 +60,7 @@ export class HomePage {
     public appVersion: AppVersion,
     private statusBar: StatusBar,
     private uniqueDeviceID: UniqueDeviceID,
+    public toastCtrl: ToastController,
     private admob: AdMobPro) {
     this.myForm = fb.group({
       comment: ['', Validators.compose([Validators.required])],
@@ -287,6 +292,7 @@ export class HomePage {
       if (channeldetail.plugin == '1') {
         this.api.get("table/z_channel", { params: { limit: 30, filter: "id=" + "'" + channeldetail.id + "'" } })
           .subscribe(val => {
+            var self = this
             let data = val['data']
             var videoUrl = data[0].url;
             var options = {
@@ -294,11 +300,28 @@ export class HomePage {
 
               },
               errorCallback: function (errMsg) {
-                let toast = this.toastCtrl.create({
-                  message: errMsg,
-                  duration: 3000
+                self.api.get('nextno/z_report_url/id').subscribe(val => {
+                  let nextno = val['nextno'];
+                  const headers = new HttpHeaders()
+                    .set("Content-Type", "application/json");
+                  self.api.post("table/z_report_url",
+                    {
+                      "id": nextno,
+                      "id_channel": data[0].id,
+                      "name": data[0].name,
+                      "title": data[0].title,
+                      "url": data[0].url,
+                      "date": moment().format('YYYY-MM-DD HH:mm:ss'),
+                    },
+                    { headers })
+                    .subscribe(val => {
+                      let toast = self.toastCtrl.create({
+                        message: 'Report has been sent',
+                        duration: 3000
+                      });
+                      toast.present();
+                    });
                 });
-                toast.present();
               },
               orientation: 'landscape',
               shouldAutoClose: true,  // true(default)/false
@@ -354,7 +377,7 @@ export class HomePage {
         let data = val['data']
         for (let i = 0; i < data.length; i++) {
           if (data[i].category == 'TV') {
-            this.api.get("table/z_channel", { params: { filter: "status='OPEN' AND name=" + "'" + data[i].name + "'", limit: 8, sort: "click" + " DESC " } })
+            this.api.get("table/z_channel", { params: { filter: "status='OPEN' AND status_2 !='CLSD' AND name=" + "'" + data[i].name + "'", limit: 8, sort: "click" + " DESC " } })
               .subscribe(val => {
                 let data = val['data']
                 for (let i = 0; i < data.length; i++) {
@@ -500,6 +523,7 @@ export class HomePage {
     else if (notlive.plugin == '1') {
       this.api.get("table/z_channel", { params: { limit: 30, filter: "id=" + "'" + notlive.id + "'" } })
         .subscribe(val => {
+          var self = this;
           let data = val['data']
           var videoUrl = data[0].url;
           var options = {
@@ -507,11 +531,28 @@ export class HomePage {
 
             },
             errorCallback: function (errMsg) {
-              let toast = this.toastCtrl.create({
-                message: errMsg,
-                duration: 3000
+              self.api.get('nextno/z_report_url/id').subscribe(val => {
+                let nextno = val['nextno'];
+                const headers = new HttpHeaders()
+                  .set("Content-Type", "application/json");
+                self.api.post("table/z_report_url",
+                  {
+                    "id": nextno,
+                    "id_channel": data[0].id,
+                    "name": data[0].name,
+                    "title": data[0].title,
+                    "url": data[0].url,
+                    "date": moment().format('YYYY-MM-DD HH:mm:ss'),
+                  },
+                  { headers })
+                  .subscribe(val => {
+                    let toast = self.toastCtrl.create({
+                      message: 'Report has been sent',
+                      duration: 3000
+                    });
+                    toast.present();
+                  });
               });
-              toast.present();
             },
             orientation: 'landscape',
             shouldAutoClose: true,  // true(default)/false
@@ -582,6 +623,7 @@ export class HomePage {
           })
         }
         else if (data[0].url && livedetail.plugin == '1') {
+          var self = this;
           var videoUrl = data[0].url;
           var options = {
             successCallback: function () {
@@ -597,11 +639,28 @@ export class HomePage {
               })
             },
             errorCallback: function (errMsg) {
-              let toast = this.toastCtrl.create({
-                message: errMsg,
-                duration: 3000
+              self.api.get('nextno/z_report_url/id').subscribe(val => {
+                let nextno = val['nextno'];
+                const headers = new HttpHeaders()
+                  .set("Content-Type", "application/json");
+                self.api.post("table/z_report_url",
+                  {
+                    "id": nextno,
+                    "id_channel": data[0].id,
+                    "name": data[0].name,
+                    "title": data[0].title,
+                    "url": data[0].url,
+                    "date": moment().format('YYYY-MM-DD HH:mm:ss'),
+                  },
+                  { headers })
+                  .subscribe(val => {
+                    let toast = self.toastCtrl.create({
+                      message: 'Report has been sent',
+                      duration: 3000
+                    });
+                    toast.present();
+                  });
               });
-              toast.present();
             },
             orientation: 'landscape',
             shouldAutoClose: true,  // true(default)/false
@@ -632,5 +691,222 @@ export class HomePage {
     this.navCtrl.push('SportslivePage', {
       param: '0'
     })
+  }
+  doQuality(channeldetail) {
+    if (channeldetail.type == 'STREAM') {
+      this.navCtrl.push('PreviewPage', {
+        id: channeldetail.id,
+        name: channeldetail.name,
+        title: channeldetail.title,
+        category: channeldetail.category,
+        trailer: channeldetail.trailer,
+        type: channeldetail.type,
+        stream: channeldetail.stream,
+        xml: channeldetail.xml,
+        plugin: channeldetail.plugin,
+        url: channeldetail.url,
+        controls: channeldetail.controls
+      })
+    }
+    else if (channeldetail.type == 'TV') {
+      this.api.get("table/z_channel_url", { params: { limit: 10, filter: "id_channel=" + "'" + channeldetail.id + "'" + "AND status = 'OPEN'", sort: 'quality ASC' } })
+        .subscribe(val => {
+          this.quality = val['data']
+          document.getElementById('quality').style.display = 'block';
+        });
+    }
+  }
+  doQualityNotLive(notlive) {
+    if (notlive.type == 'STREAM') {
+      this.navCtrl.push('PreviewPage', {
+        id: notlive.id,
+        name: notlive.name,
+        title: notlive.title,
+        category: notlive.category,
+        trailer: notlive.trailer,
+        type: notlive.type,
+        stream: notlive.stream,
+        xml: notlive.xml,
+        plugin: notlive.plugin,
+        url: notlive.url,
+        controls: notlive.controls
+      })
+    }
+    else if (notlive.type == 'TV') {
+      this.api.get("table/z_channel_url", { params: { limit: 10, filter: "id_channel=" + "'" + notlive.id + "'" + "AND status = 'OPEN'", sort: 'quality ASC' } })
+        .subscribe(val => {
+          this.quality = val['data']
+          document.getElementById('quality').style.display = 'block';
+        });
+    }
+  }
+  doQualityLive(livedetail) {
+    this.api.get("table/z_channel_live_url", { params: { limit: 10, filter: "id_channel=" + "'" + livedetail.id + "'" + "AND status = 'OPEN'", sort: 'quality ASC' } })
+      .subscribe(val => {
+        this.quality = val['data']
+        document.getElementById('quality').style.display = 'block';
+      });
+  }
+  doCloseQuality() {
+    this.qualityid = ''
+    document.getElementById('quality').style.display = 'none';
+  }
+  doSelectQuality() {
+    console.log(this.qualityid)
+  }
+  doPlayer() {
+    if (this.qualityid === '') {
+      let alert = this.alertCtrl.create({
+        subTitle: 'Silahkan pilih server terlebih dahulu !!!',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
+    else {
+      this.api.get("table/z_channel_url", { params: { limit: 10, filter: "id=" + "'" + this.qualityid + "'" } })
+        .subscribe(val => {
+          let data = val['data']
+          if (data[0].plugin == '1') {
+            this.api.get("table/z_channel", { params: { limit: 30, filter: "id=" + "'" + data[0].id + "'" } })
+              .subscribe(val => {
+                var self = this
+                let data = val['data']
+                var videoUrl = data[0].url;
+                var options = {
+                  successCallback: function () {
+
+                  },
+                  errorCallback: function (errMsg) {
+                    self.api.get('nextno/z_report_url/id').subscribe(val => {
+                      let nextno = val['nextno'];
+                      const headers = new HttpHeaders()
+                        .set("Content-Type", "application/json");
+                      self.api.post("table/z_report_url",
+                        {
+                          "id": nextno,
+                          "id_channel": data[0].id,
+                          "name": data[0].name,
+                          "title": data[0].title,
+                          "url": data[0].url,
+                          "date": moment().format('YYYY-MM-DD HH:mm:ss'),
+                        },
+                        { headers })
+                        .subscribe(val => {
+                          let toast = self.toastCtrl.create({
+                            message: 'Report has been sent',
+                            duration: 3000
+                          });
+                          toast.present();
+                        });
+                    });
+                  },
+                  orientation: 'landscape',
+                  shouldAutoClose: true,  // true(default)/false
+                  controls: data[0].controls // true(default)/false. Used to hide controls on fullscreen
+                };
+                window.plugins.streamingMedia.playVideo(videoUrl, options);
+                var admobid = {
+                  banner: this.ads[0].ads_banner,
+                  interstitial: this.ads[0].ads_interstitial
+                };
+
+                this.admob.prepareInterstitial({
+                  adId: admobid.interstitial,
+                  isTesting: this.ads[0].testing,
+                  autoShow: true
+                })
+              });
+          }
+          else {
+            this.api.get("table/z_channel", { params: { limit: 30, filter: "id=" + "'" + data[0].id + "'" } })
+              .subscribe(val => {
+                let data = val['data']
+                this.navCtrl.push('LivePage', {
+                  url: data[0].url,
+                  stream: data[0].stream,
+                  xml: data[0].xml,
+                  rotate: data[0].orientation,
+                  thumbnail: data[0].thumbnail_picture,
+                  subsbody1: data[0].subsbody_1,
+                  subsbody2: data[0].subsbody_2,
+                  subshead1: data[0].subshead_1,
+                  subshead2: data[0].subshead_2
+                })
+              });
+          }
+          this.doCloseQuality()
+        });
+    }
+  }
+  doPlayerLive() {
+    this.api.get("table/z_channel_live", { params: { limit: 30, filter: "id=" + "'" + this.qualityid + "'" } })
+      .subscribe(val => {
+        let data = val['data'];
+        if (data[0].url && data[0].plugin != '1') {
+          this.navCtrl.push('LivePage', {
+            url: data[0].url,
+            stream: data[0].stream,
+            xml: data[0].xml,
+            rotate: data[0].orientation,
+            subsbody1: data[0].subsbody_1,
+            subsbody2: data[0].subsbody_2,
+            subshead1: data[0].subshead_1,
+            subshead2: data[0].subshead_2
+          })
+        }
+        else if (data[0].url && data[0].plugin == '1') {
+          var self = this;
+          var videoUrl = data[0].url;
+          var options = {
+            successCallback: function () {
+              var admobid = {
+                banner: this.ads[0].ads_banner,
+                interstitial: this.ads[0].ads_interstitial
+              };
+
+              this.admob.prepareInterstitial({
+                adId: admobid.interstitial,
+                isTesting: this.ads[0].testing,
+                autoShow: true
+              })
+            },
+            errorCallback: function (errMsg) {
+              self.api.get('nextno/z_report_url/id').subscribe(val => {
+                let nextno = val['nextno'];
+                const headers = new HttpHeaders()
+                  .set("Content-Type", "application/json");
+                self.api.post("table/z_report_url",
+                  {
+                    "id": nextno,
+                    "id_channel": data[0].id,
+                    "name": data[0].name,
+                    "title": data[0].title,
+                    "url": data[0].url,
+                    "date": moment().format('YYYY-MM-DD HH:mm:ss'),
+                  },
+                  { headers })
+                  .subscribe(val => {
+                    let toast = self.toastCtrl.create({
+                      message: 'Report has been sent',
+                      duration: 3000
+                    });
+                    toast.present();
+                  });
+              });
+            },
+            orientation: 'landscape',
+            shouldAutoClose: true,  // true(default)/false
+            controls: data[0].controls // true(default)/false. Used to hide controls on fullscreen
+          };
+          window.plugins.streamingMedia.playVideo(videoUrl, options);
+        }
+        else {
+          let alert = this.alertCtrl.create({
+            subTitle: 'Pertandingan belum dimulai',
+            buttons: ['OK']
+          });
+          alert.present();
+        }
+      });
   }
 }
