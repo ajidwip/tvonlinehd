@@ -342,6 +342,25 @@ export class HomePage {
             })
           });
       }
+      else if (channeldetail.plugin == '3') {
+        this.api.get("table/z_channel", { params: { limit: 30, filter: "id=" + "'" + channeldetail.id + "'" } })
+          .subscribe(val => {
+            var self = this
+            let data = val['data']
+            var videoUrl = data[0].url;
+            this.youtube.openVideo(videoUrl);
+            var admobid = {
+              banner: this.ads[0].ads_banner,
+              interstitial: this.ads[0].ads_interstitial
+            };
+
+            this.admob.prepareInterstitial({
+              adId: admobid.interstitial,
+              isTesting: this.ads[0].testing,
+              autoShow: true
+            })
+          });
+      }
       else {
         this.api.get("table/z_channel", { params: { limit: 30, filter: "id=" + "'" + channeldetail.id + "'" } })
           .subscribe(val => {
@@ -573,6 +592,25 @@ export class HomePage {
           })
         });
     }
+    else if (notlive.plugin == '3') {
+      this.api.get("table/z_channel", { params: { limit: 30, filter: "id=" + "'" + notlive.id + "'" } })
+        .subscribe(val => {
+          var self = this;
+          let data = val['data']
+          var videoUrl = data[0].url;
+          this.youtube.openVideo(videoUrl);
+          var admobid = {
+            banner: this.ads[0].ads_banner,
+            interstitial: this.ads[0].ads_interstitial
+          };
+
+          this.admob.prepareInterstitial({
+            adId: admobid.interstitial,
+            isTesting: this.ads[0].testing,
+            autoShow: true
+          })
+        });
+    }
     else {
       if (notlive.type == 'TV') {
         this.api.get("table/z_channel", { params: { limit: 30, filter: "id=" + "'" + notlive.id + "'" } })
@@ -669,6 +707,21 @@ export class HomePage {
             controls: livedetail.controls // true(default)/false. Used to hide controls on fullscreen
           };
           window.plugins.streamingMedia.playVideo(videoUrl, options);
+        }
+        else if (data[0].url && livedetail.plugin == '3') {
+          let self = this;
+          let videoUrl = data[0].url;
+          this.youtube.openVideo(videoUrl);
+          var admobid = {
+            banner: this.ads[0].ads_banner,
+            interstitial: this.ads[0].ads_interstitial
+          };
+
+          this.admob.prepareInterstitial({
+            adId: admobid.interstitial,
+            isTesting: this.ads[0].testing,
+            autoShow: true
+          })
         }
         else {
           let alert = this.alertCtrl.create({
@@ -808,6 +861,25 @@ export class HomePage {
                   controls: data[0].controls // true(default)/false. Used to hide controls on fullscreen
                 };
                 window.plugins.streamingMedia.playVideo(videoUrl, options);
+                var admobid = {
+                  banner: this.ads[0].ads_banner,
+                  interstitial: this.ads[0].ads_interstitial
+                };
+
+                this.admob.prepareInterstitial({
+                  adId: admobid.interstitial,
+                  isTesting: this.ads[0].testing,
+                  autoShow: true
+                })
+              });
+          }
+          else if (data[0].plugin == '3') {
+            this.api.get("table/z_channel", { params: { limit: 30, filter: "id=" + "'" + data[0].id + "'" } })
+              .subscribe(val => {
+                var self = this
+                let data = val['data']
+                var videoUrl = data[0].url;
+                this.youtube.openVideo(videoUrl);
                 var admobid = {
                   banner: this.ads[0].ads_banner,
                   interstitial: this.ads[0].ads_interstitial
