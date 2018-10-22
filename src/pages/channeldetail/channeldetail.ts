@@ -122,6 +122,8 @@ export class ChanneldetailPage {
           });
       });
     this.navCtrl.push('PlayerPage', {
+      name: channel.name,
+      episode: channel.episode,
       url: channel.url,
       type: channel.type,
       stream: channel.stream,
@@ -156,7 +158,7 @@ export class ChanneldetailPage {
     }, (err) => {
 
     })
-    if (this.platform.is('cordova') && (this.platform.height() > this.platform.width())) {
+    if (this.platform.is('cordova')) {
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
     }
   }
@@ -205,7 +207,9 @@ export class ChanneldetailPage {
         .subscribe(val => {
           let data = val['data']
           this.navCtrl.push('PlayerPage', {
+            name: data[0].name,
             url: data[0].url,
+            episode: data[0].episode,
             type: data[0].type,
             stream: data[0].stream,
             xml: data[0].xml,

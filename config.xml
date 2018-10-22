@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.tvonline.new" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.tvonline.omegastreaming" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>TV Online</name>
     <description>TV Indonesia, TV Streaming, TV Online Indonesia, Streaming Film, Streaming Bola, TV Online, Streaming Liga Inggris, Streaming Liga Spanyol, Streaming Liga Italia, Film Indonesia, Streaming Asian Games 2018</description>
     <author email="ajidwip6@gmail.com" href="http://tvonline.co.id/" />
@@ -95,6 +95,7 @@
     <plugin name="cordova-plugin-uniquedeviceid" spec="^1.3.2" />
     <plugin name="cordova-plugin-youtube-video-player" spec="^1.0.6" />
     <allow-navigation href="http://192.168.99.166:8100" />
-    <engine name="android" spec="6.4.0" />
+    <allow-navigation href="http://192.168.0.6:8100" />
     <engine name="browser" spec="5.0.4" />
+    <engine name="android" spec="6.4.0" />
 </widget>

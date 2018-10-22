@@ -77,7 +77,7 @@ export class ListchannelPage {
     }, (err) => {
 
     })
-    if (this.platform.is('cordova') && (this.platform.height() > this.platform.width())) {
+    if (this.platform.is('cordova')) {
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
     }
   }
