@@ -142,7 +142,7 @@ export class HomePage {
           });
       })
       .catch((error: any) => console.log(error));
-    if (this.platform.is('cordova')) {
+    if (this.platform.is('cordova') && (this.platform.height() > this.platform.width())) {
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
     }
   }

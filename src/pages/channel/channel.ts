@@ -281,7 +281,7 @@ export class ChannelPage {
     }, (err) => {
 
     })
-    if (this.platform.is('cordova')) {
+    if (this.platform.is('cordova') && (this.platform.height() > this.platform.width())) {
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
     }
   }
