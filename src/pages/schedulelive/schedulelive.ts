@@ -142,7 +142,7 @@ export class SchedulelivePage {
     }, (err) => {
 
     })
-    if (this.platform.is('cordova')) {
+    if (this.platform.is('cordova'))  {
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
     }
   }

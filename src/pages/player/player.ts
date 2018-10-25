@@ -47,6 +47,7 @@ export class PlayerPage {
   public load: any;
   public name: any;
   public episode: any;
+  public row: any;
 
   constructor(
     public navCtrl: NavController,
@@ -68,35 +69,15 @@ export class PlayerPage {
         this.width = platform.height();
         this.height = platform.width();
         this.stream = this.navParams.get('stream');
+        this.name = this.navParams.get('name');
+        this.episode = this.navParams.get('episode');
+        this.row = this.navParams.get('row');
         this.type = this.navParams.get('type');
         this.url = this.navParams.get('url');
         this.xml = this.navParams.get('xml');
         this.thumbnail = this.navParams.get('thumbnail');
         this.loading.present().then(() => {
           var self = this
-          this.video = document.getElementById("videoplayer");
-          this.video.load()
-          this.load = false;
-          this.i = 0;
-          this.b = this.list.length - (this.list.length - 1)
-          this.morevideo = false;
-          this.doInterval1();
-          this.doInterval2();
-
-          this.video.addEventListener('ended', function () {
-            if (self.i < (self.list.length - 1)) {
-              self.i = self.i + 1
-              self.url = self.list[self.i].url
-              self.video.load()
-              self.video.play()
-            }
-            else {
-              self.url = self.list[0].url
-              self.i = 0
-              self.video.load()
-              self.video.pause()
-            }
-          });
           if (this.stream == '0') {
             if (this.xml == '2') {
               let playerElement = document.getElementById("player-wrapper");
@@ -139,9 +120,40 @@ export class PlayerPage {
 
             }
             else {
-              let playerElement = document.getElementById("video-player");
-              var video = videojs(playerElement);
-              video.qualityPickerPlugin();
+              this.stream = this.navParams.get('stream');
+              this.url = this.navParams.get('url');
+              this.clickvideo = false;
+              console.log(this.name)
+              this.api.get("table/z_channel_stream_detail", { params: { limit: 1000, filter: "name='" + this.name + "'", sort: "episode" + " DESC " } })
+                .subscribe(val => {
+                  this.list = val['data'];
+                  console.log(this.list)
+                  this.url = this.url
+                  this.title = this.name + " Episode " + this.episode
+                  this.video = document.getElementById("videoplayer");
+                  this.video.load()
+                  this.load = false;
+                  this.i = this.row - 1
+                  this.b = this.list.length - (this.list.length - 1)
+                  this.morevideo = false;
+                  this.doInterval1();
+                  this.doInterval2();
+
+                  this.video.addEventListener('ended', function () {
+                    if (self.i < (self.list.length - 1)) {
+                      self.i = self.i + 1
+                      self.url = self.list[self.i].url
+                      self.video.load()
+                      self.video.play()
+                    }
+                    else {
+                      self.url = self.list[0].url
+                      self.i = 0
+                      self.video.load()
+                      self.video.pause()
+                    }
+                  });
+                });
             }
           }
           else if (this.stream == '1') {
@@ -150,13 +162,6 @@ export class PlayerPage {
           else {
             this.stream = this.navParams.get('stream');
             this.url = this.navParams.get('url');
-            this.clickvideo = false;
-            this.api.get("table/z_channel_stream_detail", { params: { limit: 1000, filter: "name='" + this.name + "'", sort: "episode" + " ASC " } })
-              .subscribe(val => {
-                this.list = val['data'];
-                this.url = this.url
-                this.title = this.name + " Episode " + this.episode
-              });
           }
         });
       })
@@ -306,7 +311,7 @@ export class PlayerPage {
       this.clickvideo = false;
       clearInterval(this.interval)
     }, 5000);
-    this.i = this.i - 1
+    this.i = this.i + 1
     this.url = this.list[this.i].url
     this.title = this.list[this.i].name + " Episode " + this.list[this.i].episode
     this.video.load()
@@ -318,7 +323,7 @@ export class PlayerPage {
       this.clickvideo = false;
       clearInterval(this.interval)
     }, 5000);
-    this.i = this.i + 1
+    this.i = this.i - 1
     this.url = this.list[this.i].url
     this.title = this.list[this.i].name + " Episode " + this.list[this.i].episode
     this.video.load()

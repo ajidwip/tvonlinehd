@@ -23,6 +23,7 @@ export class ChanneldetailPage {
   public search = [];
   public quality = [];
   public qualityid: any;
+  public row: any;
 
   constructor(
     public navCtrl: NavController,
@@ -158,7 +159,7 @@ export class ChanneldetailPage {
     }, (err) => {
 
     })
-    if (this.platform.is('cordova')) {
+    if (this.platform.is('cordova'))  {
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
     }
   }
@@ -169,9 +170,10 @@ export class ChanneldetailPage {
     document.getElementById('qualitya').style.display = 'none';
   }
   doSelectQuality() {
-    console.log(this.qualityid)
+    
   }
   doQuality(channel) {
+    this.row = channel.Row
     this.qualityid = ''
     this.api.get("table/z_channel_stream_detail_url", { params: { limit: 10, filter: "id_channel=" + "'" + channel.id + "'" + "AND status = 'OPEN'", sort: 'quality ASC' } })
       .subscribe(val => {
@@ -208,6 +210,7 @@ export class ChanneldetailPage {
           let data = val['data']
           this.navCtrl.push('PlayerPage', {
             name: data[0].name,
+            row: this.row,
             url: data[0].url,
             episode: data[0].episode,
             type: data[0].type,

@@ -55,39 +55,39 @@ export class PreviewPage {
     this.loader = this.loadingCtrl.create({
 
     });
-    this.loader.present().then(() => {
-      this.id = this.navParam.get('id')
-      this.name = this.navParam.get('name')
-      this.title = this.navParam.get('title')
-      this.category = this.navParam.get('category')
-      this.type = this.navParam.get('type')
-      this.stream = this.navParam.get('stream')
-      this.xml = this.navParam.get('xml')
-      this.plugin = this.navParam.get('plugin')
-      this.url = this.navParam.get('url')
-      this.controls = this.navParam.get('controls')
-      let trailer = this.navParam.get('trailer')
-      let trailersubs = trailer.substring(32, 60)
-      let link = trailer.substring(0, 22)
-      this.trailer = trailersubs
-      // this.trailer = link + '/embed/' + trailersubs + '?autoplay=0&showinfo=0&controls=0'
-      setTimeout(() => {
-        this.loader.dismiss();
-      }, 3000);
-      this.api.get("table/z_report_url", { params: { limit: 30, filter: "id_channel=" + "'" + this.id + "' AND (name LIKE '%Film%' OR name LIKE '%Anime%')" } })
-        .subscribe(val => {
-          this.report = val['data']
-        });
-      this.uniqueDeviceID.get()
-        .then((uuid: any) => {
-          this.api.get("table/z_arsip_users", { params: { limit: 30, filter: "id=" + "'" + this.id + "' AND uuid_device=" + "'" + uuid + "'" } })
-            .subscribe(val => {
-              this.inifavorit = val['data']
-            });
-        }, (err) => {
-        })
-        .catch((error: any) => console.log(error));
-    });
+    // this.loader.present().then(() => {
+    this.id = this.navParam.get('id')
+    this.name = this.navParam.get('name')
+    this.title = this.navParam.get('title')
+    this.category = this.navParam.get('category')
+    this.type = this.navParam.get('type')
+    this.stream = this.navParam.get('stream')
+    this.xml = this.navParam.get('xml')
+    this.plugin = this.navParam.get('plugin')
+    this.url = this.navParam.get('url')
+    this.controls = this.navParam.get('controls')
+    let trailer = this.navParam.get('trailer')
+    let trailersubs = trailer.substring(32, 60)
+    let link = trailer.substring(0, 22)
+    this.trailer = trailersubs
+    // this.trailer = link + '/embed/' + trailersubs + '?autoplay=0&showinfo=0&controls=0'
+    /*setTimeout(() => {
+      this.loader.dismiss();
+    }, 3000);*/
+    this.api.get("table/z_report_url", { params: { limit: 30, filter: "id_channel=" + "'" + this.id + "' AND (name LIKE '%Film%' OR name LIKE '%Anime%')" } })
+      .subscribe(val => {
+        this.report = val['data']
+      });
+    this.uniqueDeviceID.get()
+      .then((uuid: any) => {
+        this.api.get("table/z_arsip_users", { params: { limit: 30, filter: "id=" + "'" + this.id + "' AND uuid_device=" + "'" + uuid + "'" } })
+          .subscribe(val => {
+            this.inifavorit = val['data']
+          });
+      }, (err) => {
+      })
+      .catch((error: any) => console.log(error));
+    //});
   }
   ngAfterViewInit() {
   }
@@ -428,35 +428,14 @@ export class PreviewPage {
             })
           }
           else {
-            if (this.type == 'TV') {
-              this.api.get("table/z_channel", { params: { limit: 30, filter: "id=" + "'" + this.id + "'" } })
-                .subscribe(val => {
-                  let data = val['data']
-                  this.navCtrl.push('LivePage', {
-                    url: data[0].url,
-                    stream: data[0].stream,
-                    xml: data[0].xml,
-                    rotate: data[0].orientation,
-                    thumbnail: data[0].thumbnail_picture,
-                    subsbody1: data[0].subsbody_1,
-                    subsbody2: data[0].subsbody_2,
-                    subshead1: data[0].subshead_1,
-                    subshead2: data[0].subshead_2
-                  })
-                });
-            }
-            else if (this.type == 'STREAM') {
-              this.api.get("table/z_channel_stream", { params: { limit: 30, filter: "id=" + "'" + this.id + "'" } })
-                .subscribe(val => {
-                  let data = val['data']
-                  this.navCtrl.push('LivePage', {
-                    url: data[0].url,
-                    stream: data[0].stream,
-                    xml: data[0].xml,
-                    rotate: data[0].orientation,
-                    thumbnail: data[0].thumbnail_picture
-                  })
-                });
+            if (this.type == 'STREAM') {
+              this.navCtrl.push('LivePage', {
+                url: data[0].url,
+                stream: data[0].stream,
+                xml: data[0].xml,
+                rotate: data[0].orientation,
+                thumbnail: data[0].thumbnail_picture
+              })
             }
           }
         });

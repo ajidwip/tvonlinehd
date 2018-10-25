@@ -89,29 +89,6 @@ export class LivePage {
           this.subshead2 = this.navParams.get('subshead2');
           this.loading.present().then(() => {
             var self = this
-            this.video = document.getElementById("videoplayer");
-            this.video.load()
-            this.load = false;
-            this.i = 0;
-            this.b = this.list.length - (this.list.length - 1)
-            this.morevideo = false;
-            this.doInterval1();
-            this.doInterval2();
-      
-            this.video.addEventListener('ended', function () {
-              if (self.i < (self.list.length - 1)) {
-                self.i = self.i + 1
-                self.url = self.list[self.i].url
-                self.video.load()
-                self.video.play()
-              }
-              else {
-                self.url = self.list[0].url
-                self.i = 0
-                self.video.load()
-                self.video.pause()
-              }
-            });
             if (this.stream == '0') {
               if (this.xml == '1') {
                 var xhr = new XMLHttpRequest();
@@ -201,9 +178,38 @@ export class LivePage {
                 xhrurl.send(null);
               }
               else {
-                let playerElement = document.getElementById("video-player");
-                var video = videojs(playerElement);
-                video.qualityPickerPlugin();
+                this.stream = this.navParams.get('stream');
+                this.url = this.navParams.get('url');
+                this.clickvideo = false;
+                this.api.get("table/z_channel_stream_detail", { params: { limit: 1000, filter: "name='" + this.name + "'", sort: "episode" + " ASC " } })
+                  .subscribe(val => {
+                    this.list = val['data'];
+                    this.url = this.url
+                    this.title = this.name + " Episode " + this.episode
+                    this.video = document.getElementById("videoplayer");
+                    this.video.load()
+                    this.load = false;
+                    this.i = 0;
+                    this.b = this.list.length - (this.list.length - 1)
+                    this.morevideo = false;
+                    this.doInterval1();
+                    this.doInterval2();
+
+                    this.video.addEventListener('ended', function () {
+                      if (self.i < (self.list.length - 1)) {
+                        self.i = self.i + 1
+                        self.url = self.list[self.i].url
+                        self.video.load()
+                        self.video.play()
+                      }
+                      else {
+                        self.url = self.list[0].url
+                        self.i = 0
+                        self.video.load()
+                        self.video.pause()
+                      }
+                    });
+                  });
               }
             }
             else if (this.stream == '1') {
@@ -212,13 +218,6 @@ export class LivePage {
             else {
               this.stream = this.navParams.get('stream');
               this.url = this.navParams.get('url');
-              this.clickvideo = false;
-              this.api.get("table/z_channel_stream_detail", { params: { limit: 1000, filter: "name='" + this.name + "'", sort: "episode" + " ASC " } })
-                .subscribe(val => {
-                  this.list = val['data'];
-                  this.url = this.url
-                  this.title = this.name + " Episode " + this.episode
-                });
             }
           });
         })
