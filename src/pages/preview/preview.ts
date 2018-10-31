@@ -37,6 +37,7 @@ export class PreviewPage {
   public report = [];
   public quality = [];
   public qualityid: any;
+  public datashow = false;
 
   constructor(
     public navCtrl: NavController,
@@ -70,6 +71,10 @@ export class PreviewPage {
     let trailersubs = trailer.substring(32, 60)
     let link = trailer.substring(0, 22)
     this.trailer = trailersubs
+    this.api.get("table/z_channel_stream_url", { params: { limit: 10, filter: "id_channel=" + "'" + this.id + "'" + "AND status = 'OPEN'", sort: 'quality ASC' } })
+      .subscribe(val => {
+        this.quality = val['data']
+      });
     // this.trailer = link + '/embed/' + trailersubs + '?autoplay=0&showinfo=0&controls=0'
     /*setTimeout(() => {
       this.loader.dismiss();
@@ -345,13 +350,17 @@ export class PreviewPage {
   doPlayYoutube() {
     this.youtube.openVideo(this.trailer);
   }
+  doShowQuality() {
+    this.datashow = true;
+  }
   doCloseQuality() {
-    document.getElementById('qualitys').style.display = 'none';
+    this.datashow = false;
   }
   doSelectQuality() {
     console.log(this.qualityid)
   }
   doQuality() {
+    console.log(this.id)
     this.qualityid = '';
     if ((this.type == 'STREAM' && this.name == 'Anime') || (this.type == 'STREAM' && this.name == 'Film Series')) {
       this.navCtrl.push('ChanneldetailPage', {
@@ -359,11 +368,7 @@ export class PreviewPage {
       })
     }
     else {
-      this.api.get("table/z_channel_stream_url", { params: { limit: 10, filter: "id_channel=" + "'" + this.id + "'" + "AND status = 'OPEN'", sort: 'quality ASC' } })
-        .subscribe(val => {
-          this.quality = val['data']
-          document.getElementById('qualitys').style.display = 'block';
-        });
+      this.doShowQuality()
     }
   }
   doPlayer() {

@@ -21,9 +21,9 @@ page-preview {
         z-index: 1;
     }
     .quality {
-        display: none; /* Hidden by default */
+        z-index: 999;
+        display: block; /* Hidden by default */
         position: fixed; /* Stay in place */
-        z-index: 999; /* Sit on top */
         left: 10%;
         top: 15%;
         width: 80%; /* Full width */

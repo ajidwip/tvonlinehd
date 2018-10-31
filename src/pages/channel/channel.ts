@@ -19,6 +19,7 @@ declare var videojs: any;
 })
 export class ChannelPage {
   public channels = [];
+  public channellist = [];
   public channeldetail = [];
   public channelcategory: any;
   public channeltype: any;
@@ -39,6 +40,7 @@ export class ChannelPage {
   public uuiddevices: any;
   public quality = [];
   public qualityid: any;
+  public listchannel = false;
 
   constructor(
     public navCtrl: NavController,
@@ -720,6 +722,7 @@ export class ChannelPage {
     console.log(this.qualityid)
   }
   doQuality(channel) {
+    console.log(channel)
     this.qualityid = ''
     if (channel.type == 'TV') {
       this.api.get("table/z_channel_url", { params: { limit: 10, filter: "id_channel=" + "'" + channel.id + "'" + "AND status = 'OPEN'", sort: 'quality ASC' } })
@@ -951,6 +954,33 @@ export class ChannelPage {
       });
       alert.present();
     }
+  }
+  doChannelList() {
+    this.doGetListChannel()
+    this.listchannel = true;
+    this.channelname = 'All Channels'
+  }
+  doChannel() {
+    this.listchannel = false;
+    this.channelname = this.navParam.get('name')
+  }
+  doGetListChannel() {
+    this.api.get("table/z_list_channel", { params: { filter: "status='OPEN'", limit: 100, sort: "name" + " ASC " } })
+      .subscribe(val => {
+        this.channellist = val['data']
+      }, err => {
+        this.doGetListChannel();
+      });
+  }
+  doDetail(channel) {
+    this.listchannel = false;
+    this.channelname = this.navParam.get('name')
+    this.navCtrl.push('ChannelPage', {
+      name: channel.name,
+      category: channel.category,
+      type: channel.type,
+      stream: channel.stream
+    })
   }
 
 }
